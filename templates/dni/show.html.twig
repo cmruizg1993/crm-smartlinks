@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dni{% endblock %}
+
+{% block body %}
+    <h1>Dni</h1>
+
+    <table class="table table-bordered table-responsive">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ dni.id }}</td>
+            </tr>
+            <tr>
+                <th>Numero</th>
+                <td>{{ dni.numero }}</td>
+            </tr>
+            <tr>
+                <th>Fecha_exp</th>
+                <td>{{ dni.fechaExp ? dni.fechaExp|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Foto_frontal</th>
+                <td>{{ dni.fotoFrontal }}</td>
+            </tr>
+            <tr>
+                <th>Foto_posterior</th>
+                <td>{{ dni.fotoPosterior }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('dni_index') }}">back to list</a>
+
+    <a href="{{ path('dni_edit', {'id': dni.id}) }}">edit</a>
+
+    {{ include('dni/_delete_form.html.twig') }}
+{% endblock %}

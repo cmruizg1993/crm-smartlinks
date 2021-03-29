@@ -1,0 +1,80 @@
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        {{ form_start(form) }}
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">SAN</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.san,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Nro. de Orden</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.codigo,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Fecha</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.fecha,{'attr':{}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Tipo</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.tipo,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Estado</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.estado,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Técnico</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.tecnico,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Observaciones</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.observaciones,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        {% if button_label == 'Update'%}
+            <div class="form-group row justify-content-end">
+                <label for="" class="col-form-label col-4">
+                    <span class="float-right">Motivo de Edición</span>
+                </label>
+                <div class="col-8">
+                    <textarea name="motivo" class="form-control" required></textarea>
+                </div>
+            </div>
+        {% endif %}
+        <div class="form-group row justify-content-end">
+            <div class="col-4">
+                <button class="btn btn-info btn-block">{{ button_label|default('Guardar') }}</button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+
+    </div>
+</div>

@@ -1,0 +1,12 @@
+
+{% for parroquia in parroquias %}
+    <tr>
+        <td>
+            <input type="radio" name="parroquia_id" value="{{ parroquia.id }}"
+            data-sitio="{{ parroquia.canton.provincia.nombre }}, {{ parroquia.canton.nombre }}, {{ parroquia.nombre }}">
+        </td>
+        <td>{{ parroquia.nombre }}</td>
+        <td>{{ parroquia.canton.nombre }}</td>
+        <td>{{ parroquia.canton.provincia.nombre }}</td>
+    </tr>
+{% endfor %}

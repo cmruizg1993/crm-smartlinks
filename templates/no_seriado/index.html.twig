@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}NoSeriado index{% endblock %}
+
+{% block body %}
+    <h1>NoSeriado</h1>
+    <div class="row justify-content-end">
+        <div class="col-4">
+            <a class="btn btn-primary" href="{{ path('no_seriado_new') }}">Nuevo</a>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-responsive">
+        <thead class="bg-primary">
+            <tr>
+                <th>Id</th>
+                <th>Cantidad</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for no_seriado in no_seriados %}
+            <tr>
+                <td>{{ no_seriado.id }}</td>
+                <td>{{ no_seriado.cantidad }}</td>
+                <td>
+                    <a href="{{ path('no_seriado_show', {'id': no_seriado.id}) }}">show</a>
+                    <a href="{{ path('no_seriado_edit', {'id': no_seriado.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

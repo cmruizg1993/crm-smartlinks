@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit NoSeriado{% endblock %}
+
+{% block body %}
+    <h1>Edit NoSeriado</h1>
+
+    {{ include('no_seriado/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('no_seriado_index') }}">back to list</a>
+
+    {{ include('no_seriado/_delete_form.html.twig') }}
+{% endblock %}

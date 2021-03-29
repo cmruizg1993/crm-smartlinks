@@ -4,7 +4,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-
+    upload_directory: '%kernel.project_dir%/uploads'
+    excel_templates: '%kernel.project_dir%/src/ExcelTemplates'
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -33,3 +34,11 @@ services:
     App\Service\Validador_CI_RUC:
         public: true
         tags: ['app.validador_ci']
+
+    App\Service\WhatsappApi:
+        public: true
+        tags: [ 'app.whatsapp' ]
+
+    App\Service\FileUploader:
+        arguments:
+            $targetDirectory: '%upload_directory%'

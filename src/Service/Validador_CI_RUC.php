@@ -45,7 +45,7 @@ class Validador_CI_RUC
             $this->validarCodigoProvincia(substr($numero, 0, 2));
             $this->validarTercerDigito($numero[2], 'cedula');
             $this->algoritmoModulo10(substr($numero, 0, 9), $numero[9]);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->setError($e->getMessage());
             return false;
         }
@@ -75,7 +75,7 @@ class Validador_CI_RUC
             $this->validarTercerDigito($numero[2], 'ruc_natural');
             $this->validarCodigoEstablecimiento(substr($numero, 10, 3));
             $this->algoritmoModulo10(substr($numero, 0, 9), $numero[9]);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->setError($e->getMessage());
             return false;
         }
@@ -106,7 +106,7 @@ class Validador_CI_RUC
             $this->validarTercerDigito($numero[2], 'ruc_privada');
             $this->validarCodigoEstablecimiento(substr($numero, 10, 3));
             $this->algoritmoModulo11(substr($numero, 0, 9), $numero[9], 'ruc_privada');
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->setError($e->getMessage());
             return false;
         }
@@ -136,7 +136,33 @@ class Validador_CI_RUC
             $this->validarTercerDigito($numero[2], 'ruc_publica');
             $this->validarCodigoEstablecimiento(substr($numero, 9, 4));
             $this->algoritmoModulo11(substr($numero, 0, 8), $numero[8], 'ruc_publica');
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
+            $this->setError($e->getMessage());
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Validar Pasaporte
+     *
+     * @param  string  $numero  Número de pasaporte
+     *
+     * @return Boolean
+     */
+    public function validarPasaporte($numero = '')
+    {
+        // fuerzo parametro de entrada a string
+        $numero = (string)$numero;
+
+        // borro por si acaso errores de llamadas anteriores.
+        $this->setError('');
+
+        // validaciones
+        try {
+            $this->validarInicial($numero, strlen($numero));
+        } catch (\Exception $e) {
             $this->setError($e->getMessage());
             return false;
         }
@@ -152,21 +178,21 @@ class Validador_CI_RUC
      *
      * @return Boolean
      *
-     * @throws exception Cuando valor esta vacio, cuando no es dígito y
+     * @throws \Exception Cuando valor esta vacio, cuando no es dígito y
      * cuando no tiene cantidad requerida de caracteres
      */
     protected function validarInicial($numero, $caracteres)
     {
         if (empty($numero)) {
-            throw new Exception('Valor no puede estar vacio');
+            throw new \Exception('Valor no puede estar vacio');
         }
 
         if (!ctype_digit($numero)) {
-            throw new Exception('Valor ingresado solo puede tener dígitos');
+            throw new \Exception('Valor ingresado solo puede tener dígitos');
         }
 
         if (strlen($numero) != $caracteres) {
-            throw new Exception('Valor ingresado debe tener '.$caracteres.' caracteres');
+            throw new \Exception('Valor ingresado debe tener '.$caracteres.' caracteres');
         }
 
         return true;
@@ -179,12 +205,12 @@ class Validador_CI_RUC
      *
      * @return boolean
      *
-     * @throws exception Cuando el código de provincia no esta entre 00 y 24
+     * @throws \Exception Cuando el código de provincia no esta entre 00 y 24
      */
     protected function validarCodigoProvincia($numero)
     {
         if ($numero < 0 OR $numero > 24) {
-            throw new Exception('Codigo de Provincia (dos primeros dígitos) no deben ser mayor a 24 ni menores a 0');
+            throw new \Exception('Codigo de Provincia (dos primeros dígitos) no deben ser mayor a 24 ni menores a 0');
         }
 
         return true;
@@ -211,7 +237,7 @@ class Validador_CI_RUC
      *
      * @return boolean
      *
-     * @throws exception Cuando el tercer digito no es válido. El mensaje
+     * @throws \Exception Cuando el tercer digito no es válido. El mensaje
      * de error depende del tipo de Idenficiación.
      */
     protected function validarTercerDigito($numero, $tipo)
@@ -220,22 +246,22 @@ class Validador_CI_RUC
             case 'cedula':
             case 'ruc_natural':
                 if ($numero < 0 OR $numero > 5) {
-                    throw new Exception('Tercer dígito debe ser mayor o igual a 0 y menor a 6 para cédulas y RUC de persona natural');
+                    throw new \Exception('Tercer dígito debe ser mayor o igual a 0 y menor a 6 para cédulas y RUC de persona natural');
                 }
                 break;
             case 'ruc_privada':
                 if ($numero != 9) {
-                    throw new Exception('Tercer dígito debe ser igual a 9 para sociedades privadas');
+                    throw new \Exception('Tercer dígito debe ser igual a 9 para sociedades privadas');
                 }
                 break;
 
             case 'ruc_publica':
                 if ($numero != 6) {
-                    throw new Exception('Tercer dígito debe ser igual a 6 para sociedades públicas');
+                    throw new \Exception('Tercer dígito debe ser igual a 6 para sociedades públicas');
                 }
                 break;
             default:
-                throw new Exception('Tipo de Identificación no existe.');
+                throw new \Exception('Tipo de Identificación no existe.');
                 break;
         }
 
@@ -249,12 +275,12 @@ class Validador_CI_RUC
      *
      * @return boolean
      *
-     * @throws exception Cuando el establecimiento es menor a 1
+     * @throws \Exception Cuando el establecimiento es menor a 1
      */
     protected function validarCodigoEstablecimiento($numero)
     {
         if ($numero < 1) {
-            throw new Exception('Código de establecimiento no puede ser 0');
+            throw new \Exception('Código de establecimiento no puede ser 0');
         }
 
         return true;
@@ -295,7 +321,7 @@ class Validador_CI_RUC
      *
      * @return boolean
      *
-     * @throws exception Cuando los digitosIniciales no concuerdan contra
+     * @throws \Exception Cuando los digitosIniciales no concuerdan contra
      * el código verificador.
      */
     protected function algoritmoModulo10($digitosIniciales, $digitoVerificador)
@@ -328,7 +354,7 @@ class Validador_CI_RUC
         }
 
         if ($resultado != $digitoVerificador) {
-            throw new Exception('Dígitos iniciales no validan contra Dígito Idenficador');
+            throw new \Exception('Dígitos iniciales no validan contra Dígito Idenficador');
         }
 
         return true;
@@ -382,7 +408,7 @@ class Validador_CI_RUC
      *
      * @return boolean
      *
-     * @throws exception Cuando los digitosIniciales no concuerdan contra
+     * @throws \Exception Cuando los digitosIniciales no concuerdan contra
      * el código verificador.
      */
     protected function algoritmoModulo11($digitosIniciales, $digitoVerificador, $tipo)
@@ -395,7 +421,7 @@ class Validador_CI_RUC
                 $arrayCoeficientes = array(3, 2, 7, 6, 5, 4, 3, 2);
                 break;
             default:
-                throw new Exception('Tipo de Identificación no existe.');
+                throw new \Exception('Tipo de Identificación no existe.');
                 break;
         }
 
@@ -417,7 +443,7 @@ class Validador_CI_RUC
         }
 
         if ($resultado != $digitoVerificador) {
-            throw new Exception('Dígitos iniciales no validan contra Dígito Idenficador');
+            throw new \Exception('Dígitos iniciales no validan contra Dígito Idenficador');
         }
 
         return true;

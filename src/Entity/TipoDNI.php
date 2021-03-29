@@ -18,7 +18,7 @@ class TipoDNI
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=2)
+     * @ORM\Column(type="string", length=2, unique=true)
      */
     private $codigo;
 
@@ -26,6 +26,12 @@ class TipoDNI
      * @ORM\Column(type="string", length=30)
      */
     private $nombre;
+
+    public function __toString()
+    {
+        // TODO: Implement __toString() method.
+        return $this->getNombre();
+    }
 
     public function getId(): ?int
     {

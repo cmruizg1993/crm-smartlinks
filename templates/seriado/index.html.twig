@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Seriado index{% endblock %}
+
+{% block body %}
+    <h1>Seriado</h1>
+    <div class="row justify-content-end">
+        <div class="col-4">
+            <a class="btn btn-primary" href="{{ path('seriado_new') }}">Nuevo</a>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-responsive">
+        <thead class="bg-primary">
+            <tr>
+                <th>Id</th>
+                <th>Serie</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for seriado in seriados %}
+            <tr>
+                <td>{{ seriado.id }}</td>
+                <td>{{ seriado.serie }}</td>
+                <td>
+                    <a href="{{ path('seriado_show', {'id': seriado.id}) }}">show</a>
+                    <a href="{{ path('seriado_edit', {'id': seriado.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

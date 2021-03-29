@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit SAN{% endblock %}
+
+{% block body %}
+    <h1>Edit SAN</h1>
+
+    {{ include('san/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('s_a_n_index') }}">back to list</a>
+
+    {{ include('san/_delete_form.html.twig') }}
+{% endblock %}

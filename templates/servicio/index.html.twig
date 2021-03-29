@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Servicio index{% endblock %}
+
+{% block body %}
+    <h1>Servicio index</h1>
+
+    <table class="table table-bordered table-responsive">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for servicio in servicios %}
+            <tr>
+                <td>{{ servicio.id }}</td>
+                <td>{{ servicio.nombre }}</td>
+                <td>
+                    <a href="{{ path('servicio_show', {'id': servicio.id}) }}">show</a>
+                    <a href="{{ path('servicio_edit', {'id': servicio.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('servicio_new') }}">Create new</a>
+{% endblock %}

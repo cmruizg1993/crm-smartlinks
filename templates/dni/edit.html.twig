@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Dni{% endblock %}
+
+{% block body %}
+    <h1>Edit Dni</h1>
+
+    {{ include('dni/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('dni_index') }}">back to list</a>
+
+    {{ include('dni/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,151 @@
+<!-- partial:../../partials/_sidebar.html -->
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <ul class="nav">
+        <li class="nav-item nav-profile">
+            <a href="#" class="nav-link">
+                <div class="profile-image">
+                    {#
+                    <img class="img-xs rounded-circle" src="{{ asset('assets/images/faces/face8.jpg')}}" alt="profile image">
+                    #}
+                    <i class="fa fa-user-circle"></i>
+                    <!--div class="dot-indicator bg-success"></div-->
+                </div>
+                {% if app.user.colaborador %}
+                    <div class="text-wrapper">
+                        <p class="profile-name">{{ app.user.colaborador.nombres }}</p>
+                    </div>
+                {% endif %}
+            </a>
+        </li>
+        <li class="nav-item nav-category">Main Menu</li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('cliente_index') }}">
+                <i class="fa fa-group"></i>&emsp;
+                <span class="menu-title">Clientes</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('colaborador_index') }}">
+                <i class="menu-icon typcn typcn-document-text"></i>
+                <span class="menu-title">Colaboradores</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ordenes" aria-expanded="false" aria-controls="auth">
+                <i class="menu-icon typcn typcn-document-add"></i>
+                <span class="menu-title">Ordenes SAN</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ordenes">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('estado_orden_index') }}">
+                            <span class="menu-title">Estados de Orden</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('tipo_orden_index') }}">
+                            <span class="menu-title">Tipos de Orden</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('orden_index') }}">
+                            <span class="menu-title">Ordenes</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#contratos" aria-expanded="false" aria-controls="auth">
+                <i class="menu-icon typcn typcn-document-add"></i>
+                <span class="menu-title">Contratos</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="contratos">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('contrato_index') }}">
+                            <span class="menu-title">Claro</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('s_a_n_index') }}">
+                            <span class="menu-title">Hughesnet</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#servicios" aria-expanded="false" aria-controls="auth">
+                <i class="menu-icon typcn typcn-document-add"></i>
+                <span class="menu-title">Servicios</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="servicios">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('servicio_index') }}">
+                            <span class="menu-title">Hughesnet</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('servicio_claro_index') }}">
+                            <span class="menu-title">Claro</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#planes" aria-expanded="false" aria-controls="auth">
+                <i class="menu-icon typcn typcn-document-add"></i>
+                <span class="menu-title">Planes</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="planes">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('plan_index') }}">
+                            <span class="menu-title">Hughesnet</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('planes_claro_index') }}">
+                            <span class="menu-title">Claro</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#inventario" aria-expanded="false" aria-controls="auth">
+                <i class="menu-icon typcn typcn-document-add"></i>
+                <span class="menu-title">Inventario</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="inventario">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('equipo_index') }}">
+                            <span class="menu-title">Equipos</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('seriado_index') }}">
+                            <span class="menu-title">Items Seriados</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('no_seriado_index') }}">
+                            <span class="menu-title">Items NO Seriados</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+    </ul>
+</nav>
+<!-- partial -->

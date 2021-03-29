@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TipoOrden index{% endblock %}
+
+{% block body %}
+    <h1>TipoOrden index</h1>
+
+    <table class="table table-bordered table-responsive">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Codigo</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tipo_orden in tipo_ordens %}
+            <tr>
+                <td>{{ tipo_orden.id }}</td>
+                <td>{{ tipo_orden.nombre }}</td>
+                <td>{{ tipo_orden.codigo }}</td>
+                <td>
+                    <a href="{{ path('tipo_orden_show', {'id': tipo_orden.id}) }}">show</a>
+                    <a href="{{ path('tipo_orden_edit', {'id': tipo_orden.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('tipo_orden_new') }}">Create new</a>
+{% endblock %}

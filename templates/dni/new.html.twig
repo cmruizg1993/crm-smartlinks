@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Dni{% endblock %}
+
+{% block body %}
+    <h1>Create new Dni</h1>
+
+    {{ include('dni/_form.html.twig') }}
+
+    <a href="{{ path('dni_index') }}">back to list</a>
+{% endblock %}

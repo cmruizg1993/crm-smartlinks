@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Seriado{% endblock %}
+
+{% block body %}
+    <h1>Seriado</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ seriado.id }}</td>
+            </tr>
+            <tr>
+                <th>Serie</th>
+                <td>{{ seriado.serie }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('seriado_index') }}">back to list</a>
+
+    <a href="{{ path('seriado_edit', {'id': seriado.id}) }}">edit</a>
+
+    {{ include('seriado/_delete_form.html.twig') }}
+{% endblock %}

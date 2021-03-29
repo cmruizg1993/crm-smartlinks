@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit TipoOrden{% endblock %}
+
+{% block body %}
+    <h1>Edit TipoOrden</h1>
+
+    {{ include('tipo_orden/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('tipo_orden_index') }}">back to list</a>
+
+    {{ include('tipo_orden/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New EstadoOrden{% endblock %}
+
+{% block body %}
+    <h1>Create new EstadoOrden</h1>
+
+    {{ include('estado_orden/_form.html.twig') }}
+
+    <a href="{{ path('estado_orden_index') }}">back to list</a>
+{% endblock %}

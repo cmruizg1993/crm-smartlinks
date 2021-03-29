@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Seriado{% endblock %}
+
+{% block body %}
+    <h1>Edit Seriado</h1>
+
+    {{ include('seriado/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('seriado_index') }}">back to list</a>
+
+    {{ include('seriado/_delete_form.html.twig') }}
+{% endblock %}

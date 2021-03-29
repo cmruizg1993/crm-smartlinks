@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit PlanesClaro{% endblock %}
+
+{% block body %}
+    <h1>Edit PlanesClaro</h1>
+
+    {{ include('planes_claro/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('planes_claro_index') }}">back to list</a>
+
+    {{ include('planes_claro/_delete_form.html.twig') }}
+{% endblock %}

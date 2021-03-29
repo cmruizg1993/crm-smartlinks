@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Seriado{% endblock %}
+
+{% block body %}
+    <h1>Create new Seriado</h1>
+
+    {{ include('seriado/_form.html.twig') }}
+
+    <a href="{{ path('seriado_index') }}">back to list</a>
+{% endblock %}

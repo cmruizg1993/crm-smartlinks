@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Orden{% endblock %}
+
+{% block body %}
+
+    <div class="row justify-content-center">
+        <div class="col">
+            <div class="card border-primary mb-3">
+                <div class="card-header">Nro. de Orden {{ orden.codigo }}</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <b>Solicitud:</b> {{ orden.id }}
+                        </div>
+                        <div class="col">
+                            <b>SAN:</b> {{ orden.san }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <b>Tipo:</b> {{ orden.tipo }}
+                        </div>
+                        <div class="col">
+                            <b>Estado:</b> {{ orden.estado }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <b>Fecha:</b> {{ orden.fecha | date('Y-m-d') }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <b>Técnico asignado:</b> {{ orden.tecnico }}
+                        </div>
+                    </div>
+                    <div class="row m-3">
+                        <div class="col">
+                            <a class="btn btn-primary" href="{{ path('orden_index') }}">back to list</a>
+                        </div>
+                        <div class="col">
+                            <a class="btn btn-info" href="{{ path('orden_edit', {'id': orden.id}) }}">edit</a>
+                        </div>
+                        <div class="col">
+                            {{ include('orden/_delete_form.html.twig') }}
+                        </div>
+                    </div>
+                    <div class="container-fluid">
+                        <h3 class="text-primary">Eventos</h3>
+                        <table class="table table-bordered table-responsive">
+                            <thead>
+                            <tr class="text-light">
+                                <th>Id</th>
+                                <th>Motivo</th>
+                                <th>Acciones</th>
+                                <th>Usuario</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for evento in orden.eventos %}
+                                <tr>
+                                    <td>{{ evento.id }}</td>
+                                    <td>{{ evento.observaciones }}</td>
+                                    <td>{{ evento.acciones }}</td>
+                                    <td>{{ evento.usuario.email }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

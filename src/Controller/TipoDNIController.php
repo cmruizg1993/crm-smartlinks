@@ -18,8 +18,7 @@ class TipoDNIController extends AbstractController
         $tipos = $em->getRepository('App:TipoDNI')->findAll();
         if (count($tipos)==0){
             $array_tipos = [
-                ['cod'=>'CI','nombre'=>'CED
-                ULA'],
+                ['cod'=>'CI','nombre'=>'CEDULA'],
                 ['cod'=>'RN','nombre'=>'RUC PERSONA NATURAL'],
                 ['cod'=>'RJ','nombre'=>'RUC PERSONA JURIDICA'],
                 ['cod'=>'RP','nombre'=>'RUC EMPRESA PRIVADA'],

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UsuarioRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -24,6 +26,10 @@ class Usuario implements UserInterface
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
+    /**
+     * @ORM\Column(type="string", length=18, unique=true)
+     */
+    private $phone;
 
     /**
      * @ORM\Column(type="json")
@@ -40,6 +46,22 @@ class Usuario implements UserInterface
      * @ORM\Column(type="boolean")
      */
     private $isVerified = false;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Colaborador::class, inversedBy="usuario", cascade={"persist", "remove"})
+     */
+    private $colaborador;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Evento::class, mappedBy="usuario")
+     */
+    private $eventos;
+
+    public function __construct()
+    {
+        $this->eventos = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -130,6 +152,65 @@ class Usuario implements UserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(string $phone): self
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getIsVerified(): ?bool
+    {
+        return $this->isVerified;
+    }
+
+    public function getColaborador(): ?Colaborador
+    {
+        return $this->colaborador;
+    }
+
+    public function setColaborador(?Colaborador $colaborador): self
+    {
+        $this->colaborador = $colaborador;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Evento[]
+     */
+    public function getEventos(): Collection
+    {
+        return $this->eventos;
+    }
+
+    public function addEvento(Evento $evento): self
+    {
+        if (!$this->eventos->contains($evento)) {
+            $this->eventos[] = $evento;
+            $evento->setUsuario($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvento(Evento $evento): self
+    {
+        if ($this->eventos->removeElement($evento)) {
+            // set the owning side to null (unless already changed)
+            if ($evento->getUsuario() === $this) {
+                $evento->setUsuario(null);
+            }
+        }
 
         return $this;
     }

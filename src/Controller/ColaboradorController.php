@@ -1,0 +1,103 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\Colaborador;
+use App\Form\ColaboradorType;
+use App\Repository\ColaboradorRepository;
+use App\Service\WhatsappApi;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
+/**
+ * @Route("/colaborador")
+ */
+class ColaboradorController extends AbstractController
+{
+    /**
+     * @Route("/", name="colaborador_index", methods={"GET"})
+     */
+    public function index(ColaboradorRepository $colaboradorRepository, WhatsappApi $wtp): Response
+    {
+
+
+        return $this->render('colaborador/index.html.twig', [
+            'colaboradors' => $colaboradorRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/new", name="colaborador_new", methods={"GET","POST"})
+     */
+    public function new(Request $request,  UserPasswordEncoderInterface $passwordEncoder): Response
+    {
+        $colaborador = new Colaborador();
+        $form = $this->createForm(ColaboradorType::class, $colaborador);
+        $form->handleRequest($request);
+        $entityManager = $this->getDoctrine()->getManager();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $plain = $form['usuario']['plainPassword']->getData();
+            $pass = $passwordEncoder->encodePassword($colaborador->getUsuario(),$plain);
+            $colaborador->getUsuario()->setPassword($pass);
+            $entityManager->persist($colaborador);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('colaborador_index');
+        }
+        $provincias = $entityManager->getRepository('App:Provincia')->findAll();
+        return $this->render('colaborador/new.html.twig', [
+            'colaborador' => $colaborador,
+            'form' => $form->createView(),
+            'provincias'=>$provincias
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="colaborador_show", methods={"GET"})
+     */
+    public function show(Colaborador $colaborador): Response
+    {
+        return $this->render('colaborador/show.html.twig', [
+            'colaborador' => $colaborador,
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/edit", name="colaborador_edit", methods={"GET","POST"})
+     */
+    public function edit(Request $request, Colaborador $colaborador): Response
+    {
+        $form = $this->createForm(ColaboradorType::class, $colaborador);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('colaborador_index');
+        }
+        $entityManager = $this->getDoctrine()->getManager();
+        $provincias = $entityManager->getRepository('App:Provincia')->findAll();
+        return $this->render('colaborador/edit.html.twig', [
+            'colaborador' => $colaborador,
+            'form' => $form->createView(),
+            'provincias'=>$provincias
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="colaborador_delete", methods={"DELETE"})
+     */
+    public function delete(Request $request, Colaborador $colaborador): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$colaborador->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($colaborador);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('colaborador_index');
+    }
+}

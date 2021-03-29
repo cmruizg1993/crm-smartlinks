@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New PlanesClaro{% endblock %}
+
+{% block body %}
+    <h1>Create new PlanesClaro</h1>
+
+    {{ include('planes_claro/_form.html.twig') }}
+
+    <a href="{{ path('planes_claro_index') }}">back to list</a>
+{% endblock %}

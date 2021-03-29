@@ -1,0 +1,74 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#staticBackdrop">
+    <i class="fa fa-search"></i>
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop"  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Buscar Parroquia</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="modalCerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row form-group">
+
+                    <label class="col-form-label col-4">Buscar:</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control" id="parametroParroquia">
+                    </div>
+                </div>
+                <table class="table table-hover table-bordered table-bordered">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>Parroquia</th>
+                            <th>Cantón</th>
+                            <th>Provincia</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tParroquias">
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" id="modalAceptar">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $("#parametroParroquia").keyup(function (){
+        var param = $(this).val();
+        var L = param.length;
+        if ( L >= 3){
+            $.ajax({
+                url:'{{ path('buscar_parroquia') }}',
+                type:'POST',
+                contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+                data: { param: param },
+                success: function (html){
+                    $("#tParroquias").html(html);
+                }
+
+            })
+        }
+    });
+    $("#modalAceptar").click(function (){
+        //alert("hola")
+        var radioValue = $("input[name='parroquia_id']:checked").val();
+        if (typeof radioValue !== 'undefined'){
+            var sitio = $("input[name='parroquia_id']:checked").data('sitio');
+            console.log(sitio)
+            $("#{{ controlName }}").val(radioValue);
+            $("#sitio").val(sitio);
+        }else{
+            alert('No se ha seleccionado ninguna parroquia')
+        }
+    });
+</script>

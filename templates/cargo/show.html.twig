@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cargo{% endblock %}
+
+{% block body %}
+    <h1>Cargo</h1>
+
+    <table class="table table-bordered table-responsive">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ cargo.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ cargo.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Codigo</th>
+                <td>{{ cargo.codigo }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('cargo_index') }}">back to list</a>
+
+    <a href="{{ path('cargo_edit', {'id': cargo.id}) }}">edit</a>
+
+    {{ include('cargo/_delete_form.html.twig') }}
+{% endblock %}

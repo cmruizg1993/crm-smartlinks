@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dni index{% endblock %}
+
+{% block body %}
+    <h1>Dni index</h1>
+
+    <table class="table table-bordered table-responsive">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Numero</th>
+                <th>Fecha_exp</th>
+                <th>Foto_frontal</th>
+                <th>Foto_posterior</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for dni in dnis %}
+            <tr>
+                <td>{{ dni.id }}</td>
+                <td>{{ dni.numero }}</td>
+                <td>{{ dni.fechaExp ? dni.fechaExp|date('Y-m-d') : '' }}</td>
+                <td>{{ dni.fotoFrontal }}</td>
+                <td>{{ dni.fotoPosterior }}</td>
+                <td>
+                    <a href="{{ path('dni_show', {'id': dni.id}) }}">show</a>
+                    <a href="{{ path('dni_edit', {'id': dni.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('dni_new') }}">Create new</a>
+{% endblock %}

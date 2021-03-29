@@ -1,29 +1,20 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_auth.html.twig' %}
 
 {% block title %}Log in!{% endblock %}
+{% block stylesheets %}
+    <style>
+        .logo-container{
+            max-width: 100%;
+            box-sizing: border-box;
+            padding: 5%;
 
+        }
+        .logo-container img{
+            max-width: 100%;
+        }
+    </style>
+{% endblock %}
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
-
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
-        </div>
-    {% endif %}
-
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" required>
-
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
-
     {#
         Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
         See https://symfony.com/doc/current/security/remember_me.html
@@ -35,8 +26,62 @@
         </div>
     #}
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
+
+    <form method="post">
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        {% if app.user %}
+            <div class="mb-3">
+                You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+            </div>
+        {% endif %}
+        <div class="logo-container">
+            <img src="{{ asset('assets/images/makrocel.svg') }}" alt="">
+        </div>
+        <div class="form-group">
+            <label class="label">Email</label>
+            <div class="input-group">
+                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
+                <div class="input-group-append">
+                                        <span class="input-group-text">
+                                          <i class="mdi mdi-check-circle-outline"></i>
+                                        </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="label">Password</label>
+            <div class="input-group">
+                <input type="password" name="password" id="inputPassword" class="form-control" required placeholder="**********">
+                <div class="input-group-append">
+                                        <span class="input-group-text">
+                                          <i class="mdi mdi-check-circle-outline"></i>
+                                        </span>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="_csrf_token"
+               value="{{ csrf_token('authenticate') }}"
+        >
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary submit-btn btn-block">Login</button>
+        </div>
+        <div class="form-group d-flex justify-content-between">
+            <!--div class="form-check form-check-flat mt-0">
+                <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" checked> Keep me signed in </label>
+            </div-->
+            <a href="#" class="text-small forgot-password text-black">Forgot Password</a>
+        </div>
+        <!--div class="form-group">
+            <button class="btn btn-block g-login">
+                <img class="mr-3" src="../../../assets/images/file-icons/icon-google.svg" alt="">Log in with Google</button>
+        </div-->
+        <div class="text-block text-center my-3">
+            <span class="text-small font-weight-semibold">Not a member ?</span>
+            <a href="register.html" class="text-black text-small">Create new account</a>
+        </div>
+    </form>
 {% endblock %}

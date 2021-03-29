@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Orden{% endblock %}
+
+{% block body %}
+
+    <div class="row m-3">
+        <div class="col-8">
+            <h1>Edit Orden</h1>
+        </div>
+        <div class="col-4">
+            <div class="row">
+                <div class="col">
+                    <a  class="btn btn-primary" href="{{ path('orden_index') }}">back to list</a>
+                </div>
+                <div class="col">
+                    {{ include('orden/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{ include('orden/_form.html.twig', {'button_label': 'Update'}) }}
+
+
+    <h3 class="text-primary m-3">Eventos</h3>
+    <table class="table">
+        <thead class="bg-primary text-light">
+        <tr class="text-light">
+            <th>Id</th>
+            <th>Motivo</th>
+            <th>Acciones</th>
+            <th>Usuario</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for evento in orden.eventos %}
+            <tr>
+                <td>{{ evento.id }}</td>
+                <td>{{ evento.observaciones }}</td>
+                <td>{{ evento.acciones }}</td>
+                <td>{{ evento.usuario.email }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

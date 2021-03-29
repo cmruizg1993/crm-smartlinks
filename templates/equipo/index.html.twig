@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Equipo index{% endblock %}
+
+{% block body %}
+    <h1>Equipo</h1>
+    <div class="row justify-content-end">
+        <div class="col-4">
+            <a class="btn btn-primary" href="{{ path('equipo_new') }}">Nuevo</a>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-responsive">
+        <thead class="bg-primary">
+            <tr>
+                <th>Id</th>
+                <th>Sku</th>
+                <th>Nombre</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for equipo in equipos %}
+            <tr>
+                <td>{{ equipo.id }}</td>
+                <td>{{ equipo.sku }}</td>
+                <td>{{ equipo.nombre }}</td>
+                <td>
+                    <a href="{{ path('equipo_show', {'id': equipo.id}) }}">show</a>
+                    <a href="{{ path('equipo_edit', {'id': equipo.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

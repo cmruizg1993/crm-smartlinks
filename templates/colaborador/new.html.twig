@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Colaborador{% endblock %}
+{#  block javascripts %}
+    <script>
+        var provincias = [];
+        $(document).ready(function (){
+            $("#provincia").change(function(){
+                var id = $(this).val();
+                var uri = '/canton/'+id;
+                $("#canton").html("");
+                $.ajax({
+                    url: uri,
+                    type:       'GET',
+                    dataType:   'json',
+                    success: function(data){
+                        data.forEach(function (canton){
+                            var opt = '<option value="'+canton.id+'">'+canton.nombre+'</option>';
+                            $("#canton").append(opt);
+                        })
+                    }
+                });
+            })
+            $("#canton").change(function(){
+                var id = $(this).val();
+                var uri = '/parroquia/'+id;
+                $("#parroquia").html("");
+                $.ajax({
+                    url: uri,
+                    type:       'GET',
+                    dataType:   'json',
+                    success: function(data){
+                        data.forEach(function (parroquia){
+                            var opt = '<option value="'+parroquia.id+'">'+parroquia.nombre+'</option>';
+                            $("#parroquia").append(opt);
+                        })
+                    }
+                });
+            })
+        })
+
+    </script>
+{% endblock %#}
+{% block body %}
+    <h1>Create new Colaborador</h1>
+
+    {{ include('colaborador/_form.html.twig') }}
+
+
+    <a href="{{ path('colaborador_index') }}">back to list</a>
+{% endblock %}
