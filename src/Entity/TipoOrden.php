@@ -33,6 +33,11 @@ class TipoOrden
      * @ORM\OneToMany(targetEntity=Orden::class, mappedBy="tipo")
      */
     private $ordenes;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Comision::class, mappedBy="orden")
+     */
+    private $comisiones;
     public function __toString()
     {
         // TODO: Implement __toString() method.
@@ -42,6 +47,7 @@ class TipoOrden
     public function __construct()
     {
         $this->ordenes = new ArrayCollection();
+        $this->comisiones = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -97,6 +103,36 @@ class TipoOrden
             // set the owning side to null (unless already changed)
             if ($ordene->getTipo() === $this) {
                 $ordene->setTipo(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comision[]
+     */
+    public function getComisiones(): Collection
+    {
+        return $this->comisiones;
+    }
+
+    public function addComisione(Comision $comisione): self
+    {
+        if (!$this->comisiones->contains($comisione)) {
+            $this->comisiones[] = $comisione;
+            $comisione->setOrden($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComisione(Comision $comisione): self
+    {
+        if ($this->comisiones->removeElement($comisione)) {
+            // set the owning side to null (unless already changed)
+            if ($comisione->getOrden() === $this) {
+                $comisione->setOrden(null);
             }
         }
 
