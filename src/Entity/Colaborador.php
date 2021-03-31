@@ -67,7 +67,7 @@ class Colaborador
     private $sans;
 
     /**
-     * @ORM\Column(type="string", length=18, unique=true)
+     * @ORM\Column(type="string", length=18, nullable=true)
      */
     private $cedula;
 
@@ -77,11 +77,14 @@ class Colaborador
     private $codigoIP;
 
 
-
-    public function __toString(): string
+    public function __toString()
     {
-        return $this->getUsuario()->getEmail() . ' ' . $this->nombres;
+        if($this->usuario){
+            return $this->getUsuario()->getEmail() . ' ' . $this->nombres;
+        }
+        return $this->nombres;
     }
+
     public function __construct()
     {
         $this->proveedores = new ArrayCollection();

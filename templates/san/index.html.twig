@@ -11,6 +11,8 @@
                 <th>Id</th>
                 <th>Numero</th>
                 <th>Fecha</th>
+                <th>Cliente</th>
+                <th>Direccion</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -20,6 +22,8 @@
                 <td>{{ s_a_n.id }}</td>
                 <td>{{ s_a_n.numero }}</td>
                 <td>{{ s_a_n.fecha ? s_a_n.fecha|date('Y-m-d') : '' }}</td>
+                <td>{{ s_a_n.cliente.nombres }}</td>
+                <td>{{ s_a_n.cliente.direccion }}</td>
                 <td>
                     <a href="{{ path('s_a_n_show', {'id': s_a_n.id}) }}">show</a>
                     <a href="{{ path('s_a_n_edit', {'id': s_a_n.id}) }}">edit</a>

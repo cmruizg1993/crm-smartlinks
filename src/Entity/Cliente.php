@@ -58,7 +58,7 @@ class Cliente
     private $dni;
 
     /**
-     * @ORM\OneToMany(targetEntity=SAN::class, mappedBy="cliente")
+     * @ORM\OneToMany(targetEntity=SAN::class, mappedBy="cliente",cascade={"persist", "remove"})
      */
     private $sans;
 
@@ -108,7 +108,10 @@ class Cliente
     private $otro;
     public function __toString()
     {
-        return $this->nombres.' - '. $this->getDni()->getNumero();
+        if($this->dni){
+            return $this->nombres.' - '. $this->getDni()->getNumero();
+        }
+        return $this->nombres;
     }
     public function __construct()
     {

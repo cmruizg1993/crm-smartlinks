@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Cliente;
+use App\Entity\Dni;
+use App\Entity\SAN;
 use App\Form\ClienteType;
 use App\Repository\ClienteRepository;
 use App\Service\FileUploader;
@@ -156,6 +158,74 @@ class ClienteController extends AbstractController
                 ['body' => ['tipo' => 'getDataWsRc', 'ci'=>$ci]]
             );
             $data = json_decode($response->getContent());
+        }
+        return new JsonResponse($data);
+    }
+
+    /**
+     * @Route("/sincronizar", name="sincronizar_cliente_san", methods={"POST"})
+     */
+    public function sincronizar(Request $request, HttpClientInterface $client): Response
+    {
+        $ci = $request->request->get('cedula');
+        $nsan = $request->request->get('san');
+
+        if($ci && $nsan){
+            $ci = strlen($ci) == 9 ? "0".$ci:$ci;
+
+            if(strlen($ci)==10){
+                $uri = 'http://certificados.ministeriodegobierno.gob.ec/gestorcertificados/antecedentes/data.php';
+                $response = $client->request('POST',$uri,
+                    ['body' => ['tipo' => 'getDataWsRc', 'ci'=>$ci]]
+                );
+
+                $data = json_decode($response->getContent())[0];
+
+                if(!$data->error){
+                    $em = $this->getDoctrine()->getManager();
+                    $tipodni = $em->getRepository('App:TipoDNI')->findOneByCodigo('CI');
+
+                    /* @var $san SAN */
+                    $san = $em->getRepository('App:SAN')->findOneByNumero($nsan);
+                    if($san){
+                        $dni = new Dni();
+                        $dni->setNumero($ci);
+                        $dni->setTipo($tipodni);
+                        $cliente = $san->getCliente();
+                        $cliente->setNombres($data->name);
+                        $cliente->setGenero($data->genre);
+                        $fecha = \DateTime::createFromFormat('d/m/Y',$data->dob);
+                        $cliente->setFechaNacimiento($fecha);
+                        $cliente->setNacionalidad($data->nationality);
+                        $cliente->setResidencia($data->residence);
+                        $cliente->setDireccion($data->streets);
+                        $cliente->setFingerprint($data->fingerprint);
+                        $cliente->setEstadoCivil($data->civilstate);
+                        $cliente->setDni($dni);
+                        $em->flush();
+                    }else{
+                        $data = [
+                            "error"=>true,
+                            "mensaje"=>"No se ha encontrado la SAN $nsan"
+                        ];
+                    }
+                }else{
+                    $data = [
+                        "error"=>true,
+                        "mensaje"=>$data->error
+                    ];
+                }
+            }else{
+                $data = [
+                    "error"=>true,
+                    "mensaje"=>"tipo de documento desconocido"
+                ];
+            }
+        }else{
+            $data = [
+                "error"=>true,
+                "mensaje"=>"No se recibio la san o cedula"
+            ];
         }
         return new JsonResponse($data);
     }

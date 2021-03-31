@@ -36,9 +36,14 @@ class Plan
     private $solicitudes;
 
     /**
-     * @ORM\OneToMany(targetEntity=SAN::class, mappedBy="plan")
+     * @ORM\OneToMany(targetEntity=SAN::class, mappedBy="plan", cascade={"persist", "remove"})
      */
     private $sans;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $activo;
 
     public function __toString()
     {
@@ -133,6 +138,18 @@ class Plan
                 $san->setPlan(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getActivo(): ?bool
+    {
+        return $this->activo;
+    }
+
+    public function setActivo(?bool $activo): self
+    {
+        $this->activo = $activo;
 
         return $this;
     }

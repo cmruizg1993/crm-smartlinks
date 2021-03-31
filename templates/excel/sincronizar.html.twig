@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ExcelController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>CARGA MASIVA! ✅</h1>
+    <div  class="progress m-3">
+        <div class="progress-bar progress-bar-striped bg-success" id="loading" role="progressbar"  aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    {{ form_start(form) }}
+        {{ form_widget(form.archivo) }}
+    <div class="row">
+        <div class="col">
+            <button type="button" id="btnSubir" class="btn btn-success">Subir Archivo</button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        var data = "";
+        $("#form_archivo").change(function(e){
+            var file = e.target.files[0];
+            var reader = new FileReader();
+            // Closure to capture the file information.
+            reader.onload = (function(theFile) {
+                return function(e) {
+                     data = e.target.result ;
+                };
+            })(file);
+
+            reader.readAsText(file, 'utf-8');
+        });
+
+        $("#btnSubir").click(function (){
+            if(data){
+                var rows = data.split("\n");
+                var completed = 0;
+                var L = rows.length;
+                var errores = [];
+                rows.forEach(function (row, index){
+                    var cols = row.split(",");
+                    if(cols[0]){
+                        var info = {san: cols[0], cedula: cols[3]};
+
+                        $.ajax({
+                            url: "{{ path('sincronizar_cliente_san') }}",
+                            type: "POST",
+                            data: info,
+                            success: function (response){
+                                console.log(response);
+                            },
+                            error: function (e){
+                                errores.push(e.message)
+                            },
+                            complete: function (){
+                                completed = Math.ceil(((index+1)/L)*100);
+                                $("#loading").width(completed+"%");
+                                console.log(completed);
+                            }
+                        })
+                    }
+                })
+            }
+        })
+    </script>
+{% endblock %}

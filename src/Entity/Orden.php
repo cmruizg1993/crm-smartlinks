@@ -31,7 +31,7 @@ class Orden
     private $fecha;
 
     /**
-     * @ORM\ManyToOne(targetEntity=SAN::class, inversedBy="ordenes")
+     * @ORM\ManyToOne(targetEntity=SAN::class, inversedBy="ordenes",cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $san;
@@ -48,13 +48,13 @@ class Orden
     private $observaciones;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Colaborador::class, inversedBy="ordenes")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity=Colaborador::class, inversedBy="ordenes",cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true)
      */
     private $tecnico;
 
     /**
-     * @ORM\Column(type="integer", unique=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $codigo;
 

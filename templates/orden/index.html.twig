@@ -12,6 +12,7 @@
                 <th>Tecnico</th>
                 <th>Tipo</th>
                 <th>SAN</th>
+                <th>FSO</th>
                 <th>Fecha</th>
                 <th>Estado</th>
                 <th>actions</th>
@@ -24,7 +25,7 @@
                 <td>{{ orden.tecnico }}</td>
                 <td>{{ orden.tipo }}</td>
                 <td>{{ orden.san }}</td>
-
+                <td>{{ orden.codigo }}</td>
                 <td>{{ orden.fecha ? orden.fecha|date('Y-m-d') : '' }}</td>
                 <td>{{ orden.estado }}</td>
                 <td>

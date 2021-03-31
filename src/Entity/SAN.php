@@ -30,14 +30,14 @@ class SAN
     private $fecha;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Cliente::class, inversedBy="sans")
+     * @ORM\ManyToOne(targetEntity=Cliente::class, inversedBy="sans",cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $cliente;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Plan::class, inversedBy="sans")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity=Plan::class, inversedBy="sans", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true)
      */
     private $plan;
 
@@ -60,6 +60,16 @@ class SAN
      * @ORM\ManyToOne(targetEntity=Colaborador::class, inversedBy="sans")
      */
     private $vendedor;
+
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $estado;
+
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $estadoContrato;
     public function __toString()
     {
         // TODO: Implement __toString() method.
@@ -186,6 +196,30 @@ class SAN
     public function setVendedor(?Colaborador $vendedor): self
     {
         $this->vendedor = $vendedor;
+
+        return $this;
+    }
+
+    public function getEstado(): ?string
+    {
+        return $this->estado;
+    }
+
+    public function setEstado(?string $estado): self
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    public function getEstadoContrato(): ?string
+    {
+        return $this->estadoContrato;
+    }
+
+    public function setEstadoContrato(?string $estadoContrato): self
+    {
+        $this->estadoContrato = $estadoContrato;
 
         return $this;
     }
