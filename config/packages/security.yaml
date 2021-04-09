@@ -1,4 +1,7 @@
 security:
+    role_hierarchy:
+      ROLE_ADMIN: ROLE_VENDEDOR
+      ROLE_SUPER_ADMIN: ROLE_ADMIN
     encoders:
         App\Entity\Usuario:
             algorithm: auto
@@ -35,5 +38,21 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+      # LIBRE ACCESO PARA EL LOGIN Y REGISTRO DE VENDEDORES
          - { path: ^/login, roles: IS_ANONYMOUS }
-         - { path: ^/, roles: [IS_AUTHENTICATED_FULLY] }
+         - { path: ^/colaborador/registro/vendedor, roles: IS_ANONYMOUS }
+      # RESTRICCION PARA EL LISTADO Y EDICION DE USUARIOS , SOLO LOS ADMINISTRADORES PODRAN ACCEDER
+         - { path: ^/usuario/list, roles: [ROLE_SUPER_ADMIN] }
+         - { path: ^/usuario/edit, roles: [ROLE_SUPER_ADMIN] }
+      # ACCESO A CUALQUIERA QUE SE HAYA AUTENTICADO PARA SU PROPIO PERFIL Y PARA CERRAR SESION
+         - { path: ^/usuario, roles: [IS_AUTHENTICATED_FULLY] }
+         - { path: ^/logout, roles: [IS_AUTHENTICATED_FULLY] }
+      # RESTRICCION PARA EDICION Y BORRADO DE CLIENTES
+         - { path: ^/cliente/edit, roles: [ROLE_ADMIN] }
+         - { path: ^/cliente/delete, roles: [ROLE_ADMIN] }
+      # PERMISO PARA QUE LOS VENDEDORES CREEN CLIENTES
+         - { path: ^/cliente, roles: [ROLE_VENDEDOR] }
+      # RESTRICCION GENERAL
+         - { path: ^/$, roles: [IS_AUTHENTICATED_FULLY] }
+      # RESTRICCION GENERAL
+         - { path: ^/, roles: [ROLE_ADMIN] }

@@ -18,21 +18,12 @@
             </a>
         </li>
         <li class="nav-item nav-category">Main Menu</li>
-        {% if is_granted('ROLE_SUPER_ADMIN') %}
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('usuario_list') }}">
-                    <i class="fa fa-group"></i>&emsp;
-                    <span class="menu-title">Usuarios</span>
-                </a>
-            </li>
-        {% endif %}
         <li class="nav-item">
             <a class="nav-link" href="{{ path('cliente_index') }}">
                 <i class="fa fa-group"></i>&emsp;
                 <span class="menu-title">Clientes</span>
             </a>
         </li>
-        {% if is_granted('ROLE_ADMIN') %}
         <li class="nav-item">
             <a class="nav-link" href="{{ path('colaborador_index') }}">
                 <i class="menu-icon typcn typcn-document-text"></i>
@@ -177,15 +168,9 @@
                             <span class="menu-title">Orden de Salida Invas</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('ordenrd') }}">
-                            <span class="menu-title">Ordenes Reparación/Desinstalación</span>
-                        </a>
-                    </li>
                 </ul>
             </div>
         </li>
-        {% endif %}
-        </ul>
+    </ul>
 </nav>
 <!-- partial -->

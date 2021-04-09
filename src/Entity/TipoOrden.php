@@ -12,6 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class TipoOrden
 {
+    public const INSTALACION = 'I';
+    public const DESINSTALACION = 'D';
+    public const REPARACION = 'X';
+    public const REINSTALACION = 'R';
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -38,6 +42,16 @@ class TipoOrden
      * @ORM\OneToMany(targetEntity=Comision::class, mappedBy="orden")
      */
     private $comisiones;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $puntaje;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $comision;
     public function __toString()
     {
         // TODO: Implement __toString() method.
@@ -135,6 +149,30 @@ class TipoOrden
                 $comisione->setOrden(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPuntaje(): ?int
+    {
+        return $this->puntaje;
+    }
+
+    public function setPuntaje(int $puntaje): self
+    {
+        $this->puntaje = $puntaje;
+
+        return $this;
+    }
+
+    public function getComision(): ?float
+    {
+        return $this->comision;
+    }
+
+    public function setComision(?float $comision): self
+    {
+        $this->comision = $comision;
 
         return $this;
     }

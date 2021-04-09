@@ -90,7 +90,7 @@ class ClienteController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="cliente_edit", methods={"GET","POST"})
+     * @Route("/edit/{id}", name="cliente_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Cliente $cliente, FileUploader $uploader): Response
     {
@@ -132,7 +132,7 @@ class ClienteController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="cliente_delete", methods={"DELETE"})
+     * @Route("/delete/{id}", name="cliente_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Cliente $cliente): Response
     {

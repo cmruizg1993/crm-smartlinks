@@ -1,0 +1,30 @@
+
+
+{% extends 'base.html.twig' %}
+
+{% block title %}ROLES{% endblock %}
+
+{% block body %}
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+             <h5 >Roles de : <span class="text-primary">{{ usuario.email }}</span></h5>
+            {{ form_start(form) }}
+            {% for role in form.roles %}
+                <div class="form-group row justify-content-start m-3">
+                    <div class="col-6">
+                        {{ form_widget(role) }}
+                        {{ form_label(role) }}
+                    </div>
+                </div>
+            {% endfor %}
+                {{ form_widget(form) }}
+                <div class="form-group row justify-content-center">
+                    <div class="col-4">
+                        <button class="btn btn-info btn-block">{{ button_label|default('Guardar') }}</button>
+                    </div>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+

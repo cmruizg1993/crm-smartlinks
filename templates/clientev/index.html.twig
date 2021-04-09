@@ -25,11 +25,8 @@
                 <td>{{ cliente.telefono }}</td>
                 <td>{{ cliente.estado }}</td>
                 <td>
-
                     <a href="{{ path('cliente_show', {'id': cliente.id}) }}">show</a>
-                    {% if is_granted('ROLE_ADMIN') %}
                     <a href="{{ path('cliente_edit', {'id': cliente.id}) }}">edit</a>
-                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -40,5 +37,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('cliente_new') }}">Create new</a>
+    <a href="{{ path('clientev_new') }}">Create new</a>
 {% endblock %}

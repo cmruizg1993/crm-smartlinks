@@ -77,11 +77,19 @@ class Colaborador
     private $codigoIP;
 
 
+    /**
+     * @ORM\OneToMany(targetEntity=Cliente::class, mappedBy="vendedor")
+     */
+    private $clientes;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Solicitud::class, mappedBy="vendedor")
+     */
+    private $solicitudes;
+
+
     public function __toString()
     {
-        if($this->usuario){
-            return $this->getUsuario()->getEmail() . ' ' . $this->nombres;
-        }
         return $this->nombres;
     }
 
@@ -91,6 +99,9 @@ class Colaborador
         $this->contratos = new ArrayCollection();
         $this->ordenes = new ArrayCollection();
         $this->sans = new ArrayCollection();
+        $this->ventasHughes = new ArrayCollection();
+        $this->clientes = new ArrayCollection();
+        $this->solicitudes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -302,6 +313,66 @@ class Colaborador
     public function setCodigoIP(?int $codigoIP): self
     {
         $this->codigoIP = $codigoIP;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Cliente[]
+     */
+    public function getClientes(): Collection
+    {
+        return $this->clientes;
+    }
+
+    public function addCliente(Cliente $cliente): self
+    {
+        if (!$this->clientes->contains($cliente)) {
+            $this->clientes[] = $cliente;
+            $cliente->setVendedor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCliente(Cliente $cliente): self
+    {
+        if ($this->clientes->removeElement($cliente)) {
+            // set the owning side to null (unless already changed)
+            if ($cliente->getVendedor() === $this) {
+                $cliente->setVendedor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Solicitud[]
+     */
+    public function getSolicitudes(): Collection
+    {
+        return $this->solicitudes;
+    }
+
+    public function addSolicitude(Solicitud $solicitude): self
+    {
+        if (!$this->solicitudes->contains($solicitude)) {
+            $this->solicitudes[] = $solicitude;
+            $solicitude->setVendedor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSolicitude(Solicitud $solicitude): self
+    {
+        if ($this->solicitudes->removeElement($solicitude)) {
+            // set the owning side to null (unless already changed)
+            if ($solicitude->getVendedor() === $this) {
+                $solicitude->setVendedor(null);
+            }
+        }
 
         return $this;
     }

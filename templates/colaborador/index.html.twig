@@ -10,6 +10,7 @@
             <tr>
                 <th>Id</th>
                 <th>Nombres</th>
+                <th>Codigo IP</th>
                 <th>Direccion</th>
                 <th>actions</th>
             </tr>
@@ -19,6 +20,7 @@
             <tr>
                 <td>{{ colaborador.id }}</td>
                 <td>{{ colaborador.nombres }}</td>
+                <td>{{ colaborador.codigoIP }}</td>
                 <td>{{ colaborador.direccion }}</td>
                 <td>
                     <a href="{{ path('colaborador_show', {'id': colaborador.id}) }}">show</a>

@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Cargo;
 use App\Entity\Colaborador;
 use App\Form\ColaboradorType;
+use App\Form\VendedorType;
 use App\Repository\ColaboradorRepository;
 use App\Service\WhatsappApi;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,6 +41,10 @@ class ColaboradorController extends AbstractController
         $form->handleRequest($request);
         $entityManager = $this->getDoctrine()->getManager();
         if ($form->isSubmitted() && $form->isValid()) {
+            $cargo = $colaborador->getCargo()->getCodigo();
+            if($cargo == Cargo::OPERADOR){
+                $colaborador->getUsuario()->setRoles(['ROLE_ADMIN']);
+            }
             $plain = $form['usuario']['plainPassword']->getData();
             $pass = $passwordEncoder->encodePassword($colaborador->getUsuario(),$plain);
             $colaborador->getUsuario()->setPassword($pass);
@@ -68,17 +74,19 @@ class ColaboradorController extends AbstractController
     /**
      * @Route("/{id}/edit", name="colaborador_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Colaborador $colaborador): Response
+    public function edit(Request $request, Colaborador $colaborador, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $form = $this->createForm(ColaboradorType::class, $colaborador);
         $form->handleRequest($request);
-
+        $entityManager = $this->getDoctrine()->getManager();
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $plain = $form['usuario']['plainPassword']->getData();
+            $pass = $passwordEncoder->encodePassword($colaborador->getUsuario(),$plain);
+            $colaborador->getUsuario()->setPassword($pass);
+            $entityManager->flush();
 
             return $this->redirectToRoute('colaborador_index');
         }
-        $entityManager = $this->getDoctrine()->getManager();
         $provincias = $entityManager->getRepository('App:Provincia')->findAll();
         return $this->render('colaborador/edit.html.twig', [
             'colaborador' => $colaborador,
@@ -99,5 +107,34 @@ class ColaboradorController extends AbstractController
         }
 
         return $this->redirectToRoute('colaborador_index');
+    }
+
+    /**
+     * @Route("/registro/vendedor", name="vendedor_new", methods={"GET","POST"})
+     */
+    public function newVendedor(Request $request,  UserPasswordEncoderInterface $passwordEncoder): Response
+    {
+        $colaborador = new Colaborador();
+        $form = $this->createForm(VendedorType::class, $colaborador);
+        $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $plain = $form['usuario']['plainPassword']->getData();
+            $pass = $passwordEncoder->encodePassword($colaborador->getUsuario(),$plain);
+            $colaborador->getUsuario()->setPassword($pass);
+            $cargo = $em->getRepository('App:Cargo')->findOneByCodigo('VN');
+            if($cargo){
+                $colaborador->setCargo($cargo);
+                $em->persist($colaborador);
+                $em->flush();
+            }
+            return $this->redirectToRoute('colaborador_index');
+        }
+        $provincias = $em->getRepository('App:Provincia')->findAll();
+        return $this->render('colaborador/vendedor.html.twig', [
+            'colaborador' => $colaborador,
+            'form' => $form->createView(),
+            'provincias'=>$provincias
+        ]);
     }
 }

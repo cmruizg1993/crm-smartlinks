@@ -2,7 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Cliente;
+use App\Entity\Usuario;
+use App\Repository\UsuarioRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -18,5 +24,57 @@ class UsuarioController extends AbstractController
         return $this->render('usuario/index.html.twig', [
             'controller_name' => 'UsuarioController',
         ]);
+    }
+    /**
+     * @Route("/usuario/list", name="usuario_list")
+     */
+    public function list(UsuarioRepository $usuarioRepository): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+
+        return $this->render('usuario/list.html.twig', [
+            'usuarios' => $usuarioRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/usuario/edit/{id}", name="user_edit", methods={"GET", "POST"})
+     */
+    public function edit(Request $request, Usuario $usuario): Response
+    {
+        $roles = [
+          'Vendedor'=>'ROLE_VENDEDOR',
+          'Operador'=>'ROLE_ADMIN',
+          'Administrador'=>'ROLE_SUPER_ADMIN'
+        ];
+        $userRoles = $usuario->getRoles();
+        dump($userRoles);
+        $form = $this->createFormBuilder([])
+            ->add('roles', ChoiceType::class,
+                [
+                    'expanded'=>true,
+                    'multiple'=>true,
+                    'choices' => $roles,
+                    'data' => $userRoles,
+
+                ],
+            )
+            ->add('id', HiddenType::class,
+            [
+                'attr'=>[
+                    'value'=>$usuario->getId()
+                ]
+            ])
+            ->getForm();
+        $form->handleRequest($request);
+        if($form->isSubmitted()){
+            $usuario->setRoles($form['roles']->getData());
+            $this->getDoctrine()->getManager()->flush();
+        }
+        return $this->render('usuario/roles.html.twig', [
+            'form' => $form->createView(),
+            'usuario'=>$usuario
+        ]);
+        //
     }
 }

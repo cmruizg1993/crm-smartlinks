@@ -6,6 +6,7 @@
 parameters:
     upload_directory: '%kernel.project_dir%/uploads'
     excel_templates: '%kernel.project_dir%/src/ExcelTemplates'
+    movs_directory: '%kernel.project_dir%/movimientos'
 services:
     # default configuration for services in *this* file
     _defaults:

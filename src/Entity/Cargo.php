@@ -12,6 +12,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Cargo
 {
+    public const VENDEDOR = 'VN';
+    public const OPERADOR = 'OP';
+    public const INSTALADOR = 'IT';
+    public const VENDEDORINSTALADOR = 'VI';
+    public const CONTADOR = 'CN';
+
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

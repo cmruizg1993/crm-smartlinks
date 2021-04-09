@@ -106,6 +106,11 @@ class Cliente
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $otro;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Colaborador::class, inversedBy="clientes")
+     */
+    private $vendedor;
     public function __toString()
     {
         if($this->dni){
@@ -380,6 +385,18 @@ class Cliente
     public function setOtro(?string $otro): self
     {
         $this->otro = $otro;
+
+        return $this;
+    }
+
+    public function getVendedor(): ?Colaborador
+    {
+        return $this->vendedor;
+    }
+
+    public function setVendedor(?Colaborador $vendedor): self
+    {
+        $this->vendedor = $vendedor;
 
         return $this;
     }

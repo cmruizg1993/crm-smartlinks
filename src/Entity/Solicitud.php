@@ -35,6 +35,11 @@ class Solicitud
      */
     private $planes;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Colaborador::class, inversedBy="solicitudes")
+     */
+    private $vendedor;
+
     public function __construct()
     {
         $this->planes = new ArrayCollection();
@@ -89,6 +94,18 @@ class Solicitud
     public function removePlane(Plan $plane): self
     {
         $this->planes->removeElement($plane);
+
+        return $this;
+    }
+
+    public function getVendedor(): ?Colaborador
+    {
+        return $this->vendedor;
+    }
+
+    public function setVendedor(?Colaborador $vendedor): self
+    {
+        $this->vendedor = $vendedor;
 
         return $this;
     }

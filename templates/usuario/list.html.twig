@@ -3,33 +3,29 @@
 {% block title %}Cliente index{% endblock %}
 
 {% block body %}
-    <h1>Cliente index</h1>
+
 
     <table class="table table-bordered table-responsive">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Nombres</th>
+                <th>Username</th>
                 <th>Email</th>
                 <th>Telefono</th>
-                <th>Estado</th>
+                <th>ROLES</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for cliente in clientes %}
+        {% for u in usuarios %}
             <tr>
-                <td>{{ cliente.id }}</td>
-                <td>{{ cliente.nombres }}</td>
-                <td>{{ cliente.email }}</td>
-                <td>{{ cliente.telefono }}</td>
-                <td>{{ cliente.estado }}</td>
+                <td>{{ u.id }}</td>
+                <td>{{ u.username }}</td>
+                <td>{{ u.email }}</td>
+                <td>{{ u.phone }}</td>
+                <td>{{ u.roles | join('|') }}</td>
                 <td>
-
-                    <a href="{{ path('cliente_show', {'id': cliente.id}) }}">show</a>
-                    {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('cliente_edit', {'id': cliente.id}) }}">edit</a>
-                    {% endif %}
+                    <a href="{{ path('user_edit', {'id': u.id}) }}">ROLES</a>
                 </td>
             </tr>
         {% else %}
