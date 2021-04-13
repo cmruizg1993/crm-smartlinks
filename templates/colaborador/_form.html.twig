@@ -86,6 +86,55 @@
                 {{ form_widget(form.usuario.plainPassword,{'attr':{'class':'form-control'}}) }}
             </div>
         </div>
+
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Ruc</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.ruc,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Razón Social</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.razon,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Factura</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.factura) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">% IVA</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.iva,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Ret. Fuente</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.retFuente,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Ret. Iva</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.retIva,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
         <div class="form-group row justify-content-end">
             <div class="col-4">
                 <button class="btn btn-info btn-block">{{ button_label|default('Guardar') }}</button>
