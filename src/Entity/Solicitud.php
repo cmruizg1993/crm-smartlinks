@@ -20,7 +20,7 @@ class Solicitud
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Cliente::class, inversedBy="solicitudes")
+     * @ORM\ManyToOne(targetEntity=Cliente::class, inversedBy="solicitudes",cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $cliente;
@@ -39,6 +39,13 @@ class Solicitud
      * @ORM\ManyToOne(targetEntity=Colaborador::class, inversedBy="solicitudes")
      */
     private $vendedor;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=FormaPago::class)
+     */
+    private $formaPago;
+
+
 
     public function __construct()
     {
@@ -106,6 +113,18 @@ class Solicitud
     public function setVendedor(?Colaborador $vendedor): self
     {
         $this->vendedor = $vendedor;
+
+        return $this;
+    }
+
+    public function getFormaPago(): ?FormaPago
+    {
+        return $this->formaPago;
+    }
+
+    public function setFormaPago(?FormaPago $formaPago): self
+    {
+        $this->formaPago = $formaPago;
 
         return $this;
     }

@@ -2,27 +2,26 @@
 
 namespace App\Form;
 
-use App\Entity\Plan;
+use App\Entity\Solicitud;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PlanType extends AbstractType
+class SolicitudType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nombre')
-            ->add('servicio')
-            ->add('costo')
-            ->add('activo')
+            ->add('cliente', ClienteType::class)
+            ->add('formaPago')
+            ->add('planes')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Plan::class,
+            'data_class' => Solicitud::class,
         ]);
     }
 }

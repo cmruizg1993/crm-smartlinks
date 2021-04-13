@@ -87,6 +87,36 @@ class Colaborador
      */
     private $solicitudes;
 
+    /**
+     * @ORM\Column(type="string", length=13, nullable=true)
+     */
+    private $ruc;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $razon;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $factura;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $iva;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $retFuente;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $retIva;
+
 
     public function __toString()
     {
@@ -373,6 +403,78 @@ class Colaborador
                 $solicitude->setVendedor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRuc(): ?string
+    {
+        return $this->ruc;
+    }
+
+    public function setRuc(?string $ruc): self
+    {
+        $this->ruc = $ruc;
+
+        return $this;
+    }
+
+    public function getRazon(): ?string
+    {
+        return $this->razon;
+    }
+
+    public function setRazon(?string $razon): self
+    {
+        $this->razon = $razon;
+
+        return $this;
+    }
+
+    public function getFactura(): ?bool
+    {
+        return $this->factura;
+    }
+
+    public function setFactura(?bool $factura): self
+    {
+        $this->factura = $factura;
+
+        return $this;
+    }
+
+    public function getIva(): ?int
+    {
+        return $this->iva;
+    }
+
+    public function setIva(?int $iva): self
+    {
+        $this->iva = $iva;
+
+        return $this;
+    }
+
+    public function getRetFuente(): ?float
+    {
+        return $this->retFuente;
+    }
+
+    public function setRetFuente(?float $retFuente): self
+    {
+        $this->retFuente = $retFuente;
+
+        return $this;
+    }
+
+    public function getRetIva(): ?float
+    {
+        return $this->retIva;
+    }
+
+    public function setRetIva(?float $retIva): self
+    {
+        $this->retIva = $retIva;
 
         return $this;
     }

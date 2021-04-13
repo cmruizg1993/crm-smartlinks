@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New FormaPago{% endblock %}
+
+{% block body %}
+    <h1>Create new FormaPago</h1>
+
+    {{ include('forma_pago/_form.html.twig') }}
+
+    <a href="{{ path('forma_pago_index') }}">back to list</a>
+{% endblock %}

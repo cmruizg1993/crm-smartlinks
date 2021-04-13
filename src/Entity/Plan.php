@@ -45,6 +45,11 @@ class Plan
      */
     private $activo;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $costo;
+
     public function __toString()
     {
         return $this->getNombre();
@@ -150,6 +155,18 @@ class Plan
     public function setActivo(?bool $activo): self
     {
         $this->activo = $activo;
+
+        return $this;
+    }
+
+    public function getCosto(): ?float
+    {
+        return $this->costo;
+    }
+
+    public function setCosto(?float $costo): self
+    {
+        $this->costo = $costo;
 
         return $this;
     }

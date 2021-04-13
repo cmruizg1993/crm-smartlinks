@@ -52,6 +52,7 @@ security:
          - { path: ^/cliente/delete, roles: [ROLE_ADMIN] }
       # PERMISO PARA QUE LOS VENDEDORES CREEN CLIENTES
          - { path: ^/cliente, roles: [ROLE_VENDEDOR] }
+         - { path: ^/solicitud, roles: [ROLE_VENDEDOR] }
       # RESTRICCION GENERAL
          - { path: ^/$, roles: [IS_AUTHENTICATED_FULLY] }
       # RESTRICCION GENERAL

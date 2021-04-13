@@ -6,7 +6,7 @@
 
     <div class="row justify-content-center">
         <div class="col">
-            {{ form_start(form) }}
+            {{ form_start(form,{'attr':{'id':'form_vendedor'}}) }}
             <div class="form-group row justify-content-end">
                 <label for="" class="col-form-label col-4">
                     <span class="float-right">Cédula</span>
@@ -58,7 +58,7 @@
             </div>
             <div class="form-group row justify-content-center">
                 <div class="col-6">
-                    <button class="btn btn-info btn-block">{{ button_label|default('Reistrarme') }}</button>
+                    <button id="btnRegistrar" type="button" class="btn btn-info btn-block">{{ button_label|default('Registrarme') }}</button>
                 </div>
             </div>
             {{ form_end(form) }}
@@ -66,4 +66,62 @@
     </div>
 
 
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+            $("#btnRegistrar").click(function(){
+                var cedula = $("#vendedor_cedula").val();
+                var esValida = validarCedula(cedula);
+                if(!esValida){
+                    alert("CEDULA NO VALIDA")
+                }else {
+                    $("#form_vendedor").submit();
+                }
+            });
+            function validarCedula(cedula){
+                const tam = cedula.length;
+                if(tam!==10){
+                    return false;
+                }
+                if(isNaN(Number(cedula))){
+                    return false;
+                }
+                const codigoProvincia = Number(cedula.substr(0,2));
+                const digitoMenorA6 = Number(cedula.substr(2,1));
+                const secuencia = (cedula.substr(3,1));
+                const digitoVerificador = Number(cedula.substr(9,1));
+                if(codigoProvincia<0 || codigoProvincia > 24){
+                    return false;
+                }
+                if(digitoMenorA6>=6){
+                    return false;
+                }
+                const arrayCoeficientes = [2, 1, 2, 1, 2, 1, 2, 1, 2];
+                const arrayDeDigitos = cedula.split("");
+                let suma = 0;
+
+                arrayDeDigitos.forEach((value, index)=>{
+                    if(index < 9){
+                        const digito = Number(value);
+                        const producto = digito*arrayCoeficientes[index] < 10 ? digito*arrayCoeficientes[index]: digito*arrayCoeficientes[index]-9;
+                        suma += producto;
+                    }
+                });
+                let decenaSuperior;
+                if(suma%10>0){
+                    decenaSuperior = (Math.trunc(suma/10) + 1) * 10;
+                }else{
+                    decenaSuperior = suma;
+                }
+
+                const resultado = decenaSuperior - suma ;
+
+                if(resultado == digitoVerificador){
+                    return true ;
+                }
+                return false;
+            }
+        })
+    </script>
 {% endblock %}

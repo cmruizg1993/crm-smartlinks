@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FormaPago{% endblock %}
+
+{% block body %}
+    <h1>FormaPago</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ forma_pago.id }}</td>
+            </tr>
+            <tr>
+                <th>Codigo</th>
+                <td>{{ forma_pago.codigo }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ forma_pago.nombre }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('forma_pago_index') }}">back to list</a>
+
+    <a href="{{ path('forma_pago_edit', {'id': forma_pago.id}) }}">edit</a>
+
+    {{ include('forma_pago/_delete_form.html.twig') }}
+{% endblock %}

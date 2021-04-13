@@ -128,13 +128,12 @@ class ColaboradorController extends AbstractController
                 $em->persist($colaborador);
                 $em->flush();
             }
-            return $this->redirectToRoute('colaborador_index');
+            return $this->redirectToRoute('app_login');
         }
-        $provincias = $em->getRepository('App:Provincia')->findAll();
+
         return $this->render('colaborador/vendedor.html.twig', [
             'colaborador' => $colaborador,
             'form' => $form->createView(),
-            'provincias'=>$provincias
         ]);
     }
 }

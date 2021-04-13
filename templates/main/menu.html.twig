@@ -32,6 +32,12 @@
                 <span class="menu-title">Clientes</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('solicitud_index') }}">
+                <i class="fa fa-address-book"></i>&emsp;
+                <span class="menu-title">Solicitudes</span>
+            </a>
+        </li>
         {% if is_granted('ROLE_ADMIN') %}
         <li class="nav-item">
             <a class="nav-link" href="{{ path('colaborador_index') }}">

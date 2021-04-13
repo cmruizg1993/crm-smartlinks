@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Solicitud{% endblock %}
+
+{% block body %}
+    <h1>Solicitud</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ solicitud.id }}</td>
+            </tr>
+            <tr>
+                <th>Fecha</th>
+                <td>{{ solicitud.fecha ? solicitud.fecha|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('solicitud_index') }}">back to list</a>
+
+    <a href="{{ path('solicitud_edit', {'id': solicitud.id}) }}">edit</a>
+
+    {{ include('solicitud/_delete_form.html.twig') }}
+{% endblock %}

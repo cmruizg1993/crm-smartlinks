@@ -2,27 +2,25 @@
 
 namespace App\Form;
 
-use App\Entity\Plan;
+use App\Entity\FormaPago;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PlanType extends AbstractType
+class FormaPagoType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('codigo')
             ->add('nombre')
-            ->add('servicio')
-            ->add('costo')
-            ->add('activo')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Plan::class,
+            'data_class' => FormaPago::class,
         ]);
     }
 }

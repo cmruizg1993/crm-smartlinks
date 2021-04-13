@@ -1,0 +1,199 @@
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        {{ form_start(form) }}
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Tipo DNI</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.cliente.dni.tipo,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Dni</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.cliente.dni.numero,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Nombres</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.cliente.nombres,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Fecha Nac.</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.cliente.fechaNacimiento) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Genero</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.cliente.genero,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Estado Civil</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.cliente.estadoCivil,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Huella Dactilar</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.cliente.fingerprint,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Nacionalidad</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.cliente.nacionalidad,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Residencia</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.cliente.residencia,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Dirección</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.cliente.direccion,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Forma de Pago</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.formaPago,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Planes</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.planes,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Email</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.cliente.email,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Teléfono</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.cliente.telefono,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Teléfono Fijo</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.cliente.telefonoFijo,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Fecha de Expedición</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.cliente.dni.fecha_exp,{'attr':{'class':''}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Foto Frontal</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.cliente.dni.foto_frontal,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Foto Posterior</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.cliente.dni.foto_posterior,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Otro</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.cliente.otro,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+
+
+
+        <div class="form-group row justify-content-end">
+            <div class="col-4">
+                <button class="btn btn-info btn-block">{{ button_label|default('Guardar') }}</button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+
+    </div>
+</div>
+<script>
+    $("#solicitud_cliente_dni_numero").change(function (){
+        var dni  = $(this).val();
+        var uri = '{{ path('buscar_cliente') }}';
+        $.ajax({
+            url:uri,
+            type:'POST',
+            data: {dni: dni},
+            success: function (data){
+                var info = data[0];
+                if (!info.error){
+                    console.log(info);
+                    $("#solicitud_cliente_nombres").val(info.name);
+                    $("#solicitud_cliente_genero").val(info.genre);
+                    $("#solicitud_cliente_residencia").val(info.residence);
+                    $("#solicitud_cliente_nacionalidad").val(info.nationality);
+                    $("#solicitud_cliente_direccion").val(info.streets);
+                    $("#solicitud_cliente_fingerprint").val(info.fingerprint);
+                    $("#solicitud_cliente_estadoCivil").val(info.civilstate);
+                    var fechan = info.dob.split('/');
+                    console.log(fechan)
+                    $("#solicitud_cliente_fechaNacimiento_year").val(fechan[2]);
+                    $("#solicitud_cliente_fechaNacimiento_month").val(""+Number(fechan[1]));
+                    $("#solicitud_cliente_fechaNacimiento_day").val(""+Number(fechan[0]));
+                }else{
+                    alert("DOCUMENTO NO VALIDO")
+                }
+            }
+        })
+    });
+</script>
