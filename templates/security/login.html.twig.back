@@ -1,0 +1,84 @@
+{% extends 'base_auth.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+{% block stylesheets %}
+    <style>
+        .logo-container{
+            max-width: 100%;
+            box-sizing: border-box;
+            padding: 5%;
+
+        }
+        .logo-container img{
+            max-width: 100%;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    {#
+        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+        See https://symfony.com/doc/current/security/remember_me.html
+
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" name="_remember_me"> Remember me
+            </label>
+        </div>
+    #}
+
+
+    <form method="post">
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        {% if app.user %}
+            <div class="mb-3">
+                You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+            </div>
+        {% endif %}
+        <div class="logo-container">
+            <img src="{{ asset('assets/images/makrocel.svg') }}" alt="">
+        </div>
+        <div class="form-group">
+            <label class="label">Email</label>
+            <div class="input-group">
+                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
+                <div class="input-group-append">
+                                        <span class="input-group-text">
+                                          <i class="mdi mdi-check-circle-outline"></i>
+                                        </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="label">Password</label>
+            <div class="input-group">
+                <input type="password" name="password" id="inputPassword" class="form-control" required placeholder="**********">
+                <div class="input-group-append">
+                                        <span class="input-group-text">
+                                          <i class="mdi mdi-check-circle-outline"></i>
+                                        </span>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="_csrf_token"
+               value="{{ csrf_token('authenticate') }}"
+        >
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary submit-btn btn-block">Login</button>
+        </div>
+        <!--div class="form-group d-flex justify-content-between">
+
+            <a href="#" class="text-small forgot-password text-black">Forgot Password</a>
+        </div-->
+        <!--div class="form-group">
+            <button class="btn btn-block g-login">
+                <img class="mr-3" src="../../../assets/images/file-icons/icon-google.svg" alt="">Log in with Google</button>
+        </div-->
+        <div class="text-block text-center my-3">
+            <!--span class="text-small font-weight-semibold">Not a member ?</span-->
+            <a href="{{ path('vendedor_new') }}" class="text-black text-small">Registrarme como Vendedor</a>
+        </div>
+    </form>
+{% endblock %}

@@ -144,6 +144,9 @@
             "./config/packages/nyholm_psr7.yaml"
         ]
     },
+    "php": {
+        "version": "7.3"
+    },
     "php-http/httplug": {
         "version": "2.2.0"
     },
