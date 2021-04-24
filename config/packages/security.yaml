@@ -7,7 +7,7 @@ security:
             algorithm: auto
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
-    #enable_authenticator_manager: true
+    enable_authenticator_manager: true
 
     providers:
         # used to reload user from session & other features (e.g. switch_user)
@@ -39,8 +39,8 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
       # LIBRE ACCESO PARA EL LOGIN Y REGISTRO DE VENDEDORES
-         - { path: ^/login, roles: IS_ANONYMOUS }
-         - { path: ^/colaborador/registro/vendedor, roles: IS_ANONYMOUS }
+         - { path: ^/login, roles: PUBLIC_ACCESS }
+         - { path: ^/colaborador/registro/vendedor, roles: PUBLIC_ACCESS }
       # RESTRICCION PARA EL LISTADO Y EDICION DE USUARIOS , SOLO LOS ADMINISTRADORES PODRAN ACCEDER
          - { path: ^/usuario/list, roles: [ROLE_SUPER_ADMIN] }
          - { path: ^/usuario/edit, roles: [ROLE_SUPER_ADMIN] }
