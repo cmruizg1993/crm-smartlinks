@@ -31,7 +31,9 @@
         {% if error %}
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
-
+        {% for flash in app.flashes('registration_success') %}
+            <div class="alert alert-success" role="alert">{{ flash }}</div>
+        {% endfor %}
         {% if app.user %}
             <div class="mb-3">
                 You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
@@ -78,7 +80,7 @@
         </div-->
         <div class="text-block text-center my-3">
             <!--span class="text-small font-weight-semibold">Not a member ?</span-->
-            <a href="{{ path('vendedor_new') }}" class="text-black text-small">Registrarme como Vendedor</a>
+            <a href="{{ path('app_register') }}" class="text-black text-small">Registrarme como Vendedor</a>
         </div>
     </form>
 {% endblock %}

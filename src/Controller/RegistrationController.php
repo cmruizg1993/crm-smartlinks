@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Usuario;
 use App\Form\RegistrationFormType;
+use App\Form\RegistrationVendedorFormType;
 use App\Security\EmailVerifier;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;
@@ -29,7 +31,7 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $user = new Usuario();
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form = $this->createForm(RegistrationVendedorFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -42,24 +44,29 @@ class RegistrationController extends AbstractController
             );
 
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                (new TemplatedEmail())
-                    ->from(new Address('operaciones@makrocel.com', 'SOPORTE MAKROCEL'))
-                    ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
-            );
-            // do anything else you need here, like send an email
-
-            return $this->redirectToRoute('app_login');
+            $cargo = $entityManager->getRepository('App:Cargo')->findOneByCodigo('VN');
+            $colaborador = $user->getColaborador();
+            if($cargo){
+                $colaborador->setCargo($cargo);
+                $entityManager->persist($user);
+                $entityManager->flush();
+                // generate a signed url and email it to the user
+                $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+                    (new TemplatedEmail())
+                        ->from(new Address('crm@makrocel.com', 'SOPORTE MAKROCEL'))
+                        ->to($user->getEmail())
+                        ->subject('Please Confirm your Email')
+                        ->htmlTemplate('registration/confirmation_email.html.twig')
+                );
+                // do anything else you need here, like send an email
+                $this->addFlash('registration_success','Registration succesfully. Please verify your email');
+                return $this->redirectToRoute('app_login');
+            }
+            $form->addError(new FormError('Please contact with support. 0988116697'));
         }
 
-        return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
+        return $this->render('registration/registerVendedor.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit CuentaBancaria{% endblock %}
+
+{% block body %}
+    <h1>Edit CuentaBancaria</h1>
+
+    {{ include('cuenta_bancaria/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('cuenta_bancaria_index') }}">back to list</a>
+
+    {{ include('cuenta_bancaria/_delete_form.html.twig') }}
+{% endblock %}

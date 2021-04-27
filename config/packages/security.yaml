@@ -46,20 +46,22 @@ security:
     access_control:
       # LIBRE ACCESO PARA EL LOGIN Y REGISTRO DE VENDEDORES
          - { path: ^/login, roles: PUBLIC_ACCESS }
-         - { path: ^/colaborador/registro/vendedor, roles: PUBLIC_ACCESS }
+         - { path: ^/register, roles: PUBLIC_ACCESS }
+         - { path: ^/verify/email, roles: PUBLIC_ACCESS }
+         #- { path: ^/colaborador/registro/vendedor, roles: PUBLIC_ACCESS }
       # RESTRICCION PARA EL LISTADO Y EDICION DE USUARIOS , SOLO LOS ADMINISTRADORES PODRAN ACCEDER
-      #   - { path: ^/usuario/list, roles: [ROLE_SUPER_ADMIN] }
-      #   - { path: ^/usuario/edit, roles: [ROLE_SUPER_ADMIN] }
+         - { path: ^/usuario/list, roles: [ROLE_SUPER_ADMIN] }
+         - { path: ^/usuario/edit, roles: [ROLE_SUPER_ADMIN] }
       # ACCESO A CUALQUIERA QUE SE HAYA AUTENTICADO PARA SU PROPIO PERFIL Y PARA CERRAR SESION
-      #   - { path: ^/usuario, roles: [IS_AUTHENTICATED_FULLY] }
-      #   - { path: ^/logout, roles: [IS_AUTHENTICATED_FULLY] }
+         - { path: ^/usuario, roles: [IS_AUTHENTICATED_FULLY] }
+         - { path: ^/logout, roles: [IS_AUTHENTICATED_FULLY] }
       # RESTRICCION PARA EDICION Y BORRADO DE CLIENTES
-      #   - { path: ^/cliente/edit, roles: [ROLE_ADMIN] }
-      #   - { path: ^/cliente/delete, roles: [ROLE_ADMIN] }
+         - { path: ^/cliente/edit, roles: [ROLE_ADMIN] }
+         - { path: ^/cliente/delete, roles: [ROLE_ADMIN] }
       # PERMISO PARA QUE LOS VENDEDORES CREEN CLIENTES
-      #   - { path: ^/cliente, roles: [ROLE_VENDEDOR] }
-      #   - { path: ^/solicitud, roles: [ROLE_VENDEDOR] }
+         - { path: ^/cliente, roles: [ROLE_VENDEDOR] }
+         - { path: ^/solicitud, roles: [ROLE_VENDEDOR] }
       # RESTRICCION GENERAL
-      #   - { path: ^/$, roles: [IS_AUTHENTICATED_FULLY] }
+         - { path: ^/$, roles: [IS_AUTHENTICATED_FULLY] }
       # RESTRICCION GENERAL
-      #   - { path: ^/, roles: [ROLE_ADMIN] }
+         - { path: ^/, roles: [ROLE_ADMIN] }

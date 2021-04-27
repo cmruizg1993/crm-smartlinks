@@ -6,6 +6,8 @@ use App\Repository\ClienteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @ORM\Entity(repositoryClass=ClienteRepository::class)
@@ -399,5 +401,68 @@ class Cliente
         $this->vendedor = $vendedor;
 
         return $this;
+    }
+    /**
+     * @Assert\Callback
+     */
+    public function validate(ExecutionContextInterface $context, $payload){
+        $cedula = $this->getDni()->getNumero();
+        $isvalid = $this->validarCedula($cedula);
+        if(!$isvalid){
+            $context->buildViolation('CI is not valid!')
+                ->atPath('cedula')
+                ->addViolation();
+        }
+        $nombres = $this->nombres;
+        if(!trim($nombres)){
+            $context->buildViolation('Please, enter your names')
+                ->atPath('nombres')
+                ->addViolation();
+        }
+    }
+    private function validarCedula($cedula){
+        $tam = strlen($cedula);
+        if($tam!=10){
+            return false;
+        }
+        if(is_integer($cedula)){
+            return false;
+        }
+
+        $codigoProvincia = substr($cedula,0,2);
+        $digitoMenorA6 = substr($cedula,2,1);
+        $secuencia = substr($cedula,3,1);
+        $digitoVerificador = substr($cedula,9,1);
+        if($codigoProvincia<0 || $codigoProvincia > 24){
+            return false;
+        }
+        if($digitoMenorA6>=6){
+            return false;
+        }
+        $arrayCoeficientes = [2, 1, 2, 1, 2, 1, 2, 1, 2];
+        $arrayDeDigitos = str_split($cedula,1);
+        $suma = 0;
+        foreach($arrayCoeficientes as $index=>$value){
+            if($index < 9){
+                $digito = ($value);
+                $producto = $digito*$arrayCoeficientes[$index] < 10 ? $digito*$arrayCoeficientes[$index]: $digito*$arrayCoeficientes[$index]-9;
+                $suma += $producto;
+            }
+        }
+
+
+        $decenaSuperior=null;
+        if($suma%10>0){
+            $decenaSuperior = (intval(($suma/10)) + 1) * 10;
+        }else{
+            $decenaSuperior = suma;
+        }
+
+        $resultado = $decenaSuperior - $suma ;
+
+        if($resultado == $digitoVerificador){
+            return true ;
+        }
+        return false;
     }
 }

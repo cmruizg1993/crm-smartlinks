@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\FormaPago;
 use App\Entity\Solicitud;
 use App\Entity\Usuario;
 use App\Form\SolicitudType;
+use App\Repository\FormaPagoRepository;
 use App\Repository\SolicitudRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,11 +38,18 @@ class SolicitudController extends AbstractController
     /**
      * @Route("/new", name="solicitud_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, FormaPagoRepository $formaPagoRepository): Response
     {
         $solicitud = new Solicitud();
+        $fpago = $solicitud->getFormaPago();
+        if(!$fpago){
+            $fpago = $formaPagoRepository->findOneByCodigo('EF');
+            $solicitud->setFormaPago($fpago);
+            $solicitud->setCuentaBancaria(null);
+        }
         $form = $this->createForm(SolicitudType::class, $solicitud);
         $form->handleRequest($request);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             /* @var $user Usuario */

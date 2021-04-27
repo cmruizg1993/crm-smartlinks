@@ -1,0 +1,151 @@
+{% extends 'base_auth.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    {% for flashError in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+    {% endfor %}
+    {#
+    {% for err in form.errors %}
+        <div class="alert alert-danger" role="alert">{{ err }}</div>
+    {% endfor %}
+    #}
+    {% set formErrors = form.vars.errors.form.getErrors(true) %}
+
+    {# If there are errors in the form, display them in this unorganized list #}
+    {% if formErrors|length %}
+        <div class="alert alert-danger" role="alert">
+        <ul>
+            {% for error in formErrors %}
+                <li><small>{{ error.message }}</small></li>
+            {% endfor %}
+        </ul>
+        </div>
+    {% endif %}
+
+    <div class="row justify-content-center">
+        <div class="col">
+            {{ form_start(form,{'attr':{'id':'form_vendedor','novalidate':'novalidate'}}) }}
+            <div class="form-group row justify-content-end">
+                <label for="" class="col-form-label col-4">
+                    <span class="float-right">Cédula</span>
+                </label>
+                <div class="col-8">
+                    {{ form_widget(form.colaborador.cedula,{'attr':{'class':'form-control'}}) }}
+                </div>
+            </div>
+            <div class="form-group row justify-content-end">
+                <label for="" class="col-form-label col-4">
+                    <span class="float-right">Nombres</span>
+                </label>
+                <div class="col-8">
+                    {{ form_widget(form.colaborador.nombres,{'attr':{'class':'form-control'}}) }}
+                </div>
+            </div>
+            <div class="form-group row justify-content-end">
+                <label for="" class="col-form-label col-4">
+                    <span class="float-right">Dirección</span>
+                </label>
+                <div class="col-8">
+                    {{ form_widget(form.colaborador.direccion,{'attr':{'class':'form-control'}}) }}
+                </div>
+            </div>
+
+            <div class="form-group row justify-content-end">
+                <label for="" class="col-form-label col-4">
+                    <span class="float-right">Telefono</span>
+                </label>
+                <div class="col-8">
+                    {{ form_widget(form.phone,{'attr':{'class':'form-control', 'placeholder':'593984666777'}}) }}
+                </div>
+            </div>
+            <div class="form-group row justify-content-end">
+                <label for="" class="col-form-label col-4">
+                    <span class="float-right">Email</span>
+                </label>
+                <div class="col-8">
+                    {{ form_widget(form.email,{'attr':{'class':'form-control'}}) }}
+                </div>
+            </div>
+            <div class="form-group row justify-content-end">
+                <label for="" class="col-form-label col-4">
+                    <span class="float-right">Contraseña</span>
+                </label>
+                <div class="col-8">
+                    {{ form_widget(form.plainPassword,{'attr':{'class':'form-control'}}) }}
+                </div>
+            </div>
+            <div class="form-group row justify-content-center">
+                <div class="col-6">
+                    <button id="btnRegistrar" type="submit" class="btn btn-info btn-block">{{ button_label|default('Registrarme') }}</button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+            <div class="text-block text-center my-3">
+                <!--span class="text-small font-weight-semibold">Not a member ?</span-->
+                <a href="{{ path('app_login') }}" class="text-black text-small">Iniciar Sesión</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{#% block javascripts %}
+    <script>
+        $(document).ready(function () {
+            $("#btnRegistrar").click(function(){
+                var cedula = $("#registration_vendedor_form_colaborador_cedula").val();
+                var esValida = validarCedula(cedula);
+                if(!esValida){
+                    alert("CEDULA NO VALIDA")
+                }else {
+                    $("#form_vendedor").submit();
+                }
+            });
+            function validarCedula(cedula){
+                const tam = cedula.length;
+                if(tam!==10){
+                    return false;
+                }
+                if(isNaN(Number(cedula))){
+                    return false;
+                }
+                const codigoProvincia = Number(cedula.substr(0,2));
+                const digitoMenorA6 = Number(cedula.substr(2,1));
+                const secuencia = (cedula.substr(3,1));
+                const digitoVerificador = Number(cedula.substr(9,1));
+                if(codigoProvincia<0 || codigoProvincia > 24){
+                    return false;
+                }
+                if(digitoMenorA6>=6){
+                    return false;
+                }
+                const arrayCoeficientes = [2, 1, 2, 1, 2, 1, 2, 1, 2];
+                const arrayDeDigitos = cedula.split("");
+                let suma = 0;
+
+                arrayDeDigitos.forEach((value, index)=>{
+                    if(index < 9){
+                        const digito = Number(value);
+                        const producto = digito*arrayCoeficientes[index] < 10 ? digito*arrayCoeficientes[index]: digito*arrayCoeficientes[index]-9;
+                        suma += producto;
+                    }
+                });
+                let decenaSuperior;
+                if(suma%10>0){
+                    decenaSuperior = (Math.trunc(suma/10) + 1) * 10;
+                }else{
+                    decenaSuperior = suma;
+                }
+
+                const resultado = decenaSuperior - suma ;
+
+                if(resultado == digitoVerificador){
+                    return true ;
+                }
+                return false;
+            }
+        })
+    </script>
+{% endblock %#}

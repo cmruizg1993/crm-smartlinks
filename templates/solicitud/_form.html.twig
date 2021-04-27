@@ -1,6 +1,6 @@
 <div class="row justify-content-center">
     <div class="col-md-8">
-        {{ form_start(form) }}
+        {{ form_start(form,{'attr':{'novalidate':'novalidate','id':'solicitud_form'}}) }}
         <div class="form-group row justify-content-end">
             <label for="" class="col-form-label col-4">
                 <span class="float-right">Tipo DNI</span>
@@ -89,7 +89,20 @@
                 {{ form_widget(form.formaPago,{'attr':{'class':'form-control'}}) }}
             </div>
         </div>
-
+        {% set display_cb = 'none' %}
+        {% if solicitud.formaPago %}
+            {% if  solicitud.formaPago.codigo == 'CB' %}
+                {% set display_cb = 'block' %}
+            {% endif %}
+        {% endif %}
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4 d-{{ display_cb }}">
+                <span class="float-right">Cuenta Bancaria</span>
+            </label>
+            <div class="col-8 d-{{ display_cb }}">
+                {{ form_widget(form.cuentaBancaria,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
         <div class="form-group row justify-content-end">
             <label for="" class="col-form-label col-4">
                 <span class="float-right">Planes</span>
@@ -177,7 +190,6 @@
             success: function (data){
                 var info = data[0];
                 if (!info.error){
-                    console.log(info);
                     $("#solicitud_cliente_nombres").val(info.name);
                     $("#solicitud_cliente_genero").val(info.genre);
                     $("#solicitud_cliente_residencia").val(info.residence);
@@ -186,7 +198,6 @@
                     $("#solicitud_cliente_fingerprint").val(info.fingerprint);
                     $("#solicitud_cliente_estadoCivil").val(info.civilstate);
                     var fechan = info.dob.split('/');
-                    console.log(fechan)
                     $("#solicitud_cliente_fechaNacimiento_year").val(fechan[2]);
                     $("#solicitud_cliente_fechaNacimiento_month").val(""+Number(fechan[1]));
                     $("#solicitud_cliente_fechaNacimiento_day").val(""+Number(fechan[0]));
@@ -196,4 +207,7 @@
             }
         })
     });
+    $("#solicitud_formaPago").change(function () {
+        $('#solicitud_form').submit();
+    })
 </script>

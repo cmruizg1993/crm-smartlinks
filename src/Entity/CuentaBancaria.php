@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CuentaBancariaRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -43,6 +45,21 @@ class CuentaBancaria
      */
     private $beneficiario;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $esCuentaEmpresarial=false;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Solicitud::class, mappedBy="cuentaBancaria")
+     */
+    private $solicitudes;
+
+    public function __construct()
+    {
+        $this->solicitudes = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -58,6 +75,11 @@ class CuentaBancaria
         $this->banco = $banco;
 
         return $this;
+    }
+    public function __toString()
+    {
+        // TODO: Implement __toString() method.
+        return $this->numero.'-'.$this->getBanco()->getNombre();
     }
 
     public function getNumero(): ?string
@@ -104,6 +126,48 @@ class CuentaBancaria
     public function setBeneficiario(string $beneficiario): self
     {
         $this->beneficiario = $beneficiario;
+
+        return $this;
+    }
+
+    public function getEsCuentaEmpresarial(): ?bool
+    {
+        return $this->esCuentaEmpresarial;
+    }
+
+    public function setEsCuentaEmpresarial(?bool $esCuentaEmpresarial): self
+    {
+        $this->esCuentaEmpresarial = $esCuentaEmpresarial;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Solicitud[]
+     */
+    public function getSolicitudes(): Collection
+    {
+        return $this->solicitudes;
+    }
+
+    public function addSolicitude(Solicitud $solicitude): self
+    {
+        if (!$this->solicitudes->contains($solicitude)) {
+            $this->solicitudes[] = $solicitude;
+            $solicitude->setCuentaBancaria($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSolicitude(Solicitud $solicitude): self
+    {
+        if ($this->solicitudes->removeElement($solicitude)) {
+            // set the owning side to null (unless already changed)
+            if ($solicitude->getCuentaBancaria() === $this) {
+                $solicitude->setCuentaBancaria(null);
+            }
+        }
 
         return $this;
     }

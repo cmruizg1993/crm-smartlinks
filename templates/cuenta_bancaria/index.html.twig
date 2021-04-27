@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CuentaBancaria index{% endblock %}
+
+{% block body %}
+    <h1>CuentaBancaria index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Numero</th>
+                <th>TipoCuenta</th>
+                <th>Cedula</th>
+                <th>Beneficiario</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cuenta_bancarium in cuenta_bancarias %}
+            <tr>
+                <td>{{ cuenta_bancarium.id }}</td>
+                <td>{{ cuenta_bancarium.numero }}</td>
+                <td>{{ cuenta_bancarium.tipoCuenta }}</td>
+                <td>{{ cuenta_bancarium.cedula }}</td>
+                <td>{{ cuenta_bancarium.beneficiario }}</td>
+                <td>
+                    <a href="{{ path('cuenta_bancaria_show', {'id': cuenta_bancarium.id}) }}">show</a>
+                    <a href="{{ path('cuenta_bancaria_edit', {'id': cuenta_bancarium.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('cuenta_bancaria_new') }}">Create new</a>
+{% endblock %}

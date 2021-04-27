@@ -11,14 +11,25 @@ use App\Service\WhatsappApi;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 
 /**
  * @Route("/colaborador")
  */
 class ColaboradorController extends AbstractController
 {
+    private $verifyEmailHelper;
+    private $mailer;
+
+    public function __construct(VerifyEmailHelperInterface $helper, MailerInterface $mailer)
+    {
+        $this->verifyEmailHelper = $helper;
+        $this->mailer = $mailer;
+    }
+
     /**
      * @Route("/", name="colaborador_index", methods={"GET"})
      */

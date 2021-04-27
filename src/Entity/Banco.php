@@ -33,6 +33,11 @@ class Banco
      * @ORM\OneToMany(targetEntity=CuentaBancaria::class, mappedBy="banco")
      */
     private $cuentas;
+    public function __toString()
+    {
+        // TODO: Implement __toString() method.
+        return $this->getNombre();
+    }
 
     public function __construct()
     {

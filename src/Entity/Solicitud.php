@@ -45,6 +45,11 @@ class Solicitud
      */
     private $formaPago;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=CuentaBancaria::class, inversedBy="solicitudes")
+     */
+    private $cuentaBancaria;
+
 
 
     public function __construct()
@@ -125,6 +130,18 @@ class Solicitud
     public function setFormaPago(?FormaPago $formaPago): self
     {
         $this->formaPago = $formaPago;
+
+        return $this;
+    }
+
+    public function getCuentaBancaria(): ?CuentaBancaria
+    {
+        return $this->cuentaBancaria;
+    }
+
+    public function setCuentaBancaria(?CuentaBancaria $cuentaBancaria): self
+    {
+        $this->cuentaBancaria = $cuentaBancaria;
 
         return $this;
     }
