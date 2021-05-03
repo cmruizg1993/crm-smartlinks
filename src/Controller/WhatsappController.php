@@ -10,6 +10,7 @@ use App\Entity\Usuario;
 use App\Service\WhatsappApi;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,6 +30,9 @@ class WhatsappController extends AbstractController
         $this->wtp = $wtp;
 
         $obj = $request->request->all();
+        $json = json_encode($obj);
+        return new JsonResponse($obj);
+        /*
         $event = $obj['event'];
         $contact = $obj['contact'];
         $message = $obj['message'];
@@ -70,6 +74,7 @@ class WhatsappController extends AbstractController
         }
 
         return new Response('OK');
+        */
     }
 
     /**
