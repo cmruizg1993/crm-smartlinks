@@ -23,7 +23,7 @@ class WhatsappController extends AbstractController
     private $wtp;
 
     /**
-     * @Route("/whatsapp/receive", name="whatsapp")
+     * @Route("/whatsapp/receive", name="whatsapp_receive")
      */
     public function receive(Request $request, LoggerInterface $logger, WhatsappApi $wtp): Response
     {
@@ -79,7 +79,7 @@ class WhatsappController extends AbstractController
     }
 
     /**
-     * @Route("/whatsapp/send", name="whatsapp", methods = {"POST"})
+     * @Route("/whatsapp/send", name="whatsapp_send", methods = {"POST"})
      */
     public function send(Request $request, LoggerInterface $logger, WhatsappApi $wtp): Response
     {
