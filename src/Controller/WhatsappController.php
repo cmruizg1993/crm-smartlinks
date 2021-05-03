@@ -85,8 +85,7 @@ class WhatsappController extends AbstractController
 
         $response = $wtp->send(urlencode($message),$to,$cuid);
         $logger->debug($response->getContent());
-        return $response;
-        //return new Response('OK');
+        return new Response($response->getContent());
     }
     private function enviarMenu($to, $cuid, ContactWtp $contact){
         $em = $this->getDoctrine()->getManager();
