@@ -20,10 +20,11 @@ class WhatsappController extends AbstractController
      * @var $wtp WhatsappApi
      */
     private $wtp;
+
     /**
-     * @Route("/whatsapp", name="whatsapp")
+     * @Route("/whatsapp/receive", name="whatsapp")
      */
-    public function index(Request $request, LoggerInterface $logger, WhatsappApi $wtp): Response
+    public function receive(Request $request, LoggerInterface $logger, WhatsappApi $wtp): Response
     {
         $this->wtp = $wtp;
 
@@ -40,6 +41,7 @@ class WhatsappController extends AbstractController
         if ($event == 'message'){
 
             if($message['dir']=='i'){
+
                 $contactwtp = $em->getRepository('App:ContactWtp')->findOneByUid($contact['uid']);
                 if(!$contactwtp){
                     $contactwtp = new ContactWtp();
@@ -52,60 +54,6 @@ class WhatsappController extends AbstractController
                 //$msj = json_decode($message['body']);
                 $mensajewtp = new MensajeWtp();
                 $mensajewtp->setBody($message['body']['text']);
-                /* @var $usuario Usuario*/
-                $usuario = $em->getRepository('App:Usuario')->findOneByPhone($contactwtp->getUid());
-
-                if($usuario){
-                    $text = $message['body']['text'];
-
-                    $name = $usuario->getUsername();
-
-                    $logger->info("El usuario $name ha enviado un mensaje");
-                    if($message['body']['text'] == 'start'){
-                        $logger->info("Se ha enviado el menú de opciones");
-                        $this->enviarMenu($contactwtp->getUid(), 'xxxx', $contactwtp);
-                    }else{
-                        /* @var $last MensajeWtpOut */
-                        $last = $em->getRepository('App:MensajeWtpOut')
-                            ->findOneBy(['contact'=>$contactwtp],['id'=>'DESC']);
-
-
-                        if($last){
-                            $text_last = $last->getMensaje()->getTexto();
-                            $logger->info("Ultimo mensaje de tipo: ".$last->getMensaje()->getTipo());
-                            $tipo = $last->getMensaje()->getTipo();
-                            /* @var $hijo Mensaje */
-                            if($tipo == Mensaje::SELECT){
-                                $hijos = $last->getMensaje()->getHijos();
-                                $is_match = false;
-                                foreach ($hijos as $hijo){
-                                    if($hijo->getCodigo()==$text){
-                                        $this->enviarRespuesta(
-                                            $contactwtp->getUid(),
-                                            'xxxx',
-                                            $contactwtp,
-                                            $hijo
-                                        );
-                                        $is_match = true;
-                                        break;
-                                    }
-                                }
-                                if (!$is_match){
-                                    $errormsj = $em->getRepository('App:Mensaje')->findOneByCodigo('error');
-                                    $this->enviarRespuesta(
-                                        $contactwtp->getUid(),
-                                        'xxxx',
-                                        $contactwtp,
-                                        $errormsj
-                                    );
-                                }
-                            }
-                        }else{
-                            $logger->info("primer mensaje de $name, opcion no valida. Debe enviar el comando start");
-                        }
-                    }
-                }
-
                 $mensajewtp->setContact($contactwtp);
                 $mensajewtp->setUid($message['uid']);
                 $mensajewtp->setType($message['type']);
@@ -116,16 +64,29 @@ class WhatsappController extends AbstractController
                 $mensajewtp->setMimetype($message['mimetype']);
                 $mensajewtp->setUrl($message['clientUrl']);
 
-                $em->persist($mensajewtp);
-                $em->flush();
+                //$em->persist($mensajewtp);
+                //$em->flush();
             }
         }
 
-        return $this->render('whatsapp/index.html.twig', [
-            'controller_name' => 'WhatsappController',
-        ]);
+        return new Response('OK');
     }
 
+    /**
+     * @Route("/whatsapp/send", name="whatsapp", methods = {"POST"})
+     */
+    public function send(Request $request, LoggerInterface $logger, WhatsappApi $wtp): Response
+    {
+        $to = $request->request->get('to');
+        $message = $request->request->get('message');
+        $logger->debug($to);
+        $logger->debug($message);
+        $cuid = uniqid();
+
+        $response = $wtp->send(urlencode($message),$to,$cuid);
+        $logger->debug($response->getContent());
+        return new Response('OK');
+    }
     private function enviarMenu($to, $cuid, ContactWtp $contact){
         $em = $this->getDoctrine()->getManager();
         /* @var $mensaje Mensaje */
@@ -151,3 +112,59 @@ class WhatsappController extends AbstractController
         $em->flush();
     }
 }
+
+
+/*
+$usuario = $em->getRepository('App:Usuario')->findOneByPhone($contactwtp->getUid());
+
+if($usuario){
+    $text = $message['body']['text'];
+
+    $name = $usuario->getUsername();
+
+    $logger->info("El usuario $name ha enviado un mensaje");
+    if($message['body']['text'] == 'start'){
+        $logger->info("Se ha enviado el menú de opciones");
+        $this->enviarMenu($contactwtp->getUid(), 'xxxx', $contactwtp);
+    }else{
+
+        $last = $em->getRepository('App:MensajeWtpOut')
+            ->findOneBy(['contact'=>$contactwtp],['id'=>'DESC']);
+
+
+        if($last){
+            $text_last = $last->getMensaje()->getTexto();
+            $logger->info("Ultimo mensaje de tipo: ".$last->getMensaje()->getTipo());
+            $tipo = $last->getMensaje()->getTipo();
+
+            if($tipo == Mensaje::SELECT){
+                $hijos = $last->getMensaje()->getHijos();
+                $is_match = false;
+                foreach ($hijos as $hijo){
+                    if($hijo->getCodigo()==$text){
+                        $this->enviarRespuesta(
+                            $contactwtp->getUid(),
+                            'xxxx',
+                            $contactwtp,
+                            $hijo
+                        );
+                        $is_match = true;
+                        break;
+                    }
+                }
+                if (!$is_match){
+                    $errormsj = $em->getRepository('App:Mensaje')->findOneByCodigo('error');
+                    $this->enviarRespuesta(
+                        $contactwtp->getUid(),
+                        'xxxx',
+                        $contactwtp,
+                        $errormsj
+                    );
+                }
+            }
+        }else{
+            $logger->info("primer mensaje de $name, opcion no valida. Debe enviar el comando start");
+        }
+    }
+}
+*/

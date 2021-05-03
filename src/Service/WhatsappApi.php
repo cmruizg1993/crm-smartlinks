@@ -21,8 +21,9 @@ class WhatsappApi
 
     private $client;
 
-    private const token = "ZfSrMJelV1jrgRZ8k59igHkyfUtH8eCtJu69ry68&uid=593994666777";
-
+    //private const token = "ZfSrMJelV1jrgRZ8k59igHkyfUtH8eCtJu69ry68&uid=593994666777";
+    //token tuenti cristian
+    private const token = "HXaL27lflge0P3gSOoTiCJJ1y56r31mWmRQfAb8y&uid=593963756187";
     public function __construct(HttpClientInterface $client)
     {
         $this->client = $client;
@@ -30,22 +31,10 @@ class WhatsappApi
     public function send($message, $to, $cuid){
         $token = self::token;
         $url = "https://wis.chat/w/api/send/chat/?token=$token&to=$to&custom_uid=$cuid&text=$message";
-        $response = $this->client->request(
+        return $this->client->request(
             'GET',
             $url
         );
-
-        /*
-        $statusCode = $response->getStatusCode();
-        // $statusCode = 200
-        $contentType = $response->getHeaders()['content-type'][0];
-        // $contentType = 'application/json'
-        $content = $response->getContent();
-        // $content = '{"id":521583, "name":"symfony-docs", ...}'
-        $content = $response->toArray();
-        // $content = ['id' => 521583, 'name' => 'symfony-docs', ...]
-        */
-        return $response;
     }
 
 

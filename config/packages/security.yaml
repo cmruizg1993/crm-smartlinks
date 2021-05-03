@@ -48,6 +48,7 @@ security:
          - { path: ^/login, roles: PUBLIC_ACCESS }
          - { path: ^/register, roles: PUBLIC_ACCESS }
          - { path: ^/verify/email, roles: PUBLIC_ACCESS }
+         - { path: ^/whatsapp, roles: PUBLIC_ACCESS }
          #- { path: ^/colaborador/registro/vendedor, roles: PUBLIC_ACCESS }
       # RESTRICCION PARA EL LISTADO Y EDICION DE USUARIOS , SOLO LOS ADMINISTRADORES PODRAN ACCEDER
          - { path: ^/usuario/list, roles: [ROLE_SUPER_ADMIN] }
