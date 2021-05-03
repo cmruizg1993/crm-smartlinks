@@ -31,7 +31,8 @@ class WhatsappController extends AbstractController
 
         $obj = $request->request->all();
         $json = json_encode($obj);
-        return new JsonResponse($obj);
+        $logger->debug($json);
+        return new JsonResponse();
         /*
         $event = $obj['event'];
         $contact = $obj['contact'];
