@@ -527,7 +527,7 @@ class Colaborador
         $arrayCoeficientes = [2, 1, 2, 1, 2, 1, 2, 1, 2];
         $arrayDeDigitos = str_split($cedula,1);
         $suma = 0;
-        foreach($arrayCoeficientes as $index=>$value){
+        foreach($arrayDeDigitos as $index=>$value){
             if($index < 9){
                 $digito = ($value);
                 $producto = $digito*$arrayCoeficientes[$index] < 10 ? $digito*$arrayCoeficientes[$index]: $digito*$arrayCoeficientes[$index]-9;
