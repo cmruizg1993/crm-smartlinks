@@ -537,10 +537,10 @@ class Colaborador
 
 
         $decenaSuperior=null;
-        if($suma%10>0){
+        if($suma%10 > 0){
             $decenaSuperior = (intval(($suma/10)) + 1) * 10;
         }else{
-            $decenaSuperior = suma;
+            $decenaSuperior = $suma;
         }
 
         $resultado = $decenaSuperior - $suma ;

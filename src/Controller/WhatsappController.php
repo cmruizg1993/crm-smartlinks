@@ -17,15 +17,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class WhatsappController extends AbstractController
 {
-    /**
-     * @var $wtp WhatsappApi
-     */
-    private $wtp;
+
+    public $wtp;
 
     /**
-     * @Route("/whatsapp/receive", name="whatsapp_receive")
+     * @Route("/whatsapp/receive", name="whatsapp_receive", methods={"GET, "POST"})
+     *
      */
-    public function receive(Request $request, LoggerInterface $logger, WhatsappApi $wtp): Response
+   public function receive(Request $request, LoggerInterface $logger, WhatsappApi $wtp): Response
     {
         $this->wtp = $wtp;
 
