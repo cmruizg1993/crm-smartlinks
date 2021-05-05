@@ -22,7 +22,7 @@ class RegistrationController extends AbstractController
 {
     private $emailVerifier;
 
-    public function __construct(VerifyEmailHelperInterface $helper,EmailVerifier $emailVerifier)
+    public function __construct(EmailVerifier $emailVerifier)
     {
         $this->emailVerifier = $emailVerifier;
     }
