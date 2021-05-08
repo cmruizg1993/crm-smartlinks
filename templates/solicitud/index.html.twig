@@ -31,7 +31,7 @@
                     <a href="{{ path('solicitud_edit', {'id': solicitud.id}) }}" class="btn btn-warning btn-sm" title="EDITAR">
                         <i class="fa fa-pencil"></i>
                     </a>
-                    {% if  is_granted('ROLE_ADMIN') and solicitud.ESTADO == 'PENDIENTE' %}
+                    {% if  is_granted('ROLE_ADMIN') and solicitud.estado == 'PENDIENTE' %}
                         <p>
                             <a href="{{ path('solicitud_aprobar', {'id': solicitud.id}) }}" class="btn btn-success btn-sm" title="APROBAR">
                                 <i class="fa fa-check"></i>
@@ -41,7 +41,7 @@
                             </button>
                         </p>
                     {% endif %}
-                    {% if solicitud.ESTADO == 'APROBADA' %}
+                    {% if solicitud.estado == 'APROBADA' %}
                         <p>
                             <a href="{{ path('solicitud_pagar', {'id': solicitud.id}) }}" class="btn btn-success btn-sm" title="PAGAR">
                                 <i class="fa fa-dollar"></i>
