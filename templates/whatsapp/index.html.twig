@@ -12,6 +12,7 @@
             <th>Pic</th>
             <th>Contacto</th>
             <th>Mensaje</th>
+            <th>Direccion</th>
             <th>actions</th>
         </tr>
         </thead>
@@ -25,7 +26,17 @@
                 <td>{{ msj.contact }}</td>
                 <td>{{ msj.body }}</td>
                 <td>
-
+                    {% if msj.dir=='i' %}
+                        <b>ENTRANTE</b>
+                    {% endif %}
+                    {% if msj.dir=='o' %}
+                        <b>SALIENTE</b>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if msj.dir=='i' %}
+                        <button class="btn btn-sm btn-success">Responder</button>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
