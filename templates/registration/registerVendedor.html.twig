@@ -81,6 +81,7 @@
                     <button id="btnRegistrar" type="submit" class="btn btn-info btn-block">{{ button_label|default('Registrarme') }}</button>
                 </div>
             </div>
+            {{ form_row(form._token) }}
             {{ form_end(form) }}
             <div class="text-block text-center my-3">
                 <!--span class="text-small font-weight-semibold">Not a member ?</span-->

@@ -177,7 +177,7 @@ class SolicitudController extends AbstractController
             $cuid = uniqid();
             $response = $wtp->send(urlencode($message),$to,$cuid);
             $logger->debug($response->getContent());
-            $this->redirectToRoute('solicitud_index');
+            return $this->redirectToRoute('solicitud_index');
         }
         return $this->render('solicitud/aprobar.html.twig', [
             'solicitud' => $solicitud,
