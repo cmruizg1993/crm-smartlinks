@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Mensajes de whatsapp</h1>
 
-    <table class="table table-bordered table-responsive">
+    <table class="table table-bordered table-responsive table-condensed table-hover">
         <thead>
         <tr>
             <th>Id</th>
@@ -20,17 +20,17 @@
         {% for msj in mensajes %}
             <tr
                 {% if msj.dir=='i' %}
-                    class="bg-primary"
+                    class="table-info"
                 {% endif %}
                 {% if msj.dir=='o' %}
-                    class="bg-success"
+                    class="table-success"
                 {% endif %}
             >
                 <td>{{ msj.id }}</td>
                 <td>
                     <img src="{{ msj.contact.pic }}" alt="" style="max-width: 50px">
                 </td>
-                <td>{{ msj.contact }}</td>
+                <td style="max-width: 150px">{{ msj.contact }}</td>
                 <td>{{ msj.body }}</td>
                 <td>
                     {% if msj.dir=='i' %}
