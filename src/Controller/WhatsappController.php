@@ -9,6 +9,7 @@ use App\Entity\MensajeWtpOut;
 use App\Entity\Usuario;
 use App\Repository\MensajeWtpRepository;
 use App\Service\WhatsappApi;
+use phpDocumentor\Reflection\Types\This;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -99,7 +100,7 @@ class WhatsappController extends AbstractController
 
         $response = $wtp->send(urlencode($message),$to,$cuid);
         $logger->debug($response->getContent());
-        return new Response($response->getContent());
+        return $this->redirectToRoute('whatsapp_index');
     }
     private function enviarMenu($to, $cuid, ContactWtp $contact){
         $em = $this->getDoctrine()->getManager();
