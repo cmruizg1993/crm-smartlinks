@@ -7,6 +7,7 @@ use App\Entity\Mensaje;
 use App\Entity\MensajeWtp;
 use App\Entity\MensajeWtpOut;
 use App\Entity\Usuario;
+use App\Repository\MensajeWtpRepository;
 use App\Service\WhatsappApi;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,8 +18,18 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class WhatsappController extends AbstractController
 {
-
     public $wtp;
+    /**
+     * @Route("/chat-whatsapp", name="whatsapp_index", methods = {"GET"})
+     */
+    public function index(MensajeWtpRepository $wtpRepository): Response
+    {
+        $mensajes = $wtpRepository->findAll();
+        return $this->render('whatsapp/index.html.twig',[
+           'mensajes'=>$mensajes
+        ]);
+    }
+
     /**
      * @Route("/whatsapp/receive", name="whatsapp_receive", methods = {"GET"})
      */
@@ -29,8 +40,8 @@ class WhatsappController extends AbstractController
         $obj = $request->request->all();
         $json = json_encode($obj);
         $logger->debug($json);
-        return new JsonResponse();
-        /*
+        //return new JsonResponse();
+
         $event = $obj['event'];
         $contact = $obj['contact'];
         $message = $obj['message'];
@@ -42,7 +53,7 @@ class WhatsappController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         if ($event == 'message'){
 
-            if($message['dir']=='i'){
+            if($message['dir']!==''){
 
                 $contactwtp = $em->getRepository('App:ContactWtp')->findOneByUid($contact['uid']);
                 if(!$contactwtp){
@@ -66,13 +77,13 @@ class WhatsappController extends AbstractController
                 $mensajewtp->setMimetype($message['mimetype']);
                 $mensajewtp->setUrl($message['clientUrl']);
 
-                //$em->persist($mensajewtp);
-                //$em->flush();
+                $em->persist($mensajewtp);
+                $em->flush();
             }
         }
 
         return new Response('OK');
-        */
+
     }
 
     /**

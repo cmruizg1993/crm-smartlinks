@@ -31,11 +31,6 @@ class Solicitud
     private $fecha;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Plan::class, inversedBy="solicitudes")
-     */
-    private $planes;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Colaborador::class, inversedBy="solicitudes")
      */
     private $vendedor;
@@ -49,6 +44,27 @@ class Solicitud
      * @ORM\ManyToOne(targetEntity=CuentaBancaria::class, inversedBy="solicitudes")
      */
     private $cuentaBancaria;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $aprobar=false;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $capturaEquifax;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Plan::class, inversedBy="solicitudes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $plan;
+
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $estado;
 
 
 
@@ -82,30 +98,6 @@ class Solicitud
     public function setFecha(\DateTimeInterface $fecha): self
     {
         $this->fecha = $fecha;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Plan[]
-     */
-    public function getPlanes(): Collection
-    {
-        return $this->planes;
-    }
-
-    public function addPlane(Plan $plane): self
-    {
-        if (!$this->planes->contains($plane)) {
-            $this->planes[] = $plane;
-        }
-
-        return $this;
-    }
-
-    public function removePlane(Plan $plane): self
-    {
-        $this->planes->removeElement($plane);
 
         return $this;
     }
@@ -145,4 +137,53 @@ class Solicitud
 
         return $this;
     }
+
+    public function getAprobar(): ?bool
+    {
+        return $this->aprobar;
+    }
+
+    public function setAprobar(?bool $aprobar): self
+    {
+        $this->aprobar = $aprobar;
+
+        return $this;
+    }
+
+    public function getCapturaEquifax(): ?string
+    {
+        return $this->capturaEquifax;
+    }
+
+    public function setCapturaEquifax(?string $capturaEquifax): self
+    {
+        $this->capturaEquifax = $capturaEquifax;
+
+        return $this;
+    }
+
+    public function getPlan(): ?Plan
+    {
+        return $this->plan;
+    }
+
+    public function setPlan(?Plan $plan): self
+    {
+        $this->plan = $plan;
+
+        return $this;
+    }
+
+    public function getEstado(): ?string
+    {
+        return $this->estado;
+    }
+
+    public function setEstado(?string $estado): self
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
 }

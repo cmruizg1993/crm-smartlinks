@@ -70,6 +70,11 @@ class SAN
      * @ORM\Column(type="string", length=20, nullable=true)
      */
     private $estadoContrato;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $valorSuscripcion;
     public function __toString()
     {
         // TODO: Implement __toString() method.
@@ -220,6 +225,18 @@ class SAN
     public function setEstadoContrato(?string $estadoContrato): self
     {
         $this->estadoContrato = $estadoContrato;
+
+        return $this;
+    }
+
+    public function getValorSuscripcion(): ?float
+    {
+        return $this->valorSuscripcion;
+    }
+
+    public function setValorSuscripcion(?float $valorSuscripcion): self
+    {
+        $this->valorSuscripcion = $valorSuscripcion;
 
         return $this;
     }

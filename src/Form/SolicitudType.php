@@ -22,7 +22,7 @@ class SolicitudType extends AbstractType
                 ]
             ])
             ->add('formaPago')
-            ->add('planes')
+            ->add('plan')
             ->add('cuentaBancaria',EntityType::class, [
                 'class' => CuentaBancaria::class,
                 'query_builder' => function (CuentaBancariaRepository $er) {

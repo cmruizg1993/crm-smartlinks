@@ -31,11 +31,6 @@ class Plan
     private $servicio;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Solicitud::class, mappedBy="planes")
-     */
-    private $solicitudes;
-
-    /**
      * @ORM\OneToMany(targetEntity=SAN::class, mappedBy="plan", cascade={"persist", "remove"})
      */
     private $sans;
@@ -49,6 +44,11 @@ class Plan
      * @ORM\Column(type="float", nullable=true)
      */
     private $costo;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Solicitud::class, mappedBy="plan")
+     */
+    private $solicitudes;
 
     public function __toString()
     {
@@ -86,33 +86,6 @@ class Plan
     public function setServicio(?Servicio $servicio): self
     {
         $this->servicio = $servicio;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Solicitud[]
-     */
-    public function getSolicitudes(): Collection
-    {
-        return $this->solicitudes;
-    }
-
-    public function addSolicitude(Solicitud $solicitude): self
-    {
-        if (!$this->solicitudes->contains($solicitude)) {
-            $this->solicitudes[] = $solicitude;
-            $solicitude->addPlane($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSolicitude(Solicitud $solicitude): self
-    {
-        if ($this->solicitudes->removeElement($solicitude)) {
-            $solicitude->removePlane($this);
-        }
 
         return $this;
     }
@@ -167,6 +140,36 @@ class Plan
     public function setCosto(?float $costo): self
     {
         $this->costo = $costo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Solicitud[]
+     */
+    public function getSolicitudes(): Collection
+    {
+        return $this->solicitudes;
+    }
+
+    public function addSolicitude(Solicitud $solicitude): self
+    {
+        if (!$this->solicitudes->contains($solicitude)) {
+            $this->solicitudes[] = $solicitude;
+            $solicitude->setPlan($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSolicitude(Solicitud $solicitude): self
+    {
+        if ($this->solicitudes->removeElement($solicitude)) {
+            // set the owning side to null (unless already changed)
+            if ($solicitude->getPlan() === $this) {
+                $solicitude->setPlan(null);
+            }
+        }
 
         return $this;
     }
