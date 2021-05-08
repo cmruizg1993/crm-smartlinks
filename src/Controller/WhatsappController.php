@@ -25,7 +25,8 @@ class WhatsappController extends AbstractController
      */
     public function index(MensajeWtpRepository $wtpRepository): Response
     {
-        $mensajes = $wtpRepository->findAll();
+
+        $mensajes = $wtpRepository->findBy(array(), array('id' => 'DESC'));;
         return $this->render('whatsapp/index.html.twig',[
            'mensajes'=>$mensajes
         ]);
