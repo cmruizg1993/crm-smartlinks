@@ -23,7 +23,7 @@ class WhatsappApi
 
     //private const token = "ZfSrMJelV1jrgRZ8k59igHkyfUtH8eCtJu69ry68&uid=593994666777";
     //token tuenti cristian
-    private const token = "1RR5vsUIzmZjwA9VgQizLRrn0NMGOxr8EeuxTDxw&uid=593963756187";
+    private const token = "7m5lgNnnTLaDr4CogMEVHm21fxUfqqelkqrRRt57&uid=593963756187";
     public function __construct(HttpClientInterface $client)
     {
         $this->client = $client;
