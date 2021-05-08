@@ -18,7 +18,14 @@
         </thead>
         <tbody>
         {% for msj in mensajes %}
-            <tr>
+            <tr
+                {% if msj.dir=='i' %}
+                    class="bg-primary"
+                {% endif %}
+                {% if msj.dir=='o' %}
+                    class="bg-success"
+                {% endif %}
+            >
                 <td>{{ msj.id }}</td>
                 <td>
                     <img src="{{ msj.contact.pic }}" alt="" style="max-width: 50px">
