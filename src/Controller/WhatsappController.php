@@ -54,13 +54,15 @@ class WhatsappController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         if ($event == 'message'){
 
-            if($message['dir']!==''){
+            if($message['dir']!=''){
 
                 $contactwtp = $em->getRepository('App:ContactWtp')->findOneByUid($contact['uid']);
                 if(!$contactwtp){
                     $contactwtp = new ContactWtp();
                     $contactwtp->setName($contact['name']);
-                    $contactwtp->setPic($contact['pic']);
+                    if(isset($contact['pic'])){
+                        $contactwtp->setPic($contact['pic']);
+                    }
                     $contactwtp->setType($contact['type']);
                     $contactwtp->setUid($contact['uid']);
                 }
