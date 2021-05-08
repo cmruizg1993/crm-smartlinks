@@ -41,6 +41,13 @@
                             </button>
                         </p>
                     {% endif %}
+                    {% if solicitud.ESTADO == 'APROBADA' %}
+                        <p>
+                            <a href="{{ path('solicitud_pagar', {'id': solicitud.id}) }}" class="btn btn-success btn-sm" title="PAGAR">
+                                <i class="fa fa-dollar"></i>
+                            </a>
+                        </p>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
