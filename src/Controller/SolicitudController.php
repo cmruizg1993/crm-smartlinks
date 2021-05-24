@@ -205,6 +205,25 @@ class SolicitudController extends AbstractController
         $logger->debug($response->getContent());
         return $this->redirectToRoute('solicitud_index');
     }
+    /**
+     * @Route("/pagar/{id}", name="solicitud_pagar", methods={"GET","POST"})
+     */
+    public function pagar(Request $request, Solicitud $solicitud, WhatsappApi $wtp, LoggerInterface $logger): Response
+    {
+        if($solicitud->getEstado()!='APROBADA'){
+            return $this->redirectToRoute('solicitud_index');
+        }
+        
+
+        $to = $solicitud->getVendedor()->getUsuario()->getPhone();
+        $nro = $solicitud->getId();
+        $message = "*Makrocel* lamenta notificar que la solicitud con *NRO $nro*, ingresada a traves de la aplicacion web, ha sido *RECHAZADA*. 
+            Para mayor informacion comuniquese con un asesor. *Gracias por formar parte de nuestro equipo.*";
+        $cuid = uniqid();
+        $response = $wtp->send(urlencode($message),$to,$cuid);
+        $logger->debug($response->getContent());
+        return $this->redirectToRoute('solicitud_index');
+    }
     private function notificar(MailerInterface $mailer, $subject, $template, $context = []){
 
         $emailTemplate =new TemplatedEmail();

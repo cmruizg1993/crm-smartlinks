@@ -1,6 +1,6 @@
 <div class="row justify-content-center">
     <div class="col-md-8">
-        {{ form_start(form) }}
+        {{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
         <div class="form-group row justify-content-end">
             <label for="" class="col-form-label col-4">
                 <span class="float-right">Cédula</span>
@@ -83,7 +83,7 @@
                 <span class="float-right">Contraseña</span>
             </label>
             <div class="col-8">
-                {{ form_widget(form.usuario.plainPassword,{'attr':{'class':'form-control'}}) }}
+                {{ form_widget(form.usuario.plainPassword,{'attr':{'class':'form-control', 'type':'hidden'}}) }}
             </div>
         </div>
 
@@ -146,8 +146,9 @@
 
 {#  colaborador_cedula #}
 <script>
-    $("#colaborador_cedula").change(function (){
+    $("#colaborador_cedula").blur(function (){
         var dni  = $(this).val();
+        console.log(dni);
         var uri = '{{ path('buscar_cliente') }}';
         $.ajax({
             url:uri,

@@ -442,7 +442,7 @@ class Cliente
         $arrayCoeficientes = [2, 1, 2, 1, 2, 1, 2, 1, 2];
         $arrayDeDigitos = str_split($cedula,1);
         $suma = 0;
-        foreach($arrayCoeficientes as $index=>$value){
+        foreach($arrayDeDigitos as $index=>$value){
             if($index < 9){
                 $digito = ($value);
                 $producto = $digito*$arrayCoeficientes[$index] < 10 ? $digito*$arrayCoeficientes[$index]: $digito*$arrayCoeficientes[$index]-9;
@@ -452,10 +452,10 @@ class Cliente
 
 
         $decenaSuperior=null;
-        if($suma%10>0){
+        if($suma%10 > 0){
             $decenaSuperior = (intval(($suma/10)) + 1) * 10;
         }else{
-            $decenaSuperior = suma;
+            $decenaSuperior = $suma;
         }
 
         $resultado = $decenaSuperior - $suma ;
