@@ -19,7 +19,7 @@ class ColaboradorType extends AbstractType
             ->add('cargo')
             ->add('proveedores')
             ->add('parroquia')
-            ->add('usuario', RegistrationFormType::class)
+            ->add('usuario', UserDataType::class)
             ->add('ruc')
             ->add('razon')
             ->add('factura')

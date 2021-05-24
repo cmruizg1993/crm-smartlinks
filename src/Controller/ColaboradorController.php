@@ -91,9 +91,9 @@ class ColaboradorController extends AbstractController
         $form->handleRequest($request);
         $entityManager = $this->getDoctrine()->getManager();
         if ($form->isSubmitted() && $form->isValid()) {
-            $plain = $form['usuario']['plainPassword']->getData();
-            $pass = $passwordEncoder->encodePassword($colaborador->getUsuario(),$plain);
-            $colaborador->getUsuario()->setPassword($pass);
+            //$plain = $form['usuario']['plainPassword']->getData();
+            //$pass = $passwordEncoder->encodePassword($colaborador->getUsuario(),$plain);
+            //$colaborador->getUsuario()->setPassword($pass);
             $entityManager->flush();
 
             return $this->redirectToRoute('colaborador_index');
