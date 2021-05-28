@@ -3,17 +3,21 @@
 namespace App\Controller;
 
 use App\Entity\Cargo;
+use App\Entity\Cliente;
 use App\Entity\Colaborador;
 use App\Form\ColaboradorType;
 use App\Form\VendedorType;
+use App\Repository\ClienteRepository;
 use App\Repository\ColaboradorRepository;
 use App\Service\WhatsappApi;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 
 /**
@@ -146,5 +150,44 @@ class ColaboradorController extends AbstractController
             'colaborador' => $colaborador,
             'form' => $form->createView(),
         ]);
+    }
+    /**
+     * @Route("/buscar", name="buscar_colaborador", methods={"POST"})
+     */
+    public function buscar(Request $request, HttpClientInterface $client, ColaboradorRepository $colaboradorRepository): Response
+    {
+        $ci = $request->request->get('dni');
+
+        $data = [];
+
+        /* @var $colaborador Colaborador */
+        $colaborador = $colaboradorRepository->findOneByCedula($ci);
+
+        if($colaborador){
+            $data[0]["name"] = $colaborador->getNombres();
+            $data[0]["residence"] = '';//$cliente->getResidencia();
+            /*
+            $data[0]["nationality"] = $cliente->getNacionalidad();
+            $data[0]["streets"] = $cliente->getDireccion();
+            $data[0]["fingerprint"] = $cliente->getFingerprint();
+            $data[0]["civilstate"] = $cliente->getEstadoCivil();
+            $data[0]["dob"] = $cliente->getFechaNacimiento()->format('d/m/Y');
+            $data[0]["email"] = $cliente->getEmail();
+            $data[0]["dni_type"] = $cliente->getDni()->getTipo()->getId();
+            $data[0]["phone"] = $cliente->getTelefono();
+            $data[0]["fix_phone"] = $cliente->getTelefonoFijo();
+            $data[0]["exp_date"] = $cliente->getDni()->getFechaExp() ? $cliente->getDni()->getFechaExp()->format('d/m/Y'):null;
+            */
+
+        }else{
+            if($ci){
+                $uri = 'http://certificados.ministeriodegobierno.gob.ec/gestorcertificados/antecedentes/data.php';
+                $response = $client->request('POST',$uri,
+                    ['body' => ['tipo' => 'getDataWsRc', 'ci'=>$ci]]
+                );
+                $data = json_decode($response->getContent());
+            }
+        }
+        return new JsonResponse($data);
     }
 }

@@ -161,19 +161,19 @@ class ClienteController extends AbstractController
         $cliente = $clienteRepository->findOneByNumeroDni($ci);
 
         if($cliente){
-            $data["name"] = $cliente->getNombres();
-            $data["genre"] = $cliente->getGenero();
-            $data["residence"] = $cliente->getResidencia();
-            $data["nationality"] = $cliente->getNacionalidad();
-            $data["streets"] = $cliente->getDireccion();
-            $data["fingerprint"] = $cliente->getFingerprint();
-            $data["civilstate"] = $cliente->getEstadoCivil();
-            $data["dob"] = $cliente->getFechaNacimiento()->format('d/m/Y');
-            $data["email"] = $cliente->getEmail();
-            $data["dni_type"] = $cliente->getDni()->getTipo()->getId();
-            $data["phone"] = $cliente->getTelefono();
-            $data["fix_phone"] = $cliente->getTelefonoFijo();
-            $data["exp_date"] = $cliente->getDni()->getFechaExp()->format('d/m/Y');
+            $data[0]["name"] = $cliente->getNombres();
+            $data[0]["genre"] = $cliente->getGenero();
+            $data[0]["residence"] = $cliente->getResidencia();
+            $data[0]["nationality"] = $cliente->getNacionalidad();
+            $data[0]["streets"] = $cliente->getDireccion();
+            $data[0]["fingerprint"] = $cliente->getFingerprint();
+            $data[0]["civilstate"] = $cliente->getEstadoCivil();
+            $data[0]["dob"] = $cliente->getFechaNacimiento()->format('d/m/Y');
+            $data[0]["email"] = $cliente->getEmail();
+            $data[0]["dni_type"] = $cliente->getDni()->getTipo()->getId();
+            $data[0]["phone"] = $cliente->getTelefono();
+            $data[0]["fix_phone"] = $cliente->getTelefonoFijo();
+            $data[0]["exp_date"] = $cliente->getDni()->getFechaExp() ? $cliente->getDni()->getFechaExp()->format('d/m/Y'):null;
 
         }else{
             if($ci){
