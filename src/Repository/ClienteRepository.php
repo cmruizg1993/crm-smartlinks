@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Cliente;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -36,15 +37,15 @@ class ClienteRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Cliente
+
+    public function findOneByNumeroDni($value): ?Cliente
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
+            ->innerJoin('c.Dni', 'd', Join::ON, 'd.numero = :ci')
+            ->setParameter('ci', $value)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
+
 }

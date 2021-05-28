@@ -7,6 +7,7 @@ use App\Entity\Solicitud;
 use App\Repository\CuentaBancariaRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Valid;
@@ -23,6 +24,8 @@ class SolicitudType extends AbstractType
             ])
             ->add('formaPago')
             ->add('plan')
+            ->add('lat', HiddenType::class)
+            ->add('lng', HiddenType::class)
             ->add('cuentaBancaria',EntityType::class, [
                 'class' => CuentaBancaria::class,
                 'query_builder' => function (CuentaBancariaRepository $er) {

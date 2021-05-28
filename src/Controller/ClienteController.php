@@ -7,6 +7,7 @@ use App\Entity\Dni;
 use App\Entity\SAN;
 use App\Form\ClienteType;
 use App\Repository\ClienteRepository;
+use App\Repository\DniRepository;
 use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\HttpClient;
@@ -148,16 +149,39 @@ class ClienteController extends AbstractController
     /**
      * @Route("/buscar", name="buscar_cliente", methods={"POST"})
      */
-    public function buscar(Request $request, HttpClientInterface $client): Response
+    public function buscar(Request $request, HttpClientInterface $client, ClienteRepository $clienteRepository): Response
     {
         $ci = $request->request->get('dni');
+
         $data = [];
-        if($ci){
-            $uri = 'http://certificados.ministeriodegobierno.gob.ec/gestorcertificados/antecedentes/data.php';
-            $response = $client->request('POST',$uri,
-                ['body' => ['tipo' => 'getDataWsRc', 'ci'=>$ci]]
-            );
-            $data = json_decode($response->getContent());
+
+        /* @var $cliente Cliente */
+        $cliente = $clienteRepository->findOneByNumeroDni($ci);
+
+        if($cliente){
+            $data["name"] = $cliente->getNombres();
+            $data["genre"] = $cliente->getGenero();
+            $data["residence"] = $cliente->getResidencia();
+            $data["nationality"] = $cliente->getNacionalidad();
+            $data["streets"] = $cliente->getDireccion();
+            $data["fingerprint"] = $cliente->getFingerprint();
+            $data["civilstate"] = $cliente->getEstadoCivil();
+            $data["dob"] = $cliente->getFechaNacimiento()->format('d/m/Y');
+            $data["email"] = $cliente->getEmail();
+            $data["dni_type"] = $cliente->getDni()->getTipo()->getId();
+            $data["phone"] = $cliente->getTelefono();
+            $data["fix_phone"] = $cliente->getTelefonoFijo();
+            $data["exp_date"] = $cliente->getDni()->getFechaExp()->format('d/m/Y');
+            $data->
+
+        }else{
+            if($ci){
+                $uri = 'http://certificados.ministeriodegobierno.gob.ec/gestorcertificados/antecedentes/data.php';
+                $response = $client->request('POST',$uri,
+                    ['body' => ['tipo' => 'getDataWsRc', 'ci'=>$ci]]
+                );
+                $data = json_decode($response->getContent());
+            }
         }
         return new JsonResponse($data);
     }

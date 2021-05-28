@@ -66,6 +66,26 @@ class Solicitud
      */
     private $estado;
 
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $lat;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $lng;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $aprobacionEquifax;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $validacionEquifax;
+
 
 
     public function __construct()
@@ -182,6 +202,54 @@ class Solicitud
     public function setEstado(?string $estado): self
     {
         $this->estado = $estado;
+
+        return $this;
+    }
+
+    public function getLat(): ?float
+    {
+        return $this->lat;
+    }
+
+    public function setLat(float $lat): self
+    {
+        $this->lat = $lat;
+
+        return $this;
+    }
+
+    public function getLng(): ?float
+    {
+        return $this->lng;
+    }
+
+    public function setLng(float $lng): self
+    {
+        $this->lng = $lng;
+
+        return $this;
+    }
+
+    public function getAprobacionEquifax(): ?string
+    {
+        return $this->aprobacionEquifax;
+    }
+
+    public function setAprobacionEquifax(?string $aprobacionEquifax): self
+    {
+        $this->aprobacionEquifax = $aprobacionEquifax;
+
+        return $this;
+    }
+
+    public function getValidacionEquifax(): ?string
+    {
+        return $this->validacionEquifax;
+    }
+
+    public function setValidacionEquifax(?string $validacionEquifax): self
+    {
+        $this->validacionEquifax = $validacionEquifax;
 
         return $this;
     }
