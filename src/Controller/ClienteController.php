@@ -43,6 +43,8 @@ class ClienteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($cliente);
             $entityManager->flush();
@@ -172,7 +174,6 @@ class ClienteController extends AbstractController
             $data["phone"] = $cliente->getTelefono();
             $data["fix_phone"] = $cliente->getTelefonoFijo();
             $data["exp_date"] = $cliente->getDni()->getFechaExp()->format('d/m/Y');
-            $data->
 
         }else{
             if($ci){

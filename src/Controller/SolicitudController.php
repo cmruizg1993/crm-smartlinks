@@ -7,6 +7,7 @@ use App\Entity\SAN;
 use App\Entity\Solicitud;
 use App\Entity\Usuario;
 use App\Form\SolicitudType;
+use App\Repository\ClienteRepository;
 use App\Repository\FormaPagoRepository;
 use App\Repository\SolicitudRepository;
 use App\Service\FileUploader;
@@ -48,7 +49,7 @@ class SolicitudController extends AbstractController
     /**
      * @Route("/new", name="solicitud_new", methods={"GET","POST"})
      */
-    public function new(Request $request, FormaPagoRepository $formaPagoRepository, MailerInterface $mailer): Response
+    public function new(Request $request, FormaPagoRepository $formaPagoRepository, ClienteRepository $clienteRepository, MailerInterface $mailer): Response
     {
         $solicitud = new Solicitud();
         $fpago = $solicitud->getFormaPago();
@@ -68,8 +69,13 @@ class SolicitudController extends AbstractController
             if($colaborador){
                 $solicitud->setVendedor($colaborador);
             }
+
             $solicitud->setEstado('PENDIENTE');
             $solicitud->setFecha(new \DateTime());
+            $old_client = $clienteRepository->findOneByNumeroDni($solicitud->getCliente()->getDni()->getNumero());
+            if($old_client){
+                $solicitud->setCliente($old_client);
+            }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($solicitud);
             $entityManager->flush();
