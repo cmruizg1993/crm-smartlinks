@@ -41,7 +41,7 @@ class ClienteRepository extends ServiceEntityRepository
     public function findOneByNumeroDni($value): ?Cliente
     {
         return $this->createQueryBuilder('c')
-            ->innerJoin('c.Dni', 'd', Join::ON, 'd.numero = :ci')
+            ->innerJoin('c.dni', 'd', Join::ON, 'd.numero = :ci')
             ->setParameter('ci', $value)
             ->getQuery()
             ->getOneOrNullResult()
