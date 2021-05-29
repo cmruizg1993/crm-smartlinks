@@ -166,9 +166,10 @@ class ColaboradorController extends AbstractController
         if($colaborador){
             $data[0]["name"] = $colaborador->getNombres();
             $data[0]["residence"] = '';//$cliente->getResidencia();
+            $data[0]["streets"] = $colaborador->getDireccion();
             /*
             $data[0]["nationality"] = $cliente->getNacionalidad();
-            $data[0]["streets"] = $cliente->getDireccion();
+
             $data[0]["fingerprint"] = $cliente->getFingerprint();
             $data[0]["civilstate"] = $cliente->getEstadoCivil();
             $data[0]["dob"] = $cliente->getFechaNacimiento()->format('d/m/Y');

@@ -26,22 +26,22 @@ class RegistrationVendedorFormType extends AbstractType
             ->add('email', EmailType::class, [
                 'constraints' => [
                     new Email(
-                        ['message'=>'The email \'{{ value }}\' is not a valid email.']
+                        ['message'=>'El email \'{{ value }}\' no es v[alido.']
                     ),
                     new NotBlank(
-                        ['message'=>'Please enter an email.']
+                        ['message'=>'Por favor, proporciona un email.']
                     )
                 ],
             ])
             ->add('phone', TelType::class,[
                 'constraints' => [
                     new NotBlank([
-                        'message'=>'Please enter a phone number'
+                        'message'=>'Por favor ingresa un número de teléfono'
                     ]),
                     new Length([
                         'min' => 12,
-                        'minMessage' => 'Please enter a valid phone number with min {{limit}} numbers',
-                        'maxMessage' => 'Please enter a valid phone number with max {{limit}} numbers',
+                        'minMessage' => 'El número de teléfono debe contener {{limit}} digitos, incluido 593, ejemplo: 593123456789',
+                        'maxMessage' => 'El número de teléfono debe contener {{limit}} digitos, incluido 593, ejemplo: 593123456789',
                         'max' => 12
                     ]),
                     new Regex([
@@ -67,7 +67,7 @@ class RegistrationVendedorFormType extends AbstractType
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'minMessage' => 'Tu contraseña debe tener al menos {{ limit }} caracteres',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
