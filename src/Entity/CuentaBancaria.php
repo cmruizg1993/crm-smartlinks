@@ -55,9 +55,15 @@ class CuentaBancaria
      */
     private $solicitudes;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Pago::class, mappedBy="ctaBancaria", orphanRemoval=true)
+     */
+    private $pagos;
+
     public function __construct()
     {
         $this->solicitudes = new ArrayCollection();
+        $this->pagos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -166,6 +172,36 @@ class CuentaBancaria
             // set the owning side to null (unless already changed)
             if ($solicitude->getCuentaBancaria() === $this) {
                 $solicitude->setCuentaBancaria(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Pago[]
+     */
+    public function getPagos(): Collection
+    {
+        return $this->pagos;
+    }
+
+    public function addPago(Pago $pago): self
+    {
+        if (!$this->pagos->contains($pago)) {
+            $this->pagos[] = $pago;
+            $pago->setCtaBancaria($this);
+        }
+
+        return $this;
+    }
+
+    public function removePago(Pago $pago): self
+    {
+        if ($this->pagos->removeElement($pago)) {
+            // set the owning side to null (unless already changed)
+            if ($pago->getCtaBancaria() === $this) {
+                $pago->setCtaBancaria(null);
             }
         }
 

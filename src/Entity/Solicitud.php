@@ -6,6 +6,8 @@ use App\Repository\SolicitudRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @ORM\Entity(repositoryClass=SolicitudRepository::class)
@@ -20,6 +22,7 @@ class Solicitud
     private $id;
 
     /**
+     *
      * @ORM\ManyToOne(targetEntity=Cliente::class, inversedBy="solicitudes",cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
@@ -36,6 +39,7 @@ class Solicitud
     private $vendedor;
 
     /**
+     * @Assert\NotBlank(message="Elija una forma de pago")
      * @ORM\ManyToOne(targetEntity=FormaPago::class)
      */
     private $formaPago;
@@ -56,6 +60,7 @@ class Solicitud
     private $capturaEquifax;
 
     /**
+     * @Assert\NotBlank(message="Seleccione un plan")
      * @ORM\ManyToOne(targetEntity=Plan::class, inversedBy="solicitudes")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -67,11 +72,13 @@ class Solicitud
     private $estado;
 
     /**
+     * @Assert\NotBlank(message="Selleccione una ubicación")
      * @ORM\Column(type="float")
      */
     private $lat;
 
     /**
+     * @Assert\NotBlank(message="Selleccione una ubicación")
      * @ORM\Column(type="float")
      */
     private $lng;
@@ -85,6 +92,16 @@ class Solicitud
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $validacionEquifax;
+
+    /**
+     * @ORM\OneToOne(targetEntity=SAN::class, inversedBy="solicitud", cascade={"persist", "remove"})
+     */
+    private $san;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Pago::class, cascade={"persist", "remove"})
+     */
+    private $pago;
 
 
 
@@ -254,4 +271,43 @@ class Solicitud
         return $this;
     }
 
+    public function getSan(): ?SAN
+    {
+        return $this->san;
+    }
+
+    public function setSan(?SAN $san): self
+    {
+        $this->san = $san;
+
+        return $this;
+    }
+
+    public function getPago(): ?Pago
+    {
+        return $this->pago;
+    }
+
+    public function setPago(?Pago $pago): self
+    {
+        $this->pago = $pago;
+
+        return $this;
+    }
+
+    /**
+     * @Assert\Callback
+     */
+    public function validarFormaPago(ExecutionContextInterface $context, $payload){
+        if($this->getFormaPago()){
+            if($this->getFormaPago()->getCodigo()!='EF'){
+                if(!$this->getCuentaBancaria()){
+                    $context->addViolation('Debe seleccionar una cta Bancaria');
+                }
+
+            }
+        }else{
+            $context->addViolation('Debe seleccionar una forma de pago');
+        }
+    }
 }

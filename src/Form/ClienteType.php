@@ -38,7 +38,7 @@ class ClienteType extends AbstractType
             ->add('otro', FileType::class,
                 ['mapped'=>false,'required'=>false,'attr'=>['accept' => ".png,.jpg,.jpeg,.pdf"],'constraints' => [
                     new File([
-                        'maxSize' => '1024k'])]])
+                        'maxSize' => '2048k'])]])
         ;
     }
 

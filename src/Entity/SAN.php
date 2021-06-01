@@ -75,6 +75,11 @@ class SAN
      * @ORM\Column(type="float", nullable=true)
      */
     private $valorSuscripcion;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Solicitud::class, mappedBy="san", cascade={"persist", "remove"})
+     */
+    private $solicitud;
     public function __toString()
     {
         // TODO: Implement __toString() method.
@@ -237,6 +242,28 @@ class SAN
     public function setValorSuscripcion(?float $valorSuscripcion): self
     {
         $this->valorSuscripcion = $valorSuscripcion;
+
+        return $this;
+    }
+
+    public function getSolicitud(): ?Solicitud
+    {
+        return $this->solicitud;
+    }
+
+    public function setSolicitud(?Solicitud $solicitud): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($solicitud === null && $this->solicitud !== null) {
+            $this->solicitud->setSan(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($solicitud !== null && $solicitud->getSan() !== $this) {
+            $solicitud->setSan($this);
+        }
+
+        $this->solicitud = $solicitud;
 
         return $this;
     }

@@ -1,0 +1,31 @@
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        {{ form_start(form) }}
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Nro. Documento:</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.nroDocumento,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Valor Pagado:</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.valor,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Cuenta Bancaria:</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.ctaBancaria,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+</div>

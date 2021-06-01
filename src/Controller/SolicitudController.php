@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\FormaPago;
+use App\Entity\Pago;
 use App\Entity\SAN;
 use App\Entity\Solicitud;
 use App\Entity\Usuario;
+use App\Form\PagoType;
 use App\Form\SolicitudType;
 use App\Repository\ClienteRepository;
 use App\Repository\FormaPagoRepository;
@@ -23,6 +25,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @Route("/solicitud")
@@ -52,14 +55,18 @@ class SolicitudController extends AbstractController
     public function new(Request $request, FormaPagoRepository $formaPagoRepository, ClienteRepository $clienteRepository, MailerInterface $mailer): Response
     {
         $solicitud = new Solicitud();
+
+        $form = $this->createForm(SolicitudType::class, $solicitud);
+        $form->handleRequest($request);
+        dump($solicitud);
+
         $fpago = $solicitud->getFormaPago();
         if(!$fpago){
             $fpago = $formaPagoRepository->findOneByCodigo('EF');
             $solicitud->setFormaPago($fpago);
             $solicitud->setCuentaBancaria(null);
         }
-        $form = $this->createForm(SolicitudType::class, $solicitud);
-        $form->handleRequest($request);
+
 
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -80,7 +87,7 @@ class SolicitudController extends AbstractController
             $entityManager->persist($solicitud);
             $entityManager->flush();
             $context = [];
-            $context['colaborador']=$colaborador->getNombres();
+            $context['colaborador']=$colaborador?$colaborador->getNombres():'';
             $context['url']  = $this->generateUrl('solicitud_index');
             $this->notificar($mailer,'Nueva Solicitud de Venta', 'solicitud/emailNuevaSolicitud.html.twig',$context);
 
@@ -172,6 +179,7 @@ class SolicitudController extends AbstractController
                     $solicitud->setCapturaEquifax($fn);
                 }
             }
+            $solicitud->setSan($san);
             $em->persist($san);
             $em->flush();
             $to = $solicitud->getVendedor()->getUsuario()->getPhone();
@@ -214,21 +222,41 @@ class SolicitudController extends AbstractController
     /**
      * @Route("/pagar/{id}", name="solicitud_pagar", methods={"GET","POST"})
      */
-    public function pagar(Request $request, Solicitud $solicitud, WhatsappApi $wtp, LoggerInterface $logger): Response
+    public function pagar(Request $request, Solicitud $solicitud, MailerInterface $mailer, FileUploader $uploader): Response
     {
         if($solicitud->getEstado()!='APROBADA'){
             return $this->redirectToRoute('solicitud_index');
         }
-        
+        $pago = new Pago();
+        $form = $this->createForm(PagoType::class, $pago);
+        $form->handleRequest($request);
+        if($form->isValid() && $form->isSubmitted()){
+            $solicitud->setPago($pago);
+            /** @var UploadedFile $foto1 */
+            $foto1 = $form['captura']->getData();
+            if($foto1){
+                $fn = $uploader->upload($foto1,'pago-solicitud');
+                if($fn){
+                    $pago->setComprobante($fn);
+                }
+            }
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($pago);
+            $em->flush();
 
-        $to = $solicitud->getVendedor()->getUsuario()->getPhone();
-        $nro = $solicitud->getId();
-        $message = "*Makrocel* lamenta notificar que la solicitud con *NRO $nro*, ingresada a traves de la aplicacion web, ha sido *RECHAZADA*. 
-            Para mayor informacion comuniquese con un asesor. *Gracias por formar parte de nuestro equipo.*";
-        $cuid = uniqid();
-        $response = $wtp->send(urlencode($message),$to,$cuid);
-        $logger->debug($response->getContent());
-        return $this->redirectToRoute('solicitud_index');
+            $context = [];
+            $colaborador = $this->getUser()->getColaborador();
+            $context['colaborador']=$colaborador?$colaborador->getNombres():'';
+            $context['id']=$solicitud->getId();
+            $context['url'] = $this->generateUrl('solicitud_show', array('id' => $solicitud->getId()), UrlGeneratorInterface::ABSOLUTE_URL);
+
+            $this->notificar($mailer,'Se ha reportado el pago de una solicitud', 'solicitud/emailPagoSolicitud.html.twig',$context);
+            return $this->redirectToRoute('solicitud_index');
+        }
+
+        return $this->render('pago/new.html.twig',[
+            'form'=>$form->createView()
+        ]);
     }
     private function notificar(MailerInterface $mailer, $subject, $template, $context = []){
 

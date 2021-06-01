@@ -99,7 +99,6 @@ class ColaboradorController extends AbstractController
             //$pass = $passwordEncoder->encodePassword($colaborador->getUsuario(),$plain);
             //$colaborador->getUsuario()->setPassword($pass);
             $entityManager->flush();
-
             return $this->redirectToRoute('colaborador_index');
         }
         $provincias = $entityManager->getRepository('App:Provincia')->findAll();
