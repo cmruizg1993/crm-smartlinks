@@ -46,6 +46,7 @@ security:
     access_control:
       # LIBRE ACCESO PARA EL LOGIN Y REGISTRO DE VENDEDORES
          - { path: ^/login, roles: PUBLIC_ACCESS }
+         - { path: ^/reset-password, roles: PUBLIC_ACCESS }
          - { path: ^/register, roles: PUBLIC_ACCESS }
          - { path: ^/verify/email, roles: PUBLIC_ACCESS }
          - { path: ^/whatsapp, roles: PUBLIC_ACCESS }
