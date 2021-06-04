@@ -26,6 +26,19 @@
                 {{ form_widget(form.ctaBancaria,{'attr':{'class':'form-control'}}) }}
             </div>
         </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Comprobante:</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.captura,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <div class="col-8">
+                <button class="btn btn-primary" type="submit">Confirmar</button>
+            </div>
+        </div>
         {{ form_end(form) }}
     </div>
 </div>

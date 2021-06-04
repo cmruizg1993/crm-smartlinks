@@ -182,7 +182,7 @@ class SolicitudController extends AbstractController
             $solicitud->setSan($san);
             $em->persist($san);
             $em->flush();
-            $to = $solicitud->getVendedor()->getUsuario()->getPhone();
+            $to = $solicitud->getVendedor() ? $solicitud->getVendedor()->getUsuario()->getPhone(): '';
             $nro = $solicitud->getId();
             $nroSan = $san->getNumero();
             $valor = $san->getValorSuscripcion();
@@ -230,7 +230,7 @@ class SolicitudController extends AbstractController
         $pago = new Pago();
         $form = $this->createForm(PagoType::class, $pago);
         $form->handleRequest($request);
-        if($form->isValid() && $form->isSubmitted()){
+        if($form->isSubmitted() && $form->isValid() ){
             $solicitud->setPago($pago);
             /** @var UploadedFile $foto1 */
             $foto1 = $form['captura']->getData();
@@ -264,8 +264,8 @@ class SolicitudController extends AbstractController
         $emailTemplate
             ->from(new Address('crm@makrocel.com', 'Notificación'))
             //->from(new Address('software.developer3000@gmail.com', 'Notificación'))
-            ->to('eharo@makrocel.com')
-            //->to('software.developer3000@gmail.com')
+            //->to('eharo@makrocel.com')
+            ->to('software.developer3000@gmail.com')
             ->subject($subject)
             ->htmlTemplate($template);
         $emailTemplate->context($context);
