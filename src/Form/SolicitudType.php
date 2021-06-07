@@ -7,9 +7,11 @@ use App\Entity\Solicitud;
 use App\Repository\CuentaBancariaRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Valid;
 
 class SolicitudType extends AbstractType
@@ -23,6 +25,7 @@ class SolicitudType extends AbstractType
                 ]
             ])
             ->add('formaPago')
+            ->add('vendedor')
             ->add('plan')
             ->add('lat', HiddenType::class)
             ->add('lng', HiddenType::class)
@@ -32,6 +35,14 @@ class SolicitudType extends AbstractType
                     return $er->createQueryBuilder('c')->where('c.esCuentaEmpresarial=1');
                 }
             ])
+            ->add('aprobacion', FileType::class,
+                ['mapped'=>false,'required'=>false,'attr'=>['accept' => ".png,.jpg,.jpeg,.pdf"],'constraints' => [
+                    new File([
+                        'maxSize' => '2048k'])]])
+            ->add('validacion', FileType::class,
+                ['mapped'=>false,'required'=>false,'attr'=>['accept' => ".png,.jpg,.jpeg,.pdf"],'constraints' => [
+                    new File([
+                        'maxSize' => '2048k'])]])
         ;
     }
 

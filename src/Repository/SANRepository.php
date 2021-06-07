@@ -26,12 +26,10 @@ class SANRepository extends ServiceEntityRepository
     {
         $em = $this->getEntityManager();
         /* @var $query QueryBuilder */
-        $query = $em->createQuery("SELECT san,cli,soli FROM App\Entity\SAN san
-        INNER JOIN san.cliente cli 
-        INNER JOIN san.solicitud soli 
+        $query = $em->createQuery("SELECT san,cli FROM App\Entity\SAN san
+        INNER JOIN san.cliente cli  
         WHERE san.numero LIKE :param
-        OR cli.nombres LIKE :param
-        OR soli.id LIKE :param");
+        OR cli.nombres LIKE :param");
         $query->setParameter("param","%$value%");
         $data = $query->getResult();
         return $data;

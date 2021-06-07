@@ -11,8 +11,7 @@
                             value="{{ orden.san }}"
                         {% else %}
                             value=""
-                        {% endif %}
-                >
+                        {% endif %} >
             </div>
             <div class="d-none">
                 {{ form_widget(form.san,{ 'attr': {'class':'form-control','readonly':'readonly'}}) }}
@@ -61,6 +60,30 @@
             </label>
             <div class="col-8">
                 {{ form_widget(form.tecnico,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Fecha de Cierre</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.fechaEjecucion) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Serial Modem</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.serialModem,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Serial Radio</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.serialRadio,{'attr':{'class':'form-control'}}) }}
             </div>
         </div>
         <div class="form-group row justify-content-end">

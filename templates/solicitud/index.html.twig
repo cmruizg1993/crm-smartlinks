@@ -13,8 +13,10 @@
                 <th>Id</th>
                 <th>Vendedor</th>
                 <th>Cliente</th>
+                <th>SAN</th>
                 <th>Fecha</th>
                 <th>Estado</th>
+                <th>Pago</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -24,8 +26,20 @@
                 <td>{{ solicitud.id }}</td>
                 <td>{{ solicitud.vendedor }}</td>
                 <td>{{ solicitud.cliente }}</td>
+                <td>{{ solicitud.san }}</td>
                 <td>{{ solicitud.fecha ? solicitud.fecha|date('Y-m-d') : '' }}</td>
                 <td>{{ solicitud.estado }}</td>
+                <td>
+                    {% if solicitud.pago %}
+                        <p>
+                            PAGADA
+                        </p>
+                    {% else %}
+                        <p>
+                            SIN PAGO
+                        </p>
+                    {% endif %}
+                </td>
                 <td>
                     <a href="{{ path('solicitud_show', {'id': solicitud.id}) }}" class="btn btn-primary btn-sm" title="MOSTRAR">
                         <i class="fa fa-eye"></i>
@@ -43,7 +57,7 @@
                             </button>
                         </p>
                     {% endif %}
-                    {% if solicitud.estado == 'APROBADA' %}
+                    {% if solicitud.estado == 'APROBADA' and not solicitud.pago %}
                         <p>
                             <a href="{{ path('solicitud_pagar', {'id': solicitud.id}) }}" class="btn btn-success btn-sm" title="PAGAR">
                                 <i class="fa fa-dollar"></i>

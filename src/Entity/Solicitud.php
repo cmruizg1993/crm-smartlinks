@@ -94,7 +94,7 @@ class Solicitud
     private $validacionEquifax;
 
     /**
-     * @ORM\OneToOne(targetEntity=SAN::class, inversedBy="solicitud", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=SAN::class, cascade={"persist", "remove"})
      */
     private $san;
 

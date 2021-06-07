@@ -67,6 +67,21 @@ class Orden
      * @ORM\ManyToMany(targetEntity=Seriado::class, inversedBy="ordenes")
      */
     private $equipos;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $fechaEjecucion;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $serialModem;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $serialRadio;
     
 
     public function __construct()
@@ -243,6 +258,42 @@ class Orden
     public function removeEquipo(Seriado $equipo): self
     {
         $this->equipos->removeElement($equipo);
+
+        return $this;
+    }
+
+    public function getFechaEjecucion(): ?\DateTimeInterface
+    {
+        return $this->fechaEjecucion;
+    }
+
+    public function setFechaEjecucion(?\DateTimeInterface $fechaEjecucion): self
+    {
+        $this->fechaEjecucion = $fechaEjecucion;
+
+        return $this;
+    }
+
+    public function getSerialModem(): ?string
+    {
+        return $this->serialModem;
+    }
+
+    public function setSerialModem(?string $serialModem): self
+    {
+        $this->serialModem = $serialModem;
+
+        return $this;
+    }
+
+    public function getSerialRadio(): ?string
+    {
+        return $this->serialRadio;
+    }
+
+    public function setSerialRadio(?string $serialRadio): self
+    {
+        $this->serialRadio = $serialRadio;
 
         return $this;
     }

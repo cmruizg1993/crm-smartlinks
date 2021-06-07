@@ -52,13 +52,12 @@ class SolicitudController extends AbstractController
     /**
      * @Route("/new", name="solicitud_new", methods={"GET","POST"})
      */
-    public function new(Request $request, FormaPagoRepository $formaPagoRepository, ClienteRepository $clienteRepository, MailerInterface $mailer): Response
+    public function new(Request $request, FormaPagoRepository $formaPagoRepository, ClienteRepository $clienteRepository, MailerInterface $mailer, FileUploader $uploader): Response
     {
         $solicitud = new Solicitud();
 
         $form = $this->createForm(SolicitudType::class, $solicitud);
         $form->handleRequest($request);
-        dump($solicitud);
 
         $fpago = $solicitud->getFormaPago();
         if(!$fpago){
@@ -72,13 +71,32 @@ class SolicitudController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /* @var $user Usuario */
             $user = $this->getUser();
-            $colaborador = $user->getColaborador();
-            if($colaborador){
-                $solicitud->setVendedor($colaborador);
+            if (!$this->isGranted('ROLE_ADMIN')){
+                $colaborador = $user->getColaborador();
+                if($colaborador){
+                    $solicitud->setVendedor($colaborador);
+                }
             }
 
             $solicitud->setEstado('PENDIENTE');
             $solicitud->setFecha(new \DateTime());
+            /** @var UploadedFile $foto1 */
+            $foto1 = $form['aprobacion']->getData();
+            if($foto1){
+                $fn1 = $uploader->upload($foto1,'aprobacionEquifax');
+                if($fn1){
+                    $solicitud->setAprobacionEquifax($fn1);
+                }
+            }
+            /** @var UploadedFile $foto2 */
+            $foto2 = $form['validacion']->getData();
+            if($foto2){
+                $fn2 = $uploader->upload($foto2,'validacionEquifax');
+                if($fn2){
+                    $solicitud->setCapturaEquifax($fn2);
+                }
+            }
+
             $old_client = $clienteRepository->findOneByNumeroDni($solicitud->getCliente()->getDni()->getNumero());
             if($old_client){
                 $solicitud->setCliente($old_client);
@@ -113,12 +131,16 @@ class SolicitudController extends AbstractController
     /**
      * @Route("/{id}/edit", name="solicitud_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Solicitud $solicitud): Response
+    public function edit(Request $request, Solicitud $solicitud, ClienteRepository $clienteRepository): Response
     {
         $form = $this->createForm(SolicitudType::class, $solicitud);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $old_client = $clienteRepository->findOneByNumeroDni($solicitud->getCliente()->getDni()->getNumero());
+            if($old_client){
+                $solicitud->setCliente($old_client);
+            }
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('solicitud_index');
@@ -156,9 +178,7 @@ class SolicitudController extends AbstractController
         $form = $this->createFormBuilder($san)
             ->add('numero')
             ->add('valorSuscripcion')
-            ->add('direccion')
-            ->add('parroquia')
-            ->add('capturaEquifax',FileType::class,[
+            ->add('capturaSan',FileType::class,[
                 'mapped'=>false
             ])
             ->getForm();
@@ -172,7 +192,7 @@ class SolicitudController extends AbstractController
             $san->setPlan($solicitud->getPlan());
             $em = $this->getDoctrine()->getManager();
             /** @var UploadedFile $foto1 */
-            $foto1 = $form['capturaEquifax']->getData();
+            $foto1 = $form['capturaSan']->getData();
             if($foto1){
                 $fn = $uploader->upload($foto1,'solicitudesAprobadas');
                 if($fn){
@@ -186,11 +206,13 @@ class SolicitudController extends AbstractController
             $nro = $solicitud->getId();
             $nroSan = $san->getNumero();
             $valor = $san->getValorSuscripcion();
-            $message = "*Makrocel* notifica la *APROBACION* de la solicitud con *NRO $nro*. Ingresada a través de la aplicacion web. 
+            if($to){
+                $message = "*Makrocel* notifica la *APROBACION* de la solicitud con *NRO $nro*. Ingresada a través de la aplicacion web. 
             El nro de SAN asociado es $nroSan y el valor de suscripcion es de: USD  $valor. *Gracias por formar parte de nuestro equipo.*";
-            $cuid = uniqid();
-            $response = $wtp->send(urlencode($message),$to,$cuid);
-            $logger->debug($response->getContent());
+                $cuid = uniqid();
+                $response = $wtp->send(urlencode($message),$to,$cuid);
+                $logger->debug($response->getContent());
+            }
             return $this->redirectToRoute('solicitud_index');
         }
         return $this->render('solicitud/aprobar.html.twig', [

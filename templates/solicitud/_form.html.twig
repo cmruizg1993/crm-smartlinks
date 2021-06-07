@@ -1,6 +1,22 @@
 <div class="row justify-content-center">
     <div class="col-md-8">
         {{ form_start(form,{'attr':{'novalidate':'novalidate','id':'solicitud_form'}}) }}
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="form-group row justify-content-end">
+                <label for="" class="col-form-label col-4">
+                    <span class="float-right">Vendedor</span>
+                </label>
+                <div class="col-8">
+                    {{ form_widget(form.vendedor,{'attr':{'class':'form-control'}}) }}
+                </div>
+            </div>
+        {% else %}
+            <div class="d-none">
+                <div class="col-8">
+                    {{ form_widget(form.vendedor,{'attr':{'class':'form-control'}}) }}
+                </div>
+            </div>
+        {% endif %}
         <div class="form-group row justify-content-end">
             <label for="" class="col-form-label col-4">
                 <span class="float-right">Tipo DNI</span>
@@ -165,6 +181,22 @@
             </label>
             <div class="col-8">
                 {{ form_widget(form.cliente.otro,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Aprobación Equifax</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.aprobacion,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Valición Equifax</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.validacion,{'attr':{'class':'form-control'}}) }}
             </div>
         </div>
         <div class="form-group row justify-content-end">

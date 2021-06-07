@@ -76,10 +76,7 @@ class SAN
      */
     private $valorSuscripcion;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Solicitud::class, mappedBy="san", cascade={"persist", "remove"})
-     */
-    private $solicitud;
+
     public function __toString()
     {
         // TODO: Implement __toString() method.
