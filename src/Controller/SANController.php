@@ -92,4 +92,39 @@ class SANController extends AbstractController
 
         return $this->redirectToRoute('s_a_n_index');
     }
+
+    /**
+     * @Route("/buscarsan", name="buscar_san", methods={"POST"})
+     */
+    public function buscarParroquia(Request $request): Response
+    {
+        $param = $request->request->get('param');
+        $html = '<tr><td colspan="4">No se encontraron datos</td></tr>';
+        if($param){
+            $em =$this->getDoctrine()->getManager();
+            $sans = $em->getRepository("App:SAN")->findByParam($param);
+            //dump($parroquias);
+            /* @var $serializer Serializer */
+            $serializer = $this->get('serializer');
+            $data = $serializer->normalize($sans, null, [AbstractNormalizer::ATTRIBUTES=>
+                [
+                    'id',
+                    'numero',
+                    'cliente'=>[
+                        'id',
+                        'nombre',                        
+                    ],
+                    'parroquia'=>[
+                        'nombre'
+                    ],
+                    'solicitud'=>[
+                        'id'
+                    ]
+                ]
+            ]);
+            $html = $this->renderView('san/sans.html.twig',['parroquias'=>$data]);
+        }
+        dump($html);
+        return new Response($html);
+    }
 }

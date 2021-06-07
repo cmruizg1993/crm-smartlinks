@@ -22,10 +22,12 @@ class OrdenController extends AbstractController
     /**
      * @Route("/", name="orden_index", methods={"GET"})
      */
-    public function index(OrdenRepository $ordenRepository): Response
+    public function index(Request $request , OrdenRepository $ordenRepository): Response
     {
+        $page = $request->get('page') ? $request->get('page')-1: 0;
+        $offset = $page*25;
         return $this->render('orden/index.html.twig', [
-            'ordens' => $ordenRepository->findAll(),
+            'ordens' => $ordenRepository->findBy([],[],25,$offset),
         ]);
     }
 

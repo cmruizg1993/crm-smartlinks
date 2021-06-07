@@ -1,0 +1,17 @@
+
+{% for san in sans %}
+    <tr>
+        <td>
+            <input type="radio" name="san_id" value="{{ san.id }}"
+            data-san="{{ san.numero }}">
+        </td>
+        <td>{{ san.numero }}</td>
+        <td>
+        {% if san.solicitud %}
+            {{ san.solicitud.id }}
+        {% endif %}
+        </td>
+        <td>{{ san.cliente.nombres }}</td>
+        <td>{{ san.parroquia.nombre }}</td>
+    </tr>                        
+{% endfor %}

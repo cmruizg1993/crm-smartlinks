@@ -18,6 +18,25 @@ class SANRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, SAN::class);
     }
+    /**
+    * @return Parroquia[] Returns an array of Parroquia objects
+    *
+    */
+    public function findByParam($value)
+    {
+        $em = $this->getEntityManager();
+        /* @var $query QueryBuilder */
+        $query = $em->createQuery("SELECT san,cli,soli FROM App\Entity\SAN san
+        INNER JOIN san.cliente cli 
+        INNER JOIN san.solicitud soli 
+        WHERE san.numero LIKE :param
+        OR cli.nombres LIKE :param
+        OR soli.id LIKE :param");
+        $query->setParameter("param","%$value%");
+        $data = $query->getResult();
+        return $data;
+       
+    }
 
     // /**
     //  * @return SAN[] Returns an array of SAN objects
