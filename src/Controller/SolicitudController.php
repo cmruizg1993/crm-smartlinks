@@ -286,8 +286,8 @@ class SolicitudController extends AbstractController
         $emailTemplate
             ->from(new Address('crm@makrocel.com', 'Notificación'))
             //->from(new Address('software.developer3000@gmail.com', 'Notificación'))
-            //->to('eharo@makrocel.com')
-            ->to('software.developer3000@gmail.com')
+            ->to('eharo@makrocel.com')
+            //->to('software.developer3000@gmail.com')
             ->subject($subject)
             ->htmlTemplate($template);
         $emailTemplate->context($context);
