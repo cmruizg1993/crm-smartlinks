@@ -48,7 +48,7 @@ class Orden
     private $observaciones;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Colaborador::class, inversedBy="ordenes",cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Colaborador::class, inversedBy="ordenes")
      * @ORM\JoinColumn(nullable=true)
      */
     private $tecnico;

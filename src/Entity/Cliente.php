@@ -50,7 +50,7 @@ class Cliente
 
     /**
      * HACE REFERENCIA A LOS CONTRATOS CON CLARO
-     * @ORM\OneToMany(targetEntity=Solicitud::class, mappedBy="cliente")
+     * @ORM\OneToMany(targetEntity=Solicitud::class, mappedBy="cliente", cascade={"persist", "remove"})
      */
     private $solicitudes;
 

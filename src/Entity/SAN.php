@@ -75,7 +75,10 @@ class SAN
      * @ORM\Column(type="float", nullable=true)
      */
     private $valorSuscripcion;
-
+    /**
+     * @ORM\OneToOne(targetEntity=Solicitud::class, mappedBy="san",cascade={"persist", "remove"})
+     */
+    private $solicitud;
 
     public function __toString()
     {
