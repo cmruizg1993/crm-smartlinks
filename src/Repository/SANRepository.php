@@ -35,6 +35,17 @@ class SANRepository extends ServiceEntityRepository
         return $data;
        
     }
+    public function findAllRegisters()
+    {
+        $em = $this->getEntityManager();
+        /* @var $query QueryBuilder */
+        $query = $em->createQuery("SELECT san,cli FROM App\Entity\SAN san
+        INNER JOIN san.cliente cli
+        ORDER BY san.id ASC");
+        $data = $query->getResult();
+        return $data;
+
+    }
 
     // /**
     //  * @return SAN[] Returns an array of SAN objects

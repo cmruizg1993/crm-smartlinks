@@ -22,12 +22,20 @@
         {% for orden in ordens %}
             <tr>
                 <td>{{ orden.id }}</td>
-                <td>{{ orden.tecnico }}</td>
-                <td>{{ orden.tipo }}</td>
-                <td>{{ orden.san }}</td>
+                <td>
+                    {% if orden.tecnico %}
+                        {{ orden.tecnico.nombres }}
+                    {% endif %}
+                </td>
+                <td>{{ orden.tipo.nombre }}</td>
+                <td>
+                    {% if orden.san %}
+                        {{ orden.san.numero }}
+                    {% endif %}
+                </td>
                 <td>{{ orden.codigo }}</td>
                 <td>{{ orden.fecha ? orden.fecha|date('Y-m-d') : '' }}</td>
-                <td>{{ orden.estado }}</td>
+                <td>{{ orden.estado.nombre }}</td>
                 <td>
                     <a href="{{ path('orden_show', {'id': orden.id}) }}">show</a>
                     <a href="{{ path('orden_edit', {'id': orden.id}) }}">edit</a>

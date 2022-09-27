@@ -41,10 +41,11 @@ class SAN
      */
     private $plan;
 
-    /**
+    /*
      * @ORM\OneToMany(targetEntity=Orden::class, mappedBy="san", cascade={"persist", "remove"})
-     */
+
     private $ordenes;
+    */
 
     /**
      * @ORM\ManyToOne(targetEntity=Parroquia::class, inversedBy="sans")
@@ -76,7 +77,8 @@ class SAN
      */
     private $valorSuscripcion;
     /**
-     * @ORM\OneToOne(targetEntity=Solicitud::class, mappedBy="san",cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Solicitud::class, inversedBy="san",cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="solicitud_id", referencedColumnName="id")
      */
     private $solicitud;
 

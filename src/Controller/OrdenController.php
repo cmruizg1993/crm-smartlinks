@@ -26,8 +26,33 @@ class OrdenController extends AbstractController
     {
         $page = $request->get('page') ? $request->get('page')-1: 0;
         $offset = $page*25;
+        $ordenes = $ordenRepository->findAll();
+        /* @var $serializer Serializer */
+        $serializer = $this->get('serializer');
+        $data = $serializer->normalize($ordenes, null, [AbstractNormalizer::ATTRIBUTES=>
+            [
+                'id',
+                'tecnico'=>
+                    [
+                        'nombres'
+                    ],
+                'tipo'=>
+                    [
+                        'nombre'
+                    ],
+                'san'=> [
+                        'numero'
+                ],
+                'codigo',
+                'estado'=>[
+                    'nombre'
+                ],
+                'fecha'
+
+            ]
+        ]);
         return $this->render('orden/index.html.twig', [
-            'ordens' => $ordenRepository->findBy([],[],25,$offset),
+            'ordens' => $data,
         ]);
     }
 

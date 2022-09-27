@@ -22,7 +22,7 @@ class SANController extends AbstractController
     public function index(SANRepository $sANRepository): Response
     {
         return $this->render('san/index.html.twig', [
-            's_a_ns' => $sANRepository->findAll(),
+            's_a_ns' => $sANRepository->findAllRegisters(),
         ]);
     }
 

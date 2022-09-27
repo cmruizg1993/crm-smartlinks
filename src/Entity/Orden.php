@@ -20,7 +20,7 @@ class Orden
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=TipoOrden::class, inversedBy="ordenes")
+     * @ORM\ManyToOne(targetEntity=TipoOrden::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $tipo;
@@ -31,13 +31,13 @@ class Orden
     private $fecha;
 
     /**
-     * @ORM\ManyToOne(targetEntity=SAN::class, inversedBy="ordenes",cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity=SAN::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $san;
 
     /**
-     * @ORM\ManyToOne(targetEntity=EstadoOrden::class, inversedBy="ordenes")
+     * @ORM\ManyToOne(targetEntity=EstadoOrden::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $estado;

@@ -33,10 +33,6 @@ class TipoOrden
      */
     private $codigo;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Orden::class, mappedBy="tipo")
-     */
-    private $ordenes;
 
     /**
      * @ORM\OneToMany(targetEntity=Comision::class, mappedBy="orden")

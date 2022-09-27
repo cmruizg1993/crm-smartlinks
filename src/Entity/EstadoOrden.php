@@ -29,10 +29,11 @@ class EstadoOrden
      */
     private $codigo;
 
-    /**
+    /*
      * @ORM\OneToMany(targetEntity=Orden::class, mappedBy="estado")
-     */
+
     private $ordenes;
+    */
     public function __toString()
     {
         // TODO: Implement __toString() method.
