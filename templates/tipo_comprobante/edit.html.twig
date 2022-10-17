@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit TipoComprobante{% endblock %}
+
+{% block body %}
+    <h1>Edit TipoComprobante</h1>
+
+    {{ include('tipo_comprobante/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('tipo_comprobante_index') }}">back to list</a>
+
+    {{ include('tipo_comprobante/_delete_form.html.twig') }}
+{% endblock %}

@@ -22,7 +22,8 @@ class DniType extends AbstractType
                     ])
                 ]
             ])
-            ->add('fecha_exp')
+            //->add('fecha_exp')
+                /*
             ->add('foto_frontal', FileType::class,
                 ['mapped'=>false,'required'=>false,'attr'=>['accept' => ".png,.jpg,.jpeg"],'constraints' => [
                     new File([
@@ -30,7 +31,7 @@ class DniType extends AbstractType
             ->add('foto_posterior', FileType::class,
                 ['mapped'=>false,'required'=>false,'attr'=>['accept' => ".png,.jpg,.jpeg"],'constraints' => [
                     new File([
-                        'maxSize' => '1024k'])]])
+                        'maxSize' => '1024k'])]])*/
             ->add('tipo')
         ;
     }

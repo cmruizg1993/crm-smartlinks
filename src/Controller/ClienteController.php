@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Cliente;
 use App\Entity\Dni;
-use App\Entity\SAN;
+use App\Entity\Contrato;
 use App\Form\ClienteType;
 use App\Repository\ClienteRepository;
 use App\Repository\DniRepository;
@@ -48,9 +48,8 @@ class ClienteController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($cliente);
             $entityManager->flush();
-
-
             /** @var UploadedFile $foto1 */
+            /*
             $foto1 = $form['dni']['foto_frontal']->getData();
             if($foto1){
                 $fn = $uploader->upload($foto1,$cliente->getDni()->getId());
@@ -72,6 +71,7 @@ class ClienteController extends AbstractController
                     $cliente->setOtro($fn);
                 }
             }
+            */
             $entityManager->flush();
             return $this->redirectToRoute('cliente_index');
         }
@@ -103,6 +103,7 @@ class ClienteController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             /** @var UploadedFile $foto1 */
+            /*
             $foto1 = $form['dni']['foto_frontal']->getData();
             if($foto1){
                 $fn = $uploader->upload($foto1,$cliente->getDni()->getId());
@@ -124,6 +125,7 @@ class ClienteController extends AbstractController
                     $cliente->setOtro($fn);
                 }
             }
+            */
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('cliente_index');
         }
@@ -161,20 +163,7 @@ class ClienteController extends AbstractController
         $cliente = $clienteRepository->findOneByNumeroDni($ci);
 
         if($cliente){
-            $data[0]["name"] = $cliente->getNombres();
-            $data[0]["genre"] = $cliente->getGenero();
-            $data[0]["residence"] = $cliente->getResidencia();
-            $data[0]["nationality"] = $cliente->getNacionalidad();
-            $data[0]["streets"] = $cliente->getDireccion();
-            $data[0]["fingerprint"] = $cliente->getFingerprint();
-            $data[0]["civilstate"] = $cliente->getEstadoCivil();
-            $data[0]["dob"] = $cliente->getFechaNacimiento()->format('d/m/Y');
-            $data[0]["email"] = $cliente->getEmail();
-            $data[0]["dni_type"] = $cliente->getDni()->getTipo()->getId();
-            $data[0]["phone"] = $cliente->getTelefono();
-            $data[0]["fix_phone"] = $cliente->getTelefonoFijo();
-            $data[0]["exp_date"] = $cliente->getDni()->getFechaExp() ? $cliente->getDni()->getFechaExp()->format('d/m/Y'):null;
-
+            $data[0] = $cliente->getData();
         }else{
             if($ci){
                 $uri = 'http://certificados.ministeriodegobierno.gob.ec/gestorcertificados/antecedentes/data.php';
@@ -184,18 +173,19 @@ class ClienteController extends AbstractController
                 $data = json_decode($response->getContent());
             }
         }
+
         return new JsonResponse($data);
     }
 
     /**
-     * @Route("/sincronizar", name="sincronizar_cliente_san", methods={"POST"})
+     * @Route("/sincronizar", name="sincronizar_cliente_Contrato", methods={"POST"})
      */
     public function sincronizar(Request $request, HttpClientInterface $client): Response
     {
         $ci = $request->request->get('cedula');
-        $nsan = $request->request->get('san');
+        $nContrato = $request->request->get('Contrato');
 
-        if($ci && $nsan){
+        if($ci && $nContrato){
             $ci = strlen($ci) == 9 ? "0".$ci:$ci;
 
             if(strlen($ci)==10){
@@ -210,13 +200,13 @@ class ClienteController extends AbstractController
                     $em = $this->getDoctrine()->getManager();
                     $tipodni = $em->getRepository('App:TipoDNI')->findOneByCodigo('CI');
 
-                    /* @var $san SAN */
-                    $san = $em->getRepository('App:SAN')->findOneByNumero($nsan);
-                    if($san){
+                    /* @var $Contrato Contrato */
+                    $Contrato = $em->getRepository('App:Contrato')->findOneByNumero($nContrato);
+                    if($Contrato){
                         $dni = new Dni();
                         $dni->setNumero($ci);
                         $dni->setTipo($tipodni);
-                        $cliente = $san->getCliente();
+                        $cliente = $Contrato->getCliente();
                         $cliente->setNombres($data->name);
                         $cliente->setGenero($data->genre);
                         $fecha = \DateTime::createFromFormat('d/m/Y',$data->dob);
@@ -231,7 +221,7 @@ class ClienteController extends AbstractController
                     }else{
                         $data = [
                             "error"=>true,
-                            "mensaje"=>"No se ha encontrado la SAN $nsan"
+                            "mensaje"=>"No se ha encontrado la Contrato $nContrato"
                         ];
                     }
                 }else{
@@ -249,7 +239,7 @@ class ClienteController extends AbstractController
         }else{
             $data = [
                 "error"=>true,
-                "mensaje"=>"No se recibio la san o cedula"
+                "mensaje"=>"No se recibio la Contrato o cedula"
             ];
         }
         return new JsonResponse($data);

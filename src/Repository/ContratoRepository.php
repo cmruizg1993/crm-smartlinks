@@ -18,6 +18,34 @@ class ContratoRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Contrato::class);
     }
+    /**
+    * @return Parroquia[] Returns an array of Parroquia objects
+    *
+    */
+    public function findByParam($value)
+    {
+        $em = $this->getEntityManager();
+        /* @var $query QueryBuilder */
+        $query = $em->createQuery("SELECT Contrato,cli FROM App\Entity\Contrato Contrato
+        INNER JOIN Contrato.cliente cli  
+        WHERE Contrato.numero LIKE :param
+        OR cli.nombres LIKE :param");
+        $query->setParameter("param","%$value%");
+        $data = $query->getResult();
+        return $data;
+       
+    }
+    public function findAllRegisters()
+    {
+        $em = $this->getEntityManager();
+        /* @var $query QueryBuilder */
+        $query = $em->createQuery("SELECT Contrato,cli FROM App\Entity\Contrato Contrato
+        INNER JOIN Contrato.cliente cli
+        ORDER BY Contrato.id ASC");
+        $data = $query->getResult();
+        return $data;
+
+    }
 
     // /**
     //  * @return Contrato[] Returns an array of Contrato objects
@@ -25,10 +53,10 @@ class ContratoRepository extends ServiceEntityRepository
     /*
     public function findByExampleField($value)
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
+            ->orderBy('s.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
@@ -39,8 +67,8 @@ class ContratoRepository extends ServiceEntityRepository
     /*
     public function findOneBySomeField($value): ?Contrato
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()

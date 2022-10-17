@@ -2,26 +2,29 @@
 
 namespace App\Controller;
 
+use App\Entity\Cliente;
 use App\Entity\Contrato;
+use App\Entity\EquipoInstalacion;
 use App\Form\ContratoType;
 use App\Repository\ContratoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 
 /**
- * @Route("/contrato")
+ * @Route("contrato")
  */
 class ContratoController extends AbstractController
 {
     /**
      * @Route("/", name="contrato_index", methods={"GET"})
      */
-    public function index(ContratoRepository $contratoRepository): Response
+    public function index(ContratoRepository $ContratoRepository): Response
     {
-        return $this->render('contrato/index.html.twig', [
-            'contratos' => $contratoRepository->findAll(),
+        return $this->render('Contrato/index.html.twig', [
+            'contratos' => $ContratoRepository->findAllRegisters(),
         ]);
     }
 
@@ -30,20 +33,42 @@ class ContratoController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $contrato = new Contrato();
-        $form = $this->createForm(ContratoType::class, $contrato);
+        $Contrato = new Contrato();
+        $Contrato->setFecha(new \DateTime());
+        $form = $this->createForm(ContratoType::class, $Contrato);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($contrato);
+            $clientRepository = $entityManager->getRepository('App:Cliente');
+
+            $dni = $Contrato->getCliente()->getDni()->getNumero();
+            /**
+             * @var $oldClient Cliente|null
+             */
+            $oldClient = $clientRepository->findOneByNumeroDni($dni);
+            if($oldClient){
+                $Contrato->setCliente($oldClient);
+            }
+            $equipos = json_decode($form['equiposjson']->getData());
+            foreach ($equipos as $e){
+                $equipoInstalacion = new EquipoInstalacion();
+                $equipo = $entityManager->getRepository('App:Equipo')->find($e->id);
+                $equipoInstalacion->setEquipo($equipo);
+                if($e->esSeriado)
+                    $equipoInstalacion->setSerie($e->serial);
+                $equipoInstalacion->setCantidad($e->cantidad);
+                $equipoInstalacion->setContrato($Contrato);
+                $Contrato->addEquipo($equipoInstalacion);
+            }
+            $entityManager->persist($Contrato);
             $entityManager->flush();
 
             return $this->redirectToRoute('contrato_index');
         }
 
-        return $this->render('contrato/new.html.twig', [
-            'contrato' => $contrato,
+        return $this->render('Contrato/new.html.twig', [
+            'contrato' => $Contrato,
             'form' => $form->createView(),
         ]);
     }
@@ -51,19 +76,20 @@ class ContratoController extends AbstractController
     /**
      * @Route("/{id}", name="contrato_show", methods={"GET"})
      */
-    public function show(Contrato $contrato): Response
+    public function show(Contrato $Contrato): Response
     {
-        return $this->render('contrato/show.html.twig', [
-            'contrato' => $contrato,
+        return $this->render('Contrato/show.html.twig', [
+            'contrato' => $Contrato,
         ]);
     }
 
     /**
      * @Route("/{id}/edit", name="contrato_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Contrato $contrato): Response
+    public function edit(Request $request, Contrato $Contrato): Response
     {
-        $form = $this->createForm(ContratoType::class, $contrato);
+        dump($Contrato);
+        $form = $this->createForm(ContratoType::class, $Contrato);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -72,8 +98,8 @@ class ContratoController extends AbstractController
             return $this->redirectToRoute('contrato_index');
         }
 
-        return $this->render('contrato/edit.html.twig', [
-            'contrato' => $contrato,
+        return $this->render('Contrato/edit.html.twig', [
+            'contrato' => $Contrato,
             'form' => $form->createView(),
         ]);
     }
@@ -81,14 +107,54 @@ class ContratoController extends AbstractController
     /**
      * @Route("/{id}", name="contrato_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Contrato $contrato): Response
+    public function delete(Request $request, Contrato $Contrato): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$contrato->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$Contrato->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($contrato);
+            $entityManager->remove($Contrato);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('contrato_index');
+    }
+
+    /**
+     * @Route("/buscarContrato", name="buscar_Contrato", methods={"POST"})
+     */
+    public function buscarContrato(Request $request): Response
+    {
+        $param = $request->request->get('param');
+        $html = '<tr><td colspan="4">No se encontraron datos</td></tr>';
+        if($param){
+            $em =$this->getDoctrine()->getManager();
+            $Contratos = $em->getRepository("App:Contrato")->findByParam($param);
+            //dump($parroquias);
+            /* @var $serializer Serializer */
+            $serializer = $this->get('serializer');
+            $data = $serializer->normalize($Contratos, null, [AbstractNormalizer::ATTRIBUTES=>
+                [
+                    'id',
+                    'numero',
+                    'cliente'=>[
+                        'id',
+                        'nombres',
+                        'dni'=>[
+                            'numero'
+                        ]
+                    ],
+                    'parroquia'=>[
+                        'nombre'
+                    ],
+                    'plan'=>[
+                        'id',
+                        'codigo',
+                        'nombre',
+                        'costo'
+                    ]
+                ]
+            ]);
+            $html = $this->renderView('Contrato/Contratos.html.twig',['Contratos'=>$data]);
+        }
+        return new Response($html);
     }
 }

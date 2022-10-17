@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 
 /**
  * @Route("/equipo")
@@ -90,5 +91,31 @@ class EquipoController extends AbstractController
         }
 
         return $this->redirectToRoute('equipo_index');
+    }
+
+    /**
+     * @Route("/buscarEquipo", name="buscar_equipo", methods={"POST"})
+     */
+    public function buscarEquipo(Request $request): Response
+    {
+        $param = $request->request->get('param');
+        $response = '<tr><td colspan="4">No se encontraron datos</td></tr>';
+        if($param){
+            $em =$this->getDoctrine()->getManager();
+            $equipos = $em->getRepository("App:Equipo")->findByParam($param);
+            //dump($parroquias);
+            /* @var $serializer Serializer */
+            $serializer = $this->get('serializer');
+            $data = $serializer->normalize($equipos, null, [AbstractNormalizer::ATTRIBUTES=>
+                [
+                    'id',
+                    'nombre',
+                    'codigo',
+                    'esSeriado'
+                ]
+            ]);
+            $response = $this->renderView('equipo/equipos.html.twig',['equipos'=>$data]);
+        }
+        return new Response($response);
     }
 }

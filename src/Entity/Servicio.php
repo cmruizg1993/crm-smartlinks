@@ -20,20 +20,35 @@ class Servicio
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=255)
      */
     private $nombre;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Proveedor::class, inversedBy="servicios")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $proveedor;
 
     /**
-     * @ORM\OneToMany(targetEntity=Plan::class, mappedBy="servicio")
+     * @ORM\OneToMany(targetEntity=Contrato::class, mappedBy="plan", cascade={"persist", "remove"})
      */
-    private $planes;
+    private $Contratos;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $activo;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $costo;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Solicitud::class, mappedBy="plan")
+     */
+    private $solicitudes;
+
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $codigo;
 
     public function __toString()
     {
@@ -41,7 +56,9 @@ class Servicio
     }
     public function __construct()
     {
-        $this->planes = new ArrayCollection();
+        $this->solicitudes = new ArrayCollection();
+        $this->contratos = new ArrayCollection();
+        $this->Contratos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -61,44 +78,110 @@ class Servicio
         return $this;
     }
 
-    public function getProveedor(): ?Proveedor
+    public function getServicio(): ?Servicio
     {
-        return $this->proveedor;
+        return $this->servicio;
     }
 
-    public function setProveedor(?Proveedor $proveedor): self
+    public function setServicio(?Servicio $servicio): self
     {
-        $this->proveedor = $proveedor;
+        $this->servicio = $servicio;
 
         return $this;
     }
 
     /**
-     * @return Collection|Plan[]
+     * @return Collection|Contrato[]
      */
-    public function getPlanes(): Collection
+    public function getContratos(): Collection
     {
-        return $this->planes;
+        return $this->Contratos;
     }
 
-    public function addPlane(Plan $plane): self
+    public function addContrato(Contrato $Contrato): self
     {
-        if (!$this->planes->contains($plane)) {
-            $this->planes[] = $plane;
-            $plane->setServicio($this);
+        if (!$this->Contratos->contains($Contrato)) {
+            $this->Contratos[] = $Contrato;
+            $Contrato->setPlan($this);
         }
 
         return $this;
     }
 
-    public function removePlane(Plan $plane): self
+    public function removeContrato(Contrato $Contrato): self
     {
-        if ($this->planes->removeElement($plane)) {
+        if ($this->Contratos->removeElement($Contrato)) {
             // set the owning side to null (unless already changed)
-            if ($plane->getServicio() === $this) {
-                $plane->setServicio(null);
+            if ($Contrato->getPlan() === $this) {
+                $Contrato->setPlan(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getActivo(): ?bool
+    {
+        return $this->activo;
+    }
+
+    public function setActivo(?bool $activo): self
+    {
+        $this->activo = $activo;
+
+        return $this;
+    }
+
+    public function getCosto(): ?float
+    {
+        return $this->costo;
+    }
+
+    public function setCosto(?float $costo): self
+    {
+        $this->costo = $costo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Solicitud[]
+     */
+    public function getSolicitudes(): Collection
+    {
+        return $this->solicitudes;
+    }
+
+    public function addSolicitude(Solicitud $solicitude): self
+    {
+        if (!$this->solicitudes->contains($solicitude)) {
+            $this->solicitudes[] = $solicitude;
+            $solicitude->setPlan($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSolicitude(Solicitud $solicitude): self
+    {
+        if ($this->solicitudes->removeElement($solicitude)) {
+            // set the owning side to null (unless already changed)
+            if ($solicitude->getPlan() === $this) {
+                $solicitude->setPlan(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCodigo(): ?string
+    {
+        return $this->codigo;
+    }
+
+    public function setCodigo(string $codigo): self
+    {
+        $this->codigo = $codigo;
 
         return $this;
     }

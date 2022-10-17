@@ -14,8 +14,8 @@
           "10107": "HUAYNACÁPAC",
           "10108": "MACHÁNGARA",
           "10109": "MONAY",
-          "10110": "SAN BLAS",
-          "10111": "SAN SEBASTIÁN",
+          "10110": "Contrato BLAS",
+          "10111": "Contrato SEBASTIÁN",
           "10112": "SUCRE",
           "10113": "TOTORACOCHA",
           "10114": "YANUNCAY",
@@ -29,12 +29,12 @@
           "10156": "LLACAO",
           "10157": "MOLLETURO",
           "10158": "NULTI",
-          "10159": "OCTAVIO CORDERO PALACIOS (SANTA ROSA)",
+          "10159": "OCTAVIO CORDERO PALACIOS (ContratoTA ROSA)",
           "10160": "PACCHA",
           "10161": "QUINGEO",
           "10162": "RICAURTE",
-          "10163": "SAN JOAQUÍN",
-          "10164": "SANTA ANA",
+          "10163": "Contrato JOAQUÍN",
+          "10164": "ContratoTA ANA",
           "10165": "SAYAUSÍ",
           "10166": "SIDCAY",
           "10167": "SININCAY",
@@ -49,7 +49,7 @@
         "parroquias": {
           "10250": "GIRÓN",
           "10251": "ASUNCIÓN",
-          "10252": "SAN GERARDO"
+          "10252": "Contrato GERARDO"
         }
       },
       "103": {
@@ -62,7 +62,7 @@
           "10354": "MARIANO MORENO",
           "10355": "PRINCIPAL",
           "10356": "REMIGIO CRESPO TORAL (GÚLAG)",
-          "10357": "SAN JUAN",
+          "10357": "Contrato JUAN",
           "10358": "ZHIDMAD",
           "10359": "LUIS CORDERO VEGA",
           "10360": "SIMÓN BOLÍVAR (CAB. EN GAÑANZOL)"
@@ -90,7 +90,7 @@
           "10556": "GUARAINAG",
           "10557": "PALMAS",
           "10558": "PAN",
-          "10559": "SAN CRISTÓBAL (CARLOS ORDÓÑEZ LAZO)",
+          "10559": "Contrato CRISTÓBAL (CARLOS ORDÓÑEZ LAZO)",
           "10560": "SEVILLA DE ORO",
           "10561": "TOMEBAMBA",
           "10562": "DUG DUG"
@@ -101,24 +101,24 @@
         "parroquias": {
           "10650": "PUCARÁ",
           "10651": "CAMILO PONCE ENRÍQUEZ (CAB. EN RÍO 7 DE MOLLEPONGO)",
-          "10652": "SAN RAFAEL DE SHARUG"
+          "10652": "Contrato RAFAEL DE SHARUG"
         }
       },
       "107": {
-        "canton": "SAN FERNANDO",
+        "canton": "Contrato FERNANDO",
         "parroquias": {
-          "10750": "SAN FERNANDO",
+          "10750": "Contrato FERNANDO",
           "10751": "CHUMBLÍN"
         }
       },
       "108": {
-        "canton": "SANTA ISABEL",
+        "canton": "ContratoTA ISABEL",
         "parroquias": {
-          "10850": "SANTA ISABEL (CHAGUARURCO)",
+          "10850": "ContratoTA ISABEL (CHAGUARURCO)",
           "10851": "ABDÓN CALDERÓN (LA UNIÓN)",
           "10852": "EL CARMEN DE PIJILÍ",
           "10853": "ZHAGLLI (SHAGLLI)",
-          "10854": "SAN SALVADOR DE CAÑARIBAMBA"
+          "10854": "Contrato SALVADOR DE CAÑARIBAMBA"
         }
       },
       "109": {
@@ -129,14 +129,14 @@
           "10952": "GIMA",
           "10953": "GUEL",
           "10954": "LUDO",
-          "10955": "SAN BARTOLOMÉ",
-          "10956": "SAN JOSÉ DE RARANGA"
+          "10955": "Contrato BARTOLOMÉ",
+          "10956": "Contrato JOSÉ DE RARANGA"
         }
       },
       "110": {
         "canton": "OÑA",
         "parroquias": {
-          "11050": "SAN FELIPE DE OÑA CABECERA CANTONAL",
+          "11050": "Contrato FELIPE DE OÑA CABECERA CANTONAL",
           "11051": "SUSUDEL"
         }
       },
@@ -147,7 +147,7 @@
           "11151": "PRINCIPAL",
           "11152": "LA UNIÓN",
           "11153": "LUIS GALARZA ORELLANA (CAB.EN DELEGSOL)",
-          "11154": "SAN MARTÍN DE PUZHIO"
+          "11154": "Contrato MARTÍN DE PUZHIO"
         }
       },
       "112": {
@@ -156,7 +156,7 @@
           "11250": "EL PAN",
           "11251": "AMALUZA",
           "11252": "PALMAS",
-          "11253": "SAN VICENTE"
+          "11253": "Contrato VICENTE"
         }
       },
       "113": {
@@ -197,28 +197,28 @@
           "20153": "JULIO E. MORENO (CATANAHUÁN GRANDE)",
           "20154": "LAS NAVES",
           "20155": "SALINAS",
-          "20156": "SAN LORENZO",
-          "20157": "SAN SIMÓN (YACOTO)",
-          "20158": "SANTA FÉ (SANTA FÉ)",
+          "20156": "Contrato LORENZO",
+          "20157": "Contrato SIMÓN (YACOTO)",
+          "20158": "ContratoTA FÉ (ContratoTA FÉ)",
           "20159": "SIMIÁTUG",
-          "20160": "SAN LUIS DE PAMBIL"
+          "20160": "Contrato LUIS DE PAMBIL"
         }
       },
       "202": {
         "canton": "CHILLANES",
         "parroquias": {
           "20250": "CHILLANES",
-          "20251": "SAN JOSÉ DEL TAMBO (TAMBOPAMBA)"
+          "20251": "Contrato JOSÉ DEL TAMBO (TAMBOPAMBA)"
         }
       },
       "203": {
         "canton": "CHIMBO",
         "parroquias": {
-          "20350": "SAN JOSÉ DE CHIMBO",
-          "20351": "ASUNCIÓN (ASANCOTO)",
+          "20350": "Contrato JOSÉ DE CHIMBO",
+          "20351": "ASUNCIÓN (AContratoCOTO)",
           "20352": "CALUMA",
           "20353": "MAGDALENA (CHAPACOTO)",
-          "20354": "SAN SEBASTIÁN",
+          "20354": "Contrato SEBASTIÁN",
           "20355": "TELIMBELA"
         }
       },
@@ -229,15 +229,15 @@
         }
       },
       "205": {
-        "canton": "SAN MIGUEL",
+        "canton": "Contrato MIGUEL",
         "parroquias": {
-          "20550": "SAN MIGUEL",
+          "20550": "Contrato MIGUEL",
           "20551": "BALSAPAMBA",
           "20552": "BILOVÁN",
           "20553": "RÉGULO DE MORA",
-          "20554": "SAN PABLO (SAN PABLO DE ATENAS)",
-          "20555": "SANTIAGO",
-          "20556": "SAN VICENTE"
+          "20554": "Contrato PABLO (Contrato PABLO DE ATENAS)",
+          "20555": "ContratoTIAGO",
+          "20556": "Contrato VICENTE"
         }
       },
       "206": {
@@ -265,7 +265,7 @@
           "30101": "AURELIO BAYAS MARTÍNEZ",
           "30102": "AZOGUES",
           "30103": "BORRERO",
-          "30104": "SAN FRANCISCO",
+          "30104": "Contrato FRANCISCO",
           "30150": "AZOGUES",
           "30151": "COJITAMBO",
           "30152": "DÉLEG",
@@ -274,7 +274,7 @@
           "30155": "LUIS CORDERO",
           "30156": "PINDILIG",
           "30157": "RIVERA",
-          "30158": "SAN MIGUEL",
+          "30158": "Contrato MIGUEL",
           "30159": "SOLANO",
           "30160": "TADAY"
         }
@@ -284,7 +284,7 @@
         "parroquias": {
           "30250": "BIBLIÁN",
           "30251": "NAZÓN (CAB. EN PAMPA DE DOMÍNGUEZ)",
-          "30252": "SAN FRANCISCO DE SAGEO",
+          "30252": "Contrato FRANCISCO DE SAGEO",
           "30253": "TURUPAMBA",
           "30254": "JERUSALÉN"
         }
@@ -300,7 +300,7 @@
           "30355": "HONORATO VÁSQUEZ (TAMBO VIEJO)",
           "30356": "INGAPIRCA",
           "30357": "JUNCAL",
-          "30358": "SAN ANTONIO",
+          "30358": "Contrato ANTONIO",
           "30359": "SUSCAL",
           "30360": "TAMBO",
           "30361": "ZHUD",
@@ -356,7 +356,7 @@
           "40158": "URBINA (TAYA)",
           "40159": "EL CHICAL",
           "40160": "MARISCAL SUCRE",
-          "40161": "SANTA MARTHA DE CUBA"
+          "40161": "ContratoTA MARTHA DE CUBA"
         }
       },
       "402": {
@@ -366,8 +366,8 @@
           "40251": "GARCÍA MORENO",
           "40252": "LOS ANDES",
           "40253": "MONTE OLIVO",
-          "40254": "SAN VICENTE DE PUSIR",
-          "40255": "SAN RAFAEL"
+          "40254": "Contrato VICENTE DE PUSIR",
+          "40255": "Contrato RAFAEL"
         }
       },
       "403": {
@@ -378,7 +378,7 @@
           "40350": "EL ANGEL",
           "40351": "EL GOALTAL",
           "40352": "LA LIBERTAD (ALIZO)",
-          "40353": "SAN ISIDRO"
+          "40353": "Contrato ISIDRO"
         }
       },
       "404": {
@@ -387,15 +387,15 @@
           "40450": "MIRA (CHONTAHUASI)",
           "40451": "CONCEPCIÓN",
           "40452": "JIJÓN Y CAAMAÑO (CAB. EN RÍO BLANCO)",
-          "40453": "JUAN MONTALVO (SAN IGNACIO DE QUIL)"
+          "40453": "JUAN MONTALVO (Contrato IGNACIO DE QUIL)"
         }
       },
       "405": {
         "canton": "MONTÚFAR",
         "parroquias": {
           "40501": "GONZÁLEZ SUÁREZ",
-          "40502": "SAN JOSÉ",
-          "40550": "SAN GABRIEL",
+          "40502": "Contrato JOSÉ",
+          "40550": "Contrato GABRIEL",
           "40551": "CRISTÓBAL COLÓN",
           "40552": "CHITÁN DE NAVARRETE",
           "40553": "FERNÁNDEZ SALVADOR",
@@ -404,7 +404,7 @@
         }
       },
       "406": {
-        "canton": "SAN PEDRO DE HUACA",
+        "canton": "Contrato PEDRO DE HUACA",
         "parroquias": {
           "40650": "HUACA",
           "40651": "MARISCAL SUCRE"
@@ -418,11 +418,11 @@
       "501": {
         "canton": "LATACUNGA",
         "parroquias": {
-          "50101": "ELOY ALFARO (SAN FELIPE)",
+          "50101": "ELOY ALFARO (Contrato FELIPE)",
           "50102": "IGNACIO FLORES (PARQUE FLORES)",
-          "50103": "JUAN MONTALVO (SAN SEBASTIÁN)",
+          "50103": "JUAN MONTALVO (Contrato SEBASTIÁN)",
           "50104": "LA MATRIZ",
-          "50105": "SAN BUENAVENTURA",
+          "50105": "Contrato BUENAVENTURA",
           "50150": "LATACUNGA",
           "50151": "ALAQUES (ALÁQUEZ)",
           "50152": "BELISARIO QUEVEDO (GUANAILÍN)",
@@ -432,7 +432,7 @@
           "50156": "MULALÓ",
           "50157": "11 DE NOVIEMBRE (ILINCHISI)",
           "50158": "POALÓ",
-          "50159": "SAN JUAN DE PASTOCALLE",
+          "50159": "Contrato JUAN DE PASTOCALLE",
           "50160": "SIGCHOS",
           "50161": "TANICUCHÍ",
           "50162": "TOACASO",
@@ -476,11 +476,11 @@
       "505": {
         "canton": "SALCEDO",
         "parroquias": {
-          "50550": "SAN MIGUEL",
-          "50551": "ANTONIO JOSÉ HOLGUÍN (SANTA LUCÍA)",
+          "50550": "Contrato MIGUEL",
+          "50551": "ANTONIO JOSÉ HOLGUÍN (ContratoTA LUCÍA)",
           "50552": "CUSUBAMBA",
           "50553": "MULALILLO",
-          "50554": "MULLIQUINDIL (SANTA ANA)",
+          "50554": "MULLIQUINDIL (ContratoTA ANA)",
           "50555": "PANSALEO"
         }
       },
@@ -526,8 +526,8 @@
           "60157": "PUNGALÁ",
           "60158": "PUNÍN",
           "60159": "QUIMIAG",
-          "60160": "SAN JUAN",
-          "60161": "SAN LUIS"
+          "60160": "Contrato JUAN",
+          "60161": "Contrato LUIS"
         }
       },
       "602": {
@@ -555,7 +555,7 @@
           "60351": "CAÑI",
           "60352": "COLUMBE",
           "60353": "JUAN DE VELASCO (PANGOR)",
-          "60354": "SANTIAGO DE QUITO (CAB. EN SAN ANTONIO DE QUITO)"
+          "60354": "ContratoTIAGO DE QUITO (CAB. EN Contrato ANTONIO DE QUITO)"
         }
       },
       "604": {
@@ -591,11 +591,11 @@
           "60751": "GUANANDO",
           "60752": "ILAPO",
           "60753": "LA PROVIDENCIA",
-          "60754": "SAN ANDRÉS",
-          "60755": "SAN GERARDO DE PACAICAGUÁN",
-          "60756": "SAN ISIDRO DE PATULÚ",
-          "60757": "SAN JOSÉ DEL CHAZO",
-          "60758": "SANTA FÉ DE GALÁN",
+          "60754": "Contrato ANDRÉS",
+          "60755": "Contrato GERARDO DE PACAICAGUÁN",
+          "60756": "Contrato ISIDRO DE PATULÚ",
+          "60757": "Contrato JOSÉ DEL CHAZO",
+          "60758": "ContratoTA FÉ DE GALÁN",
           "60759": "VALPARAÍSO"
         }
       },
@@ -612,7 +612,7 @@
           "60951": "EL ALTAR",
           "60952": "MATUS",
           "60953": "PUELA",
-          "60954": "SAN ANTONIO DE BAYUSHIG",
+          "60954": "Contrato ANTONIO DE BAYUSHIG",
           "60955": "LA CANDELARIA",
           "60956": "BILBAO (CAB.EN QUILLUYACU)"
         }
@@ -659,8 +659,8 @@
           "70351": "AYAPAMBA",
           "70352": "CORDONCILLO",
           "70353": "MILAGRO",
-          "70354": "SAN JOSÉ",
-          "70355": "SAN JUAN DE CERRO AZUL"
+          "70354": "Contrato JOSÉ",
+          "70355": "Contrato JUAN DE CERRO AZUL"
         }
       },
       "704": {
@@ -731,7 +731,7 @@
           "71052": "LA BOCANA",
           "71053": "MOROMORO (CAB. EN EL VADO)",
           "71054": "PIEDRAS",
-          "71055": "SAN ROQUE (AMBROSIO MALDONADO)",
+          "71055": "Contrato ROQUE (AMBROSIO MALDONADO)",
           "71056": "SARACAY"
         }
       },
@@ -745,18 +745,18 @@
         }
       },
       "712": {
-        "canton": "SANTA ROSA",
+        "canton": "ContratoTA ROSA",
         "parroquias": {
-          "71201": "SANTA ROSA",
+          "71201": "ContratoTA ROSA",
           "71202": "PUERTO JELÍ",
           "71203": "BALNEARIO JAMBELÍ (SATÉLITE)",
           "71204": "JUMÓN (SATÉLITE)",
-          "71205": "NUEVO SANTA ROSA",
-          "71250": "SANTA ROSA",
+          "71205": "NUEVO ContratoTA ROSA",
+          "71250": "ContratoTA ROSA",
           "71251": "BELLAVISTA",
           "71252": "JAMBELÍ",
           "71253": "LA AVANZADA",
-          "71254": "SAN ANTONIO",
+          "71254": "Contrato ANTONIO",
           "71255": "TORATA",
           "71256": "VICTORIA",
           "71257": "BELLAMARÍA"
@@ -786,7 +786,7 @@
           "71450": "LA VICTORIA",
           "71451": "LA LIBERTAD",
           "71452": "EL PARAÍSO",
-          "71453": "SAN ISIDRO"
+          "71453": "Contrato ISIDRO"
         }
       }
     }
@@ -804,7 +804,7 @@
           "80105": "SIMÓN PLATA TORRES",
           "80150": "ESMERALDAS",
           "80151": "ATACAMES",
-          "80152": "CAMARONES (CAB. EN SAN VICENTE)",
+          "80152": "CAMARONES (CAB. EN Contrato VICENTE)",
           "80153": "CRNEL. CARLOS CONCHA TORRES (CAB.EN HUELE)",
           "80154": "CHINCA",
           "80155": "CHONTADURO",
@@ -815,7 +815,7 @@
           "80160": "MONTALVO (CAB. EN HORQUETA)",
           "80161": "RÍO VERDE",
           "80162": "ROCAFUERTE",
-          "80163": "SAN MATEO",
+          "80163": "Contrato MATEO",
           "80164": "SÚA (CAB. EN LA BOCANA)",
           "80165": "TABIAZO",
           "80166": "TACHINA",
@@ -834,12 +834,12 @@
           "80255": "LUIS VARGAS TORRES (CAB. EN PLAYA DE ORO)",
           "80256": "MALDONADO",
           "80257": "PAMPANAL DE BOLÍVAR",
-          "80258": "SAN FRANCISCO DE ONZOLE",
-          "80259": "SANTO DOMINGO DE ONZOLE",
+          "80258": "Contrato FRANCISCO DE ONZOLE",
+          "80259": "ContratoTO DOMINGO DE ONZOLE",
           "80260": "SELVA ALEGRE",
           "80261": "TELEMBÍ",
           "80262": "COLÓN ELOY DEL MARÍA",
-          "80263": "SAN JOSÉ DE CAYAPAS",
+          "80263": "Contrato JOSÉ DE CAYAPAS",
           "80264": "TIMBIRÉ"
         }
       },
@@ -852,9 +852,9 @@
           "80353": "GALERA",
           "80354": "QUINGUE (OLMEDO PERDOMO FRANCO)",
           "80355": "SALIMA",
-          "80356": "SAN FRANCISCO",
-          "80357": "SAN GREGORIO",
-          "80358": "SAN JOSÉ DE CHAMANGA (CAB.EN CHAMANGA)"
+          "80356": "Contrato FRANCISCO",
+          "80357": "Contrato GREGORIO",
+          "80358": "Contrato JOSÉ DE CHAMANGA (CAB.EN CHAMANGA)"
         }
       },
       "804": {
@@ -869,18 +869,18 @@
         }
       },
       "805": {
-        "canton": "SAN LORENZO",
+        "canton": "Contrato LORENZO",
         "parroquias": {
-          "80550": "SAN LORENZO",
+          "80550": "Contrato LORENZO",
           "80551": "ALTO TAMBO (CAB. EN GUADUAL)",
           "80552": "ANCÓN (PICHANGAL) (CAB. EN PALMA REAL)",
           "80553": "CALDERÓN",
           "80554": "CARONDELET",
           "80555": "5 DE JUNIO (CAB. EN UIMBI)",
           "80556": "CONCEPCIÓN",
-          "80557": "MATAJE (CAB. EN SANTANDER)",
-          "80558": "SAN JAVIER DE CACHAVÍ (CAB. EN SAN JAVIER)",
-          "80559": "SANTA RITA",
+          "80557": "MATAJE (CAB. EN ContratoTANDER)",
+          "80558": "Contrato JAVIER DE CACHAVÍ (CAB. EN Contrato JAVIER)",
+          "80559": "ContratoTA RITA",
           "80560": "TAMBILLO",
           "80561": "TULULBÍ (CAB. EN RICAURTE)",
           "80562": "URBINA"
@@ -931,7 +931,7 @@
           "90105": "GARCÍA MORENO",
           "90106": "LETAMENDI",
           "90107": "NUEVE DE OCTUBRE",
-          "90108": "OLMEDO (SAN ALEJO)",
+          "90108": "OLMEDO (Contrato ALEJO)",
           "90109": "ROCA",
           "90110": "ROCAFUERTE",
           "90111": "SUCRE",
@@ -972,7 +972,7 @@
         "canton": "COLIMES",
         "parroquias": {
           "90550": "COLIMES",
-          "90551": "SAN JACINTO"
+          "90551": "Contrato JACINTO"
         }
       },
       "906": {
@@ -984,7 +984,7 @@
           "90604": "EMILIANO CAICEDO MARCOS",
           "90605": "MAGRO",
           "90606": "PADRE JUAN BAUTISTA AGUIRRE",
-          "90607": "SANTA CLARA",
+          "90607": "ContratoTA CLARA",
           "90608": "VICENTE PIEDRAHITA",
           "90650": "DAULE",
           "90651": "ISIDRO AYORA (SOLEDAD)",
@@ -1033,8 +1033,8 @@
         "parroquias": {
           "91150": "NARANJAL",
           "91151": "JESÚS MARÍA",
-          "91152": "SAN CARLOS",
-          "91153": "SANTA ROSA DE FLANDES",
+          "91152": "Contrato CARLOS",
+          "91153": "ContratoTA ROSA DE FLANDES",
           "91154": "TAURA"
         }
       },
@@ -1068,9 +1068,9 @@
         }
       },
       "918": {
-        "canton": "SANTA LUCÍA",
+        "canton": "ContratoTA LUCÍA",
         "parroquias": {
-          "91850": "SANTA LUCÍA"
+          "91850": "ContratoTA LUCÍA"
         }
       },
       "919": {
@@ -1080,7 +1080,7 @@
           "91902": "CANDILEJOS",
           "91903": "CENTRAL",
           "91904": "PARAÍSO",
-          "91905": "SAN MATEO",
+          "91905": "Contrato MATEO",
           "91950": "EL SALITRE (LAS RAMAS)",
           "91951": "GRAL. VERNAZA (DOS ESTEROS)",
           "91952": "LA VICTORIA (ÑAUZA)",
@@ -1088,11 +1088,11 @@
         }
       },
       "920": {
-        "canton": "SAN JACINTO DE YAGUACHI",
+        "canton": "Contrato JACINTO DE YAGUACHI",
         "parroquias": {
-          "92050": "SAN JACINTO DE YAGUACHI",
+          "92050": "Contrato JACINTO DE YAGUACHI",
           "92051": "CRNEL. LORENZO DE GARAICOA (PEDREGAL)",
-          "92052": "CRNEL. MARCELINO MARIDUEÑA (SAN CARLOS)",
+          "92052": "CRNEL. MARCELINO MARIDUEÑA (Contrato CARLOS)",
           "92053": "GRAL. PEDRO J. MONTERO (BOLICHE)",
           "92054": "SIMÓN BOLÍVAR",
           "92055": "YAGUACHI VIEJO (CONE)",
@@ -1115,7 +1115,7 @@
       "923": {
         "canton": "CORONEL MARCELINO MARIDUEÑA",
         "parroquias": {
-          "92350": "CORONEL MARCELINO MARIDUEÑA (SAN CARLOS)"
+          "92350": "CORONEL MARCELINO MARIDUEÑA (Contrato CARLOS)"
         }
       },
       "924": {
@@ -1154,16 +1154,16 @@
           "100101": "CARANQUI",
           "100102": "GUAYAQUIL DE ALPACHACA",
           "100103": "SAGRARIO",
-          "100104": "SAN FRANCISCO",
+          "100104": "Contrato FRANCISCO",
           "100105": "LA DOLOROSA DEL PRIORATO",
-          "100150": "SAN MIGUEL DE IBARRA",
+          "100150": "Contrato MIGUEL DE IBARRA",
           "100151": "AMBUQUÍ",
           "100152": "ANGOCHAGUA",
           "100153": "CAROLINA",
           "100154": "LA ESPERANZA",
           "100155": "LITA",
           "100156": "SALINAS",
-          "100157": "SAN ANTONIO"
+          "100157": "Contrato ANTONIO"
         }
       },
       "1002": {
@@ -1172,17 +1172,17 @@
           "100201": "ANDRADE MARÍN (LOURDES)",
           "100202": "ATUNTAQUI",
           "100250": "ATUNTAQUI",
-          "100251": "IMBAYA (SAN LUIS DE COBUENDO)",
-          "100252": "SAN FRANCISCO DE NATABUELA",
-          "100253": "SAN JOSÉ DE CHALTURA",
-          "100254": "SAN ROQUE"
+          "100251": "IMBAYA (Contrato LUIS DE COBUENDO)",
+          "100252": "Contrato FRANCISCO DE NATABUELA",
+          "100253": "Contrato JOSÉ DE CHALTURA",
+          "100254": "Contrato ROQUE"
         }
       },
       "1003": {
         "canton": "COTACACHI",
         "parroquias": {
           "100301": "SAGRARIO",
-          "100302": "SAN FRANCISCO",
+          "100302": "Contrato FRANCISCO",
           "100350": "COTACACHI",
           "100351": "APUELA",
           "100352": "GARCÍA MORENO (LLURIMAGUA)",
@@ -1191,24 +1191,24 @@
           "100355": "PLAZA GUTIÉRREZ (CALVARIO)",
           "100356": "QUIROGA",
           "100357": "6 DE JULIO DE CUELLAJE (CAB. EN CUELLAJE)",
-          "100358": "VACAS GALINDO (EL CHURO) (CAB.EN SAN MIGUEL ALTO"
+          "100358": "VACAS GALINDO (EL CHURO) (CAB.EN Contrato MIGUEL ALTO"
         }
       },
       "1004": {
         "canton": "OTAVALO",
         "parroquias": {
           "100401": "JORDÁN",
-          "100402": "SAN LUIS",
+          "100402": "Contrato LUIS",
           "100450": "OTAVALO",
           "100451": "DR. MIGUEL EGAS CABEZAS (PEGUCHE)",
           "100452": "EUGENIO ESPEJO (CALPAQUÍ)",
           "100453": "GONZÁLEZ SUÁREZ",
           "100454": "PATAQUÍ",
-          "100455": "SAN JOSÉ DE QUICHINCHE",
-          "100456": "SAN JUAN DE ILUMÁN",
-          "100457": "SAN PABLO",
-          "100458": "SAN RAFAEL",
-          "100459": "SELVA ALEGRE (CAB.EN SAN MIGUEL DE PAMPLONA)"
+          "100455": "Contrato JOSÉ DE QUICHINCHE",
+          "100456": "Contrato JUAN DE ILUMÁN",
+          "100457": "Contrato PABLO",
+          "100458": "Contrato RAFAEL",
+          "100459": "SELVA ALEGRE (CAB.EN Contrato MIGUEL DE PAMPLONA)"
         }
       },
       "1005": {
@@ -1217,17 +1217,17 @@
           "100550": "PIMAMPIRO",
           "100551": "CHUGÁ",
           "100552": "MARIANO ACOSTA",
-          "100553": "SAN FRANCISCO DE SIGSIPAMBA"
+          "100553": "Contrato FRANCISCO DE SIGSIPAMBA"
         }
       },
       "1006": {
-        "canton": "SAN MIGUEL DE URCUQUÍ",
+        "canton": "Contrato MIGUEL DE URCUQUÍ",
         "parroquias": {
           "100650": "URCUQUÍ CABECERA CANTONAL",
           "100651": "CAHUASQUÍ",
           "100652": "LA MERCED DE BUENOS AIRES",
           "100653": "PABLO ARENAS",
-          "100654": "SAN BLAS",
+          "100654": "Contrato BLAS",
           "100655": "TUMBABIRO"
         }
       }
@@ -1240,7 +1240,7 @@
         "canton": "LOJA",
         "parroquias": {
           "110101": "EL SAGRARIO",
-          "110102": "SAN SEBASTIÁN",
+          "110102": "Contrato SEBASTIÁN",
           "110103": "SUCRE",
           "110104": "VALLE",
           "110150": "LOJA",
@@ -1250,9 +1250,9 @@
           "110154": "GUALEL",
           "110155": "JIMBILLA",
           "110156": "MALACATOS (VALLADOLID)",
-          "110157": "SAN LUCAS",
-          "110158": "SAN PEDRO DE VILCABAMBA",
-          "110159": "SANTIAGO",
+          "110157": "Contrato LUCAS",
+          "110158": "Contrato PEDRO DE VILCABAMBA",
+          "110159": "ContratoTIAGO",
           "110160": "TAQUIL (MIGUEL RIOFRÍO)",
           "110161": "VILCABAMBA (VICTORIA)",
           "110162": "YANGANA (ARSENIO CASTILLO)",
@@ -1264,23 +1264,23 @@
         "parroquias": {
           "110201": "CARIAMANGA",
           "110202": "CHILE",
-          "110203": "SAN VICENTE",
+          "110203": "Contrato VICENTE",
           "110250": "CARIAMANGA",
           "110251": "COLAISACA",
           "110252": "EL LUCERO",
           "110253": "UTUANA",
-          "110254": "SANGUILLÍN"
+          "110254": "ContratoGUILLÍN"
         }
       },
       "1103": {
         "canton": "CATAMAYO",
         "parroquias": {
           "110301": "CATAMAYO",
-          "110302": "SAN JOSÉ",
+          "110302": "Contrato JOSÉ",
           "110350": "CATAMAYO (LA TOMA)",
           "110351": "EL TAMBO",
           "110352": "GUAYQUICHUMA",
-          "110353": "SAN PEDRO DE LA BENDITA",
+          "110353": "Contrato PEDRO DE LA BENDITA",
           "110354": "ZAMBI"
         }
       },
@@ -1292,7 +1292,7 @@
           "110452": "CHAQUINAL",
           "110453": "12 DE DICIEMBRE (CAB. EN ACHIOTES)",
           "110454": "PINDAL (FEDERICO PÁEZ)",
-          "110455": "POZUL (SAN JUAN DE POZUL)",
+          "110455": "POZUL (Contrato JUAN DE POZUL)",
           "110456": "SABANILLA",
           "110457": "TNTE. MAXIMILIANO RODRÍGUEZ LOAIZA"
         }
@@ -1303,7 +1303,7 @@
           "110550": "CHAGUARPAMBA",
           "110551": "BUENAVISTA",
           "110552": "EL ROSARIO",
-          "110553": "SANTA RUFINA",
+          "110553": "ContratoTA RUFINA",
           "110554": "AMARILLOS"
         }
       },
@@ -1313,7 +1313,7 @@
           "110650": "AMALUZA",
           "110651": "BELLAVISTA",
           "110652": "JIMBURA",
-          "110653": "SANTA TERESITA",
+          "110653": "ContratoTA TERESITA",
           "110654": "27 DE ABRIL (CAB. EN LA NARANJA)",
           "110655": "EL INGENIO",
           "110656": "EL AIRO"
@@ -1329,13 +1329,13 @@
           "110754": "PURUNUMA (EGUIGUREN)",
           "110755": "QUILANGA (LA PAZ)",
           "110756": "SACAPALCA",
-          "110757": "SAN ANTONIO DE LAS ARADAS (CAB. EN LAS ARADAS)"
+          "110757": "Contrato ANTONIO DE LAS ARADAS (CAB. EN LAS ARADAS)"
         }
       },
       "1108": {
         "canton": "MACARÁ",
         "parroquias": {
-          "110801": "GENERAL ELOY ALFARO (SAN SEBASTIÁN)",
+          "110801": "GENERAL ELOY ALFARO (Contrato SEBASTIÁN)",
           "110802": "MACARÁ (MANUEL ENRIQUE RENGEL SUQUILANDA)",
           "110850": "MACARÁ",
           "110851": "LARAMA",
@@ -1353,10 +1353,10 @@
           "110952": "GUACHANAMÁ",
           "110953": "LA TINGUE",
           "110954": "LAURO GUERRERO",
-          "110955": "OLMEDO (SANTA BÁRBARA)",
+          "110955": "OLMEDO (ContratoTA BÁRBARA)",
           "110956": "ORIANGA",
-          "110957": "SAN ANTONIO",
-          "110958": "CASANGA",
+          "110957": "Contrato ANTONIO",
+          "110958": "CAContratoGA",
           "110959": "YAMANA"
         }
       },
@@ -1379,9 +1379,9 @@
           "111152": "EL TABLÓN",
           "111153": "LLUZHAPA",
           "111154": "MANÚ",
-          "111155": "SAN ANTONIO DE QUMBE (CUMBE)",
-          "111156": "SAN PABLO DE TENTA",
-          "111157": "SAN SEBASTIÁN DE YÚLUC",
+          "111155": "Contrato ANTONIO DE QUMBE (CUMBE)",
+          "111156": "Contrato PABLO DE TENTA",
+          "111157": "Contrato SEBASTIÁN DE YÚLUC",
           "111158": "SELVA ALEGRE",
           "111159": "URDANETA (PAQUISHAPA)",
           "111160": "SUMAYPAMBA"
@@ -1420,7 +1420,7 @@
         "parroquias": {
           "111550": "QUILANGA",
           "111551": "FUNDOCHAMBA",
-          "111552": "SAN ANTONIO DE LAS ARADAS (CAB. EN LAS ARADAS)"
+          "111552": "Contrato ANTONIO DE LAS ARADAS (CAB. EN LAS ARADAS)"
         }
       },
       "1116": {
@@ -1443,7 +1443,7 @@
           "120103": "BARREIRO",
           "120104": "EL SALTO",
           "120150": "BABAHOYO",
-          "120151": "BARREIRO (SANTA RITA)",
+          "120151": "BARREIRO (ContratoTA RITA)",
           "120152": "CARACOL",
           "120153": "FEBRES CORDERO (LAS JUNTAS)",
           "120154": "PIMOCHA",
@@ -1469,18 +1469,18 @@
         "parroquias": {
           "120450": "PUEBLOVIEJO",
           "120451": "PUERTO PECHICHE",
-          "120452": "SAN JUAN"
+          "120452": "Contrato JUAN"
         }
       },
       "1205": {
         "canton": "QUEVEDO",
         "parroquias": {
           "120501": "QUEVEDO",
-          "120502": "SAN CAMILO",
-          "120503": "SAN JOSÉ",
+          "120502": "Contrato CAMILO",
+          "120503": "Contrato JOSÉ",
           "120504": "GUAYACÁN",
           "120505": "NICOLÁS INFANTE DÍAZ",
-          "120506": "SAN CRISTÓBAL",
+          "120506": "Contrato CRISTÓBAL",
           "120507": "SIETE DE OCTUBRE",
           "120508": "24 DE MAYO",
           "120509": "VENUS DEL RÍO QUEVEDO",
@@ -1488,7 +1488,7 @@
           "120550": "QUEVEDO",
           "120551": "BUENA FÉ",
           "120552": "MOCACHE",
-          "120553": "SAN CARLOS",
+          "120553": "Contrato CARLOS",
           "120554": "VALENCIA",
           "120555": "LA ESPERANZA"
         }
@@ -1528,10 +1528,10 @@
       "1210": {
         "canton": "BUENA FÉ",
         "parroquias": {
-          "121001": "SAN JACINTO DE BUENA FÉ",
+          "121001": "Contrato JACINTO DE BUENA FÉ",
           "121002": "7 DE AGOSTO",
           "121003": "11 DE OCTUBRE",
-          "121050": "SAN JACINTO DE BUENA FÉ",
+          "121050": "Contrato JACINTO DE BUENA FÉ",
           "121051": "PATRICIA PILAR"
         }
       },
@@ -1565,18 +1565,18 @@
           "130102": "12 DE MARZO",
           "130103": "COLÓN",
           "130104": "PICOAZÁ",
-          "130105": "SAN PABLO",
+          "130105": "Contrato PABLO",
           "130106": "ANDRÉS DE VERA",
           "130107": "FRANCISCO PACHECO",
           "130108": "18 DE OCTUBRE",
           "130109": "SIMÓN BOLÍVAR",
           "130150": "PORTOVIEJO",
-          "130151": "ABDÓN CALDERÓN (SAN FRANCISCO)",
+          "130151": "ABDÓN CALDERÓN (Contrato FRANCISCO)",
           "130152": "ALHAJUELA (BAJO GRANDE)",
           "130153": "CRUCITA",
           "130154": "PUEBLO NUEVO",
           "130155": "RIOCHICO (RÍO CHICO)",
-          "130156": "SAN PLÁCIDO",
+          "130156": "Contrato PLÁCIDO",
           "130157": "CHIRIJOS"
         }
       },
@@ -1592,7 +1592,7 @@
         "canton": "CHONE",
         "parroquias": {
           "130301": "CHONE",
-          "130302": "SANTA RITA",
+          "130302": "ContratoTA RITA",
           "130350": "CHONE",
           "130351": "BOYACÁ",
           "130352": "CANUTO",
@@ -1600,7 +1600,7 @@
           "130354": "CHIBUNGA",
           "130355": "ELOY ALFARO",
           "130356": "RICAURTE",
-          "130357": "SAN ANTONIO"
+          "130357": "Contrato ANTONIO"
         }
       },
       "1304": {
@@ -1610,14 +1610,14 @@
           "130402": "4 DE DICIEMBRE",
           "130450": "EL CARMEN",
           "130451": "WILFRIDO LOOR MOREIRA (MAICITO)",
-          "130452": "SAN PEDRO DE SUMA"
+          "130452": "Contrato PEDRO DE SUMA"
         }
       },
       "1305": {
         "canton": "FLAVIO ALFARO",
         "parroquias": {
           "130550": "FLAVIO ALFARO",
-          "130551": "SAN FRANCISCO DE NOVILLO (CAB. EN",
+          "130551": "Contrato FRANCISCO DE NOVILLO (CAB. EN",
           "130552": "ZAPALLO"
         }
       },
@@ -1626,7 +1626,7 @@
         "parroquias": {
           "130601": "DR. MIGUEL MORÁN LUCIO",
           "130602": "MANUEL INOCENCIO PARRALES Y GUALE",
-          "130603": "SAN LORENZO DE JIPIJAPA",
+          "130603": "Contrato LORENZO DE JIPIJAPA",
           "130650": "JIPIJAPA",
           "130651": "AMÉRICA",
           "130652": "EL ANEGADO (CAB. EN ELOY ALFARO)",
@@ -1650,18 +1650,18 @@
         "parroquias": {
           "130801": "LOS ESTEROS",
           "130802": "MANTA",
-          "130803": "SAN MATEO",
+          "130803": "Contrato MATEO",
           "130804": "TARQUI",
           "130805": "ELOY ALFARO",
           "130850": "MANTA",
-          "130851": "SAN LORENZO",
-          "130852": "SANTA MARIANITA (BOCA DE PACOCHE)"
+          "130851": "Contrato LORENZO",
+          "130852": "ContratoTA MARIANITA (BOCA DE PACOCHE)"
         }
       },
       "1309": {
         "canton": "MONTECRISTI",
         "parroquias": {
-          "130901": "ANIBAL SAN ANDRÉS",
+          "130901": "ANIBAL Contrato ANDRÉS",
           "130902": "MONTECRISTI",
           "130903": "EL COLORADO",
           "130904": "GENERAL ELOY ALFARO",
@@ -1686,7 +1686,7 @@
         "parroquias": {
           "131150": "PICHINCHA",
           "131151": "BARRAGANETE",
-          "131152": "SAN SEBASTIÁN"
+          "131152": "Contrato SEBASTIÁN"
         }
       },
       "1312": {
@@ -1696,16 +1696,16 @@
         }
       },
       "1313": {
-        "canton": "SANTA ANA",
+        "canton": "ContratoTA ANA",
         "parroquias": {
-          "131301": "SANTA ANA",
+          "131301": "ContratoTA ANA",
           "131302": "LODANA",
-          "131350": "SANTA ANA DE VUELTA LARGA",
+          "131350": "ContratoTA ANA DE VUELTA LARGA",
           "131351": "AYACUCHO",
           "131352": "HONORATO VÁSQUEZ (CAB. EN VÁSQUEZ)",
           "131353": "LA UNIÓN",
           "131354": "OLMEDO",
-          "131355": "SAN PABLO (CAB. EN PUEBLO NUEVO)"
+          "131355": "Contrato PABLO (CAB. EN PUEBLO NUEVO)"
         }
       },
       "1314": {
@@ -1720,8 +1720,8 @@
           "131454": "10 DE AGOSTO",
           "131455": "JAMA",
           "131456": "PEDERNALES",
-          "131457": "SAN ISIDRO",
-          "131458": "SAN VICENTE"
+          "131457": "Contrato ISIDRO",
+          "131458": "Contrato VICENTE"
         }
       },
       "1315": {
@@ -1777,16 +1777,16 @@
         }
       },
       "1322": {
-        "canton": "SAN VICENTE",
+        "canton": "Contrato VICENTE",
         "parroquias": {
-          "132250": "SAN VICENTE",
+          "132250": "Contrato VICENTE",
           "132251": "CANOA"
         }
       }
     }
   },
   "14": {
-    "provincia": "MORONA SANTIAGO",
+    "provincia": "MORONA ContratoTIAGO",
     "cantones": {
       "1401": {
         "canton": "MORONA",
@@ -1797,14 +1797,14 @@
           "140153": "GENERAL PROAÑO",
           "140154": "HUASAGA (CAB.EN WAMPUIK)",
           "140155": "MACUMA",
-          "140156": "SAN ISIDRO",
+          "140156": "Contrato ISIDRO",
           "140157": "SEVILLA DON BOSCO",
           "140158": "SINAÍ",
           "140159": "TAISHA",
           "140160": "ZUÑA (ZÚÑAC)",
           "140161": "TUUTINENTZA",
           "140162": "CUCHAENTZA",
-          "140163": "SAN JOSÉ DE MORONA",
+          "140163": "Contrato JOSÉ DE MORONA",
           "140164": "RÍO BLANCO"
         }
       },
@@ -1820,7 +1820,7 @@
           "140254": "CHIGÜINDA",
           "140255": "EL ROSARIO",
           "140256": "NUEVA TARQUI",
-          "140257": "SAN MIGUEL DE CUYES",
+          "140257": "Contrato MIGUEL DE CUYES",
           "140258": "EL IDEAL"
         }
       },
@@ -1830,11 +1830,11 @@
           "140350": "GENERAL LEONIDAS PLAZA GUTIÉRREZ (LIMÓN)",
           "140351": "INDANZA",
           "140352": "PAN DE AZÚCAR",
-          "140353": "SAN ANTONIO (CAB. EN SAN ANTONIO CENTRO",
-          "140354": "SAN CARLOS DE LIMÓN (SAN CARLOS DEL",
-          "140355": "SAN JUAN BOSCO",
-          "140356": "SAN MIGUEL DE CONCHAY",
-          "140357": "SANTA SUSANA DE CHIVIAZA (CAB. EN CHIVIAZA)",
+          "140353": "Contrato ANTONIO (CAB. EN Contrato ANTONIO CENTRO",
+          "140354": "Contrato CARLOS DE LIMÓN (Contrato CARLOS DEL",
+          "140355": "Contrato JUAN BOSCO",
+          "140356": "Contrato MIGUEL DE CONCHAY",
+          "140357": "ContratoTA SUContratoA DE CHIVIAZA (CAB. EN CHIVIAZA)",
           "140358": "YUNGANZA (CAB. EN EL ROSARIO)"
         }
       },
@@ -1845,20 +1845,20 @@
           "140451": "ARAPICOS",
           "140452": "CUMANDÁ (CAB. EN COLONIA AGRÍCOLA SEVILLA DEL ORO)",
           "140453": "HUAMBOYA",
-          "140454": "SANGAY (CAB. EN NAYAMANACA)"
+          "140454": "ContratoGAY (CAB. EN NAYAMANACA)"
         }
       },
       "1405": {
-        "canton": "SANTIAGO",
+        "canton": "ContratoTIAGO",
         "parroquias": {
-          "140550": "SANTIAGO DE MÉNDEZ",
+          "140550": "ContratoTIAGO DE MÉNDEZ",
           "140551": "COPAL",
           "140552": "CHUPIANZA",
           "140553": "PATUCA",
-          "140554": "SAN LUIS DE EL ACHO (CAB. EN EL ACHO)",
-          "140555": "SANTIAGO",
+          "140554": "Contrato LUIS DE EL ACHO (CAB. EN EL ACHO)",
+          "140555": "ContratoTIAGO",
           "140556": "TAYUZA",
-          "140557": "SAN FRANCISCO DE CHINIMBIMI"
+          "140557": "Contrato FRANCISCO DE CHINIMBIMI"
         }
       },
       "1406": {
@@ -1869,7 +1869,7 @@
           "140652": "HUAMBI",
           "140653": "LOGROÑO",
           "140654": "YAUPI",
-          "140655": "SANTA MARIANITA DE JESÚS"
+          "140655": "ContratoTA MARIANITA DE JESÚS"
         }
       },
       "1407": {
@@ -1881,13 +1881,13 @@
         }
       },
       "1408": {
-        "canton": "SAN JUAN BOSCO",
+        "canton": "Contrato JUAN BOSCO",
         "parroquias": {
-          "140850": "SAN JUAN BOSCO",
+          "140850": "Contrato JUAN BOSCO",
           "140851": "PAN DE AZÚCAR",
-          "140852": "SAN CARLOS DE LIMÓN",
-          "140853": "SAN JACINTO DE WAKAMBEIS",
-          "140854": "SANTIAGO DE PANANZA"
+          "140852": "Contrato CARLOS DE LIMÓN",
+          "140853": "Contrato JACINTO DE WAKAMBEIS",
+          "140854": "ContratoTIAGO DE PANANZA"
         }
       },
       "1409": {
@@ -1917,8 +1917,8 @@
       "1412": {
         "canton": "TIWINTZA",
         "parroquias": {
-          "141250": "SANTIAGO",
-          "141251": "SAN JOSÉ DE MORONA"
+          "141250": "ContratoTIAGO",
+          "141251": "Contrato JOSÉ DE MORONA"
         }
       }
     }
@@ -1937,7 +1937,7 @@
           "150155": "PUERTO MISAHUALLI",
           "150156": "PUERTO NAPO",
           "150157": "TÁLAG",
-          "150158": "SAN JUAN DE MUYUNA"
+          "150158": "Contrato JUAN DE MUYUNA"
         }
       },
       "1503": {
@@ -1947,7 +1947,7 @@
           "150351": "AVILA",
           "150352": "COTUNDO",
           "150353": "LORETO",
-          "150354": "SAN PABLO DE USHPAYACU",
+          "150354": "Contrato PABLO DE USHPAYACU",
           "150355": "PUERTO MURIALDO"
         }
       },
@@ -1958,7 +1958,7 @@
           "150451": "GONZALO DíAZ DE PINEDA (EL BOMBÓN)",
           "150452": "LINARES",
           "150453": "OYACACHI",
-          "150454": "SANTA ROSA",
+          "150454": "ContratoTA ROSA",
           "150455": "SARDINAS"
         }
       },
@@ -1966,11 +1966,11 @@
         "canton": "QUIJOS",
         "parroquias": {
           "150750": "BAEZA",
-          "150751": "COSANGA",
+          "150751": "COContratoGA",
           "150752": "CUYUJA",
           "150753": "PAPALLACTA",
-          "150754": "SAN FRANCISCO DE BORJA (VIRGILIO DÁVILA)",
-          "150755": "SAN JOSÉ DEL PAYAMINO",
+          "150754": "Contrato FRANCISCO DE BORJA (VIRGILIO DÁVILA)",
+          "150755": "Contrato JOSÉ DEL PAYAMINO",
           "150756": "SUMACO"
         }
       },
@@ -1998,7 +1998,7 @@
           "160157": "POMONA",
           "160158": "RÍO CORRIENTES",
           "160159": "RÍO TIGRE",
-          "160160": "SANTA CLARA",
+          "160160": "ContratoTA CLARA",
           "160161": "SARAYACU",
           "160162": "SIMÓN BOLÍVAR (CAB. EN MUSHULLACTA)",
           "160163": "TARQUI",
@@ -2016,10 +2016,10 @@
         }
       },
       "1603": {
-        "canton": "SANTA CLARA",
+        "canton": "ContratoTA CLARA",
         "parroquias": {
-          "160350": "SANTA CLARA",
-          "160351": "SAN JOSÉ"
+          "160350": "ContratoTA CLARA",
+          "160351": "Contrato JOSÉ"
         }
       },
       "1604": {
@@ -2064,9 +2064,9 @@
           "170125": "PUENGASÍ",
           "170126": "QUITUMBE",
           "170127": "RUMIPAMBA",
-          "170128": "SAN BARTOLO",
-          "170129": "SAN ISIDRO DEL INCA",
-          "170130": "SAN JUAN",
+          "170128": "Contrato BARTOLO",
+          "170129": "Contrato ISIDRO DEL INCA",
+          "170130": "Contrato JUAN",
           "170131": "SOLANDA",
           "170132": "TURUBAMBA",
           "170150": "QUITO DISTRITO METROPOLITANO",
@@ -2099,9 +2099,9 @@
           "170177": "POMASQUI",
           "170178": "PUÉLLARO",
           "170179": "PUEMBO",
-          "170180": "SAN ANTONIO",
-          "170181": "SAN JOSÉ DE MINAS",
-          "170182": "SAN MIGUEL DE LOS BANCOS",
+          "170180": "Contrato ANTONIO",
+          "170181": "Contrato JOSÉ DE MINAS",
+          "170182": "Contrato MIGUEL DE LOS BANCOS",
           "170183": "TABABELA",
           "170184": "TUMBACO",
           "170185": "YARUQUÍ",
@@ -2120,7 +2120,7 @@
           "170252": "CANGAHUA",
           "170253": "OLMEDO (PESILLO)",
           "170254": "OTÓN",
-          "170255": "SANTA ROSA DE CUZUBAMBA"
+          "170255": "ContratoTA ROSA DE CUZUBAMBA"
         }
       },
       "1703": {
@@ -2149,18 +2149,18 @@
       "1705": {
         "canton": "RUMIÑAHUI",
         "parroquias": {
-          "170501": "SANGOLQUÍ",
-          "170502": "SAN PEDRO DE TABOADA",
-          "170503": "SAN RAFAEL",
-          "170550": "SANGOLQUI",
+          "170501": "ContratoGOLQUÍ",
+          "170502": "Contrato PEDRO DE TABOADA",
+          "170503": "Contrato RAFAEL",
+          "170550": "ContratoGOLQUI",
           "170551": "COTOGCHOA",
           "170552": "RUMIPAMBA"
         }
       },
       "1707": {
-        "canton": "SAN MIGUEL DE LOS BANCOS",
+        "canton": "Contrato MIGUEL DE LOS BANCOS",
         "parroquias": {
-          "170750": "SAN MIGUEL DE LOS BANCOS",
+          "170750": "Contrato MIGUEL DE LOS BANCOS",
           "170751": "MINDO",
           "170752": "PEDRO VICENTE MALDONADO",
           "170753": "PUERTO QUITO"
@@ -2194,7 +2194,7 @@
           "180106": "LA PENÍNSULA",
           "180107": "MATRIZ",
           "180108": "PISHILATA",
-          "180109": "SAN FRANCISCO",
+          "180109": "Contrato FRANCISCO",
           "180150": "AMBATO",
           "180151": "AMBATILLO",
           "180152": "ATAHUALPA (CHISALATA)",
@@ -2208,18 +2208,18 @@
           "180160": "PICAIGUA",
           "180161": "PILAGÜÍN (PILAHÜÍN)",
           "180162": "QUISAPINCHA (QUIZAPINCHA)",
-          "180163": "SAN BARTOLOMÉ DE PINLLOG",
-          "180164": "SAN FERNANDO (PASA SAN FERNANDO)",
-          "180165": "SANTA ROSA",
+          "180163": "Contrato BARTOLOMÉ DE PINLLOG",
+          "180164": "Contrato FERNANDO (PASA Contrato FERNANDO)",
+          "180165": "ContratoTA ROSA",
           "180166": "TOTORAS",
           "180167": "CUNCHIBAMBA",
           "180168": "UNAMUNCHO"
         }
       },
       "1802": {
-        "canton": "BAÑOS DE AGUA SANTA",
+        "canton": "BAÑOS DE AGUA ContratoTA",
         "parroquias": {
-          "180250": "BAÑOS DE AGUA SANTA",
+          "180250": "BAÑOS DE AGUA ContratoTA",
           "180251": "LLIGUA",
           "180252": "RÍO NEGRO",
           "180253": "RÍO VERDE",
@@ -2257,7 +2257,7 @@
         }
       },
       "1807": {
-        "canton": "SAN PEDRO DE PELILEO",
+        "canton": "Contrato PEDRO DE PELILEO",
         "parroquias": {
           "180701": "PELILEO",
           "180702": "PELILEO GRANDE",
@@ -2273,7 +2273,7 @@
         }
       },
       "1808": {
-        "canton": "SANTIAGO DE PÍLLARO",
+        "canton": "ContratoTIAGO DE PÍLLARO",
         "parroquias": {
           "180801": "CIUDAD NUEVA",
           "180802": "PÍLLARO",
@@ -2282,9 +2282,9 @@
           "180852": "EMILIO MARÍA TERÁN (RUMIPAMBA)",
           "180853": "MARCOS ESPINEL (CHACATA)",
           "180854": "PRESIDENTE URBINA (CHAGRAPAMBA -PATZUCUL)",
-          "180855": "SAN ANDRÉS",
-          "180856": "SAN JOSÉ DE POALÓ",
-          "180857": "SAN MIGUELITO"
+          "180855": "Contrato ANDRÉS",
+          "180856": "Contrato JOSÉ DE POALÓ",
+          "180857": "Contrato MIGUELITO"
         }
       },
       "1809": {
@@ -2312,7 +2312,7 @@
           "190155": "SABANILLA",
           "190156": "TIMBARA",
           "190157": "ZUMBI",
-          "190158": "SAN CARLOS DE LAS MINAS"
+          "190158": "Contrato CARLOS DE LAS MINAS"
         }
       },
       "1902": {
@@ -2325,9 +2325,9 @@
           "190254": "LA CHONTA",
           "190255": "PALANDA",
           "190256": "PUCAPAMBA",
-          "190257": "SAN FRANCISCO DEL VERGEL",
+          "190257": "Contrato FRANCISCO DEL VERGEL",
           "190258": "VALLADOLID",
-          "190259": "SAN ANDRÉS"
+          "190259": "Contrato ANDRÉS"
         }
       },
       "1903": {
@@ -2341,7 +2341,7 @@
       "1904": {
         "canton": "YACUAMBI",
         "parroquias": {
-          "190450": "28 DE MAYO (SAN JOSÉ DE YACUAMBI)",
+          "190450": "28 DE MAYO (Contrato JOSÉ DE YACUAMBI)",
           "190451": "LA PAZ",
           "190452": "TUTUPALI"
         }
@@ -2378,7 +2378,7 @@
         "parroquias": {
           "190850": "PALANDA",
           "190851": "EL PORVENIR DEL CARMEN",
-          "190852": "SAN FRANCISCO DEL VERGEL",
+          "190852": "Contrato FRANCISCO DEL VERGEL",
           "190853": "VALLADOLID",
           "190854": "LA CANELA"
         }
@@ -2397,26 +2397,26 @@
     "provincia": "GALAPAGOS",
     "cantones": {
       "2001": {
-        "canton": "SAN CRISTÓBAL",
+        "canton": "Contrato CRISTÓBAL",
         "parroquias": {
           "200150": "PUERTO BAQUERIZO MORENO",
           "200151": "EL PROGRESO",
-          "200152": "ISLA SANTA MARÍA (FLOREANA) (CAB. EN PTO. VELASCO IBARRA)"
+          "200152": "ISLA ContratoTA MARÍA (FLOREANA) (CAB. EN PTO. VELASCO IBARRA)"
         }
       },
       "2002": {
         "canton": "ISABELA",
         "parroquias": {
           "200250": "PUERTO VILLAMIL",
-          "200251": "TOMÁS DE BERLANGA (SANTO TOMÁS)"
+          "200251": "TOMÁS DE BERLANGA (ContratoTO TOMÁS)"
         }
       },
       "2003": {
-        "canton": "SANTA CRUZ",
+        "canton": "ContratoTA CRUZ",
         "parroquias": {
           "200350": "PUERTO AYORA",
           "200351": "BELLAVISTA",
-          "200352": "SANTA ROSA (INCLUYE LA ISLA BALTRA)"
+          "200352": "ContratoTA ROSA (INCLUYE LA ISLA BALTRA)"
         }
       }
     }
@@ -2435,7 +2435,7 @@
           "210155": "EL ENO",
           "210156": "PACAYACU",
           "210157": "JAMBELÍ",
-          "210158": "SANTA CECILIA",
+          "210158": "ContratoTA CECILIA",
           "210159": "AGUAS NEGRAS"
         }
       },
@@ -2447,7 +2447,7 @@
           "210252": "GONZALO PIZARRO",
           "210253": "LUMBAQUÍ",
           "210254": "PUERTO LIBRE",
-          "210255": "SANTA ROSA DE SUCUMBÍOS"
+          "210255": "ContratoTA ROSA DE SUCUMBÍOS"
         }
       },
       "2103": {
@@ -2457,7 +2457,7 @@
           "210351": "PALMA ROJA",
           "210352": "PUERTO BOLÍVAR (PUERTO MONTÚFAR)",
           "210353": "PUERTO RODRÍGUEZ",
-          "210354": "SANTA ELENA"
+          "210354": "ContratoTA ELENA"
         }
       },
       "2104": {
@@ -2466,8 +2466,8 @@
           "210450": "SHUSHUFINDI",
           "210451": "LIMONCOCHA",
           "210452": "PAÑACOCHA",
-          "210453": "SAN ROQUE (CAB. EN SAN VICENTE)",
-          "210454": "SAN PEDRO DE LOS COFANES",
+          "210453": "Contrato ROQUE (CAB. EN Contrato VICENTE)",
+          "210454": "Contrato PEDRO DE LOS COFANES",
           "210455": "SIETE DE JULIO"
         }
       },
@@ -2475,17 +2475,17 @@
         "canton": "SUCUMBÍOS",
         "parroquias": {
           "210550": "LA BONITA",
-          "210551": "EL PLAYÓN DE SAN FRANCISCO",
+          "210551": "EL PLAYÓN DE Contrato FRANCISCO",
           "210552": "LA SOFÍA",
           "210553": "ROSA FLORIDA",
-          "210554": "SANTA BÁRBARA"
+          "210554": "ContratoTA BÁRBARA"
         }
       },
       "2106": {
         "canton": "CASCALES",
         "parroquias": {
           "210650": "EL DORADO DE CASCALES",
-          "210651": "SANTA ROSA DE SUCUMBÍOS",
+          "210651": "ContratoTA ROSA DE SUCUMBÍOS",
           "210652": "SEVILLA"
         }
       },
@@ -2515,8 +2515,8 @@
           "220157": "INÉS ARANGO (CAB. EN WESTERN)",
           "220158": "LA BELLEZA",
           "220159": "NUEVO PARAÍSO (CAB. EN UNIÓN",
-          "220160": "SAN JOSÉ DE GUAYUSA",
-          "220161": "SAN LUIS DE ARMENIA"
+          "220160": "Contrato JOSÉ DE GUAYUSA",
+          "220161": "Contrato LUIS DE ARMENIA"
         }
       },
       "2202": {
@@ -2526,7 +2526,7 @@
           "220250": "NUEVO ROCAFUERTE",
           "220251": "CAPITÁN AUGUSTO RIVADENEYRA",
           "220252": "CONONACO",
-          "220253": "SANTA MARÍA DE HUIRIRIMA",
+          "220253": "ContratoTA MARÍA DE HUIRIRIMA",
           "220254": "TIPUTINI",
           "220255": "YASUNÍ"
         }
@@ -2537,9 +2537,9 @@
           "220350": "LA JOYA DE LOS SACHAS",
           "220351": "ENOKANQUI",
           "220352": "POMPEYA",
-          "220353": "SAN CARLOS",
-          "220354": "SAN SEBASTIÁN DEL COCA",
-          "220355": "LAGO SAN PEDRO",
+          "220353": "Contrato CARLOS",
+          "220354": "Contrato SEBASTIÁN DEL COCA",
+          "220355": "LAGO Contrato PEDRO",
           "220356": "RUMIPAMBA",
           "220357": "TRES DE NOVIEMBRE",
           "220358": "UNIÓN MILAGREÑA"
@@ -2551,53 +2551,53 @@
           "220450": "LORETO",
           "220451": "AVILA (CAB. EN HUIRUNO)",
           "220452": "PUERTO MURIALDO",
-          "220453": "SAN JOSÉ DE PAYAMINO",
-          "220454": "SAN JOSÉ DE DAHUANO",
-          "220455": "SAN VICENTE DE HUATICOCHA"
+          "220453": "Contrato JOSÉ DE PAYAMINO",
+          "220454": "Contrato JOSÉ DE DAHUANO",
+          "220455": "Contrato VICENTE DE HUATICOCHA"
         }
       }
     }
   },
   "23": {
-    "provincia": "SANTO DOMINGO DE LOS TSACHILAS",
+    "provincia": "ContratoTO DOMINGO DE LOS TSACHILAS",
     "cantones": {
       "2301": {
-        "canton": "SANTO DOMINGO",
+        "canton": "ContratoTO DOMINGO",
         "parroquias": {
           "230101": "ABRAHAM CALAZACÓN",
           "230102": "BOMBOLÍ",
           "230103": "CHIGUILPE",
           "230104": "RÍO TOACHI",
           "230105": "RÍO VERDE",
-          "230106": "SANTO DOMINGO DE LOS COLORADOS",
+          "230106": "ContratoTO DOMINGO DE LOS COLORADOS",
           "230107": "ZARACAY",
-          "230150": "SANTO DOMINGO DE LOS COLORADOS",
+          "230150": "ContratoTO DOMINGO DE LOS COLORADOS",
           "230151": "ALLURIQUÍN",
           "230152": "PUERTO LIMÓN",
           "230153": "LUZ DE AMÉRICA",
-          "230154": "SAN JACINTO DEL BÚA",
+          "230154": "Contrato JACINTO DEL BÚA",
           "230155": "VALLE HERMOSO",
           "230156": "EL ESFUERZO",
-          "230157": "SANTA MARÍA DEL TOACHI"
+          "230157": "ContratoTA MARÍA DEL TOACHI"
         }
       }
     }
   },
   "24": {
-    "provincia": "SANTA ELENA",
+    "provincia": "ContratoTA ELENA",
     "cantones": {
       "2401": {
-        "canton": "SANTA ELENA",
+        "canton": "ContratoTA ELENA",
         "parroquias": {
           "240101": "BALLENITA",
-          "240102": "SANTA ELENA",
-          "240150": "SANTA ELENA",
+          "240102": "ContratoTA ELENA",
+          "240150": "ContratoTA ELENA",
           "240151": "ATAHUALPA",
           "240152": "COLONCHE",
           "240153": "CHANDUY",
           "240154": "MANGLARALTO",
           "240155": "SIMÓN BOLÍVAR (JULIO MORENO)",
-          "240156": "SAN JOSÉ DE ANCÓN"
+          "240156": "Contrato JOSÉ DE ANCÓN"
         }
       },
       "2402": {
@@ -2612,7 +2612,7 @@
           "240301": "CARLOS ESPINOZA LARREA",
           "240302": "GRAL. ALBERTO ENRÍQUEZ GALLO",
           "240303": "VICENTE ROCAFUERTE",
-          "240304": "SANTA ROSA",
+          "240304": "ContratoTA ROSA",
           "240350": "SALINAS",
           "240351": "ANCONCITO",
           "240352": "JOSÉ LUIS TAMAYO (MUEY)"

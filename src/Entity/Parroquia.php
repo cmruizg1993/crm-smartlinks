@@ -36,9 +36,9 @@ class Parroquia
     private $colaboradores;
 
     /**
-     * @ORM\OneToMany(targetEntity=SAN::class, mappedBy="parroquia")
+     * @ORM\OneToMany(targetEntity=Contrato::class, mappedBy="parroquia")
      */
-    private $sans;
+    private $Contratos;
 
     public function __toString()
     {
@@ -51,7 +51,7 @@ class Parroquia
     public function __construct()
     {
         $this->colaboradores = new ArrayCollection();
-        $this->sans = new ArrayCollection();
+        $this->Contratos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -114,29 +114,29 @@ class Parroquia
     }
 
     /**
-     * @return Collection|SAN[]
+     * @return Collection|Contrato[]
      */
-    public function getSans(): Collection
+    public function getContratos(): Collection
     {
-        return $this->sans;
+        return $this->Contratos;
     }
 
-    public function addSan(SAN $san): self
+    public function addContrato(Contrato $Contrato): self
     {
-        if (!$this->sans->contains($san)) {
-            $this->sans[] = $san;
-            $san->setParroquia($this);
+        if (!$this->Contratos->contains($Contrato)) {
+            $this->Contratos[] = $Contrato;
+            $Contrato->setParroquia($this);
         }
 
         return $this;
     }
 
-    public function removeSan(SAN $san): self
+    public function removeContrato(Contrato $Contrato): self
     {
-        if ($this->sans->removeElement($san)) {
+        if ($this->Contratos->removeElement($Contrato)) {
             // set the owning side to null (unless already changed)
-            if ($san->getParroquia() === $this) {
-                $san->setParroquia(null);
+            if ($Contrato->getParroquia() === $this) {
+                $Contrato->setParroquia(null);
             }
         }
 

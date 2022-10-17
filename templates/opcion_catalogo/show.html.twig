@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}OpcionCatalogo{% endblock %}
+
+{% block body %}
+    <h1>OpcionCatalogo</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ opcion_catalogo.id }}</td>
+            </tr>
+            <tr>
+                <th>Codigo</th>
+                <td>{{ opcion_catalogo.codigo }}</td>
+            </tr>
+            <tr>
+                <th>Texto</th>
+                <td>{{ opcion_catalogo.texto }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('opcion_catalogo_index') }}">back to list</a>
+
+    <a href="{{ path('opcion_catalogo_edit', {'id': opcion_catalogo.id}) }}">edit</a>
+
+    {{ include('opcion_catalogo/_delete_form.html.twig') }}
+{% endblock %}

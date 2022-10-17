@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PuntoEmision index{% endblock %}
+
+{% block body %}
+    <h1>PuntoEmision index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Codigo</th>
+                <th>Descripcion</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for punto_emision in punto_emisions %}
+            <tr>
+                <td>{{ punto_emision.id }}</td>
+                <td>{{ punto_emision.codigo }}</td>
+                <td>{{ punto_emision.descripcion }}</td>
+                <td>
+                    <a href="{{ path('punto_emision_show', {'id': punto_emision.id}) }}">show</a>
+                    <a href="{{ path('punto_emision_edit', {'id': punto_emision.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('punto_emision_new') }}">Create new</a>
+{% endblock %}

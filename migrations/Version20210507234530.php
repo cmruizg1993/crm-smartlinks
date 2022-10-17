@@ -21,7 +21,7 @@ final class Version20210507234530 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE solicitud ADD plan_id INT NOT NULL');
-        $this->addSql('ALTER TABLE solicitud ADD CONSTRAINT FK_96D27CC0E899029B FOREIGN KEY (plan_id) REFERENCES plan (id)');
+        $this->addSql('ALTER TABLE solicitud ADD CONSTRAINT FK_96D27CC0E899029B FOREIGN KEY (plan_id) REFERENCES servicio (id)');
         $this->addSql('CREATE INDEX IDX_96D27CC0E899029B ON solicitud (plan_id)');
     }
 

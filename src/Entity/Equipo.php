@@ -22,7 +22,7 @@ class Equipo
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $sku;
+    private $codigo;
 
     /**
      * @ORM\Column(type="string", length=100)
@@ -30,20 +30,10 @@ class Equipo
     private $nombre;
 
     /**
-     * @ORM\OneToMany(targetEntity=Seriado::class, mappedBy="equipo")
+     * @ORM\Column(type="boolean", nullable=true)
      */
-    private $seriados;
+    private $esSeriado;
 
-    /**
-     * @ORM\OneToMany(targetEntity=NoSeriado::class, mappedBy="equipo")
-     */
-    private $noSeriados;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=TipoEquipo::class, inversedBy="equipos")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $tipo;
     public function __toString()
     {
         // TODO: Implement __toString() method.
@@ -61,14 +51,14 @@ class Equipo
         return $this->id;
     }
 
-    public function getSku(): ?string
+    public function getCodigo(): ?string
     {
-        return $this->sku;
+        return $this->codigo;
     }
 
-    public function setSku(string $sku): self
+    public function setCodigo(string $codigo): self
     {
-        $this->sku = $sku;
+        $this->codigo = $codigo;
 
         return $this;
     }
@@ -85,74 +75,14 @@ class Equipo
         return $this;
     }
 
-    /**
-     * @return Collection|Seriado[]
-     */
-    public function getSeriados(): Collection
+    public function getEsSeriado(): ?bool
     {
-        return $this->seriados;
+        return $this->esSeriado;
     }
 
-    public function addSeriado(Seriado $seriado): self
+    public function setEsSeriado(?bool $esSeriado): self
     {
-        if (!$this->seriados->contains($seriado)) {
-            $this->seriados[] = $seriado;
-            $seriado->setEquipo($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSeriado(Seriado $seriado): self
-    {
-        if ($this->seriados->removeElement($seriado)) {
-            // set the owning side to null (unless already changed)
-            if ($seriado->getEquipo() === $this) {
-                $seriado->setEquipo(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|NoSeriado[]
-     */
-    public function getNoSeriados(): Collection
-    {
-        return $this->noSeriados;
-    }
-
-    public function addNoSeriado(NoSeriado $noSeriado): self
-    {
-        if (!$this->noSeriados->contains($noSeriado)) {
-            $this->noSeriados[] = $noSeriado;
-            $noSeriado->setEquipo($this);
-        }
-
-        return $this;
-    }
-
-    public function removeNoSeriado(NoSeriado $noSeriado): self
-    {
-        if ($this->noSeriados->removeElement($noSeriado)) {
-            // set the owning side to null (unless already changed)
-            if ($noSeriado->getEquipo() === $this) {
-                $noSeriado->setEquipo(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getTipo(): ?TipoEquipo
-    {
-        return $this->tipo;
-    }
-
-    public function setTipo(?TipoEquipo $tipo): self
-    {
-        $this->tipo = $tipo;
+        $this->esSeriado = $esSeriado;
 
         return $this;
     }

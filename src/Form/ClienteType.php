@@ -23,7 +23,7 @@ class ClienteType extends AbstractType
             ->add('fechaNacimiento',DateType::Class, array(
                 'widget' => 'choice',
                 'years' => range(date('Y'), date('Y')-100),))
-            ->add('fingerprint')
+            //->add('fingerprint')
             ->add('estadoCivil')
             ->add('genero', ChoiceType::class,[
                 'choices'=>[
@@ -32,13 +32,17 @@ class ClienteType extends AbstractType
                 ]
             ])
             ->add('nacionalidad')
-            ->add('residencia')
+            ->add('direccion')
+            ->add('esTerceraEdad')
+            ->add('esDiscapacitado')
             ->add('direccion')
             ->add('dni', DniType::class)
+            /*
             ->add('otro', FileType::class,
                 ['mapped'=>false,'required'=>false,'attr'=>['accept' => ".png,.jpg,.jpeg,.pdf"],'constraints' => [
                     new File([
                         'maxSize' => '2048k'])]])
+            */
         ;
     }
 

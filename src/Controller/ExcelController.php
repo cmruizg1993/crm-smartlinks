@@ -8,7 +8,7 @@ use App\Entity\Colaborador;
 use App\Entity\Equipo;
 use App\Entity\Orden;
 use App\Entity\Plan;
-use App\Entity\SAN;
+use App\Entity\Contrato;
 use App\Entity\Seriado;
 use App\Entity\TipoOrden;
 use App\Form\ItemOsType;
@@ -42,7 +42,7 @@ class ExcelController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // data is an array with "name", "email", and "message" keys
             $map = (object) [
-                'sanColumn' => 'A', 'codigoInstaladorColumn' => 'B','fechaColumn' => 'C',
+                'ContratoColumn' => 'A', 'codigoInstaladorColumn' => 'B','fechaColumn' => 'C',
                 'radioColumn'=>'D','modemColumn'=>'E','tipoOrdenColumn' => 'F'
             ];
             $file = $form['archivo']->getData();
@@ -59,7 +59,7 @@ class ExcelController extends AbstractController
 
                 $em = $this->getDoctrine()->getManager();
 
-                $sanRepository = $em->getRepository('App:SAN');
+                $ContratoRepository = $em->getRepository('App:Contrato');
 
                 $colaboradorRepository = $em->getRepository('App:Colaborador');
 
@@ -71,16 +71,16 @@ class ExcelController extends AbstractController
 
                 $estado = $em->getRepository('App:EstadoOrden')->findOneByCodigo('C');
 
-                $nsan = $sheet->getCell("$map->sanColumn$counter")->getValue();
+                $nContrato = $sheet->getCell("$map->ContratoColumn$counter")->getValue();
                 /* @var $modem Equipo */
                 $modem = $em->getRepository('App:Equipo')->findOneBySku("1505216-0473");
                 /* @var $radio Equipo */
                 $radio = $em->getRepository('App:Equipo')->findOneBySku("1506688-1002");
 
-                while($nsan){
+                while($nContrato){
                     try{
-                        $san = $sanRepository->findOneByNumero("HEC2000$nsan");
-                        if($san) {
+                        $Contrato = $ContratoRepository->findOneByNumero("HEC2000$nContrato");
+                        if($Contrato) {
                             $orden = new Orden();
 
                             $tipo = $sheet->getCell("$map->tipoOrdenColumn$counter")->getValue();
@@ -89,10 +89,10 @@ class ExcelController extends AbstractController
                             }elseif($tipo==TipoOrden::REPARACION){
                                 $orden->setTipo($tipoReparacion);
                             }else{
-                                $errores[] = "CODIGO DE INSTALACION: $tipo NO VÁLIDO EN LA SAN $nsan";
+                                $errores[] = "CODIGO DE INSTALACION: $tipo NO VÁLIDO EN LA Contrato $nContrato";
                             }
 
-                            $orden->setSan($san);
+                            $orden->setContrato($Contrato);
 
                             $orden->setEstado($estado);
 
@@ -132,13 +132,13 @@ class ExcelController extends AbstractController
 
 
                         }else{
-                            $errores[] = "NO SE ENCONTRO LA SAN CON NUMERO $nsan";
+                            $errores[] = "NO SE ENCONTRO LA Contrato CON NUMERO $nContrato";
                         }
                     }catch (\Exception $e){
                         $errores[] = "Error: ".$e->getMessage();
                     }
                     $counter++;
-                    $nsan = $sheet->getCell("$map->sanColumn$counter")->getValue();
+                    $nContrato = $sheet->getCell("$map->ContratoColumn$counter")->getValue();
                 }
                 $em->flush();
 
@@ -319,7 +319,7 @@ class ExcelController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // data is an array with "name", "email", and "message" keys
             $map = (object) [
-                'sanColumn' => 'B','estadoSanColumn' => 'C','estadoContratoColumn' => 'D','fechaOrdenColumn' => 'E',
+                'ContratoColumn' => 'B','estadoContratoColumn' => 'C','estadoContratoColumn' => 'D','fechaOrdenColumn' => 'E',
                 'nombreClienteColumn' => 'H', 'emailClienteColumn' => 'I','cantonColumn' => 'J','provinciaColumn' => 'K',
                 'nroOrdenColumn' => 'Q', 'tipoOrdenColumn' => 'S', 'estadoOrdenColumn' => 'T', 'fechaOrdenColumn' => 'U',
                 'codigoInstaladorColumn' => 'Y', 'nombreInstaladorColumn' => 'Z', 'fechaInstalacionColumn' => 'AA',
@@ -334,7 +334,7 @@ class ExcelController extends AbstractController
                 $sheet = $spreadsheet->getActiveSheet();
                 $counter = 3;
                 $em = $this->getDoctrine()->getManager();
-                $sanRepository = $em->getRepository('App:SAN');
+                $ContratoRepository = $em->getRepository('App:Contrato');
                 $planRepository = $em->getRepository('App:Plan');
 
                 $colaboradorRepository = $em->getRepository('App:Colaborador');
@@ -343,25 +343,25 @@ class ExcelController extends AbstractController
 
                 $servicio = $em->getRepository('App:Servicio')->findOneByNombre('INTERNET SATELITAL');
 
-                $nsan = $sheet->getCell("$map->sanColumn$counter")->getValue();
-                while($nsan){
+                $nContrato = $sheet->getCell("$map->ContratoColumn$counter")->getValue();
+                while($nContrato){
 
-                    $exist = $sanRepository->findOneByNumero($nsan);
+                    $exist = $ContratoRepository->findOneByNumero($nContrato);
                     if(!$exist) {
 
-                        $san = new SAN();
-                        $san->setNumero($nsan);
-                        $san->setEstado($sheet->getCell("$map->estadoSanColumn$counter")->getValue());
-                        $san->setEstadoContrato($sheet->getCell("$map->estadoContratoColumn$counter")->getValue());
-                        $san->setFecha(new \DateTime($sheet->getCell("$map->fechaOrdenColumn$counter")->getFormattedValue()));
-                        $san->setDireccion($sheet->getCell("$map->cantonColumn$counter")->getValue() . ", " . $sheet->getCell("$map->provinciaColumn$counter")->getValue());
+                        $Contrato = new Contrato();
+                        $Contrato->setNumero($nContrato);
+                        $Contrato->setEstado($sheet->getCell("$map->estadoContratoColumn$counter")->getValue());
+                        $Contrato->setEstadoContrato($sheet->getCell("$map->estadoContratoColumn$counter")->getValue());
+                        $Contrato->setFecha(new \DateTime($sheet->getCell("$map->fechaOrdenColumn$counter")->getFormattedValue()));
+                        $Contrato->setDireccion($sheet->getCell("$map->cantonColumn$counter")->getValue() . ", " . $sheet->getCell("$map->provinciaColumn$counter")->getValue());
 
                         $cliente = new Cliente();
                         $cliente->setNombres($sheet->getCell("$map->nombreClienteColumn$counter")->getValue());
                         $cliente->setEmail($sheet->getCell("$map->emailClienteColumn$counter")->getValue());
                         $cliente->setDireccion($sheet->getCell("$map->cantonColumn$counter")->getValue() . ", " . $sheet->getCell("$map->provinciaColumn$counter")->getValue());
-                        $cliente->addSan($san);
-                        $san->setCliente($cliente);
+                        $cliente->addContrato($Contrato);
+                        $Contrato->setCliente($cliente);
 
                         $orden = new Orden();
                         $orden->setTipo($tipo);
@@ -370,7 +370,7 @@ class ExcelController extends AbstractController
                         }
                         $orden->setFecha(new \DateTime($sheet->getCell("$map->fechaOrdenColumn$counter")->getFormattedValue()));
                         $orden->setEstado($estado);
-                        $san->addOrdene($orden);
+                        $Contrato->addOrdene($orden);
                         $nombre = $sheet->getCell("$map->nombrePlanColumn$counter")->getValue();
                         $plan = $planRepository->findOneByNombre($nombre);
 
@@ -379,15 +379,15 @@ class ExcelController extends AbstractController
                             $plan->setServicio($servicio);
                             $plan->setNombre($nombre);
                             $plan->setActivo(true);
-                            $plan->addSan($san);
+                            $plan->addContrato($Contrato);
                             $em->persist($plan);
                             $em->flush();
                         }
 
-                        $san->setPlan($plan);
+                        $Contrato->setPlan($plan);
 
 
-                        $orden->setSan($san);
+                        $orden->setContrato($Contrato);
 
                         $tecnico = $colaboradorRepository->findOneByCodigoIP($sheet->getCell("$map->codigoInstaladorColumn$counter")->getValue());
 
@@ -403,10 +403,10 @@ class ExcelController extends AbstractController
                         }
                         $orden->setTecnico($tecnico);
 
-                        $em->persist($san);
+                        $em->persist($Contrato);
                     }
                     $counter++;
-                    $nsan = $sheet->getCell("$map->sanColumn$counter")->getValue();
+                    $nContrato = $sheet->getCell("$map->ContratoColumn$counter")->getValue();
                 }
                 $em->flush();
 
@@ -443,12 +443,12 @@ class ExcelController extends AbstractController
                 $counter = 1;
 
                 $em = $this->getDoctrine()->getManager();
-                $sanRepository = $em->getRepository('App:SAN');
+                $ContratoRepository = $em->getRepository('App:Contrato');
 
-                $nsan = $sheet->getCell("A$counter")->getValue();
+                $nContrato = $sheet->getCell("A$counter")->getValue();
                 while($counter < 20){
                     $counter++;
-                    $nsan = $sheet->getCell("A$counter")->getValue();
+                    $nContrato = $sheet->getCell("A$counter")->getValue();
                 }
             }
         }

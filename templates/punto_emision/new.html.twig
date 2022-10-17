@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New PuntoEmision{% endblock %}
+
+{% block body %}
+    <h1>Create new PuntoEmision</h1>
+
+    {{ include('punto_emision/_form.html.twig') }}
+
+    <a href="{{ path('punto_emision_index') }}">back to list</a>
+{% endblock %}

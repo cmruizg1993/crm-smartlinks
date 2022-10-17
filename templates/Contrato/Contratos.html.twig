@@ -1,0 +1,22 @@
+
+{% for Contrato in Contratos %}
+    <tr>
+        <td>
+            <input type="radio" name="Contrato_id" value="{{ Contrato.id }}"
+            data-contrato="{{  Contrato|json_encode() }}">
+        </td>
+        <td>{{ Contrato.numero }}</td>
+
+        <td>{{ Contrato.cliente.nombres }}</td>
+        <td>
+            {% if Contrato.cliente.dni %}
+                {{ Contrato.cliente.dni.numero }}
+            {% endif %}
+        </td>
+        <td>
+            {% if Contrato.parroquia %}
+                {{ Contrato.parroquia.nombre }}
+            {% endif %}
+        </td>
+    </tr>                        
+{% endfor %}

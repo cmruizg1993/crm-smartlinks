@@ -9,7 +9,9 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Cod</th>
                 <th>Nombre</th>
+                <th>Precio</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -17,7 +19,9 @@
         {% for servicio in servicios %}
             <tr>
                 <td>{{ servicio.id }}</td>
+                <td>{{ servicio.codigo }}</td>
                 <td>{{ servicio.nombre }}</td>
+                <td>{{ servicio.costo }}</td>
                 <td>
                     <a href="{{ path('servicio_show', {'id': servicio.id}) }}">show</a>
                     <a href="{{ path('servicio_edit', {'id': servicio.id}) }}">edit</a>

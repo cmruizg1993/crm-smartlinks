@@ -1,0 +1,18 @@
+
+{% for equipo in equipos %}
+    <tr>
+        <td>
+            <input type="button" class="btn btn-sm btn-success btn-add" name="equipo_{{ equipo.id }}" value="Agregar"
+            data-equipo="{{ equipo|json_encode() }}">
+        </td>
+        <td>{{ equipo.nombre }}</td>
+        <td>{{ equipo.codigo }}</td>
+        <td>
+        {% if equipo.esSeriado %}
+            <span>SI</span>
+        {% else %}
+            <span>NO</span>
+        {% endif %}
+        </td>
+    </tr>                        
+{% endfor %}

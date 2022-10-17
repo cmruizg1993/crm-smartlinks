@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\FormaPago;
 use App\Entity\Pago;
-use App\Entity\SAN;
+use App\Entity\Contrato;
 use App\Entity\Solicitud;
 use App\Entity\Usuario;
 use App\Form\PagoType;
@@ -52,7 +52,7 @@ class SolicitudController extends AbstractController
     /**
      * @Route("/new", name="solicitud_new", methods={"GET","POST"})
      */
-    public function new(Request $request, FormaPagoRepository $formaPagoRepository, ClienteRepository $clienteRepository, MailerInterface $mailer, FileUploader $uploader): Response
+    public function new(Request $request, FormaPagoRepository $formaPagoRepository, ClienteRepository $clienteRepository/*, MailerInterface $mailer, FileUploader $uploader*/): Response
     {
         $solicitud = new Solicitud();
 
@@ -81,6 +81,7 @@ class SolicitudController extends AbstractController
             $solicitud->setEstado('PENDIENTE');
             $solicitud->setFecha(new \DateTime());
             /** @var UploadedFile $foto1 */
+            /*
             $foto1 = $form['aprobacion']->getData();
             if($foto1){
                 $fn1 = $uploader->upload($foto1,'aprobacionEquifax');
@@ -88,7 +89,7 @@ class SolicitudController extends AbstractController
                     $solicitud->setAprobacionEquifax($fn1);
                 }
             }
-            /** @var UploadedFile $foto2 */
+
             $foto2 = $form['validacion']->getData();
             if($foto2){
                 $fn2 = $uploader->upload($foto2,'validacionEquifax');
@@ -96,7 +97,7 @@ class SolicitudController extends AbstractController
                     $solicitud->setCapturaEquifax($fn2);
                 }
             }
-
+            */
             $old_client = $clienteRepository->findOneByNumeroDni($solicitud->getCliente()->getDni()->getNumero());
             if($old_client){
                 $solicitud->setCliente($old_client);
@@ -107,7 +108,7 @@ class SolicitudController extends AbstractController
             $context = [];
             $context['colaborador']=$colaborador?$colaborador->getNombres():'';
             $context['url']  = $this->generateUrl('solicitud_index');
-            $this->notificar($mailer,'Nueva Solicitud de Venta', 'solicitud/emailNuevaSolicitud.html.twig',$context);
+            //$this->notificar($mailer,'Nueva Solicitud de Venta', 'solicitud/emailNuevaSolicitud.html.twig',$context);
 
             return $this->redirectToRoute('solicitud_index');
         }
@@ -173,12 +174,12 @@ class SolicitudController extends AbstractController
         if($solicitud->getEstado()!='PENDIENTE'){
             return $this->redirectToRoute('solicitud_index');
         }
-        $san = new SAN();
-        $san->setDireccion($solicitud->getCliente()->getDireccion());
-        $form = $this->createFormBuilder($san)
+        $Contrato = new Contrato();
+        $Contrato->setDireccion($solicitud->getCliente()->getDireccion());
+        $form = $this->createFormBuilder($Contrato)
             ->add('numero')
             ->add('valorSuscripcion')
-            ->add('capturaSan',FileType::class,[
+            ->add('capturaContrato',FileType::class,[
                 'mapped'=>false
             ])
             ->getForm();
@@ -186,29 +187,29 @@ class SolicitudController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
             $solicitud->setAprobar(true);
             $solicitud->setEstado('APROBADA');
-            $san->setVendedor($solicitud->getVendedor());
-            $san->setFecha(new \DateTime());
-            $san->setCliente($solicitud->getCliente());
-            $san->setPlan($solicitud->getPlan());
+            $Contrato->setVendedor($solicitud->getVendedor());
+            $Contrato->setFecha(new \DateTime());
+            $Contrato->setCliente($solicitud->getCliente());
+            $Contrato->setPlan($solicitud->getPlan());
             $em = $this->getDoctrine()->getManager();
             /** @var UploadedFile $foto1 */
-            $foto1 = $form['capturaSan']->getData();
+            $foto1 = $form['capturaContrato']->getData();
             if($foto1){
                 $fn = $uploader->upload($foto1,'solicitudesAprobadas');
                 if($fn){
                     $solicitud->setCapturaEquifax($fn);
                 }
             }
-            $solicitud->setSan($san);
-            $em->persist($san);
+            $solicitud->setContrato($Contrato);
+            $em->persist($Contrato);
             $em->flush();
             $to = $solicitud->getVendedor() ? $solicitud->getVendedor()->getUsuario()->getPhone(): '';
             $nro = $solicitud->getId();
-            $nroSan = $san->getNumero();
-            $valor = $san->getValorSuscripcion();
+            $nroContrato = $Contrato->getNumero();
+            $valor = $Contrato->getValorSuscripcion();
             if($to){
                 $message = "*Makrocel* notifica la *APROBACION* de la solicitud con *NRO $nro*. Ingresada a través de la aplicacion web. 
-            El nro de SAN asociado es $nroSan y el valor de suscripcion es de: USD  $valor. *Gracias por formar parte de nuestro equipo.*";
+            El nro de Contrato asociado es $nroContrato y el valor de suscripcion es de: USD  $valor. *Gracias por formar parte de nuestro equipo.*";
                 $cuid = uniqid();
                 $response = $wtp->send(urlencode($message),$to,$cuid);
                 $logger->debug($response->getContent());
@@ -218,7 +219,7 @@ class SolicitudController extends AbstractController
         return $this->render('solicitud/aprobar.html.twig', [
             'solicitud' => $solicitud,
             'form' => $form->createView(),
-            's_a_n'=>$san
+            's_a_n'=>$Contrato
         ]);
     }
     /**

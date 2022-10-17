@@ -42,12 +42,6 @@ class Cliente
      */
     private $estado;
 
-
-    /**
-     * @ORM\OneToMany(targetEntity=Contrato::class, mappedBy="cliente")
-     */
-    private $contratos;
-
     /**
      * HACE REFERENCIA A LOS CONTRATOS CON CLARO
      * @ORM\OneToMany(targetEntity=Solicitud::class, mappedBy="cliente", cascade={"persist", "remove"})
@@ -60,9 +54,9 @@ class Cliente
     private $dni;
 
     /**
-     * @ORM\OneToMany(targetEntity=SAN::class, mappedBy="cliente",cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Contrato::class, mappedBy="cliente",cascade={"persist", "remove"})
      */
-    private $sans;
+    private $Contratos;
 
     /**
      * @ORM\Column(type="date", nullable=true)
@@ -113,6 +107,21 @@ class Cliente
      * @ORM\ManyToOne(targetEntity=Colaborador::class, inversedBy="clientes")
      */
     private $vendedor;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Factura::class, mappedBy="cliente")
+     */
+    private $facturas;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $esTerceraEdad;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $esDiscapacitado;
     public function __toString()
     {
         if($this->dni){
@@ -122,9 +131,9 @@ class Cliente
     }
     public function __construct()
     {
-        $this->contratos = new ArrayCollection();
         $this->solicitudes = new ArrayCollection();
-        $this->sans = new ArrayCollection();
+        $this->Contratos = new ArrayCollection();
+        $this->facturas = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -182,36 +191,6 @@ class Cliente
     }
 
     /**
-     * @return Collection|Contrato[]
-     */
-    public function getContratos(): Collection
-    {
-        return $this->contratos;
-    }
-
-    public function addContrato(Contrato $contrato): self
-    {
-        if (!$this->contratos->contains($contrato)) {
-            $this->contratos[] = $contrato;
-            $contrato->setCliente($this);
-        }
-
-        return $this;
-    }
-
-    public function removeContrato(Contrato $contrato): self
-    {
-        if ($this->contratos->removeElement($contrato)) {
-            // set the owning side to null (unless already changed)
-            if ($contrato->getCliente() === $this) {
-                $contrato->setCliente(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Solicitud[]
      */
     public function getSolicitudes(): Collection
@@ -254,29 +233,29 @@ class Cliente
     }
 
     /**
-     * @return Collection|SAN[]
+     * @return Collection|Contrato[]
      */
-    public function getSans(): Collection
+    public function getContratos(): Collection
     {
-        return $this->sans;
+        return $this->Contratos;
     }
 
-    public function addSan(SAN $san): self
+    public function addContrato(Contrato $Contrato): self
     {
-        if (!$this->sans->contains($san)) {
-            $this->sans[] = $san;
-            $san->setCliente($this);
+        if (!$this->Contratos->contains($Contrato)) {
+            $this->Contratos[] = $Contrato;
+            $Contrato->setCliente($this);
         }
 
         return $this;
     }
 
-    public function removeSan(SAN $san): self
+    public function removeContrato(Contrato $Contrato): self
     {
-        if ($this->sans->removeElement($san)) {
+        if ($this->Contratos->removeElement($Contrato)) {
             // set the owning side to null (unless already changed)
-            if ($san->getCliente() === $this) {
-                $san->setCliente(null);
+            if ($Contrato->getCliente() === $this) {
+                $Contrato->setCliente(null);
             }
         }
 
@@ -464,5 +443,75 @@ class Cliente
             return true ;
         }
         return false;
+    }
+
+    /**
+     * @return Collection|Factura[]
+     */
+    public function getFacturas(): Collection
+    {
+        return $this->facturas;
+    }
+
+    public function addFactura(Factura $factura): self
+    {
+        if (!$this->facturas->contains($factura)) {
+            $this->facturas[] = $factura;
+            $factura->setCliente($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFactura(Factura $factura): self
+    {
+        if ($this->facturas->removeElement($factura)) {
+            // set the owning side to null (unless already changed)
+            if ($factura->getCliente() === $this) {
+                $factura->setCliente(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getEsTerceraEdad(): ?bool
+    {
+        return $this->esTerceraEdad;
+    }
+
+    public function setEsTerceraEdad(?bool $esTerceraEdad): self
+    {
+        $this->esTerceraEdad = $esTerceraEdad;
+
+        return $this;
+    }
+
+    public function getEsDiscapacitado(): ?bool
+    {
+        return $this->esDiscapacitado;
+    }
+
+    public function setEsDiscapacitado(?bool $esDiscapacitado): self
+    {
+        $this->esDiscapacitado = $esDiscapacitado;
+
+        return $this;
+    }
+    public function getData(){
+        $data["name"] = $this->getNombres();
+        $data["genre"] = $this->getGenero();
+        $data["residence"] = $this->getResidencia();
+        $data["nationality"] = $this->getNacionalidad();
+        $data["streets"] = $this->getDireccion();
+        $data["fingerprint"] = $this->getFingerprint();
+        $data["civilstate"] = $this->getEstadoCivil();
+        $data["dob"] = $this->getFechaNacimiento()->format('d/m/Y');
+        $data["email"] = $this->getEmail();
+        $data["dni_type"] = $this->getDni()->getTipo()->getId();
+        $data["phone"] = $this->getTelefono();
+        $data["fix_phone"] = $this->getTelefonoFijo();
+        $data["exp_date"] = $this->getDni()->getFechaExp() ? $this->getDni()->getFechaExp()->format('d/m/Y'):null;
+        return $data;
     }
 }

@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}OpcionCatalogo index{% endblock %}
+
+{% block body %}
+    <h1>OpcionCatalogo index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Codigo</th>
+                <th>Texto</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for opcion_catalogo in opcion_catalogos %}
+            <tr>
+                <td>{{ opcion_catalogo.id }}</td>
+                <td>{{ opcion_catalogo.codigo }}</td>
+                <td>{{ opcion_catalogo.texto }}</td>
+                <td>
+                    <a href="{{ path('opcion_catalogo_show', {'id': opcion_catalogo.id}) }}">show</a>
+                    <a href="{{ path('opcion_catalogo_edit', {'id': opcion_catalogo.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('opcion_catalogo_new') }}">Create new</a>
+{% endblock %}

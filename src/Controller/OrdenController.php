@@ -40,7 +40,7 @@ class OrdenController extends AbstractController
                     [
                         'nombre'
                     ],
-                'san'=> [
+                'Contrato'=> [
                         'numero'
                 ],
                 'codigo',
@@ -167,10 +167,10 @@ class OrdenController extends AbstractController
             $b = $new->getObservaciones();
             $acciones.="Se cambió las observaciones de Orden: $a, a: $b |";
         }
-        if($old->getSan()!=$new->getSan()){
-            $a = $old->getSan()->getNumero();
-            $b = $new->getSan()->getNumero();
-            $acciones.="Se cambió la SAN de la Orden: $a, a: $b |";
+        if($old->getContrato()!=$new->getContrato()){
+            $a = $old->getContrato()->getNumero();
+            $b = $new->getContrato()->getNumero();
+            $acciones.="Se cambió la Contrato de la Orden: $a, a: $b |";
         }
         if($old->getTecnico()!=$new->getTecnico()){
             $a = $old->getTecnico();

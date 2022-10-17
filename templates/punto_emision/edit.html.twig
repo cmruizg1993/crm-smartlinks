@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit PuntoEmision{% endblock %}
+
+{% block body %}
+    <h1>Edit PuntoEmision</h1>
+
+    {{ include('punto_emision/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('punto_emision_index') }}">back to list</a>
+
+    {{ include('punto_emision/_delete_form.html.twig') }}
+{% endblock %}

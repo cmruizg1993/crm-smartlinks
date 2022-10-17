@@ -1,6 +1,6 @@
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#staticBackdrop">
-    <i class="fa fa-search"></i>
+    <i class="icon-search"></i>
 </button>
 
 <!-- Modal -->
@@ -42,33 +42,6 @@
         </div>
     </div>
 </div>
-<script>
-    $("#parametroParroquia").keyup(function (){
-        var param = $(this).val();
-        var L = param.length;
-        if ( L >= 3){
-            $.ajax({
-                url:'{{ path('buscar_parroquia') }}',
-                type:'POST',
-                contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-                data: { param: param },
-                success: function (html){
-                    $("#tParroquias").html(html);
-                }
+{% block javascript %}
 
-            })
-        }
-    });
-    $("#modalAceptar").click(function (){
-        //alert("hola")
-        var radioValue = $("input[name='parroquia_id']:checked").val();
-        if (typeof radioValue !== 'undefined'){
-            var sitio = $("input[name='parroquia_id']:checked").data('sitio');
-            console.log(sitio)
-            $("#{{ controlName }}").val(radioValue);
-            $("#sitio").val(sitio);
-        }else{
-            alert('No se ha seleccionado ninguna parroquia')
-        }
-    });
-</script>
+{% endblock %}

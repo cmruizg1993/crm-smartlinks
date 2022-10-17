@@ -18,7 +18,22 @@ class EquipoRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Equipo::class);
     }
+    /**
+     * @return Equipo[] Returns an array of Equipo objects
+     *
+     */
+    public function findByParam($value)
+    {
+        $em = $this->getEntityManager();
+        /* @var $query QueryBuilder */
+        $query = $em->createQuery("SELECT equipo FROM App\Entity\Equipo equipo 
+        WHERE equipo.nombre LIKE :param
+        OR equipo.codigo LIKE :param");
+        $query->setParameter("param","%$value%");
+        $data = $query->getResult();
+        return $data;
 
+    }
     // /**
     //  * @return Equipo[] Returns an array of Equipo objects
     //  */

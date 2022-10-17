@@ -14,7 +14,7 @@
         <thead class="bg-primary">
             <tr>
                 <th>Id</th>
-                <th>Sku</th>
+                <th>codigo</th>
                 <th>Nombre</th>
                 <th>actions</th>
             </tr>
@@ -23,7 +23,7 @@
         {% for equipo in equipos %}
             <tr>
                 <td>{{ equipo.id }}</td>
-                <td>{{ equipo.sku }}</td>
+                <td>{{ equipo.codigo }}</td>
                 <td>{{ equipo.nombre }}</td>
                 <td>
                     <a href="{{ path('equipo_show', {'id': equipo.id}) }}">show</a>

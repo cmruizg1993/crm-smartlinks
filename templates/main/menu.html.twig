@@ -1,228 +1,76 @@
-<!-- partial:../../partials/_sidebar.html -->
+
+
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
-        <li class="nav-item nav-profile">
-            <a href="#" class="nav-link">
-                <div class="profile-image">
-                    {#
-                    <img class="img-xs rounded-circle" src="{{ asset('assets/images/faces/face8.jpg')}}" alt="profile image">
-                    #}
-                    <i class="fa fa-user-circle"></i>
-                    <!--div class="dot-indicator bg-success"></div-->
-                </div>
-                {% if app.user.colaborador %}
-                    <div class="text-wrapper">
-                        <p class="profile-name">{{ app.user.colaborador.nombres }}</p>
-                    </div>
-                {% endif %}
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <i class="mdi mdi-grid-large menu-icon"></i>
+                <span class="menu-title">Dashboard</span>
             </a>
         </li>
-        <li class="nav-item nav-category">Main Menu</li>
-        {% if is_granted('ROLE_SUPER_ADMIN') %}
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('usuario_list') }}">
-                    <i class="fa fa-group"></i>&emsp;
-                    <span class="menu-title">Usuarios</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#bancos" aria-expanded="false" aria-controls="auth">
-                    <i class="menu-icon typcn typcn-document-add"></i>
-                    <span class="menu-title">Bancos</span>
-                    <i class="menu-arrow"></i>
-                </a>
-                <div class="collapse" id="bancos">
-                    <ul class="nav flex-column sub-menu">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('banco_index') }}">
-                                <span class="menu-title">Listado de Bancos</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('cuenta_bancaria_index') }}">
-                                <span class="menu-title">Cuentas Bancarias</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-        {% endif %}
-
+        <li class="nav-item nav-category">Administrador</li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ path('solicitud_index') }}">
-                <i class="fa fa-address-book"></i>&emsp;
-                <span class="menu-title">Solicitudes</span>
+            <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                <i class="menu-icon mdi mdi-settings"></i>
+                <span class="menu-title">Configuración</span>
+                <!--i class="mdi mdi-settings"></i-->
             </a>
+            <div class="collapse" id="ui-basic">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
+                </ul>
+            </div>
         </li>
-        {% if is_granted('ROLE_ADMIN') %}
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('cliente_index') }}">
-                    <i class="fa fa-group"></i>&emsp;
-                    <span class="menu-title">Clientes</span>
-                </a>
-            </li>
+        <li class="nav-item nav-category">Negocio</li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ path('colaborador_index') }}">
-                <i class="menu-icon typcn typcn-document-text"></i>
-                <span class="menu-title">Colaboradores</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ordenes" aria-expanded="false" aria-controls="auth">
-                <i class="menu-icon typcn typcn-document-add"></i>
-                <span class="menu-title">Ordenes SAN</span>
+            <a class="nav-link" data-bs-toggle="collapse" href="#facturacion" aria-expanded="false" aria-controls="form-elements">
+                <i class="menu-icon mdi mdi-card-text-outline"></i>
+                <span class="menu-title">Facturación</span>
                 <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="ordenes">
+            <div class="collapse" id="facturacion">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('estado_orden_index') }}">
-                            <span class="menu-title">Estados de Orden</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('tipo_orden_index') }}">
-                            <span class="menu-title">Tipos de Orden</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('orden_index') }}">
-                            <span class="menu-title">Ordenes</span>
-                        </a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="{{ path('factura_new') }}">Nueva Factura</a></li>
                 </ul>
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#contratos" aria-expanded="false" aria-controls="auth">
-                <i class="menu-icon typcn typcn-document-add"></i>
+            <a class="nav-link" data-bs-toggle="collapse" href="#contratos" aria-expanded="false" aria-controls="form-elements">
+                <i class="menu-icon mdi mdi-card-text-outline"></i>
                 <span class="menu-title">Contratos</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="contratos">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('contrato_index') }}">
-                            <span class="menu-title">Claro</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('s_a_n_index') }}">
-                            <span class="menu-title">Hughesnet</span>
-                        </a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="{{ path('contrato_index') }}">Ver Contratos</a></li>
+                </ul>
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"><a class="nav-link" href="{{ path('contrato_new') }}">Nuevo Contrato</a></li>
                 </ul>
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#servicios" aria-expanded="false" aria-controls="auth">
-                <i class="menu-icon typcn typcn-document-add"></i>
-                <span class="menu-title">Servicios</span>
+            <a class="nav-link" data-bs-toggle="collapse" href="#clientes" aria-expanded="false" aria-controls="form-elements">
+                <i class="menu-icon mdi mdi-human"></i>
+                <span class="menu-title">Clientes</span>
                 <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="servicios">
+            <div class="collapse" id="clientes">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('servicio_index') }}">
-                            <span class="menu-title">Hughesnet</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('servicio_claro_index') }}">
-                            <span class="menu-title">Claro</span>
-                        </a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="{{ path('cliente_new') }}">Nuevo Cliente</a></li>
                 </ul>
             </div>
         </li>
+
+
+        <li class="nav-item nav-category">Ayuda</li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#planes" aria-expanded="false" aria-controls="auth">
-                <i class="menu-icon typcn typcn-document-add"></i>
-                <span class="menu-title">Planes</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="planes">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('plan_index') }}">
-                            <span class="menu-title">Hughesnet</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('planes_claro_index') }}">
-                            <span class="menu-title">Claro</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#inventario" aria-expanded="false" aria-controls="auth">
-                <i class="menu-icon typcn typcn-document-add"></i>
-                <span class="menu-title">Inventario</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="inventario">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('equipo_index') }}">
-                            <span class="menu-title">Equipos</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('seriado_index') }}">
-                            <span class="menu-title">Items Seriados</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('no_seriado_index') }}">
-                            <span class="menu-title">Items NO Seriados</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#excel" aria-expanded="false" aria-controls="auth">
-                <i class="menu-icon typcn typcn-document-add"></i>
-                <span class="menu-title">Excel</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="excel">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('fso') }}">
-                            <span class="menu-title">Sincronizar Detailed Report</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('sincronizar') }}">
-                            <span class="menu-title">Sincronizar Clientes SAN</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('ordensalida') }}">
-                            <span class="menu-title">Orden de Salida Invas</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('ordenrd') }}">
-                            <span class="menu-title">Ordenes Reparación/Desinstalación</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ path('whatsapp_index') }}">
-                <span class="menu-title">
-                    <i class="fa fa-whatsapp"></i>
-                    Whatsapp
-                </span>
+            <a class="nav-link" href="#">
+                <i class="menu-icon mdi mdi-file-document"></i>
+                <span class="menu-title">Documentacion</span>
             </a>
         </li>
-        {% endif %}
-        </ul>
+    </ul>
 </nav>
-<!-- partial -->

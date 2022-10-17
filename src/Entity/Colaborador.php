@@ -33,11 +33,6 @@ class Colaborador
     private $cargo;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Proveedor::class, inversedBy="colaboradores")
-     */
-    private $proveedores;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Parroquia::class, inversedBy="colaboradores")
      */
     private $parroquia;
@@ -49,24 +44,14 @@ class Colaborador
     private $direccion;
 
     /**
-     * @ORM\OneToOne(targetEntity=Usuario::class, mappedBy="colaborador", cascade={"persist", "remove"})
-     */
-    private $usuario;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Contrato::class, mappedBy="instalador")
-     */
-    private $contratos;
-
-    /**
      * @ORM\OneToMany(targetEntity=Orden::class, mappedBy="tecnico", cascade={"persist", "remove"})
      */
     private $ordenes;
 
     /**
-     * @ORM\OneToMany(targetEntity=SAN::class, mappedBy="vendedor",cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Contrato::class, mappedBy="vendedor",cascade={"persist", "remove"})
      */
-    private $sans;
+    private $Contratos;
 
     /**
      * @ORM\Column(type="string", length=18, nullable=true)
@@ -127,10 +112,9 @@ class Colaborador
 
     public function __construct()
     {
-        $this->proveedores = new ArrayCollection();
         $this->contratos = new ArrayCollection();
         $this->ordenes = new ArrayCollection();
-        $this->sans = new ArrayCollection();
+        $this->Contratos = new ArrayCollection();
         $this->ventasHughes = new ArrayCollection();
         $this->clientes = new ArrayCollection();
         $this->solicitudes = new ArrayCollection();
@@ -161,30 +145,6 @@ class Colaborador
     public function setCargo(?Cargo $cargo): self
     {
         $this->cargo = $cargo;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Proveedor[]
-     */
-    public function getProveedores(): Collection
-    {
-        return $this->proveedores;
-    }
-
-    public function addProveedore(Proveedor $proveedore): self
-    {
-        if (!$this->proveedores->contains($proveedore)) {
-            $this->proveedores[] = $proveedore;
-        }
-
-        return $this;
-    }
-
-    public function removeProveedore(Proveedor $proveedore): self
-    {
-        $this->proveedores->removeElement($proveedore);
 
         return $this;
     }
@@ -289,36 +249,6 @@ class Colaborador
             // set the owning side to null (unless already changed)
             if ($ordene->getTecnico() === $this) {
                 $ordene->setTecnico(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|SAN[]
-     */
-    public function getSans(): Collection
-    {
-        return $this->sans;
-    }
-
-    public function addSan(SAN $san): self
-    {
-        if (!$this->sans->contains($san)) {
-            $this->sans[] = $san;
-            $san->setVendedor($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSan(SAN $san): self
-    {
-        if ($this->sans->removeElement($san)) {
-            // set the owning side to null (unless already changed)
-            if ($san->getVendedor() === $this) {
-                $san->setVendedor(null);
             }
         }
 

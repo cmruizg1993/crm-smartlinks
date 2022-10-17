@@ -4,9 +4,9 @@ namespace App\Form;
 
 use App\Entity\CuentaBancaria;
 use App\Entity\Orden;
-use App\Entity\SAN;
+use App\Entity\Contrato;
 use App\Repository\CuentaBancariaRepository;
-use App\Repository\SANRepository;
+use App\Repository\ContratoRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,9 +20,9 @@ class OrdenType extends AbstractType
             ->add('fecha')
             ->add('codigo',null,['label'=>'Nro. de Orden'])
             ->add('tipo')
-            ->add('san',EntityType::class, [
-                'class' => SAN::class,
-                'query_builder' => function (SANRepository $er) {
+            ->add('Contrato',EntityType::class, [
+                'class' => Contrato::class,
+                'query_builder' => function (ContratoRepository $er) {
                     return $er->createQueryBuilder('s');
                 }
             ])

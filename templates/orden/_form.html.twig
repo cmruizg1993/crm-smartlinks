@@ -6,18 +6,18 @@
                 <span class="float-right">Sitio</span>
             </label>
             <div class="col-6">
-                <input type="text" class="form-control" id="nsan" readonly
-                        {% if orden.san %}
-                            value="{{ orden.san }}"
+                <input type="text" class="form-control" id="nContrato" readonly
+                        {% if orden.Contrato %}
+                            value="{{ orden.Contrato }}"
                         {% else %}
                             value=""
                         {% endif %} >
             </div>
             <div class="d-none">
-                {{ form_widget(form.san,{ 'attr': {'class':'form-control','readonly':'readonly'}}) }}
+                {{ form_widget(form.Contrato,{ 'attr': {'class':'form-control','readonly':'readonly'}}) }}
             </div>
             <div class="col-2">
-                {{ include('modals/buscarSan.html.twig',{'controlName':'orden_s_a_n'}) }}
+                {{ include('modals/buscarContrato.html.twig',{'controlName':'orden_s_a_n'}) }}
             </div>
         </div>
         <div class="form-group row justify-content-end">

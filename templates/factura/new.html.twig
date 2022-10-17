@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nueva Factura{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/factura/styles.css') }}">
+{% endblock %}
+{% block body %}
+
+    {{ include('factura/_form.html.twig') }}
+
+{% endblock %}
+{% block javascript %}
+    {{ include('partial/buscar_cliente.twig',{control_id: 'factura_cedula'}) }}
+{% endblock %}

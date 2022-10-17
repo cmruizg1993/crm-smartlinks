@@ -1,0 +1,30 @@
+<script>
+    $("#parametroParroquia").keyup(function (){
+        var param = $(this).val();
+        var L = param.length;
+        if ( L >= 3){
+            $.ajax({
+                url:'{{ path('buscar_parroquia') }}',
+                type:'POST',
+                contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+                data: { param: param },
+                success: function (html){
+                    $("#tParroquias").html(html);
+                }
+
+            })
+        }
+    });
+    $("#modalAceptar").click(function (){
+        //alert("hola")
+        var radioValue = $("input[name='parroquia_id']:checked").val();
+        if (typeof radioValue !== 'undefined'){
+            var sitio = $("input[name='parroquia_id']:checked").data('sitio');
+            console.log(sitio)
+            $("#{{ controlName }}").val(radioValue);
+            $("#sitio").val(sitio);
+        }else{
+            alert('No se ha seleccionado ninguna parroquia')
+        }
+    });
+</script>

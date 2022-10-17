@@ -4,9 +4,11 @@ namespace App\Entity;
 
 use App\Repository\DniRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=DniRepository::class)
+ * @UniqueEntity(fields={"numero"}, message="Ya existe un registro con este DNI")
  */
 class Dni
 {

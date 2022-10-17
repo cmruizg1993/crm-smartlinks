@@ -1,0 +1,22 @@
+
+<script>
+
+    function buscar_cliente() {
+
+        let cedula = $(this).val();
+        if(cedula.length != 10 && cedula.length!=13) return;
+        $.ajax({
+            url: '{{ path('buscar_cliente') }}',
+            method: 'POST',
+            data: {dni: cedula},
+            success: function (response) {
+                console.log(response)
+            },
+            error: function (err) {
+                console.log(err)
+            }
+        })
+    }
+    $('#{{ control_id }}').blur(buscar_cliente);
+
+</script>

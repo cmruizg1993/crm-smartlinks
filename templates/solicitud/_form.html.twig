@@ -65,6 +65,7 @@
                 {{ form_widget(form.cliente.estadoCivil,{'attr':{'class':'form-control'}}) }}
             </div>
         </div>
+        {#
         <div class="form-group row justify-content-end">
             <label for="" class="col-form-label col-4">
                 <span class="float-right">Huella Dactilar</span>
@@ -73,14 +74,7 @@
                 {{ form_widget(form.cliente.fingerprint,{'attr':{'class':'form-control'}}) }}
             </div>
         </div>
-        <div class="form-group row justify-content-end">
-            <label for="" class="col-form-label col-4">
-                <span class="float-right">Nacionalidad</span>
-            </label>
-            <div class="col-8">
-                {{ form_widget(form.cliente.nacionalidad,{'attr':{'class':'form-control'}}) }}
-            </div>
-        </div>
+
         <div class="form-group row justify-content-end">
             <label for="" class="col-form-label col-4">
                 <span class="float-right">Residencia</span>
@@ -89,6 +83,48 @@
                 {{ form_widget(form.cliente.residencia,{'attr':{'class':'form-control'}}) }}
             </div>
         </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Fecha de Expedición</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.cliente.dni.fecha_exp,{'attr':{'class':''}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Foto Frontal</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.cliente.dni.foto_frontal,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Foto Posterior</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.cliente.dni.foto_posterior,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Otro</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.cliente.otro,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        #}
+        <div class="form-group row justify-content-end">
+            <label for="" class="col-form-label col-4">
+                <span class="float-right">Nacionalidad</span>
+            </label>
+            <div class="col-8">
+                {{ form_widget(form.cliente.nacionalidad,{'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+
         <div class="form-group row justify-content-end">
             <label for="" class="col-form-label col-4">
                 <span class="float-right">Dirección</span>
@@ -151,38 +187,7 @@
                 {{ form_widget(form.cliente.telefonoFijo,{'attr':{'class':'form-control'}}) }}
             </div>
         </div>
-        <div class="form-group row justify-content-end">
-            <label for="" class="col-form-label col-4">
-                <span class="float-right">Fecha de Expedición</span>
-            </label>
-            <div class="col-8">
-                {{ form_widget(form.cliente.dni.fecha_exp,{'attr':{'class':''}}) }}
-            </div>
-        </div>
-        <div class="form-group row justify-content-end">
-            <label for="" class="col-form-label col-4">
-                <span class="float-right">Foto Frontal</span>
-            </label>
-            <div class="col-8">
-                {{ form_widget(form.cliente.dni.foto_frontal,{'attr':{'class':'form-control'}}) }}
-            </div>
-        </div>
-        <div class="form-group row justify-content-end">
-            <label for="" class="col-form-label col-4">
-                <span class="float-right">Foto Posterior</span>
-            </label>
-            <div class="col-8">
-                {{ form_widget(form.cliente.dni.foto_posterior,{'attr':{'class':'form-control'}}) }}
-            </div>
-        </div>
-        <div class="form-group row justify-content-end">
-            <label for="" class="col-form-label col-4">
-                <span class="float-right">Otro</span>
-            </label>
-            <div class="col-8">
-                {{ form_widget(form.cliente.otro,{'attr':{'class':'form-control'}}) }}
-            </div>
-        </div>
+
         <div class="form-group row justify-content-end">
             <label for="" class="col-form-label col-4">
                 <span class="float-right">Aprobación Equifax</span>

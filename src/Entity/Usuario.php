@@ -53,7 +53,7 @@ class Usuario implements UserInterface
 
     /**
      *
-     * @ORM\OneToOne(targetEntity=Colaborador::class, inversedBy="usuario", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Colaborador::class, cascade={"persist", "remove"})
      */
     private $colaborador;
 
@@ -62,11 +62,21 @@ class Usuario implements UserInterface
      */
     private $eventos;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Factura::class, mappedBy="usuario")
+     */
+    private $facturas;
+
     public function __construct()
     {
         $this->eventos = new ArrayCollection();
+        $this->facturas = new ArrayCollection();
     }
-
+    public function __toString()
+    {
+        // TODO: Implement __toString() method.
+        return $this->getEmail();
+    }
 
     public function getId(): ?int
     {
@@ -214,6 +224,36 @@ class Usuario implements UserInterface
             // set the owning side to null (unless already changed)
             if ($evento->getUsuario() === $this) {
                 $evento->setUsuario(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Factura[]
+     */
+    public function getFacturas(): Collection
+    {
+        return $this->facturas;
+    }
+
+    public function addFactura(Factura $factura): self
+    {
+        if (!$this->facturas->contains($factura)) {
+            $this->facturas[] = $factura;
+            $factura->setUsuario($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFactura(Factura $factura): self
+    {
+        if ($this->facturas->removeElement($factura)) {
+            // set the owning side to null (unless already changed)
+            if ($factura->getUsuario() === $this) {
+                $factura->setUsuario(null);
             }
         }
 

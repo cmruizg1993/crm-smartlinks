@@ -60,8 +60,8 @@ class Solicitud
     private $capturaEquifax;
 
     /**
-     * @Assert\NotBlank(message="Seleccione un plan")
-     * @ORM\ManyToOne(targetEntity=Plan::class, inversedBy="solicitudes")
+     * @Assert\NotBlank(message="Seleccione un servicio")
+     * @ORM\ManyToOne(targetEntity=Servicio::class, inversedBy="solicitudes")
      * @ORM\JoinColumn(nullable=false)
      */
     private $plan;
@@ -94,9 +94,9 @@ class Solicitud
     private $validacionEquifax;
 
     /**
-     * @ORM\OneToOne(targetEntity=SAN::class, cascade={"persist", "remove"}, mappedBy="solicitud")
+     * @ORM\OneToOne(targetEntity=Contrato::class, cascade={"persist", "remove"}, mappedBy="solicitud")
      */
-    private $san;
+    private $Contrato;
 
     /**
      * @ORM\OneToOne(targetEntity=Pago::class, cascade={"persist", "remove"})
@@ -271,14 +271,14 @@ class Solicitud
         return $this;
     }
 
-    public function getSan(): ?SAN
+    public function getContrato(): ?Contrato
     {
-        return $this->san;
+        return $this->Contrato;
     }
 
-    public function setSan(?SAN $san): self
+    public function setContrato(?Contrato $Contrato): self
     {
-        $this->san = $san;
+        $this->Contrato = $Contrato;
 
         return $this;
     }

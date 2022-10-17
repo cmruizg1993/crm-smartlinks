@@ -25,10 +25,10 @@ class ServicioRepository extends ServiceEntityRepository
     /*
     public function findByExampleField($value)
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
+            ->orderBy('p.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
@@ -39,8 +39,8 @@ class ServicioRepository extends ServiceEntityRepository
     /*
     public function findOneBySomeField($value): ?Servicio
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()

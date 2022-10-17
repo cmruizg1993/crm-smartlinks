@@ -20,14 +20,14 @@ final class Version20210507222200 extends AbstractMigration
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE san ADD valor_suscripcion DOUBLE PRECISION DEFAULT NULL');
+        $this->addSql('ALTER TABLE Contrato ADD valor_suscripcion DOUBLE PRECISION DEFAULT NULL');
         $this->addSql('ALTER TABLE solicitud ADD aprobar TINYINT(1) DEFAULT NULL');
     }
 
     public function down(Schema $schema) : void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE san DROP valor_suscripcion');
+        $this->addSql('ALTER TABLE Contrato DROP valor_suscripcion');
         $this->addSql('ALTER TABLE solicitud DROP aprobar');
     }
 }

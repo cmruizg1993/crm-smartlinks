@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Factura{% endblock %}
+
+{% block body %}
+    <h1>Factura</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ factura.id }}</td>
+            </tr>
+            <tr>
+                <th>Total</th>
+                <td>{{ factura.total }}</td>
+            </tr>
+            <tr>
+                <th>Subtotal</th>
+                <td>{{ factura.subtotal }}</td>
+            </tr>
+            <tr>
+                <th>BaseIva</th>
+                <td>{{ factura.baseIva }}</td>
+            </tr>
+            <tr>
+                <th>Iva</th>
+                <td>{{ factura.iva }}</td>
+            </tr>
+            <tr>
+                <th>BaseIce</th>
+                <td>{{ factura.baseIce }}</td>
+            </tr>
+            <tr>
+                <th>Ice</th>
+                <td>{{ factura.ice }}</td>
+            </tr>
+            <tr>
+                <th>BaseCero</th>
+                <td>{{ factura.baseCero }}</td>
+            </tr>
+            <tr>
+                <th>BaseNoImponible</th>
+                <td>{{ factura.baseNoImponible }}</td>
+            </tr>
+            <tr>
+                <th>Fecha</th>
+                <td>{{ factura.fecha ? factura.fecha|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Serial</th>
+                <td>{{ factura.serial }}</td>
+            </tr>
+            <tr>
+                <th>Secuencial</th>
+                <td>{{ factura.secuencial }}</td>
+            </tr>
+            <tr>
+                <th>Observaciones</th>
+                <td>{{ factura.observaciones }}</td>
+            </tr>
+            <tr>
+                <th>Referencia</th>
+                <td>{{ factura.referencia }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('factura_index') }}">back to list</a>
+
+    <a href="{{ path('factura_edit', {'id': factura.id}) }}">edit</a>
+
+    {{ include('factura/_delete_form.html.twig') }}
+{% endblock %}

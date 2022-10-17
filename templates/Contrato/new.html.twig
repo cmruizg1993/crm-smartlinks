@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nuevo Contrato{% endblock %}
+
+{% block body %}
+
+    {{ include('Contrato/_form.html.twig') }}
+
+{% endblock %}
+{% block javascript %}
+{{ include('scripts/buscar_parroquia.twig',{'controlName':'san_parroquia'}) }}
+{% endblock %}

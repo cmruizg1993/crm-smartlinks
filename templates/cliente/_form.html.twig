@@ -1,54 +1,140 @@
 <div class="row justify-content-center">
-    <div class="col-md-8">
+    <div class="col-md-10">
         {{ form_start(form) }}
-        <div class="form-group row justify-content-end">
-            <label for="" class="col-form-label col-4">
-                <span class="float-right">Tipo DNI</span>
-            </label>
-            <div class="col-8">
-                {{ form_widget(form.dni.tipo,{'attr':{'class':'form-control'}}) }}
+        <div class="row">
+            <div class="form-group row justify-content-end col">
+                <label for="" class="col-form-label col-4">
+                    <span class="float-right">Tipo DNI</span>
+                </label>
+                <div class="col-8">
+                    {{ form_widget(form.dni.tipo,{'attr':{'class':'form-control  mt-2'}}) }}
+                </div>
+            </div>
+            <div class="form-group row justify-content-end col">
+                <label for="" class="col-form-label col-4">
+                    <span class="float-right">Dni</span>
+                </label>
+                <div class="col-8">
+                    {{ form_widget(form.dni.numero,{'attr':{'class':'form-control mt-2'}}) }}
+                </div>
             </div>
         </div>
-        <div class="form-group row justify-content-end">
-            <label for="" class="col-form-label col-4">
-                <span class="float-right">Dni</span>
-            </label>
-            <div class="col-8">
-                {{ form_widget(form.dni.numero,{'attr':{'class':'form-control'}}) }}
+        <div class="row">
+            <div class="form-group row justify-content-end col">
+                <label for="" class="col-form-label col-4">
+                    <span class="float-right">Nombres</span>
+                </label>
+                <div class="col-8">
+                    {{ form_widget(form.nombres,{'attr':{'class':'form-control'}}) }}
+                </div>
+            </div>
+            <div class="form-group row justify-content-end col">
+                <label for="" class="col-form-label col-4">
+                    <span class="float-right">Fecha Nac.</span>
+                </label>
+                <div class="col-8">
+                    {{ form_widget(form.fechaNacimiento) }}
+                </div>
             </div>
         </div>
-        <div class="form-group row justify-content-end">
-            <label for="" class="col-form-label col-4">
-                <span class="float-right">Nombres</span>
-            </label>
-            <div class="col-8">
-                {{ form_widget(form.nombres,{'attr':{'class':'form-control'}}) }}
+        <div class="row">
+            <div class="form-group row justify-content-end col">
+                <label for="" class="col-form-label col-4">
+                    <span class="float-right">Genero</span>
+                </label>
+                <div class="col-8">
+                    {{ form_widget(form.genero,{'attr':{'class':'form-control'}}) }}
+                </div>
+            </div>
+            <div class="form-group row justify-content-end col">
+                <label for="" class="col-form-label col-4">
+                    <span class="float-right">Estado Civil</span>
+                </label>
+                <div class="col-8">
+                    {{ form_widget(form.estadoCivil,{'attr':{'class':'form-control'}}) }}
+                </div>
             </div>
         </div>
-        <div class="form-group row justify-content-end">
-            <label for="" class="col-form-label col-4">
-                <span class="float-right">Fecha Nac.</span>
-            </label>
-            <div class="col-8">
-                {{ form_widget(form.fechaNacimiento) }}
+        <div class="row">
+            <div class="form-group row justify-content-end col">
+                <label for="" class="col-form-label col-4">
+                    <span class="float-right">Nacionalidad</span>
+                </label>
+                <div class="col-8">
+                    {{ form_widget(form.nacionalidad,{'attr':{'class':'form-control'}}) }}
+                </div>
+            </div>
+            <div class="form-group row justify-content-end col">
+                <label for="" class="col-form-label col-4">
+                    <span class="float-right">Dirección</span>
+                </label>
+                <div class="col-8">
+                    {{ form_widget(form.direccion,{'attr':{'class':'form-control'}}) }}
+                </div>
             </div>
         </div>
-        <div class="form-group row justify-content-end">
-            <label for="" class="col-form-label col-4">
-                <span class="float-right">Genero</span>
-            </label>
-            <div class="col-8">
-                {{ form_widget(form.genero,{'attr':{'class':'form-control'}}) }}
+        <div class="row">
+            <div class="form-group row justify-content-end col">
+                <label for="" class="col-form-label col-4">
+                    <span class="float-right">Email</span>
+                </label>
+                <div class="col-8">
+                    {{ form_widget(form.email,{'attr':{'class':'form-control'}}) }}
+                </div>
+            </div>
+            <div class="form-group row justify-content-end col">
+
             </div>
         </div>
-        <div class="form-group row justify-content-end">
-            <label for="" class="col-form-label col-4">
-                <span class="float-right">Estado Civil</span>
-            </label>
-            <div class="col-8">
-                {{ form_widget(form.estadoCivil,{'attr':{'class':'form-control'}}) }}
+        <div class="row">
+            <div class="form-group row justify-content-end col">
+                <label for="" class="col-form-label col-4">
+                    <span class="float-right">Teléfono Fijo</span>
+                </label>
+                <div class="col-8">
+                    {{ form_widget(form.telefonoFijo,{'attr':{'class':'form-control'}}) }}
+                </div>
+            </div>
+            <div class="form-group row justify-content-end col">
+                <label for="" class="col-form-label col-4">
+                    <span class="float-right">Teléfono</span>
+                </label>
+                <div class="col-8">
+                    {{ form_widget(form.telefono,{'attr':{'class':'form-control'}}) }}
+                </div>
             </div>
         </div>
+        <div class="row">
+            <div class="form-group row justify-content-end col">
+                <label for="" class="col-form-label col-4">
+                    <span class="float-right">Tercera Edad</span>
+                </label>
+                <div class="col-8 align-self-center">
+                    {{ form_widget(form.esTerceraEdad, {'attr':{'class': ' float-left'}}) }}
+                </div>
+            </div>
+            <div class="form-group row justify-content-end col">
+                <label for="" class="col-form-label col-4">
+                    <span class="float-right">Discapacitado</span>
+                </label>
+                <div class="col-8 align-self-center">
+                    {{ form_widget(form.esDiscapacitado, {'attr':{'class': ' float-left'}}) }}
+                </div>
+            </div>
+        </div>
+        {% if submit is defined and submit !='NO' %}
+        <div class="form-group row justify-content-center">
+            <div class="col-4">
+                <button class="btn btn-info btn-block">{{ button_label|default('Guardar') }}</button>
+            </div>
+        </div>
+        {% endif %}
+        {{ form_end(form) }}
+    </div>
+</div>
+
+
+        {#
         <div class="form-group row justify-content-end">
             <label for="" class="col-form-label col-4">
                 <span class="float-right">Huella Dactilar</span>
@@ -57,14 +143,9 @@
                 {{ form_widget(form.fingerprint,{'attr':{'class':'form-control'}}) }}
             </div>
         </div>
-        <div class="form-group row justify-content-end">
-            <label for="" class="col-form-label col-4">
-                <span class="float-right">Nacionalidad</span>
-            </label>
-            <div class="col-8">
-                {{ form_widget(form.nacionalidad,{'attr':{'class':'form-control'}}) }}
-            </div>
-        </div>
+        #}
+
+        {#
         <div class="form-group row justify-content-end">
             <label for="" class="col-form-label col-4">
                 <span class="float-right">Residencia</span>
@@ -73,38 +154,11 @@
                 {{ form_widget(form.residencia,{'attr':{'class':'form-control'}}) }}
             </div>
         </div>
-        <div class="form-group row justify-content-end">
-            <label for="" class="col-form-label col-4">
-                <span class="float-right">Dirección</span>
-            </label>
-            <div class="col-8">
-                {{ form_widget(form.direccion,{'attr':{'class':'form-control'}}) }}
-            </div>
-        </div>
-        <div class="form-group row justify-content-end">
-            <label for="" class="col-form-label col-4">
-                <span class="float-right">Email</span>
-            </label>
-            <div class="col-8">
-                {{ form_widget(form.email,{'attr':{'class':'form-control'}}) }}
-            </div>
-        </div>
-        <div class="form-group row justify-content-end">
-            <label for="" class="col-form-label col-4">
-                <span class="float-right">Teléfono</span>
-            </label>
-            <div class="col-8">
-                {{ form_widget(form.telefono,{'attr':{'class':'form-control'}}) }}
-            </div>
-        </div>
-        <div class="form-group row justify-content-end">
-            <label for="" class="col-form-label col-4">
-                <span class="float-right">Teléfono Fijo</span>
-            </label>
-            <div class="col-8">
-                {{ form_widget(form.telefonoFijo,{'attr':{'class':'form-control'}}) }}
-            </div>
-        </div>
+        #}
+
+
+
+        {#
         <div class="form-group row justify-content-end">
             <label for="" class="col-form-label col-4">
                 <span class="float-right">Fecha de Expedición</span>
@@ -137,20 +191,14 @@
                 {{ form_widget(form.otro,{'attr':{'class':'form-control'}}) }}
             </div>
         </div>
+        #}
 
 
-
-        <div class="form-group row justify-content-end">
-            <div class="col-4">
-                <button class="btn btn-info btn-block">{{ button_label|default('Guardar') }}</button>
-            </div>
-        </div>
-        {{ form_end(form) }}
-
-    </div>
-</div>
 <script>
-    $("#cliente_dni_numero").change(function (){
+    {% if prefix is not defined %}
+        {% set prefix = '' %}
+    {% endif %}
+    $("#{{ prefix }}cliente_dni_numero").change(function (){
        var dni  = $(this).val();
        var uri = '{{ path('buscar_cliente') }}';
        $.ajax({
@@ -158,20 +206,29 @@
            type:'POST',
            data: {dni: dni},
            success: function (data){
+               console.log(data)
+               if(!Array.isArray(data)) return;
                var info = data[0];
                if (!info.error){
-                   console.log(info);
-                   $("#cliente_nombres").val(info.name);
-                   $("#cliente_genero").val(info.genre);
-                   $("#cliente_residencia").val(info.residence);
-                   $("#cliente_nacionalidad").val(info.nationality);
-                   $("#cliente_direccion").val(info.streets);
-                   $("#cliente_fingerprint").val(info.fingerprint);
-                   $("#cliente_estadoCivil").val(info.civilstate);
-                   var fechan = info.dob.split('/');
-                   $("#cliente_fechaNacimiento_year").val(fechan[2]);
-                   $("#cliente_fechaNacimiento_month").val(fechan[1]);
-                   $("#cliente_fechaNacimiento_day").val(fechan[0]);
+                   console.log(info)
+                   $("#{{prefix}}cliente_nombres").val(info.name);
+                   $("#{{prefix}}cliente_genero").val(info.genre);
+                   $("#{{prefix}}cliente_residencia").val(info.residence);
+                   $("#{{prefix}}cliente_nacionalidad").val(info.nationality);
+                   $("#{{prefix}}cliente_direccion").val(info.streets);
+                   $("#{{prefix}}cliente_fingerprint").val(info.fingerprint);
+                   $("#{{prefix}}cliente_estadoCivil").val(info.civilstate);
+                   $("#{{prefix}}cliente_telefonoFijo").val(info.fix_phone);
+                   $("#{{prefix}}cliente_telefono").val(info.phone);
+                   $("#{{prefix}}cliente_email").val(info.email)
+                   if(info.dob){
+                       var fechan = info.dob.split('/')
+                       console.log(fechan)
+                       $("#{{prefix}}cliente_fechaNacimiento_year").val(Number(fechan[2]).toString());
+                       $("#{{prefix}}cliente_fechaNacimiento_month").val(Number(fechan[1]).toString());
+                       $("#{{prefix}}cliente_fechaNacimiento_day").val(Number(fechan[0]).toString());
+                   }
+
                }else{
                    alert("DOCUMENTO NO VALIDO")
                }

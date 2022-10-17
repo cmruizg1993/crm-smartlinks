@@ -1,0 +1,140 @@
+<!-- Button trigger modal -->
+<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#staticBackdrop2">
+    Agregar Equipo/Material <i class="icon-circle-plus"></i>
+</button>
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop2"  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Buscar Equipo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="modalCerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row form-group">
+
+                    <label class="col-form-label col-4">Buscar:</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control" id="parametroEquipo">
+                    </div>
+                </div>
+                <table class="table table-hover table-bordered table-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Código</th>
+                            <th>Nombre</th>
+                            <th>Seriado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tEquipos">
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" id="modalAceptar">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let equipos = [];
+    $("#parametroEquipo").keyup(function (){
+        var param = $(this).val();
+        var L = param.length;
+        if ( L >= 3){
+            $.ajax({
+                url:'{{ path('buscar_equipo') }}',
+                type:'POST',
+                contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+                data: { param: param },
+                success: function (html){
+                    $("#tEquipos").html(html);
+                    $(".btn-add").click(agregarEquipo)
+                }
+
+            })
+        }
+    });
+    /*
+    $("#modalAceptar").click(function (){
+        //alert("hola")
+        var radioValue = $("input[name='equipo_id']:checked").val();
+        if (typeof radioValue !== 'undefined'){
+            var equipo = $("input[name='equipo_id']:checked").data('equipo');
+            console.log(equipo)            
+            $("#nequipo").val(equipo);
+        }else{
+            alert('No se ha seleccionado ninguna equipo')
+        }
+    });
+     */
+    function agregarEquipo(){
+        let e = $(this).data('equipo');
+        let r = equipos.find( equipo => equipo.id == e.id);
+        if(typeof r == 'undefined'){
+            e.cantidad = 1;
+            equipos.push(e);
+            let row = document.createElement('tr');
+            row.id = `row_${e.id}`;
+            row.innerHTML = `
+                <td colspan="3">${e.nombre}</td>
+                <td colspan="2">${e.codigo}</td>
+                <td colspan="2"><input type="text"  class="form-control form-group-sm" onchange="establecerSerial(this, ${e.id})" ${e.esSeriado ? '':'disabled'} required></td>
+                <td colspan="1"><input type="number" min="1" value="1" class="form-control form-group-sm" onchange="establecerCantidad(this, ${e.id})"/></td>
+                <td colspan="1"><button type="button" class="btn btn-sm btn-danger btn-eliminar" data-id=${e.id} >Quitar</button></td>
+            `;
+            $("#tEquiposInstalacion").append(row);
+            $(`#row_${e.id} .btn-eliminar`).click(quitarEquipo);
+            let strEquipos = JSON.stringify(equipos);
+            $("#contrato_equiposjson").val(strEquipos);
+            $.toast({
+                text: "Don't forget to star the repository if you like it.", // Text that is to be shown in the toast
+                heading: 'Note', // Optional heading to be shown on the toast
+                icon: 'success', // Type of toast icon
+                showHideTransition: 'fade', // fade, slide or plain
+                allowToastClose: true, // Boolean value true or false
+                hideAfter: 3000, // false to make it sticky or number representing the miliseconds as time after which toast needs to be hidden
+                stack: 5, // false if there should be only one toast at a time or a number representing the maximum number of toasts to be shown at a time
+                position: 'top-right', // bottom-left or bottom-right or bottom-center or top-left or top-right or top-center or mid-center or an object representing the left, right, top, bottom values
+                textAlign: 'left',  // Text alignment i.e. left, right or center
+                loader: true,  // Whether to show loader or not. True by default
+                loaderBg: '#9EC600',  // Background color of the toast loader
+                beforeShow: function () {}, // will be triggered before the toast is shown
+                afterShown: function () {}, // will be triggered after the toat has been shown
+                beforeHide: function () {}, // will be triggered before the toast gets hidden
+                afterHidden: function () {}  // will be triggered after the toast has been hidden
+            });
+        }else {
+            $.toast({
+                text: "El item seleccionado ya está en lista.", // Text that is to be shown in the toast
+                heading: '', // Optional heading to be shown on the toast
+                icon: 'warning', // Type of toast icon
+                position: 'top-right', // bottom-left or bottom-right or bottom-center or top-left or top-right or top-center or mid-center or an object representing the left, right, top, bottom values
+            });
+        }
+    }
+    function establecerCantidad(event, id) {
+        let equipo = equipos.find(e => e.id == id);
+        equipo.cantidad = event.value;
+        let strEquipos = JSON.stringify(equipos);
+        $("#contrato_equiposjson").val(strEquipos);
+    }
+    function establecerSerial(event, id) {
+        let equipo = equipos.find(e => e.id == id);
+        equipo.serial = event.value;
+        let strEquipos = JSON.stringify(equipos);
+        $("#contrato_equiposjson").val(strEquipos);
+    }
+    function quitarEquipo() {
+        let id = $(this).data('id');
+        equipos = equipos.filter( e => e.id != id);
+        $("#row_"+id).remove();
+        let strEquipos = JSON.stringify(equipos);
+        $("#contrato_equiposjson").val(strEquipos);
+    }
+</script>

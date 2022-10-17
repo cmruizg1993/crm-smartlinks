@@ -12,9 +12,9 @@ class EquipoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('sku')
+            ->add('codigo')
+            ->add('esSeriado')
             ->add('nombre')
-            ->add('tipo')
         ;
     }
 

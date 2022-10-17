@@ -31,10 +31,10 @@ class Orden
     private $fecha;
 
     /**
-     * @ORM\ManyToOne(targetEntity=SAN::class)
+     * @ORM\ManyToOne(targetEntity=Contrato::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $san;
+    private $Contrato;
 
     /**
      * @ORM\ManyToOne(targetEntity=EstadoOrden::class)
@@ -63,10 +63,6 @@ class Orden
      */
     private $eventos;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Seriado::class, inversedBy="ordenes")
-     */
-    private $equipos;
 
     /**
      * @ORM\Column(type="date", nullable=true)
@@ -124,14 +120,14 @@ class Orden
         return $this;
     }
 
-    public function getSan(): ?SAN
+    public function getContrato(): ?Contrato
     {
-        return $this->san;
+        return $this->Contrato;
     }
 
-    public function setSan(?SAN $san): self
+    public function setContrato(?Contrato $Contrato): self
     {
-        $this->san = $san;
+        $this->Contrato = $Contrato;
 
         return $this;
     }
