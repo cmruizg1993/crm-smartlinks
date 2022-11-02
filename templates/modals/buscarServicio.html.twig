@@ -1,0 +1,46 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-group-sm" data-toggle="modal" data-target="#staticBackdrop3">
+    <i class="icon-search"></i>
+    <span>Agregar Item</span>
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop3"  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Buscar Servicio</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="modalCerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row form-group">
+
+                    <label class="col-form-label col-4">Buscar:</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control" id="parametroServicio">
+                    </div>
+                </div>
+                <table class="table table-hover table-bordered table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>  
+                            <th>Código</th>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tServicios">
+
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" id="modalAceptar2">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>

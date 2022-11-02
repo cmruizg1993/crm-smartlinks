@@ -33,6 +33,16 @@ class OpcionCatalogo
      */
     private $texto;
 
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     */
+    private $valorNumerico;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $cssClass;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -70,6 +80,30 @@ class OpcionCatalogo
     public function setTexto(string $texto): self
     {
         $this->texto = $texto;
+
+        return $this;
+    }
+
+    public function getValorNumerico(): ?string
+    {
+        return $this->valorNumerico;
+    }
+
+    public function setValorNumerico(?string $valorNumerico): self
+    {
+        $this->valorNumerico = $valorNumerico;
+
+        return $this;
+    }
+
+    public function getCssClass(): ?string
+    {
+        return $this->cssClass;
+    }
+
+    public function setCssClass(?string $cssClass): self
+    {
+        $this->cssClass = $cssClass;
 
         return $this;
     }

@@ -57,7 +57,7 @@ class WhatsappController extends AbstractController
 
             if($message['dir']!=''){
 
-                $contactwtp = $em->getRepository('App:ContactWtp')->findOneByUid($contact['uid']);
+                $contactwtp = $em->getRepository(ContactWtp::class)->findOneByUid($contact['uid']);
                 if(!$contactwtp){
                     $contactwtp = new ContactWtp();
                     $contactwtp->setName($contact['name']);
@@ -108,7 +108,7 @@ class WhatsappController extends AbstractController
     private function enviarMenu($to, $cuid, ContactWtp $contact){
         $em = $this->getDoctrine()->getManager();
         /* @var $mensaje Mensaje */
-        $mensaje = $em->getRepository('App:Mensaje')->findOneByCodigo('menup');
+        $mensaje = $em->getRepository(Mensaje::class)->findOneByCodigo('menup');
         $mensaje_coded = urlencode($mensaje->getTexto());
 
         $response = $this->wtp->send($mensaje_coded, $to, $cuid);
@@ -133,7 +133,7 @@ class WhatsappController extends AbstractController
 
 
 /*
-$usuario = $em->getRepository('App:Usuario')->findOneByPhone($contactwtp->getUid());
+$usuario = $em->getRepository(Usuario::class)->findOneByPhone($contactwtp->getUid());
 
 if($usuario){
     $text = $message['body']['text'];
@@ -146,7 +146,7 @@ if($usuario){
         $this->enviarMenu($contactwtp->getUid(), 'xxxx', $contactwtp);
     }else{
 
-        $last = $em->getRepository('App:MensajeWtpOut')
+        $last = $em->getRepository(MensajeWtpOut::class)
             ->findOneBy(['contact'=>$contactwtp],['id'=>'DESC']);
 
 
@@ -171,7 +171,7 @@ if($usuario){
                     }
                 }
                 if (!$is_match){
-                    $errormsj = $em->getRepository('App:Mensaje')->findOneByCodigo('error');
+                    $errormsj = $em->getRepository(Mensaje::class)->findOneByCodigo('error');
                     $this->enviarRespuesta(
                         $contactwtp->getUid(),
                         'xxxx',

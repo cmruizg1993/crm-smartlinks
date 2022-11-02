@@ -55,7 +55,16 @@ class ParroquiaRepository extends ServiceEntityRepository
             //->getResult()
             //;
     }
-
+    public function findOneByName($value): ?Parroquia
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.nombre LIKE :val')
+            ->setParameter('val', "%$value%")
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
 
     /*
     public function findOneBySomeField($value): ?Parroquia

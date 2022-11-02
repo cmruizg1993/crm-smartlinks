@@ -3,12 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\PuntoEmision;
+use App\Entity\TipoComprobante;
 use App\Form\PuntoEmisionType;
 use App\Repository\PuntoEmisionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 
 /**
  * @Route("/punto/emision")
@@ -56,6 +59,22 @@ class PuntoEmisionController extends AbstractController
         return $this->render('punto_emision/show.html.twig', [
             'punto_emision' => $puntoEmision,
         ]);
+    }
+    /**
+     * @Route("/get/{codigo}", name="punto_emision_get", methods={"GET"})
+     */
+    public function getPuntoByCodigoComprobante($codigo = ''): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        /* @var $punto PuntoEmision */
+        $punto = $em->getRepository(PuntoEmision::class)->findOneCodigoComprobante($codigo);
+        $data = $this->get('serializer')->normalize($punto,null, [AbstractNormalizer::ATTRIBUTES=>[
+            'id',
+            'codigo',
+            'serie',
+            'codigoEstablecimiento'
+        ]]);
+        return new JsonResponse($data);
     }
 
     /**

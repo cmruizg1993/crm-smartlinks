@@ -37,10 +37,6 @@ class Cliente
      */
     private $telefono;
 
-    /**
-     * @ORM\Column(type="string", length=1, nullable=true)
-     */
-    private $estado;
 
     /**
      * HACE REFERENCIA A LOS CONTRATOS CON CLARO
@@ -122,12 +118,27 @@ class Cliente
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $esDiscapacitado;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $nombreComercial;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $referenciaDireccion;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Parroquia::class)
+     */
+    private $parroquia;
     public function __toString()
     {
         if($this->dni){
             return $this->nombres.' - '. $this->getDni()->getNumero();
         }
-        return $this->nombres;
+        return $this->nombres ? $this->nombres : ''. $this->getId();
     }
     public function __construct()
     {
@@ -139,6 +150,11 @@ class Cliente
     public function getId(): ?int
     {
         return $this->id;
+    }
+    public function setId($id): self
+    {
+        $this->id = $id;
+        return $this;
     }
 
     public function getNombres(): ?string
@@ -159,7 +175,7 @@ class Cliente
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
 
@@ -174,18 +190,6 @@ class Cliente
     public function setTelefono(?string $telefono): self
     {
         $this->telefono = $telefono;
-
-        return $this;
-    }
-
-    public function getEstado(): ?string
-    {
-        return $this->estado;
-    }
-
-    public function setEstado(string $estado): self
-    {
-        $this->estado = $estado;
 
         return $this;
     }
@@ -506,12 +510,50 @@ class Cliente
         $data["streets"] = $this->getDireccion();
         $data["fingerprint"] = $this->getFingerprint();
         $data["civilstate"] = $this->getEstadoCivil();
-        $data["dob"] = $this->getFechaNacimiento()->format('d/m/Y');
+        $data["dob"] = $this->getFechaNacimiento() ? $this->getFechaNacimiento()->format('d/m/Y'): null;
         $data["email"] = $this->getEmail();
-        $data["dni_type"] = $this->getDni()->getTipo()->getId();
+        $data["dni_type"] = $this->getDni()->getTipo();
         $data["phone"] = $this->getTelefono();
         $data["fix_phone"] = $this->getTelefonoFijo();
         $data["exp_date"] = $this->getDni()->getFechaExp() ? $this->getDni()->getFechaExp()->format('d/m/Y'):null;
+        $data["dni_type"] = $this->getDni()->getTipo();
+        dump($data);
         return $data;
+    }
+
+    public function getNombreComercial(): ?string
+    {
+        return $this->nombreComercial;
+    }
+
+    public function setNombreComercial(?string $nombreComercial): self
+    {
+        $this->nombreComercial = $nombreComercial;
+
+        return $this;
+    }
+
+    public function getReferenciaDireccion(): ?string
+    {
+        return $this->referenciaDireccion;
+    }
+
+    public function setReferenciaDireccion(?string $referenciaDireccion): self
+    {
+        $this->referenciaDireccion = $referenciaDireccion;
+
+        return $this;
+    }
+
+    public function getParroquia(): ?Parroquia
+    {
+        return $this->parroquia;
+    }
+
+    public function setParroquia(?Parroquia $parroquia): self
+    {
+        $this->parroquia = $parroquia;
+
+        return $this;
     }
 }

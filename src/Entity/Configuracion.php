@@ -18,11 +18,6 @@ class Configuracion
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $nombreConfiguracion;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $razonSocial;
@@ -51,6 +46,11 @@ class Configuracion
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $direccion;
+
+    /**
+     * @ORM\Column(type="string", length=2)
+     */
+    private $obligadoContabilidad;
 
     public function getId(): ?int
     {
@@ -137,6 +137,18 @@ class Configuracion
     public function setDireccion(?string $direccion): self
     {
         $this->direccion = $direccion;
+
+        return $this;
+    }
+
+    public function getObligadoContabilidad(): ?string
+    {
+        return $this->obligadoContabilidad;
+    }
+
+    public function setObligadoContabilidad(string $obligadoContabilidad): self
+    {
+        $this->obligadoContabilidad = $obligadoContabilidad;
 
         return $this;
     }

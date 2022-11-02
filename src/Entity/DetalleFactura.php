@@ -39,20 +39,24 @@ class DetalleFactura
     private $factura;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Item::class)
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $item;
-
-    /**
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $esServicio;
 
     /**
-     * @ORM\OneToOne(targetEntity=Servicio::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Servicio::class, cascade={"persist", "remove"})
      */
     private $servicio;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $descripcion;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Producto::class)
+     */
+    private $producto;
 
     public function getId(): ?int
     {
@@ -139,6 +143,30 @@ class DetalleFactura
     public function setServicio(?Servicio $servicio): self
     {
         $this->servicio = $servicio;
+
+        return $this;
+    }
+
+    public function getDescripcion(): ?string
+    {
+        return $this->descripcion;
+    }
+
+    public function setDescripcion(string $descripcion): self
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    public function getProducto(): ?Producto
+    {
+        return $this->producto;
+    }
+
+    public function setProducto(?Producto $producto): self
+    {
+        $this->producto = $producto;
 
         return $this;
     }

@@ -12,6 +12,11 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Dni
 {
+    const RUC ='04';
+    const CEDULA ='05';
+    const PASAPORTE ='06';
+    const CONSUMIDOR ='07';
+    const IDENTIFIACION_EXTRANJERA ='08';
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -40,8 +45,7 @@ class Dni
     private $foto_posterior;
 
     /**
-     * @ORM\ManyToOne(targetEntity=TipoDNI::class)
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="string", length=2, nullable=true)
      */
     private $tipo;
 
@@ -98,12 +102,12 @@ class Dni
         return $this;
     }
 
-    public function getTipo(): ?TipoDNI
+    public function getTipo(): ?string
     {
         return $this->tipo;
     }
 
-    public function setTipo(?TipoDNI $tipo): self
+    public function setTipo(?string $tipo): self
     {
         $this->tipo = $tipo;
 

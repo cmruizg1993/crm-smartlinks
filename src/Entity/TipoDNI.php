@@ -27,6 +27,11 @@ class TipoDNI
      */
     private $nombre;
 
+    /**
+     * @ORM\Column(type="string", length=2, nullable=true)
+     */
+    private $codigoSri;
+
     public function __toString()
     {
         // TODO: Implement __toString() method.
@@ -58,6 +63,18 @@ class TipoDNI
     public function setNombre(string $nombre): self
     {
         $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    public function getCodigoSri(): ?string
+    {
+        return $this->codigoSri;
+    }
+
+    public function setCodigoSri(?string $codigoSri): self
+    {
+        $this->codigoSri = $codigoSri;
 
         return $this;
     }

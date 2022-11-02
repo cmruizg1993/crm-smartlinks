@@ -102,4 +102,34 @@ class TipoComprobante
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Factura>
+     */
+    public function getFacturas(): Collection
+    {
+        return $this->facturas;
+    }
+
+    public function addFactura(Factura $factura): self
+    {
+        if (!$this->facturas->contains($factura)) {
+            $this->facturas[] = $factura;
+            $factura->setComprobante($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFactura(Factura $factura): self
+    {
+        if ($this->facturas->removeElement($factura)) {
+            // set the owning side to null (unless already changed)
+            if ($factura->getComprobante() === $this) {
+                $factura->setComprobante(null);
+            }
+        }
+
+        return $this;
+    }
 }

@@ -3,8 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Factura;
+use App\Entity\OpcionCatalogo;
 use App\Entity\PuntoEmision;
 use App\Entity\TipoComprobante;
+use App\Repository\OpcionCatalogoRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -16,44 +18,29 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FacturaType extends AbstractType
 {
+    private $repositorioOpciones;
+    public function __construct(OpcionCatalogoRepository $repositorioOpciones)
+    {
+        $this->repositorioOpciones = $repositorioOpciones;
+    }
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('fecha', TextType::class, ['attr'=>['class'=>' form-control'], 'mapped'=>false])
-            ->add('vence', TextType::class, ['attr'=>['class'=>' form-control'], 'mapped'=>false])
-            ->add('secuencial',TextType::class, ['attr'=>['class'=>' form-control']])
-            ->add('observaciones', null, ['attr'=>['class' => 'form-control']])
-            ->add('referencia', null, ['attr'=>['class' => 'form-control']])
-            ->add('puntoEmision', EntityType::class,
-                [
-                    'class' => PuntoEmision::class,
-                    'mapped'=>false,
-                    'attr'=>
-                        [
-                            'class'=>' form-control'
-                        ]
-                ]
-            )
-            ->add('tipoComprobante', EntityType::class,
-                [
-                    'class' => TipoComprobante::class,
-                    'mapped'=>false,
-                    'attr'=>
-                        [
-                            'class'=>' form-control'
-                        ]
-                ]
-            )
-            ->add('detalles', CollectionType::class, [
-                'entry_type' => DetalleFacturaType::class,
-                'entry_options' => ['label' => false],
-                'allow_add' => true
-            ])
-            ->add('usuario', null, ['attr'=>['class' => 'form-control'] ])
-            ->add('cedula', TextType::class ,['mapped'=>false, 'attr'=>['class' => 'form-control', 'minlength'=> 5, 'maxlength'=>13, 'readonly'=> true]])
-            ->add('nombre',TextType::class, ['mapped'=>false, 'attr'=>['class'=>' form-control']])
             ->add('detallesjson', HiddenType::class, ['mapped'=>false])
-            ->add('contrato', null, ['mapped'=>false, 'attr'=>['readonly'=>true]])
+            /*
+            ->add('tipoAmbiente', EntityType::class, [
+                'class' => OpcionCatalogo::class,
+                'mapped'=>false,
+                'choice_label' => function(OpcionCatalogo $opcionCatalogo) {
+                    return sprintf('%s', $opcionCatalogo->getTexto());
+                },
+                'choices' => $this->repositorioOpciones->findByCodigoCatalogo('ambiente'),
+                'choice_value' => function( $opcionCatalogo){
+                    return $opcionCatalogo? $opcionCatalogo->getCodigo():null;
+                },
+                'attr'=>['class'=>' form-control']
+            ])
+            */
         ;
     }
 

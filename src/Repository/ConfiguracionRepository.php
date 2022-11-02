@@ -18,7 +18,15 @@ class ConfiguracionRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Configuracion::class);
     }
-
+    public function findOneLast(): ?Configuracion
+    {
+        return $this->createQueryBuilder('c')
+            ->orderBy('c.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
     // /**
     //  * @return Configuracion[] Returns an array of Configuracion objects
     //  */

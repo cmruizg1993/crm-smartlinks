@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Servicio
 {
+    const CODIGO_RECONEXION = 'S015';
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -33,12 +34,12 @@ class Servicio
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $activo;
+    private $activo = true;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      */
-    private $costo;
+    private $precio;
 
     /**
      * @ORM\OneToMany(targetEntity=Solicitud::class, mappedBy="plan")
@@ -49,6 +50,16 @@ class Servicio
      * @ORM\Column(type="string", length=10)
      */
     private $codigo;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $codigoPorcentaje;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $incluyeIva = true;
 
     public function __toString()
     {
@@ -64,6 +75,11 @@ class Servicio
     public function getId(): ?int
     {
         return $this->id;
+    }
+    public function setId($id):self
+    {
+        $this->id = $id;
+        return $this;
     }
 
     public function getNombre(): ?string
@@ -132,14 +148,14 @@ class Servicio
         return $this;
     }
 
-    public function getCosto(): ?float
+    public function getPrecio(): ?float
     {
-        return $this->costo;
+        return $this->precio;
     }
 
-    public function setCosto(?float $costo): self
+    public function setPrecio(?float $precio): self
     {
-        $this->costo = $costo;
+        $this->precio = $precio;
 
         return $this;
     }
@@ -182,6 +198,30 @@ class Servicio
     public function setCodigo(string $codigo): self
     {
         $this->codigo = $codigo;
+
+        return $this;
+    }
+
+    public function getCodigoPorcentaje(): ?int
+    {
+        return $this->codigoPorcentaje;
+    }
+
+    public function setCodigoPorcentaje(?OpcionCatalogo $codigoPorcentaje): self
+    {
+        $this->codigoPorcentaje = $codigoPorcentaje ? $codigoPorcentaje->getCodigo(): null;
+
+        return $this;
+    }
+
+    public function getIncluyeIva(): ?bool
+    {
+        return $this->incluyeIva;
+    }
+
+    public function setIncluyeIva(?bool $incluyeIva): self
+    {
+        $this->incluyeIva = $incluyeIva;
 
         return $this;
     }

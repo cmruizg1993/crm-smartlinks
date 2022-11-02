@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Impuesto{% endblock %}
+
+{% block body %}
+    <h1>Create new Impuesto</h1>
+
+    {{ include('impuesto/_form.html.twig') }}
+
+    <a href="{{ path('impuesto_index') }}">back to list</a>
+{% endblock %}

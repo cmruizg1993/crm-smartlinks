@@ -68,7 +68,7 @@ class ColaboradorController extends AbstractController
 
             return $this->redirectToRoute('colaborador_index');
         }
-        $provincias = $entityManager->getRepository('App:Provincia')->findAll();
+        $provincias = $entityManager->getRepository(Provincia::class)->findAll();
         return $this->render('colaborador/new.html.twig', [
             'colaborador' => $colaborador,
             'form' => $form->createView(),
@@ -101,7 +101,7 @@ class ColaboradorController extends AbstractController
             $entityManager->flush();
             return $this->redirectToRoute('colaborador_index');
         }
-        $provincias = $entityManager->getRepository('App:Provincia')->findAll();
+        $provincias = $entityManager->getRepository(Provincia::class)->findAll();
         return $this->render('colaborador/edit.html.twig', [
             'colaborador' => $colaborador,
             'form' => $form->createView(),
@@ -136,7 +136,7 @@ class ColaboradorController extends AbstractController
             $plain = $form['usuario']['plainPassword']->getData();
             $pass = $passwordEncoder->encodePassword($colaborador->getUsuario(),$plain);
             $colaborador->getUsuario()->setPassword($pass);
-            $cargo = $em->getRepository('App:Cargo')->findOneByCodigo('VN');
+            $cargo = $em->getRepository(Cargo::class)->findOneByCodigo('VN');
             if($cargo){
                 $colaborador->setCargo($cargo);
                 $em->persist($colaborador);

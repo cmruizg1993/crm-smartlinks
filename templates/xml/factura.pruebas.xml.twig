@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<factura id="comprobante" version="1.1.0">
+    <infoTributaria>
+        <ambiente>{{ factura.tipoAmbiente }}</ambiente>
+        <tipoEmision>{{ factura.tipoEmision }}</tipoEmision>
+        <razonSocial>{{ conf.razonSocial }}</razonSocial>
+        <nombreComercial>{{ conf.nombreComercial }}'S</nombreComercial>
+        <ruc>{{ conf.ruc }}</ruc>
+        <claveAcceso>{{ factura.claveAcceso }}</claveAcceso>
+        <codDoc>{{ factura.tipoComprobante }}</codDoc>
+        <estab>{{ factura.puntoEmision.establecimiento.codigo }}</estab>
+        <ptoEmi>{{ factura.puntoEmision.codigo }}</ptoEmi>
+        <secuencial>{{ factura.secuencial }}</secuencial>
+        <dirMatriz>{{ conf.direccion }}</dirMatriz>
+    </infoTributaria>
+    <infoFactura>
+        <fechaEmision>{{ factura.fecha|date('Y/m/d') }}</fechaEmision>
+        <dirEstablecimiento>{{ conf.direccion }}</dirEstablecimiento>
+        <obligadoContabilidad>{{ conf.obligadoContabilidad }}</obligadoContabilidad>
+        <tipoIdentificacionComprador>{{ factura.cliente.dni.tipo }}</tipoIdentificacionComprador>
+        <razonSocialComprador>{{ factura.cliente.nombres }}</razonSocialComprador>
+        <identificacionComprador>{{ factura.cliente.dni.numero }}</identificacionComprador>
+        <direccionComprador>{{factura.cliente.direccion}}</direccionComprador>
+        <totalSinImpuestos>{{ factura.subtotal }}</totalSinImpuestos>
+        <totalDescuento>{{ factura.descuento }}</totalDescuento>
+        <totalConImpuestos>
+            {% if factura.subtotal12 > 0 %}
+            <totalImpuesto>
+                <codigo>2</codigo>
+                <codigoPorcentaje>2</codigoPorcentaje>
+                <baseImponible>{{ factura.subtotal12 }}</baseImponible>
+                <valor>{{ factura.iva }}</valor>
+            </totalImpuesto>
+            {% endif %}
+            {% if factura.subtotal0 > 0 %}
+                <totalImpuesto>
+                    <codigo>2</codigo>
+                    <codigoPorcentaje>0</codigoPorcentaje>
+                    <baseImponible>{{ factura.subtotal0 }}</baseImponible>
+                    <valor>0</valor>
+                </totalImpuesto>
+            {% endif %}
+        </totalConImpuestos>
+        <propina>{{ factura.propina }}</propina>
+        <importeTotal>{{ factura.total }}</importeTotal>
+        <moneda>DOLAR</moneda>
+        <pagos>
+            <pago>
+                <formaPago>{{ factura.formaPago }}</formaPago>
+                <total>{{ factura.total }}</total>
+                <plazo>0</plazo>
+                <unidadTiempo>Dias</unidadTiempo>
+            </pago>
+        </pagos>
+    </infoFactura>
+    <detalles>
+        {% for d in factura.detalles %}
+        <detalle>
+            <codigoPrincipal>{{ d.servicio.id }}</codigoPrincipal>
+            <codigoAuxiliar>{{ d.servicio.codigo }}</codigoAuxiliar>
+            <descripcion>{{ d.servicio.nombre }}</descripcion>
+            <cantidad>{{ d.cantidad }}</cantidad>
+            <precioUnitario>{{ d.precio }}</precioUnitario>
+            <descuento>{{ d.descuento }}</descuento>
+            <precioTotalSinImpuesto>{{ d.subtotal }}</precioTotalSinImpuesto>
+            <detallesAdicionales>
+                <detAdicional nombre="Información" valor="abril-2022"/>
+            </detallesAdicionales>
+            <impuestos>
+                {% if d.servicio.codigoPorcentaje > 0 %}
+                    <impuesto>
+                        <codigo>2</codigo>
+                        <codigoPorcentaje>2</codigoPorcentaje>
+                        <tarifa>12</tarifa>
+                        <baseImponible>{{ d.subtotal }}</baseImponible>
+                        {% if d.servicio.incluyeIva %}
+                            <valor>{{ d.subtotal - (d.subtotal/1.12)  }}</valor>
+                        {% else %}
+                            <valor>{{ d.subtotal*0.12 }}</valor>
+                        {% endif %}
+                        ta
+                    </impuesto>
+                {% endif %}
+                {% if d.servicio.codigoPorcentaje == 0 %}
+                    <impuesto>
+                        <codigo>2</codigo>
+                        <codigoPorcentaje>0</codigoPorcentaje>
+                        <tarifa>0</tarifa>
+                        <baseImponible>{{ d.subtotal }}</baseImponible>
+                        <valor>0</valor>
+                    </impuesto>
+                {% endif %}
+            </impuestos>
+        </detalle>
+        {% endfor %}
+    </detalles>
+    <infoAdicional>
+        <campoAdicional nombre="vendedor ">Vendedor</campoAdicional>
+        <campoAdicional nombre="correo ">facturas.smartlinksec@gmail.com</campoAdicional>
+        <campoAdicional nombre="ciudad ">IBARRA</campoAdicional>
+        <campoAdicional nombre="referencia ">Atuntaqui</campoAdicional>
+    </infoAdicional>
+</factura>

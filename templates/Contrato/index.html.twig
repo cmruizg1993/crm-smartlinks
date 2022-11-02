@@ -3,7 +3,23 @@
 {% block title %}SAN index{% endblock %}
 
 {% block body %}
-    <h1>Contratos</h1>
+    <div class="row">
+        <div class="col">
+            <h3 class="m-2">Contratos</h3>
+        </div>
+        <div class="col d-flex justify-content-end">
+            <a class="btn btn-sm btn-warning" href="{{ path('contrato_corte') }}">
+                Generar Corte
+            </a>
+            <a class="btn btn-sm btn-info" href="{{ path('contrato_inpagos') }}">
+                Marcar Inpagos
+            </a>
+            <a href="{{ path('contrato_new') }}" class="btn btn-primary btn-sm">
+                <strong><b>+</b></strong>Nuevo
+            </a>
+        </div>
+    </div>
+
 
     <table class="table table-bordered table-responsive">
         <thead>
@@ -13,20 +29,32 @@
                 <th>Fecha</th>
                 <th>Cliente</th>
                 <th>Direccion</th>
+                <th>Estado</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for contrato in contratos %}
-            <tr>
+            <tr {% if contrato.estadoActual %} class="table-{{ contrato.estadoActual.estado.cssClass }}" {% endif %}>
                 <td>{{ contrato.id }}</td>
                 <td>{{ contrato.numero }}</td>
                 <td>{{ contrato.fecha ? contrato.fecha|date('Y-m-d') : '' }}</td>
                 <td>{{ contrato.cliente.nombres }}</td>
-                <td>{{ contrato.cliente.direccion }}</td>
+                <td>{{ contrato.cliente.direccion }} </td>
                 <td>
-                    <a href="{{ path('contrato_show', {'id': contrato.id}) }}">show</a>
-                    <a href="{{ path('contrato_edit', {'id': contrato.id}) }}">edit</a>
+                    {% if contrato.estadoActual %}
+                        {{ contrato.estadoActual.estado.texto }}
+                    {% else %}
+                        {{ contrato.estado }}
+                    {% endif %}
+                </td>
+                <td>
+                    <a class="btn btn-sm btn-success"  href="{{ path('contrato_activar', {'id': contrato.id}) }}">
+                        Activar
+                    </a>
+                    <a class="btn btn-sm btn-warning" href="{{ path('contrato_edit', {'id': contrato.id}) }}">
+                        Editar
+                    </a>
                 </td>
             </tr>
         {% else %}
@@ -37,5 +65,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('contrato_new') }}">Create new</a>
 {% endblock %}

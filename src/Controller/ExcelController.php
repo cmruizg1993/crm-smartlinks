@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\Cliente;
 use App\Entity\Colaborador;
+use App\Entity\Dni;
 use App\Entity\Equipo;
 use App\Entity\Orden;
 use App\Entity\Plan;
@@ -12,6 +13,9 @@ use App\Entity\Contrato;
 use App\Entity\Seriado;
 use App\Entity\TipoOrden;
 use App\Form\ItemOsType;
+use App\Repository\ParroquiaRepository;
+use App\Repository\ProvinciaRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -59,23 +63,23 @@ class ExcelController extends AbstractController
 
                 $em = $this->getDoctrine()->getManager();
 
-                $ContratoRepository = $em->getRepository('App:Contrato');
+                $ContratoRepository = $em->getRepository(Contrato::class);
 
-                $colaboradorRepository = $em->getRepository('App:Colaborador');
+                $colaboradorRepository = $em->getRepository(Colaborador::class);
 
-                $seriadosRepository = $em->getRepository('App:Seriado');
+                $seriadosRepository = $em->getRepository(Seriado::class);
 
-                $tipoReparacion = $em->getRepository('App:TipoOrden')->findOneByCodigo('X');
+                $tipoReparacion = $em->getRepository(TipoOrden::class)->findOneByCodigo('X');
 
-                $tipoDesinstalacion = $em->getRepository('App:TipoOrden')->findOneByCodigo('D');
+                $tipoDesinstalacion = $em->getRepository(TipoOrden::class)->findOneByCodigo('D');
 
-                $estado = $em->getRepository('App:EstadoOrden')->findOneByCodigo('C');
+                $estado = $em->getRepository(EstadoOrden::class)->findOneByCodigo('C');
 
                 $nContrato = $sheet->getCell("$map->ContratoColumn$counter")->getValue();
                 /* @var $modem Equipo */
-                $modem = $em->getRepository('App:Equipo')->findOneBySku("1505216-0473");
+                $modem = $em->getRepository(Equipo::class)->findOneBySku("1505216-0473");
                 /* @var $radio Equipo */
-                $radio = $em->getRepository('App:Equipo')->findOneBySku("1506688-1002");
+                $radio = $em->getRepository(Equipo::class)->findOneBySku("1506688-1002");
 
                 while($nContrato){
                     try{
@@ -236,7 +240,7 @@ class ExcelController extends AbstractController
 
                 //$em = $this->getDoctrine()->getManager();
 
-                //$movRepository = $em->getRepository('App:Movimiento');
+                //$movRepository = $em->getRepository(Movimiento::class);
 
                 $serial     = (string) $sheet->getCell("A$counter")->getFormattedValue();
                 $auxFuente  = "";
@@ -334,14 +338,14 @@ class ExcelController extends AbstractController
                 $sheet = $spreadsheet->getActiveSheet();
                 $counter = 3;
                 $em = $this->getDoctrine()->getManager();
-                $ContratoRepository = $em->getRepository('App:Contrato');
-                $planRepository = $em->getRepository('App:Plan');
+                $ContratoRepository = $em->getRepository(Contrato::class);
+                $planRepository = $em->getRepository(Plan::class);
 
-                $colaboradorRepository = $em->getRepository('App:Colaborador');
-                $tipo = $em->getRepository('App:TipoOrden')->findOneByCodigo('I');
-                $estado = $em->getRepository('App:EstadoOrden')->findOneByCodigo('P');
+                $colaboradorRepository = $em->getRepository(Colaborador::class);
+                $tipo = $em->getRepository(TipoOrden::class)->findOneByCodigo('I');
+                $estado = $em->getRepository(EstadoOrden::class)->findOneByCodigo('P');
 
-                $servicio = $em->getRepository('App:Servicio')->findOneByNombre('INTERNET SATELITAL');
+                $servicio = $em->getRepository(Servicio::class)->findOneByNombre('INTERNET SATELITAL');
 
                 $nContrato = $sheet->getCell("$map->ContratoColumn$counter")->getValue();
                 while($nContrato){
@@ -443,7 +447,7 @@ class ExcelController extends AbstractController
                 $counter = 1;
 
                 $em = $this->getDoctrine()->getManager();
-                $ContratoRepository = $em->getRepository('App:Contrato');
+                $ContratoRepository = $em->getRepository(Contrato::class);
 
                 $nContrato = $sheet->getCell("A$counter")->getValue();
                 while($counter < 20){
@@ -490,5 +494,102 @@ class ExcelController extends AbstractController
             $httpClient->wait();
 
         }
+    }
+
+    /**
+     * @Route("/carga/masiva/clientes", name="carga_masiva_clientes")
+     */
+    public function cargaClientes(
+        Request $request,
+        ParroquiaRepository $parroquiaRepository,
+        EntityManagerInterface $em
+    ): Response
+    {
+        set_time_limit(450);
+        $starttime = microtime(true);
+        /* do stuff here */
+
+        //return new Response(null, 200);
+        $form = $this->createFormBuilder([])
+            ->add('archivo', FileType::class,['attr'=>['required'=>'required']])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $file = $form['archivo']->getData();
+            if($file){
+                $pathFile = $file->getPathName();
+
+                $reader = IOFactory::createReaderForFile($pathFile);
+                $spreadsheet = $reader->load($pathFile);
+                $sheet = $spreadsheet->getActiveSheet();
+
+                $counter = 1;
+                $mapping = [
+                    'cedula' => 'B',
+                    'nombre' => 'D',
+                    'razon' => 'C',
+                    'direccion'=> 'E',
+                    'telefono1' => 'G',
+                    'telefono2'=>'F',
+                    'email'=>'H',
+                    'provincia'=>'R',
+                    'referencia'=>'U'
+                ];
+                //$nContrato = $sheet->getCell("A$counter")->getValue();
+                $nrows = $sheet->getHighestRow();
+                $cache = [];
+                $clientes = [];
+                while ($counter<$nrows){
+                    $counter++;
+                    $cliente = new Cliente();
+                    $dni = new Dni();
+                    $numeroDni = $sheet->getCell($mapping['cedula']."$counter")->getValue();
+                    $nombre = $sheet->getCell($mapping['nombre']."$counter")->getValue();
+                    $razon = $sheet->getCell($mapping['razon']."$counter")->getValue();
+                    $direccion = $sheet->getCell($mapping['direccion']."$counter")->getValue();
+                    $telefono1 = $sheet->getCell($mapping['telefono1']."$counter")->getValue();
+                    $telefono2 = $sheet->getCell($mapping['telefono2']."$counter")->getValue();
+                    $email = $sheet->getCell($mapping['email']."$counter")->getValue();
+                    $parroquia = $sheet->getCell($mapping['provincia'].$counter)->getValue();
+                    $referencia = $sheet->getCell($mapping['referencia'].$counter)->getValue();
+
+                    if(!$razon) {
+                        continue;
+                    }
+                    $cliente->setNombres($razon);
+                    $cliente->setNombreComercial($nombre);
+                    $cliente->setDireccion($direccion);
+                    $cliente->setTelefono($telefono1);
+                    $cliente->setTelefonoFijo($telefono2);
+                    $cliente->setEmail($email);
+                    $cliente->setReferenciaDireccion($referencia);
+
+                    if(isset($cache["$parroquia"])){
+                        $cliente->setParroquia($cache["$parroquia"]);
+                    }else{
+                        $cache["$parroquia"] = $parroquiaRepository->findOneByName($parroquia);
+                        $cliente->setParroquia($cache["$parroquia"]);
+                    }
+                    $tipodni = strlen($numeroDni) == 10 ? Dni::CEDULA: Dni::RUC;
+                    if($tipodni === '9999999999999') $tipodni = Dni::CONSUMIDOR;
+                    $dni->setTipo($tipodni);
+                    $dni->setNumero($numeroDni);
+                    $cliente->setDni($dni);
+                    $em->persist($cliente);
+                }
+                $em->flush();
+                $endtime = microtime(true);
+                $timediff = $endtime - $starttime;
+                dump($timediff);
+            }
+        }
+
+        return $this->render('excel/carga_clientes.html.twig', [
+            'controller_name' => 'ExcelController',
+            'form'=>$form->createView()
+        ]);
     }
 }

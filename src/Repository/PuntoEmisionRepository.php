@@ -19,6 +19,17 @@ class PuntoEmisionRepository extends ServiceEntityRepository
         parent::__construct($registry, PuntoEmision::class);
     }
 
+    public function findOneCodigoComprobante($value): ?PuntoEmision
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.tipoComprobante', 'c', 'WITH', 'c.codigo = :val')
+            ->setParameter('val', $value)
+            ->orderBy('p.codigo', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
     // /**
     //  * @return PuntoEmision[] Returns an array of PuntoEmision objects
     //  */

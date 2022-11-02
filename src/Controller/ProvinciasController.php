@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Canton;
 use App\Entity\Parroquia;
 use App\Entity\Provincia;
+use App\Repository\ParroquiaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class ProvinciasController extends AbstractController
 {
@@ -21,7 +23,7 @@ class ProvinciasController extends AbstractController
     public function index(): Response
     {
         $em = $this->getDoctrine()->getManager();
-        $provincias = $em->getRepository('App:Provincia')->findAll();
+        $provincias = $em->getRepository(Provincia::class)->findAll();
         if(count($provincias)==0){
             $fileProvincias = __DIR__.'/provincias.json';
             $strJsonFileContents = file_get_contents($fileProvincias);
@@ -87,6 +89,22 @@ class ProvinciasController extends AbstractController
 
     }
     /**
+     * @Route("/parroquia/get/{nombre}", name="parroquia")
+     */
+    public function obtenerParroquia($nombre, ParroquiaRepository $parroquiaRepository, SerializerInterface $serializer): Response
+    {
+        $parroquia = $parroquiaRepository->findOneByName($nombre);
+        $data = $serializer->normalize($parroquia, null,
+            [AbstractNormalizer::ATTRIBUTES =>
+                [
+                    'id',
+                    'nombre'
+                ]
+            ]);
+        return new JsonResponse($data);
+
+    }
+    /**
      * @Route("/buscarparroquia", name="buscar_parroquia", methods={"POST"})
      */
     public function buscarParroquia(Request $request): Response
@@ -95,7 +113,7 @@ class ProvinciasController extends AbstractController
         $html = '<tr><td colspan="4">No se encontraron datos</td></tr>';
         if($param){
             $em =$this->getDoctrine()->getManager();
-            $parroquias = $em->getRepository("App:Parroquia")->findByParam($param);
+            $parroquias = $em->getRepository(Parroquia::class)->findByParam($param);
             //dump($parroquias);
             /* @var $serializer Serializer */
             $serializer = $this->get('serializer');

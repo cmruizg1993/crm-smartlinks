@@ -15,7 +15,7 @@ class TipoDNIController extends AbstractController
     public function index(): Response
     {
         $em = $this->getDoctrine()->getManager();
-        $tipos = $em->getRepository('App:TipoDNI')->findAll();
+        $tipos = $em->getRepository(TipoDNI::class)->findAll();
         if (count($tipos)==0){
             $array_tipos = [
                 ['cod'=>'CI','nombre'=>'CEDULA'],

@@ -198,10 +198,10 @@ class ClienteController extends AbstractController
 
                 if(!$data->error){
                     $em = $this->getDoctrine()->getManager();
-                    $tipodni = $em->getRepository('App:TipoDNI')->findOneByCodigo('CI');
+                    $tipodni = $em->getRepository(TipoDNI::class)->findOneByCodigo('CI');
 
                     /* @var $Contrato Contrato */
-                    $Contrato = $em->getRepository('App:Contrato')->findOneByNumero($nContrato);
+                    $Contrato = $em->getRepository(Contrato::class)->findOneByNumero($nContrato);
                     if($Contrato){
                         $dni = new Dni();
                         $dni->setNumero($ci);

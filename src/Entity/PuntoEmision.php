@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PuntoEmisionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -37,15 +39,32 @@ class PuntoEmision
      * @ORM\ManyToOne(targetEntity=TipoComprobante::class, inversedBy="puntosEmision")
      */
     private $tipoComprobante;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Factura::class, mappedBy="puntoEmision")
+     */
+    private $facturas;
+
+    public function __construct()
+    {
+        $this->facturas = new ArrayCollection();
+    }
+
     public function __toString()
     {
         // TODO: Implement __toString() method.
+        if(!$this->getCodigoEstablecimiento()) return ''. $this->getId();
         return $this->getEstablecimiento()->getCodigo().' - '.$this->getCodigo();
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+    public function setId($id): self
+    {
+        $this->id = $id;
+        return $this;
     }
 
     public function getCodigo(): ?string
@@ -92,6 +111,43 @@ class PuntoEmision
     public function setTipoComprobante(?TipoComprobante $tipoComprobante): self
     {
         $this->tipoComprobante = $tipoComprobante;
+
+        return $this;
+    }
+    public function getSerie(){
+        return $this->__toString();
+    }
+    public function getCodigoEstablecimiento(){
+        if(!$this->getEstablecimiento()) return null;
+        return $this->getEstablecimiento()->getCodigo();
+    }
+
+    /**
+     * @return Collection<int, Factura>
+     */
+    public function getFacturas(): Collection
+    {
+        return $this->facturas;
+    }
+
+    public function addFactura(Factura $factura): self
+    {
+        if (!$this->facturas->contains($factura)) {
+            $this->facturas[] = $factura;
+            $factura->setPuntoEmision($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFactura(Factura $factura): self
+    {
+        if ($this->facturas->removeElement($factura)) {
+            // set the owning side to null (unless already changed)
+            if ($factura->getPuntoEmision() === $this) {
+                $factura->setPuntoEmision(null);
+            }
+        }
 
         return $this;
     }

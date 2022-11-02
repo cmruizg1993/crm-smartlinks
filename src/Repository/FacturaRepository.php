@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Factura;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -18,7 +19,54 @@ class FacturaRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Factura::class);
     }
+    public function obtenerSecuencial($punto_emision_id): int
+    {
+        /* @var $last Factura|null */
 
+        $last = $this->createQueryBuilder('f')
+            ->innerJoin('f.puntoEmision', 'p', 'WITH', 'p.id = :puntoEmision')
+            ->orderBy('f.secuencial', 'DESC')
+            ->setMaxResults(1)
+            ->setParameter('puntoEmision', $punto_emision_id)
+            ->getQuery()
+            ->getOneOrNullResult();
+        return $last ? (int)$last->getSecuencial() + 1: 1;
+    }
+    public function getPage($page, $pageLength)
+    {
+        if($page <= 0 || $pageLength <= 0) return null;
+        $first = ($page-1)*$pageLength;
+        $query = $this->createQueryBuilder('f')
+            ->orderBy('f.id', 'DESC')
+            ->setFirstResult($first)
+            ->setMaxResults($pageLength)
+            ->getQuery();
+        return $query->getResult();
+    }
+
+    /**
+     * @return int
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function obtenerNumeroDeFacturas()
+    {
+        $qb = $this->createQueryBuilder('f');
+        $qb->select('count(f.id)');
+        $count = $qb->getQuery()->getSingleScalarResult();
+        return (int)$count;
+    }
+    public function obtenerSecuencialPorComprobante($codigo){
+        return $this->createQueryBuilder('f')
+                    ->innerJoin('f.puntoEmision', 'p')
+                    ->innerJoin('p.tipoComprobante', 'c', 'WITH', 'c.codigo = :val')
+                    ->setParameter('val', $codigo)
+                    ->orderBy('p.codigo', 'DESC')
+                    ->orderBy('f.secuencial', 'DESC')
+                    ->setMaxResults(1)
+                    ->getQuery()
+                    ->getOneOrNullResult();
+    }
     // /**
     //  * @return Factura[] Returns an array of Factura objects
     //  */

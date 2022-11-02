@@ -15,6 +15,8 @@ class OpcionCatalogoType extends AbstractType
             ->add('codigo')
             ->add('texto')
             ->add('catalogo')
+            ->add('valorNumerico')
+            ->add('cssClass')
         ;
     }
 

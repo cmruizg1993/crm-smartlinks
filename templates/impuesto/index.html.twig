@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Impuesto index{% endblock %}
+
+{% block body %}
+    <h1>Impuesto index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for impuesto in impuestos %}
+            <tr>
+                <td>{{ impuesto.id }}</td>
+                <td>{{ impuesto.nombre }}</td>
+                <td>{{ impuesto.descripcion }}</td>
+                <td>
+                    <a href="{{ path('impuesto_show', {'id': impuesto.id}) }}">show</a>
+                    <a href="{{ path('impuesto_edit', {'id': impuesto.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('impuesto_new') }}">Create new</a>
+{% endblock %}

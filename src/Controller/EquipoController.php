@@ -102,7 +102,7 @@ class EquipoController extends AbstractController
         $response = '<tr><td colspan="4">No se encontraron datos</td></tr>';
         if($param){
             $em =$this->getDoctrine()->getManager();
-            $equipos = $em->getRepository("App:Equipo")->findByParam($param);
+            $equipos = $em->getRepository(Equipo::class)->findByParam($param);
             //dump($parroquias);
             /* @var $serializer Serializer */
             $serializer = $this->get('serializer');

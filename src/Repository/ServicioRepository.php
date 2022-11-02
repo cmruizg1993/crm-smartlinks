@@ -18,7 +18,29 @@ class ServicioRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Servicio::class);
     }
+    public function findByParam($value)
+    {
+        $em = $this->getEntityManager();
+        /* @var $query QueryBuilder */
+        $query = $em->createQuery("SELECT Servicio FROM App\Entity\Servicio Servicio
+        WHERE Servicio.codigo LIKE :param
+        OR Servicio.nombre LIKE :param");
+        $query->setParameter("param","%$value%");
+        $data = $query->getResult();
+        return $data;
 
+    }
+    public function obtenerServicioReconexion(): ?Servicio
+    {
+        $value = Servicio::CODIGO_RECONEXION;
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.codigo = :val')
+            ->setParameter('val', $value)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
     // /**
     //  * @return Servicio[] Returns an array of Servicio objects
     //  */

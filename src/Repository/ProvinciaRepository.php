@@ -18,6 +18,16 @@ class ProvinciaRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Provincia::class);
     }
+    public function findOneByName($value): ?Provincia
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.nombre LIKE :val')
+            ->setParameter('val', "%$value%")
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
 
     // /**
     //  * @return Provincia[] Returns an array of Provincia objects

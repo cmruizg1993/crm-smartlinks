@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Impuesto{% endblock %}
+
+{% block body %}
+    <h1>Edit Impuesto</h1>
+
+    {{ include('impuesto/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('impuesto_index') }}">back to list</a>
+
+    {{ include('impuesto/_delete_form.html.twig') }}
+{% endblock %}

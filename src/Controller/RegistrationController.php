@@ -46,7 +46,7 @@ class RegistrationController extends AbstractController
             );
 
             $entityManager = $this->getDoctrine()->getManager();
-            $cargo = $entityManager->getRepository('App:Cargo')->findOneByCodigo('VN');
+            $cargo = $entityManager->getRepository(Cargo::class)->findOneByCodigo('VN');
             $colaborador = $user->getColaborador();
             if($cargo){
                 $colaborador->setCargo($cargo);

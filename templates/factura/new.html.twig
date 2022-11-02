@@ -10,5 +10,152 @@
 
 {% endblock %}
 {% block javascript %}
+
+{{ encore_entry_script_tags('app') }}
+
+<script>
+    let detalles = [];
+    $("#parametroContrato").keyup(function (){
+        var param = $(this).val();
+        var L = param.length;
+        if ( L >= 3){
+            $.ajax({
+                url:'{{ path('buscar_Contrato') }}',
+                    type:'POST',
+                    contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+                    data: { param: param },
+                    success: function (html){
+                        $("#tContratos").html(html);
+                    }
+
+                })
+            }
+        });
+        $("#modalAceptar").click(function (){
+            //alert("hola")
+            let checkboxContrato = $("input[name='Contrato_id']:checked")
+            if (typeof checkboxContrato !== 'undefined'){
+                let contrato = $("input[name='Contrato_id']:checked").data('contrato');
+                console.log(contrato)
+                llenarDatos(contrato);
+            }else{
+                alert('No se ha seleccionado ninguna Contrato')
+            }
+        });
+        function llenarDatos(contrato) {
+            console.log(contrato)
+            $("#factura_cedula").val(contrato.cliente.dni.numero);
+            $("#factura_nombre").val(contrato.cliente.nombres);
+            $("#factura_contrato").val(contrato.numero);
+            let detalle = {
+                id_servicio: contrato.plan.id,
+                id_producto: null,
+                codigo: contrato.plan.codigo,
+                descripcion: contrato.plan.nombre,
+                precio: contrato.plan.precio,
+                cantidad: 1,
+                subtotal: contrato.plan.precio,
+                esServicio: true
+            }
+            console.log(detalle)
+            agregarDetalle(detalle);
+        }
+
+
+    </script>
+    <script>
+        function agregarDetalle(detalle) {
+            let row = document.createElement('tr');
+
+            row.id = `row_${detalle.esServicio? detalle.id_servicio : detalle.id_producto}`;
+            row.innerHTML = `
+                    <td>${detalle.codigo}</td>
+                    <td>${detalle.descripcion}</td>
+                    <td>${detalle.precio}</td>
+                    <td>${detalle.cantidad}</td>
+                    <td>${detalle.subtotal}</td>
+                `;
+            $("#tDetalles").append(row);
+            detalles.push(detalle);
+            $("#factura_detallesjson").val(JSON.stringify(detalles));
+            totalizar();
+            /*
+            <td><input type="text"  class="form-control form-group-sm" onchange="establecerSerial(this, ${e.id})" ${e.esSeriado ? '':'disabled'} required></td>
+            <td><input type="number" min="1" value="1" class="form-control form-group-sm" onchange="establecerCantidad(this, ${e.id})"/></td>
+            <td><button type="button" class="btn btn-sm btn-danger btn-eliminar" data-id=${e.id} >Quitar</button></td>
+             */
+        }
+        function totalizar() {
+            let detallesjson = JSON.parse($("#factura_detallesjson").val());
+            let total = detallesjson.reduce((prev, current) => {
+                return prev + current.subtotal
+            }, 0);
+            $("#txtTotal").text(total.toString())
+        }
+    </script>
+    <script>
+        $("#parametroServicio").keyup(function (){
+            var param = $(this).val();
+            console.log(param)
+            var L = param.length;
+            if ( L >= 3){
+                $.ajax({
+                    url:'{{ path('buscar_servicio') }}',
+                    type:'POST',
+                    contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+                    data: { param: param },
+                    success: function (html){
+                        $("#tServicios").html(html);
+                    }
+
+                })
+            }
+        });
+        $("#modalAceptar2").click(function (){
+            //alert("hola")
+            let checkboxServicio = $("input[name='servicio_id']:checked")
+            if (typeof checkboxServicio !== 'undefined'){
+                let servicio = $("input[name='servicio_id']:checked").data('servicio');
+                llenarDatos2(servicio);
+            }else{
+                alert('No se ha seleccionado ningún servicio')
+            }
+        });
+        function llenarDatos2(servicio) {
+            let detalle = {
+                id_servicio: servicio.id,
+                id_producto: null,
+                codigo: servicio.codigo,
+                descripcion: servicio.nombre,
+                precio: servicio.precio,
+                cantidad: 1,
+                subtotal: servicio.precio,
+                esServicio: true
+            }
+            agregarDetalle(detalle);
+        }
+        function agregarDetalle(detalle) {
+            let row = document.createElement('tr');
+            row.id = `row_${detalle.esServicio? detalle.id_servicio : detalle.id_producto}`;
+            row.innerHTML = `
+                    <td>${detalle.codigo}</td>
+                    <td>${detalle.descripcion}</td>
+                    <td>${detalle.precio}</td>
+                    <td>${detalle.cantidad}</td>
+                    <td>${detalle.subtotal}</td>
+                `;
+            $("#tDetalles").append(row);
+            detalles.push(detalle);
+            $("#factura_detallesjson").val(JSON.stringify(detalles));
+            totalizar();
+        }
+        function totalizar() {
+            let detallesjson = JSON.parse($("#factura_detallesjson").val());
+            let total = detallesjson.reduce((prev, current) => {
+                return prev + current.subtotal
+            }, 0);
+            $("#txtTotal").text(total.toString())
+        }
+    </script>
     {{ include('partial/buscar_cliente.twig',{control_id: 'factura_cedula'}) }}
 {% endblock %}
