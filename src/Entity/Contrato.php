@@ -104,12 +104,12 @@ class Contrato
     private $equipos;
 
     /**
-     * @ORM\OneToMany(targetEntity=Factura::class, mappedBy="contrato")
+     * @ORM\OneToMany(targetEntity=Factura::class, mappedBy="contrato", cascade={"persist"}, orphanRemoval=true)
      */
     private $facturas;
 
     /**
-     * @ORM\OneToMany(targetEntity=EstadoContrato::class, mappedBy="contrato", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity=EstadoContrato::class, mappedBy="contrato", cascade={"persist", "remove"})
      */
     private $estados;
     /**

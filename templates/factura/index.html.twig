@@ -9,45 +9,42 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Serial</th>
+                <th>Secuencial</th>
                 <th>Total</th>
                 <th>Subtotal</th>
                 <th>Subtotal 0</th>
                 <th>Subtotal 12</th>
                 <th>Iva</th>
-                <th>BaseIce</th>
-                <th>Ice</th>
-                <th>BaseCero</th>
-                <th>BaseNoImponible</th>
+                <!--th>BaseNoImponible</th-->
                 <th>Fecha</th>
-                <th>Serial</th>
-                <th>Secuencial</th>
+
                 <th>Observaciones</th>
-                <th>Referencia</th>
-                <th>actions</th>
+                <!--th>actions</th-->
             </tr>
         </thead>
         <tbody>
         {% for factura in facturas %}
             <tr>
                 <td>{{ factura.id }}</td>
+                <td>{{ factura.serial }}</td>
+                <td>{{ factura.secuencial }}</td>
                 <td>{{ factura.total }}</td>
                 <td>{{ factura.subtotal }}</td>
                 <td>{{ factura.subtotal0 }}</td>
                 <td>{{ factura.subtotal12 }}</td>
                 <td>{{ factura.iva }}</td>
-                <td>{{ factura.baseIce }}</td>
-                <td>{{ factura.ice }}</td>
-                <td>{{ factura.baseCero }}</td>
+                {#
                 <td>{{ factura.baseNoImponible }}</td>
+                #}
                 <td>{{ factura.fecha ? factura.fecha|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ factura.serial }}</td>
-                <td>{{ factura.secuencial }}</td>
                 <td>{{ factura.observaciones }}</td>
-                <td>{{ factura.referencia }}</td>
+                {#
                 <td>
                     <a href="{{ path('factura_show', {'id': factura.id}) }}">show</a>
                     <a href="{{ path('factura_edit', {'id': factura.id}) }}">edit</a>
                 </td>
+                #}
             </tr>
         {% else %}
             <tr>
@@ -56,6 +53,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('factura_new') }}">Create new</a>
 {% endblock %}
