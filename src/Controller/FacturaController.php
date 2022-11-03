@@ -70,19 +70,19 @@ class FacturaController extends AbstractController
             $puntoEmision =
             /* ENLAZANDO FACTURA AL CONTRATO */
             $contrato = $factura->getContrato();
-            if(!$contrato || !$contrato->getId()) return new Response(null, 400);
+            if(!$contrato || !$contrato->getId()) return new Response('contrato', 400);
             $contrato = $contratoRepository->findOneBy(['id'=>$contrato->getId()],['version'=>'DESC']);
-            if(!$contrato) return new Response(null, 400);
+            if(!$contrato) return new Response('contrato 2', 400);
             $contrato->addFactura($factura);
             $factura->setContrato($contrato);
 
             /* PUNTO DE EMISION */
             $puntoEmision = $factura->getPuntoEmision();
-            if(!$puntoEmision || !$puntoEmision->getId()) return new Response(null, 400);
+            if(!$puntoEmision || !$puntoEmision->getId()) return new Response('pto 2', 400);
             $puntoEmision = $puntoEmisionRepository->find($puntoEmision->getId());
-            if(!$puntoEmision) return new Response(null, 400);
+            if(!$puntoEmision) return new Response('punto emision', 400);
             $tipo = $puntoEmision->getTipoComprobante()->getCodigo();
-            if($tipo != Factura::FACTURA && $tipo != Factura::NOTA_VENTA)return new Response(null, 400);
+            if($tipo != Factura::FACTURA && $tipo != Factura::NOTA_VENTA)return new Response('tipo comp', 400);
             $factura->setPuntoEmision($puntoEmision);
 
             /* SECUENCIAL */
@@ -92,9 +92,9 @@ class FacturaController extends AbstractController
 
             /* CLIENTE */
             $cliente = $factura->getCliente();
-            if(!$cliente || !$cliente->getId()) return new Response(null, 400);
+            if(!$cliente || !$cliente->getId()) return new Response('cliente', 400);
             $cliente = $clienteRepository->find($cliente->getId());
-            if(!$cliente) return new Response(null, 400);
+            if(!$cliente) return new Response('cliente 2', 400);
             $cliente->addFactura($factura);
             $factura->setCliente($cliente);
             dump($factura);
@@ -110,10 +110,10 @@ class FacturaController extends AbstractController
             foreach ($detalles as $detalle){
                 if($detalle->getEsServicio()){
                     $servicio = $detalle->getServicio();
-                    if(!$servicio || !$servicio->getId()) return new Response(null, 400);
+                    if(!$servicio || !$servicio->getId()) return new Response('servicio', 400);
                     /* @var $servicio Servicio */
                     $servicio = $servicioRepository->find($servicio->getId());
-                    if(!$servicio) return new Response(null, 400);
+                    if(!$servicio) return new Response('servicio', 400);
                     $detalle->setServicio( $servicio );
 
                     /* @var $impuesto OpcionCatalogo */
@@ -161,6 +161,10 @@ class FacturaController extends AbstractController
             $configuracion = $configuracionRepository->findOneLast();
             $xml = $this->renderView('xml/factura.pruebas.xml.twig',['factura'=>$factura, 'conf'=>$configuracion]);
             dump($xml);
+            $secuencial = $factura->getSecuencial();
+            $file = fopen("Fact-$secuencial.xml", "w");
+            fwrite($file, $xml);
+
             return new Response(null, 200);
         }
 

@@ -27,6 +27,37 @@ class ContratoRepository extends ServiceEntityRepository
     public function findByParam($value)
     {
         $em = $this->getEntityManager();
+        $rsm = new Query\ResultSetMappingBuilder($em);
+        $sql = "SELECT MIN(x.id), x.*, 
+                        cli.nombres, cli.direccion as direccion_cli, cli.vendedor_id as vendedor_cli, cli.parroquia_id as parroquia_cli, 
+                        dni.numero as numero_dni, dni.id as dni_id,
+                        est.id as estado_pk, est.fecha as fecha_estado ,est.estado_id, 
+                        op.id as id_opcion, op.texto, op.css_class FROM contrato x 
+                JOIN 
+                    (SELECT p.numero, MAX(version) AS max_version FROM contrato p GROUP BY p.numero) y 
+                    ON y.numero = x.numero AND y.max_version = x.version 
+                INNER JOIN cliente cli ON x.cliente_id = cli.id
+                INNER JOIN dni as dni ON cli.dni_id = dni.id
+                LEFT JOIN estado_contrato est ON est.contrato_id = x.id
+                LEFT JOIN opcion_catalogo op ON op.id = est.estado_id
+                WHERE x.numero LIKE :param OR cli.nombres LIKE :param OR dni.numero LIKE :param
+                GROUP BY x.numero, x.version";
+        $rsm->addRootEntityFromClassMetadata('App\Entity\Contrato', 'x');
+        $rsm->addJoinedEntityFromClassMetadata('App\Entity\Cliente', 'cli', 'x', 'cliente',
+            ['id'=>'cliente_id', 'direccion'=>'direccion_cli', 'vendedor_id'=>'vendedor_cli', 'parroquia_id'=>'parroquia_cli']);
+        $rsm->addJoinedEntityFromClassMetadata('App\Entity\EstadoContrato', 'est', 'x', 'estados',
+            ['id'=>'estado_pk', 'fecha'=>'fecha_estado']);
+        $rsm->addJoinedEntityFromClassMetadata('App\Entity\OpcionCatalogo', 'op', 'est', 'estado',
+            ['id'=>'id_opcion']);
+        $rsm->addJoinedEntityFromClassMetadata('App\Entity\Dni', 'dni', 'cli', 'dni',
+            ['numero'=>'numero_dni', 'id'=>'dni_id']);
+        $query = $em->createNativeQuery($sql, $rsm);
+        $query->setParameter('param', "%$value%");
+        $result = $query->getResult();
+        dump($result);
+        return $result;
+
+        $em = $this->getEntityManager();
         /* @var $query QueryBuilder */
         $query = $em->createQuery("SELECT Contrato,cli,f,est FROM App\Entity\Contrato Contrato
         LEFT JOIN Contrato.facturas f

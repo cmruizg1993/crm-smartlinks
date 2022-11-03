@@ -106,7 +106,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-4 col-form-label">Año Pago</label>
+                            <label class="col-4 col-form-label">#Comprobante</label>
                             <div class="col-8">
                                 <input type="number" min="100" step="1" class="form-control" form="factura"  v-model="factura.comprobantePago" >
                             </div>

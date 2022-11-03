@@ -32,10 +32,6 @@ class Factura
      */
     private $subtotal;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=3)
-     */
-    private $baseIva;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=3)

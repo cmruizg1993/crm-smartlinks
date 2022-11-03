@@ -21,33 +21,33 @@
         <razonSocialComprador>{{ factura.cliente.nombres }}</razonSocialComprador>
         <identificacionComprador>{{ factura.cliente.dni.numero }}</identificacionComprador>
         <direccionComprador>{{factura.cliente.direccion}}</direccionComprador>
-        <totalSinImpuestos>{{ factura.subtotal }}</totalSinImpuestos>
-        <totalDescuento>{{ factura.descuento }}</totalDescuento>
+        <totalSinImpuestos>{{ factura.subtotal|number_format(2) }}</totalSinImpuestos>
+        <totalDescuento>{{ factura.descuento|number_format(2) }}</totalDescuento>
         <totalConImpuestos>
             {% if factura.subtotal12 > 0 %}
             <totalImpuesto>
                 <codigo>2</codigo>
                 <codigoPorcentaje>2</codigoPorcentaje>
-                <baseImponible>{{ factura.subtotal12 }}</baseImponible>
-                <valor>{{ factura.iva }}</valor>
+                <baseImponible>{{ factura.subtotal12|number_format(2) }}</baseImponible>
+                <valor>{{ factura.iva|number_format(2) }}</valor>
             </totalImpuesto>
             {% endif %}
             {% if factura.subtotal0 > 0 %}
                 <totalImpuesto>
                     <codigo>2</codigo>
                     <codigoPorcentaje>0</codigoPorcentaje>
-                    <baseImponible>{{ factura.subtotal0 }}</baseImponible>
+                    <baseImponible>{{ factura.subtotal0|number_format(2) }}</baseImponible>
                     <valor>0</valor>
                 </totalImpuesto>
             {% endif %}
         </totalConImpuestos>
-        <propina>{{ factura.propina }}</propina>
-        <importeTotal>{{ factura.total }}</importeTotal>
+        <propina>{{ factura.propina|number_format(2) }}</propina>
+        <importeTotal>{{ factura.total|number_format(2) }}</importeTotal>
         <moneda>DOLAR</moneda>
         <pagos>
             <pago>
                 <formaPago>{{ factura.formaPago }}</formaPago>
-                <total>{{ factura.total }}</total>
+                <total>{{ factura.total|number_format(2) }}</total>
                 <plazo>0</plazo>
                 <unidadTiempo>Dias</unidadTiempo>
             </pago>
@@ -60,9 +60,9 @@
             <codigoAuxiliar>{{ d.servicio.codigo }}</codigoAuxiliar>
             <descripcion>{{ d.servicio.nombre }}</descripcion>
             <cantidad>{{ d.cantidad }}</cantidad>
-            <precioUnitario>{{ d.precio }}</precioUnitario>
-            <descuento>{{ d.descuento }}</descuento>
-            <precioTotalSinImpuesto>{{ d.subtotal }}</precioTotalSinImpuesto>
+            <precioUnitario>{{ d.precio|number_format(2) }}</precioUnitario>
+            <descuento>{{ d.descuento|number_format(2) }}</descuento>
+            <precioTotalSinImpuesto>{{ d.subtotal|number_format(2) }}</precioTotalSinImpuesto>
             <detallesAdicionales>
                 <detAdicional nombre="Información" valor="abril-2022"/>
             </detallesAdicionales>
@@ -74,11 +74,10 @@
                         <tarifa>12</tarifa>
                         <baseImponible>{{ d.subtotal }}</baseImponible>
                         {% if d.servicio.incluyeIva %}
-                            <valor>{{ d.subtotal - (d.subtotal/1.12)  }}</valor>
+                        <valor>{{ (d.subtotal - (d.subtotal/1.12) )|number_format(2) }}</valor>
                         {% else %}
-                            <valor>{{ d.subtotal*0.12 }}</valor>
+                        <valor>{{ (d.subtotal*0.12) |number_format(2)}}</valor>
                         {% endif %}
-                        ta
                     </impuesto>
                 {% endif %}
                 {% if d.servicio.codigoPorcentaje == 0 %}
@@ -86,7 +85,7 @@
                         <codigo>2</codigo>
                         <codigoPorcentaje>0</codigoPorcentaje>
                         <tarifa>0</tarifa>
-                        <baseImponible>{{ d.subtotal }}</baseImponible>
+                        <baseImponible>{{ d.subtotal|number_format(2)}}</baseImponible>
                         <valor>0</valor>
                     </impuesto>
                 {% endif %}

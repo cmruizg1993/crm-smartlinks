@@ -15,11 +15,14 @@ class InicioController extends AbstractController
     {
         $user = $this->getUser();
         if ($user){
+            /*
             $hasAccess = $this->isGranted('ROLE_ADMIN');
             if($hasAccess){
                 return $this->render('inicio/index.html.twig');
             }
             return $this->redirectToRoute('perfil_usuario');
+            */
+            return $this->redirectToRoute('factura_index');
         }
         return $this->redirectToRoute('app_login');
     }

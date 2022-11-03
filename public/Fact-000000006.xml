@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<factura id="comprobante" version="1.1.0">
+    <infoTributaria>
+        <ambiente>1</ambiente>
+        <tipoEmision>1</tipoEmision>
+        <razonSocial>PENTATELGROUP S.A.S</razonSocial>
+        <nombreComercial>SMARTLINK&#039;S'S</nombreComercial>
+        <ruc>1091795198001</ruc>
+        <claveAcceso>02112022</claveAcceso>
+        <codDoc>01</codDoc>
+        <estab>001</estab>
+        <ptoEmi>091</ptoEmi>
+        <secuencial>000000006</secuencial>
+        <dirMatriz>SUCRE Y ABDON CALDERON, ATUNTAQUI</dirMatriz>
+    </infoTributaria>
+    <infoFactura>
+        <fechaEmision>2022/11/02</fechaEmision>
+        <dirEstablecimiento>SUCRE Y ABDON CALDERON, ATUNTAQUI</dirEstablecimiento>
+        <obligadoContabilidad>SI</obligadoContabilidad>
+        <tipoIdentificacionComprador>05</tipoIdentificacionComprador>
+        <razonSocialComprador>CRISTIAN MANUEL RUIZ GÓMEZ</razonSocialComprador>
+        <identificacionComprador>1003659966</identificacionComprador>
+        <direccionComprador>General Enríquez y Alegría</direccionComprador>
+        <totalSinImpuestos>8.92</totalSinImpuestos>
+        <totalDescuento>0.00</totalDescuento>
+        <totalConImpuestos>
+                        <totalImpuesto>
+                <codigo>2</codigo>
+                <codigoPorcentaje>2</codigoPorcentaje>
+                <baseImponible>8.92</baseImponible>
+                <valor>1.07</valor>
+            </totalImpuesto>
+                                </totalConImpuestos>
+        <propina>0.00</propina>
+        <importeTotal>9.99</importeTotal>
+        <moneda>DOLAR</moneda>
+        <pagos>
+            <pago>
+                <formaPago>01</formaPago>
+                <total>9.99</total>
+                <plazo>0</plazo>
+                <unidadTiempo>Dias</unidadTiempo>
+            </pago>
+        </pagos>
+    </infoFactura>
+    <detalles>
+                <detalle>
+            <codigoPrincipal>3</codigoPrincipal>
+            <codigoAuxiliar>PB</codigoAuxiliar>
+            <descripcion>PLAN BASICO</descripcion>
+            <cantidad>1</cantidad>
+            <precioUnitario>9.99</precioUnitario>
+            <descuento>0.00</descuento>
+            <precioTotalSinImpuesto>8.92</precioTotalSinImpuesto>
+            <detallesAdicionales>
+                <detAdicional nombre="Información" valor="abril-2022"/>
+            </detallesAdicionales>
+            <impuestos>
+                                    <impuesto>
+                        <codigo>2</codigo>
+                        <codigoPorcentaje>2</codigoPorcentaje>
+                        <tarifa>12</tarifa>
+                        <baseImponible>8.9196428571429</baseImponible>
+                                                    <valor>0.96</valor>
+                                                ta
+                    </impuesto>
+                                            </impuestos>
+        </detalle>
+            </detalles>
+    <infoAdicional>
+        <campoAdicional nombre="vendedor ">Vendedor</campoAdicional>
+        <campoAdicional nombre="correo ">facturas.smartlinksec@gmail.com</campoAdicional>
+        <campoAdicional nombre="ciudad ">IBARRA</campoAdicional>
+        <campoAdicional nombre="referencia ">Atuntaqui</campoAdicional>
+    </infoAdicional>
+</factura>

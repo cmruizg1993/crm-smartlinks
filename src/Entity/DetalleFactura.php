@@ -58,6 +58,11 @@ class DetalleFactura
      */
     private $producto;
 
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     */
+    private $descuento;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -167,6 +172,18 @@ class DetalleFactura
     public function setProducto(?Producto $producto): self
     {
         $this->producto = $producto;
+
+        return $this;
+    }
+
+    public function getDescuento(): ?string
+    {
+        return $this->descuento;
+    }
+
+    public function setDescuento(?string $descuento): self
+    {
+        $this->descuento = $descuento;
 
         return $this;
     }
