@@ -306,7 +306,7 @@
                         icon: 'success', // Type of toast icon
                         position: 'top-right', // bottom-left or bottom-right or bottom-center or top-left or top-right or top-center or mid-center or an object representing the left, right, top, bottom values
                     });
-                    //location.reload();
+                    location.reload();
                 }
                 else{
                     $.toast({
