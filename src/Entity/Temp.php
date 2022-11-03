@@ -23,7 +23,7 @@ class Temp
     private $mensajes = [];
 
     /**
-     * @ORM\OneToOne(targetEntity=ContactWtp::class, inversedBy="temp", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=ContactWtp::class, inversedBy="temp", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $contact;

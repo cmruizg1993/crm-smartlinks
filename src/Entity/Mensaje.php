@@ -51,7 +51,7 @@ class Mensaje
     private $tipo;
 
     /**
-     * @ORM\OneToOne(targetEntity=Mensaje::class, cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Mensaje::class, cascade={"persist"})
      */
     private $siguiente;
 

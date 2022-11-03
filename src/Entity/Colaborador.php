@@ -44,12 +44,12 @@ class Colaborador
     private $direccion;
 
     /**
-     * @ORM\OneToMany(targetEntity=Orden::class, mappedBy="tecnico", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Orden::class, mappedBy="tecnico", cascade={"persist"})
      */
     private $ordenes;
 
     /**
-     * @ORM\OneToMany(targetEntity=Contrato::class, mappedBy="vendedor",cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Contrato::class, mappedBy="vendedor",cascade={"persist"})
      */
     private $Contratos;
 

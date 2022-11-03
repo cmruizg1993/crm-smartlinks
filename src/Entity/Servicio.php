@@ -27,7 +27,7 @@ class Servicio
 
 
     /**
-     * @ORM\OneToMany(targetEntity=Contrato::class, mappedBy="plan", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Contrato::class, mappedBy="plan", cascade={"persist"})
      */
     private $Contratos;
 

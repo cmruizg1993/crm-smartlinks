@@ -31,13 +31,13 @@ class Contrato
     private $fecha;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Cliente::class, inversedBy="Contratos",cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Cliente::class, inversedBy="Contratos",cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $cliente;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Servicio::class, inversedBy="Contratos", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Servicio::class, inversedBy="Contratos", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true, name="servicio_id")
      */
     private $plan;
@@ -68,7 +68,7 @@ class Contrato
      */
     private $valorSuscripcion;
     /**
-     * @ORM\OneToOne(targetEntity=Solicitud::class, inversedBy="Contrato",cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Solicitud::class, inversedBy="Contrato",cascade={"persist"})
      * @ORM\JoinColumn(name="solicitud_id", referencedColumnName="id")
      */
     private $solicitud;
@@ -99,7 +99,7 @@ class Contrato
     private $instalador;
 
     /**
-     * @ORM\OneToMany(targetEntity=EquipoInstalacion::class, mappedBy="contrato", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=EquipoInstalacion::class, mappedBy="contrato", cascade={"persist"})
      */
     private $equipos;
 
@@ -109,7 +109,7 @@ class Contrato
     private $facturas;
 
     /**
-     * @ORM\OneToMany(targetEntity=EstadoContrato::class, mappedBy="contrato", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=EstadoContrato::class, mappedBy="contrato", cascade={"persist"})
      */
     private $estados;
     /**

@@ -40,17 +40,17 @@ class Cliente
 
     /**
      * HACE REFERENCIA A LOS CONTRATOS CON CLARO
-     * @ORM\OneToMany(targetEntity=Solicitud::class, mappedBy="cliente", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Solicitud::class, mappedBy="cliente", cascade={"persist"})
      */
     private $solicitudes;
 
     /**
-     * @ORM\OneToOne(targetEntity=Dni::class, cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Dni::class, cascade={"persist"})
      */
     private $dni;
 
     /**
-     * @ORM\OneToMany(targetEntity=Contrato::class, mappedBy="cliente",cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Contrato::class, mappedBy="cliente",cascade={"persist"})
      */
     private $Contratos;
 

@@ -53,7 +53,7 @@ class Usuario implements UserInterface
 
     /**
      *
-     * @ORM\OneToOne(targetEntity=Colaborador::class, cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Colaborador::class, cascade={"persist"})
      */
     private $colaborador;
 

@@ -94,12 +94,12 @@ class Solicitud
     private $validacionEquifax;
 
     /**
-     * @ORM\OneToOne(targetEntity=Contrato::class, cascade={"persist", "remove"}, mappedBy="solicitud")
+     * @ORM\OneToOne(targetEntity=Contrato::class, cascade={"persist"}, mappedBy="solicitud")
      */
     private $Contrato;
 
     /**
-     * @ORM\OneToOne(targetEntity=Pago::class, cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Pago::class, cascade={"persist"})
      */
     private $pago;
 

@@ -59,7 +59,7 @@ class Orden
     private $codigo;
 
     /**
-     * @ORM\OneToMany(targetEntity=Evento::class, mappedBy="orden",cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Evento::class, mappedBy="orden",cascade={"persist"})
      */
     private $eventos;
 

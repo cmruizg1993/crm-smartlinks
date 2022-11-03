@@ -50,7 +50,7 @@ class ContactWtp
     private $mensajes_in;
 
     /**
-     * @ORM\OneToOne(targetEntity=Temp::class, mappedBy="contact", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Temp::class, mappedBy="contact", cascade={"persist"})
      */
     private $temp;
 

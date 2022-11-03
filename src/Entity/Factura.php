@@ -96,7 +96,7 @@ class Factura
     private $cliente;
 
     /**
-     * @ORM\OneToMany(targetEntity=DetalleFactura::class, mappedBy="factura", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=DetalleFactura::class, mappedBy="factura", cascade={"persist"})
      */
     private $detalles;
 

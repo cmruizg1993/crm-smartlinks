@@ -44,7 +44,7 @@ class DetalleFactura
     private $esServicio;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Servicio::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Servicio::class, cascade={"persist"})
      */
     private $servicio;
 
