@@ -42,10 +42,7 @@ class EstadoContrato
      */
     private $estado;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Contrato::class, inversedBy="estados")
-     * @ORM\JoinColumn(nullable=false)
-     */
+
     private $contrato;
 
     public function getId(): ?int

@@ -24,7 +24,7 @@ class ServicioType extends AbstractType
             ->add('nombre')
             ->add('precio')
             ->add('activo')
-            ->add('inluyeIva')
+            ->add('incluyeIva')
             ->add('codigoPorcentaje', EntityType::class, [
                 'class' => OpcionCatalogo::class,
                 'choice_label' => function(OpcionCatalogo $opcionCatalogo) {

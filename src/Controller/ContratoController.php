@@ -72,14 +72,14 @@ class ContratoController extends AbstractController
                 }
             }
 
-            $estado = new EstadoContrato();
-            $estado->setFecha(new \DateTime());
-            $estado->setObservaciones('eestado inicial');
-            $estadoOpcion = $opcionCatalogoRepository->findOneByCodigoyCatalogo(EstadoContrato::ACTIVO, 'est-cont');
-            $estado->setEstado($estadoOpcion);
+            //$estado = new EstadoContrato();
+            //$estado->setFecha(new \DateTime());
+            //$estado->setObservaciones('eestado inicial');
+            //$estadoOpcion = $opcionCatalogoRepository->findOneByCodigoyCatalogo(EstadoContrato::ACTIVO, 'est-cont');
+            //$estado->setEstado($estadoOpcion);
             //$Contrato->setEstado($estado);
-            $Contrato->addEstado($estado);
-            $estado->setContrato($Contrato);
+            //$Contrato->addEstado($estado);
+            //$estado->setContrato($Contrato);
             $entityManager->persist($Contrato);
             $entityManager->flush();
 
@@ -115,11 +115,9 @@ class ContratoController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $new = clone $Contrato;
-            $new->setVersion($Contrato->getVersion()+1);
-            unset($Contrato);
-            $new->setId(null);
-            $em->persist($new);
+            $Contrato->setVersion($Contrato->getVersion()+1);
+            $Contrato->setFechaActualizacion(new \DateTime());
+            $Contrato->getActualizadoPor($this->getUser());
             $em->flush();
             return $this->redirectToRoute('contrato_index');
         }
@@ -212,19 +210,25 @@ class ContratoController extends AbstractController
         EntityManagerInterface $em
     ): Response
     {
-        $contratos = $contratoRepository->findBy(['estado'=>EstadoContrato::INPAGO]);
-        /* @var $contratos Contrato*/
-        foreach ($contratos as $contrato){
-            $contrato->setEstado(EstadoContrato::CORTADO);
-            $opcion = $opcionCatalogoRepository
-                ->findOneByCodigoyCatalogo(EstadoContrato::CORTADO, EstadoContrato::NOMBRE_CATALOGO);
-            $estado = new EstadoContrato();
-            $estado->setEstado($opcion);
-            $estado->setFecha(new \DateTime());
-            $estado->setContrato($contrato);
-            $contrato->addEstado($estado);
-        }
-        $em->flush();
+        error_reporting(E_ALL & ~E_NOTICE);
+        $fecha = new \DateTime();
+        $anio = (int)$fecha->format('Y');
+        $mes = (int)$fecha->format('m');
+        $contratoRepository->generarCorte($anio, $mes);
+        return $this->redirectToRoute('contrato_index');
+    }
+    /**
+     * @Route("/generar/activaciones", name="contrato_activacion", methods={"GET"})
+     */
+    public function generarActivacion(
+        ContratoRepository $contratoRepository
+    ): Response
+    {
+        error_reporting(E_ALL & ~E_NOTICE);
+        $fecha = new \DateTime();
+        $anio = (int)$fecha->format('Y');
+        $mes = (int)$fecha->format('m');
+        $contratoRepository->generarActivacion($anio, $mes);
         return $this->redirectToRoute('contrato_index');
     }
     /**
@@ -251,9 +255,7 @@ class ContratoController extends AbstractController
         $em->flush();
         return $this->redirectToRoute('contrato_index');
     }
-    /**
-     * @Route("/generar/activacion/{id}", name="contrato_activar", methods={"GET"})
-     */
+    /*
     public function generarActivacion(Contrato $contrato, EntityManagerInterface $em, OpcionCatalogoRepository $opcionCatalogoRepository): Response
     {
         $contrato->setEstado(EstadoContrato::ACTIVO);
@@ -267,4 +269,5 @@ class ContratoController extends AbstractController
         $em->flush();
         return $this->redirectToRoute('contrato_index');
     }
+    */
 }

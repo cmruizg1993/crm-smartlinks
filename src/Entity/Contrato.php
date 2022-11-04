@@ -21,7 +21,7 @@ class Contrato
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180)
+     * @ORM\Column(type="string", length=180, unique=true)
      */
     private $numero;
 
@@ -59,9 +59,10 @@ class Contrato
     private $vendedor;
 
     /**
-     * @ORM\Column(type="string", length=20, nullable=true)
+     * @ORM\ManyToOne(targetEntity=OpcionCatalogo::class)
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $estado;
+    private $estadoActual;
 
     /**
      * @ORM\Column(type="float", nullable=true)
@@ -99,28 +100,32 @@ class Contrato
     private $instalador;
 
     /**
-     * @ORM\OneToMany(targetEntity=EquipoInstalacion::class, mappedBy="contrato", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity=EquipoInstalacion::class, mappedBy="contrato", cascade={"persist", "remove"})
      */
     private $equipos;
 
     /**
-     * @ORM\OneToMany(targetEntity=Factura::class, mappedBy="contrato", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Factura::class, mappedBy="contrato", cascade={"persist", "remove"})
      */
     private $facturas;
-
-    /**
-     * @ORM\OneToMany(targetEntity=EstadoContrato::class, mappedBy="contrato", cascade={"persist"})
-     */
-    private $estados;
-    /**
-     * @var $estadoActual EstadoContrato
-     */
-    private $estadoActual;
+    
+    
 
     /**
      * @ORM\Column(type="integer")
      */
     private $version = 1;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $fechaActualizacion;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Usuario::class)
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $actualizadoPor;
 
     public function __toString()
     {
@@ -133,7 +138,6 @@ class Contrato
         //$this->ordenes = new ArrayCollection();
         $this->equipos = new ArrayCollection();
         $this->facturas = new ArrayCollection();
-        $this->estados = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -261,17 +265,6 @@ class Contrato
         return $this;
     }
 
-    public function getEstado(): ?string
-    {
-        return $this->estado;
-    }
-
-    public function setEstado(?string $estado): self
-    {
-        $this->estado = $estado;
-
-        return $this;
-    }
 
     public function getEstadoContrato(): ?string
     {
@@ -439,36 +432,6 @@ class Contrato
         return $this;
     }
 
-    /**
-     * @return Collection<int, EstadoContrato>
-     */
-    public function getEstados(): Collection
-    {
-        return $this->estados;
-    }
-
-    public function addEstado(EstadoContrato $estado): self
-    {
-        if (!$this->estados->contains($estado)) {
-            $this->estados[] = $estado;
-            $estado->setContrato($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEstado(EstadoContrato $estado): self
-    {
-        if ($this->estados->removeElement($estado)) {
-            // set the owning side to null (unless already changed)
-            if ($estado->getContrato() === $this) {
-                $estado->setContrato(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getVersion(): ?int
     {
         return $this->version;
@@ -483,25 +446,24 @@ class Contrato
 
 
     /**
-     * @return EstadoContrato | boolean
+     * @return OpcionCatalogo | null
      */
     public function getEstadoActual(){
-        if(!$this->estadoActual){
-            $criteria = Criteria::create()
-                ->orderBy(['fecha'=>Criteria::DESC])
-                ->setMaxResults(1);
-            $estados = $this->getEstados();
-            $this->estadoActual = $estados->matching($criteria)->first();
 
-        }
         return  $this->estadoActual;
+    }
+    public function setEstadoActual(?OpcionCatalogo $estado){
+
+        $this->estadoActual = $estado;
+
+        return $this;
     }
     function getMesPago(){
         $mes = null;
         /* @var $facturas ArrayCollection */
         $facturas = $this->getFacturas();
         if($facturas->count() > 0 ){
-            $mes = $facturas->first()->getMesPago();
+            $mes = $facturas->last()->getMesPago();
         }
         return $mes;
     }
@@ -509,7 +471,7 @@ class Contrato
         $anio = null;
         $facturas = $this->getFacturas();
         if($facturas->count() > 0 ){
-            $anio = $facturas->first()->getAnioPago();
+            $anio = $facturas->last()->getAnioPago();
         }
         return $anio;
     }
@@ -518,11 +480,35 @@ class Contrato
         if(
             $estado &&
             (
-                $estado->getEstado()->getCodigo() == EstadoContrato::CORTADO ||
-                $estado->getEstado()->getCodigo() == EstadoContrato::SUSPENDIDO
+                $estado->getCodigo() == EstadoContrato::CORTADO ||
+                $estado->getCodigo() == EstadoContrato::SUSPENDIDO
             ) ){
             return true;
         }
         return false;
+    }
+
+    public function getFechaActualizacion(): ?\DateTimeInterface
+    {
+        return $this->fechaActualizacion;
+    }
+
+    public function setFechaActualizacion(?\DateTimeInterface $fechaActualizacion): self
+    {
+        $this->fechaActualizacion = $fechaActualizacion;
+
+        return $this;
+    }
+
+    public function getActualizadoPor(): ?Usuario
+    {
+        return $this->actualizadoPor;
+    }
+
+    public function setActualizadoPor(?Usuario $actualizadoPor): self
+    {
+        $this->actualizadoPor = $actualizadoPor;
+
+        return $this;
     }
 }

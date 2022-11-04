@@ -6,7 +6,7 @@
         <razonSocial>PENTATELGROUP S.A.S</razonSocial>
         <nombreComercial>SMARTLINKS'S</nombreComercial>
         <ruc>1091795198001</ruc>
-        <claveAcceso>02112022</claveAcceso>
+        <claveAcceso>0411202201109179519800110010910000000079384249214</claveAcceso>
         <codDoc>01</codDoc>
         <estab>001</estab>
         <ptoEmi>091</ptoEmi>
@@ -14,30 +14,30 @@
         <dirMatriz>SUCRE Y ABDON CALDERON, ATUNTAQUI</dirMatriz>
     </infoTributaria>
     <infoFactura>
-        <fechaEmision>2022/11/02</fechaEmision>
+        <fechaEmision>04/11/2022</fechaEmision>
         <dirEstablecimiento>SUCRE Y ABDON CALDERON, ATUNTAQUI</dirEstablecimiento>
         <obligadoContabilidad>SI</obligadoContabilidad>
-        <tipoIdentificacionComprador>05</tipoIdentificacionComprador>
+        <tipoIdentificacionComprador>04</tipoIdentificacionComprador>
         <razonSocialComprador>CRISTIAN MANUEL RUIZ GÓMEZ</razonSocialComprador>
         <identificacionComprador>1003659966</identificacionComprador>
-        <direccionComprador>General Enríquez y Alegría</direccionComprador>
-        <totalSinImpuestos>17.85</totalSinImpuestos>
+        <direccionComprador>OLMEDO Y SUCRE</direccionComprador>
+        <totalSinImpuestos>8.92</totalSinImpuestos>
         <totalDescuento>0.00</totalDescuento>
         <totalConImpuestos>
                         <totalImpuesto>
                 <codigo>2</codigo>
                 <codigoPorcentaje>2</codigoPorcentaje>
-                <baseImponible>17.85</baseImponible>
-                <valor>2.14</valor>
+                <baseImponible>8.92</baseImponible>
+                <valor>1.07</valor>
             </totalImpuesto>
                                 </totalConImpuestos>
         <propina>0.00</propina>
-        <importeTotal>19.99</importeTotal>
+        <importeTotal>9.99</importeTotal>
         <moneda>DOLAR</moneda>
         <pagos>
             <pago>
                 <formaPago>01</formaPago>
-                <total>19.99</total>
+                <total>9.99</total>
                 <plazo>0</plazo>
                 <unidadTiempo>Dias</unidadTiempo>
             </pago>
@@ -45,13 +45,13 @@
     </infoFactura>
     <detalles>
                 <detalle>
-            <codigoPrincipal>5</codigoPrincipal>
+            <codigoPrincipal>7</codigoPrincipal>
             <codigoAuxiliar>S01</codigoAuxiliar>
-            <descripcion>PLAN MEDIUM</descripcion>
+            <descripcion>PLAN BASICO</descripcion>
             <cantidad>1</cantidad>
-            <precioUnitario>19.99</precioUnitario>
+            <precioUnitario>9.99</precioUnitario>
             <descuento>0.00</descuento>
-            <precioTotalSinImpuesto>17.85</precioTotalSinImpuesto>
+            <precioTotalSinImpuesto>8.92</precioTotalSinImpuesto>
             <detallesAdicionales>
                 <detAdicional nombre="Información" valor="abril-2022"/>
             </detallesAdicionales>
@@ -60,10 +60,9 @@
                         <codigo>2</codigo>
                         <codigoPorcentaje>2</codigoPorcentaje>
                         <tarifa>12</tarifa>
-                        <baseImponible>17.848214285714</baseImponible>
-                                                    <valor>1.91</valor>
-                                                ta
-                    </impuesto>
+                        <baseImponible>8.9196428571429</baseImponible>
+                                                <valor>0.96</valor>
+                                            </impuesto>
                                             </impuestos>
         </detalle>
             </detalles>

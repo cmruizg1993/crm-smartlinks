@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Cliente;
+use App\Entity\Configuracion;
 use App\Entity\Contrato;
 use App\Entity\DetalleFactura;
 use App\Entity\Factura;
@@ -158,7 +159,9 @@ class FacturaController extends AbstractController
 
             $em->persist($factura);
             $em->flush();
+            /* @var $configuracion Configuracion */
             $configuracion = $configuracionRepository->findOneLast();
+            $factura->ruc = $configuracion->getRuc();
             $xml = $this->renderView('xml/factura.pruebas.xml.twig',['factura'=>$factura, 'conf'=>$configuracion]);
             dump($xml);
             $secuencial = $factura->getSecuencial();

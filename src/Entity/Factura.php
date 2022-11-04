@@ -175,7 +175,7 @@ class Factura
      */
     private $propina = 0;
 
-
+    public $ruc;
 
     public function __construct()
     {
@@ -458,9 +458,32 @@ class Factura
         return $this;
     }
     public function getClaveAcceso(){
-        $clave = '';
-        $clave .= $this->getFecha()->format('dmY');
-        return $clave;
+        $claveAcceso = '';
+        $claveAcceso .= $this->getFecha()->format('dmY');
+
+            $n = rand(10000000, 99999999);
+            $digito8 = $n.'';
+            $estab = $this->getPuntoEmision()->getEstablecimiento()->getCodigo();
+            $ptoEmi = $this->getPuntoEmision()->getCodigo();
+            $claveAcceso .= "$this->tipoComprobante$this->ruc$this->tipoAmbiente$estab$ptoEmi$this->secuencial$digito8$this->tipoEmision";
+
+            $suma = 0;
+            $factor = 7;
+            foreach(str_split($claveAcceso) as $item ){
+                $suma = $suma + (int)$item * $factor;
+                $factor = $factor - 1;
+                if ($factor == 1)$factor = 7;
+            }
+
+            $digitoVerificador = ($suma % 11);
+            $digitoVerificador = 11 - $digitoVerificador;
+
+            if ($digitoVerificador == 11)$digitoVerificador = 0;
+            if ($digitoVerificador == 10)$digitoVerificador = 1;
+
+            $claveAcceso.=$digitoVerificador;
+            $this->claveAcceso = $claveAcceso;
+            return $claveAcceso;
     }
 
     public function getFormaPago(): ?string

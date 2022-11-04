@@ -14,13 +14,15 @@
         <dirMatriz>{{ conf.direccion }}</dirMatriz>
     </infoTributaria>
     <infoFactura>
-        <fechaEmision>{{ factura.fecha|date('Y/m/d') }}</fechaEmision>
+        <fechaEmision>{{ factura.fecha|date('d/m/Y') }}</fechaEmision>
         <dirEstablecimiento>{{ conf.direccion }}</dirEstablecimiento>
         <obligadoContabilidad>{{ conf.obligadoContabilidad }}</obligadoContabilidad>
         <tipoIdentificacionComprador>{{ factura.cliente.dni.tipo }}</tipoIdentificacionComprador>
         <razonSocialComprador>{{ factura.cliente.nombres }}</razonSocialComprador>
         <identificacionComprador>{{ factura.cliente.dni.numero }}</identificacionComprador>
+        {#
         <direccionComprador>{{factura.cliente.direccion}}</direccionComprador>
+        #}
         <totalSinImpuestos>{{ factura.subtotal|number_format(2) }}</totalSinImpuestos>
         <totalDescuento>{{ factura.descuento|number_format(2) }}</totalDescuento>
         <totalConImpuestos>
@@ -44,6 +46,7 @@
         <propina>{{ factura.propina|number_format(2) }}</propina>
         <importeTotal>{{ factura.total|number_format(2) }}</importeTotal>
         <moneda>DOLAR</moneda>
+        {#
         <pagos>
             <pago>
                 <formaPago>{{ factura.formaPago }}</formaPago>
@@ -52,6 +55,7 @@
                 <unidadTiempo>Dias</unidadTiempo>
             </pago>
         </pagos>
+        #}
     </infoFactura>
     <detalles>
         {% for d in factura.detalles %}
@@ -63,22 +67,15 @@
             <precioUnitario>{{ d.precio|number_format(2) }}</precioUnitario>
             <descuento>{{ d.descuento|number_format(2) }}</descuento>
             <precioTotalSinImpuesto>{{ d.subtotal|number_format(2) }}</precioTotalSinImpuesto>
-            <detallesAdicionales>
-                <detAdicional nombre="Información" valor="abril-2022"/>
-            </detallesAdicionales>
             <impuestos>
                 {% if d.servicio.codigoPorcentaje > 0 %}
-                    <impuesto>
-                        <codigo>2</codigo>
-                        <codigoPorcentaje>2</codigoPorcentaje>
-                        <tarifa>12</tarifa>
-                        <baseImponible>{{ d.subtotal }}</baseImponible>
-                        {% if d.servicio.incluyeIva %}
-                        <valor>{{ (d.subtotal - (d.subtotal/1.12) )|number_format(2) }}</valor>
-                        {% else %}
-                        <valor>{{ (d.subtotal*0.12) |number_format(2)}}</valor>
-                        {% endif %}
-                    </impuesto>
+                <impuesto>
+                    <codigo>2</codigo>
+                    <codigoPorcentaje>2</codigoPorcentaje>
+                    <tarifa>12</tarifa>
+                    <baseImponible>{{ d.subtotal|number_format(2) }}</baseImponible>
+                    <valor>{{ (d.subtotal*0.12) |number_format(2)}}</valor>
+                </impuesto>
                 {% endif %}
                 {% if d.servicio.codigoPorcentaje == 0 %}
                     <impuesto>

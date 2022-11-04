@@ -4,9 +4,9 @@
         <ambiente>1</ambiente>
         <tipoEmision>1</tipoEmision>
         <razonSocial>PENTATELGROUP S.A.S</razonSocial>
-        <nombreComercial>SMARTLINK&#039;S'S</nombreComercial>
+        <nombreComercial>SMARTLINKS'S</nombreComercial>
         <ruc>1091795198001</ruc>
-        <claveAcceso>02112022</claveAcceso>
+        <claveAcceso>0411202201109179519800110010910000000061225483714</claveAcceso>
         <codDoc>01</codDoc>
         <estab>001</estab>
         <ptoEmi>091</ptoEmi>
@@ -14,13 +14,13 @@
         <dirMatriz>SUCRE Y ABDON CALDERON, ATUNTAQUI</dirMatriz>
     </infoTributaria>
     <infoFactura>
-        <fechaEmision>2022/11/02</fechaEmision>
+        <fechaEmision>04/11/2022</fechaEmision>
         <dirEstablecimiento>SUCRE Y ABDON CALDERON, ATUNTAQUI</dirEstablecimiento>
         <obligadoContabilidad>SI</obligadoContabilidad>
-        <tipoIdentificacionComprador>05</tipoIdentificacionComprador>
+        <tipoIdentificacionComprador>04</tipoIdentificacionComprador>
         <razonSocialComprador>CRISTIAN MANUEL RUIZ GÓMEZ</razonSocialComprador>
         <identificacionComprador>1003659966</identificacionComprador>
-        <direccionComprador>General Enríquez y Alegría</direccionComprador>
+        <direccionComprador>OLMEDO Y SUCRE</direccionComprador>
         <totalSinImpuestos>8.92</totalSinImpuestos>
         <totalDescuento>0.00</totalDescuento>
         <totalConImpuestos>
@@ -45,8 +45,8 @@
     </infoFactura>
     <detalles>
                 <detalle>
-            <codigoPrincipal>3</codigoPrincipal>
-            <codigoAuxiliar>PB</codigoAuxiliar>
+            <codigoPrincipal>7</codigoPrincipal>
+            <codigoAuxiliar>S01</codigoAuxiliar>
             <descripcion>PLAN BASICO</descripcion>
             <cantidad>1</cantidad>
             <precioUnitario>9.99</precioUnitario>
@@ -61,9 +61,8 @@
                         <codigoPorcentaje>2</codigoPorcentaje>
                         <tarifa>12</tarifa>
                         <baseImponible>8.9196428571429</baseImponible>
-                                                    <valor>0.96</valor>
-                                                ta
-                    </impuesto>
+                                                <valor>0.96</valor>
+                                            </impuesto>
                                             </impuestos>
         </detalle>
             </detalles>
