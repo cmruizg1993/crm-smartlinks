@@ -306,7 +306,8 @@
                         icon: 'success', // Type of toast icon
                         position: 'top-right', // bottom-left or bottom-right or bottom-center or top-left or top-right or top-center or mid-center or an object representing the left, right, top, bottom values
                     });
-                    location.reload();
+                    //location.reload();
+                    this.inicializar();
                 }
                 else{
                     $.toast({
@@ -326,20 +327,32 @@
             },
             quitarDetalle(d){
                 this.factura.detalles = this.detalles.filter( v => v.id_servicio != d.id_servicio);
+            },
+            inicializar(){
+                this.factura = {
+                    tipoComprobante: '01',
+                        cliente:{},
+                    contrato:{},
+                    puntoEmision:{},
+                    detalles: []
+                };
+
+                this.getComprobantes();
+                this.getAmbientes();
+                this.getFormasPago();
+                let fecha = new Date();
+                let mes = (fecha.getMonth() + 1).toString().length == 1 ? `0${fecha.getMonth() + 1}`:`${fecha.getMonth() + 1}`;
+                let dia = (fecha.getDate()).toString().length == 1 ? `0${fecha.getDate()}`:`${fecha.getDate()}`;
+                let anio = fecha.getFullYear();
+
+                this.factura.fecha = `${anio}-${mes}-${dia}`;
+                this.factura.mesPago = fecha.getMonth() + 1;
+                this.factura.anioPago = fecha.getFullYear();
             }
+
         },
         mounted() {
-            this.getComprobantes();
-            this.getAmbientes();
-            this.getFormasPago();
-            let fecha = new Date();
-            let mes = (fecha.getMonth() + 1).toString().length == 1 ? `0${fecha.getMonth() + 1}`:`${fecha.getMonth() + 1}`;
-            let dia = (fecha.getDate()).toString().length == 1 ? `0${fecha.getDate()}`:`${fecha.getDate()}`;
-            let anio = fecha.getFullYear();
-
-            this.factura.fecha = `${anio}-${mes}-${dia}`;
-            this.factura.mesPago = fecha.getMonth() + 1;
-            this.factura.anioPago = fecha.getFullYear();
+            this.inicializar();
         }
     }
 </script>

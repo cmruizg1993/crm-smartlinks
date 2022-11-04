@@ -5,6 +5,8 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     upload_directory: '%kernel.project_dir%/uploads'
+    xml_files: '%kernel.project_dir%/xml_files'
+    felectronica_path: '%kernel.project_dir%/FirmaElectronica'
     excel_templates: '%kernel.project_dir%/src/ExcelTemplates'
     movs_directory: '%kernel.project_dir%/movimientos'
 services:
@@ -43,3 +45,9 @@ services:
     App\Service\FileUploader:
         arguments:
             $targetDirectory: '%upload_directory%'
+
+    App\Service\FacturacionElectronica:
+        public: true
+        arguments:
+            $targetDirectory: '%xml_files%'
+            $fElectronicaDirectory: '%felectronica_path%'

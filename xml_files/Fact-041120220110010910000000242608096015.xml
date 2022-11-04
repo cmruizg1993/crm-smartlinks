@@ -6,21 +6,21 @@
         <razonSocial>PENTATELGROUP S.A.S</razonSocial>
         <nombreComercial>SMARTLINKS'S</nombreComercial>
         <ruc>1091795198001</ruc>
-        <claveAcceso>0411202201109179519800110010910000000082175272315</claveAcceso>
+        <claveAcceso>041120220110010910000000242608096015</claveAcceso>
         <codDoc>01</codDoc>
         <estab>001</estab>
         <ptoEmi>091</ptoEmi>
-        <secuencial>000000008</secuencial>
+        <secuencial>000000024</secuencial>
         <dirMatriz>SUCRE Y ABDON CALDERON, ATUNTAQUI</dirMatriz>
     </infoTributaria>
     <infoFactura>
         <fechaEmision>04/11/2022</fechaEmision>
         <dirEstablecimiento>SUCRE Y ABDON CALDERON, ATUNTAQUI</dirEstablecimiento>
         <obligadoContabilidad>SI</obligadoContabilidad>
-        <tipoIdentificacionComprador>04</tipoIdentificacionComprador>
-        <razonSocialComprador>CRISTIAN MANUEL RUIZ GÓMEZ</razonSocialComprador>
-                <direccionComprador>OLMEDO Y SUCRE</direccionComprador>
-        <totalSinImpuestos>8.92</totalSinImpuestos>
+        <tipoIdentificacionComprador>05</tipoIdentificacionComprador>
+        <razonSocialComprador>CRISTIAN MANUEL RUIZ GOMEZ</razonSocialComprador>
+        <identificacionComprador>1003659966</identificacionComprador>
+                <totalSinImpuestos>8.92</totalSinImpuestos>
         <totalDescuento>0.00</totalDescuento>
         <totalConImpuestos>
                         <totalImpuesto>
@@ -49,9 +49,8 @@
                     <codigoPorcentaje>2</codigoPorcentaje>
                     <tarifa>12</tarifa>
                     <baseImponible>8.92</baseImponible>
-                    <incluyeIva>1</incluyeIva>
-                                        <valor>0.96</valor>
-                                    </impuesto>
+                    <valor>1.07</valor>
+                </impuesto>
                                             </impuestos>
         </detalle>
             </detalles>

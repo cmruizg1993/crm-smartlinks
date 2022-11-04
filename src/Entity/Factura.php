@@ -177,6 +177,16 @@ class Factura
 
     public $ruc;
 
+    /**
+     * @ORM\Column(type="string", length=49, nullable=true)
+     */
+    private $claveAcceso;
+
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $estadoSri;
+
     public function __construct()
     {
         $this->detalles = new ArrayCollection();
@@ -457,7 +467,7 @@ class Factura
 
         return $this;
     }
-    public function getClaveAcceso(){
+    public function generarClaveAcceso(){
         $claveAcceso = '';
         $claveAcceso .= $this->getFecha()->format('dmY');
 
@@ -602,6 +612,30 @@ class Factura
     public function setPropina(?string $propina): self
     {
         $this->propina = $propina;
+
+        return $this;
+    }
+
+    public function getClaveAcceso(): ?string
+    {
+        return $this->claveAcceso;
+    }
+
+    public function setClaveAcceso(?string $claveAcceso): self
+    {
+        $this->claveAcceso = $claveAcceso;
+
+        return $this;
+    }
+
+    public function getEstadoSri(): ?string
+    {
+        return $this->estadoSri;
+    }
+
+    public function setEstadoSri(?string $estadoSri): self
+    {
+        $this->estadoSri = $estadoSri;
 
         return $this;
     }

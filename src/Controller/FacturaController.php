@@ -19,6 +19,7 @@ use App\Repository\FacturaRepository;
 use App\Repository\OpcionCatalogoRepository;
 use App\Repository\PuntoEmisionRepository;
 use App\Repository\ServicioRepository;
+use App\Service\FacturacionElectronica;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -59,7 +60,8 @@ class FacturaController extends AbstractController
         OpcionCatalogoRepository $opcionCatalogoRepository,
         ConfiguracionRepository $configuracionRepository,
         EntityManagerInterface $em,
-        SerializerInterface $serializer
+        SerializerInterface $serializer,
+        FacturacionElectronica $facturacionElectronica
     ): Response
     {
         $method = $request->getMethod();
@@ -98,7 +100,6 @@ class FacturaController extends AbstractController
             if(!$cliente) return new Response('cliente 2', 400);
             $cliente->addFactura($factura);
             $factura->setCliente($cliente);
-            dump($factura);
             /* AGREGANDO DETALLES Y CALCULANDO TOTALES */
             $total= 0;
             $subtotal = 0;
@@ -155,19 +156,24 @@ class FacturaController extends AbstractController
             $factura->setSubtotal0($subtotal0);
             $factura->setSubtotal12($subtotal12);
             $factura->setUsuario($this->getUser());
-            dump($factura);
 
-            $em->persist($factura);
-            $em->flush();
             /* @var $configuracion Configuracion */
             $configuracion = $configuracionRepository->findOneLast();
             $factura->ruc = $configuracion->getRuc();
-            $xml = $this->renderView('xml/factura.pruebas.xml.twig',['factura'=>$factura, 'conf'=>$configuracion]);
-            dump($xml);
-            $secuencial = $factura->getSecuencial();
-            $file = fopen("Fact-$secuencial.xml", "w");
-            fwrite($file, $xml);
+            $factura->generarClaveAcceso();
 
+            $xml = $this->renderView('xml/factura.pruebas.xml.twig',['factura'=>$factura, 'conf'=>$configuracion]);
+            $clave = $factura->getClaveAcceso();
+            $fileName = $facturacionElectronica->crearArchivoXml($clave, $xml);
+            $output = $facturacionElectronica->firmarArchivoXml($fileName, $configuracion);
+            if($output == 0){
+                $result = $facturacionElectronica->recepcion($fileName);
+                $respuesta = isset($result->RespuestaRecepcionComprobante) ? $result->RespuestaRecepcionComprobante: null;
+                $estado = $respuesta && isset($respuesta->estado) ? $respuesta->estado: null;
+                $factura->setEstadoSri($estado);
+            }
+            $em->persist($factura);
+            $em->flush();
             return new Response(null, 200);
         }
 

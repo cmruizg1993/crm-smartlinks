@@ -6,22 +6,21 @@
         <razonSocial>PENTATELGROUP S.A.S</razonSocial>
         <nombreComercial>SMARTLINKS'S</nombreComercial>
         <ruc>1091795198001</ruc>
-        <claveAcceso>0411202201109179519800110010910000000079384249214</claveAcceso>
+        <claveAcceso>0411202201109179519800110010910000000046221187216</claveAcceso>
         <codDoc>01</codDoc>
         <estab>001</estab>
         <ptoEmi>091</ptoEmi>
-        <secuencial>000000007</secuencial>
+        <secuencial>000000004</secuencial>
         <dirMatriz>SUCRE Y ABDON CALDERON, ATUNTAQUI</dirMatriz>
     </infoTributaria>
     <infoFactura>
         <fechaEmision>04/11/2022</fechaEmision>
         <dirEstablecimiento>SUCRE Y ABDON CALDERON, ATUNTAQUI</dirEstablecimiento>
         <obligadoContabilidad>SI</obligadoContabilidad>
-        <tipoIdentificacionComprador>04</tipoIdentificacionComprador>
-        <razonSocialComprador>CRISTIAN MANUEL RUIZ GÓMEZ</razonSocialComprador>
+        <tipoIdentificacionComprador>05</tipoIdentificacionComprador>
+        <razonSocialComprador>CRISTIAN MANUEL RUIZ GOMEZ</razonSocialComprador>
         <identificacionComprador>1003659966</identificacionComprador>
-        <direccionComprador>OLMEDO Y SUCRE</direccionComprador>
-        <totalSinImpuestos>8.92</totalSinImpuestos>
+                <totalSinImpuestos>8.92</totalSinImpuestos>
         <totalDescuento>0.00</totalDescuento>
         <totalConImpuestos>
                         <totalImpuesto>
@@ -34,15 +33,7 @@
         <propina>0.00</propina>
         <importeTotal>9.99</importeTotal>
         <moneda>DOLAR</moneda>
-        <pagos>
-            <pago>
-                <formaPago>01</formaPago>
-                <total>9.99</total>
-                <plazo>0</plazo>
-                <unidadTiempo>Dias</unidadTiempo>
-            </pago>
-        </pagos>
-    </infoFactura>
+            </infoFactura>
     <detalles>
                 <detalle>
             <codigoPrincipal>7</codigoPrincipal>
@@ -52,17 +43,14 @@
             <precioUnitario>9.99</precioUnitario>
             <descuento>0.00</descuento>
             <precioTotalSinImpuesto>8.92</precioTotalSinImpuesto>
-            <detallesAdicionales>
-                <detAdicional nombre="Información" valor="abril-2022"/>
-            </detallesAdicionales>
             <impuestos>
-                                    <impuesto>
-                        <codigo>2</codigo>
-                        <codigoPorcentaje>2</codigoPorcentaje>
-                        <tarifa>12</tarifa>
-                        <baseImponible>8.9196428571429</baseImponible>
-                                                <valor>0.96</valor>
-                                            </impuesto>
+                                <impuesto>
+                    <codigo>2</codigo>
+                    <codigoPorcentaje>2</codigoPorcentaje>
+                    <tarifa>12</tarifa>
+                    <baseImponible>8.92</baseImponible>
+                    <valor>1.07</valor>
+                </impuesto>
                                             </impuestos>
         </detalle>
             </detalles>

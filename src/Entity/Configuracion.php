@@ -52,6 +52,16 @@ class Configuracion
      */
     private $obligadoContabilidad;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $p12Name;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $p12Password;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -149,6 +159,30 @@ class Configuracion
     public function setObligadoContabilidad(string $obligadoContabilidad): self
     {
         $this->obligadoContabilidad = $obligadoContabilidad;
+
+        return $this;
+    }
+
+    public function getP12Name(): ?string
+    {
+        return $this->p12Name;
+    }
+
+    public function setP12Name(?string $p12Name): self
+    {
+        $this->p12Name = $p12Name;
+
+        return $this;
+    }
+
+    public function getP12Password(): ?string
+    {
+        return $this->p12Password;
+    }
+
+    public function setP12Password(?string $p12Password): self
+    {
+        $this->p12Password = $p12Password;
 
         return $this;
     }

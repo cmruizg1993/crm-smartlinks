@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<factura id="comprobante" version="1.1.0">
+    <infoTributaria>
+        <ambiente>1</ambiente>
+        <tipoEmision>1</tipoEmision>
+        <razonSocial>PENTATELGROUP S.A.S</razonSocial>
+        <nombreComercial>SMARTLINKS'S</nombreComercial>
+        <ruc>1091795198001</ruc>
+        <claveAcceso>041120220110010910000000181678492114</claveAcceso>
+        <codDoc>01</codDoc>
+        <estab>001</estab>
+        <ptoEmi>091</ptoEmi>
+        <secuencial>000000018</secuencial>
+        <dirMatriz>SUCRE Y ABDON CALDERON, ATUNTAQUI</dirMatriz>
+    </infoTributaria>
+    <infoFactura>
+        <fechaEmision>04/11/2022</fechaEmision>
+        <dirEstablecimiento>SUCRE Y ABDON CALDERON, ATUNTAQUI</dirEstablecimiento>
+        <obligadoContabilidad>SI</obligadoContabilidad>
+        <tipoIdentificacionComprador>05</tipoIdentificacionComprador>
+        <razonSocialComprador>CRISTIAN MANUEL RUIZ GÓMEZ</razonSocialComprador>
+        <identificacionComprador>1003659966</identificacionComprador>
+                <totalSinImpuestos>8.92</totalSinImpuestos>
+        <totalDescuento>0.00</totalDescuento>
+        <totalConImpuestos>
+                        <totalImpuesto>
+                <codigo>2</codigo>
+                <codigoPorcentaje>2</codigoPorcentaje>
+                <baseImponible>8.92</baseImponible>
+                <valor>1.07</valor>
+            </totalImpuesto>
+                                </totalConImpuestos>
+        <propina>0.00</propina>
+        <importeTotal>9.99</importeTotal>
+        <moneda>DOLAR</moneda>
+            </infoFactura>
+    <detalles>
+                <detalle>
+            <codigoPrincipal>7</codigoPrincipal>
+            <codigoAuxiliar>S01</codigoAuxiliar>
+            <descripcion>PLAN BASICO</descripcion>
+            <cantidad>1</cantidad>
+            <precioUnitario>9.99</precioUnitario>
+            <descuento>0.00</descuento>
+            <precioTotalSinImpuesto>8.92</precioTotalSinImpuesto>
+            <impuestos>
+                                <impuesto>
+                    <codigo>2</codigo>
+                    <codigoPorcentaje>2</codigoPorcentaje>
+                    <tarifa>12</tarifa>
+                    <baseImponible>8.92</baseImponible>
+                    <valor>1.07</valor>
+                </impuesto>
+                                            </impuestos>
+        </detalle>
+            </detalles>
+    <infoAdicional>
+        <campoAdicional nombre="vendedor ">Vendedor</campoAdicional>
+        <campoAdicional nombre="correo ">facturas.smartlinksec@gmail.com</campoAdicional>
+        <campoAdicional nombre="ciudad ">IBARRA</campoAdicional>
+        <campoAdicional nombre="referencia ">Atuntaqui</campoAdicional>
+    </infoAdicional>
+</factura>
