@@ -29,10 +29,16 @@ class ContratoController extends AbstractController
     /**
      * @Route("/", name="contrato_index", methods={"GET"})
      */
-    public function index(ContratoRepository $ContratoRepository): Response
+    public function index(ContratoRepository $ContratoRepository, SerializerInterface $serializer): Response
     {
+        $contratos = $ContratoRepository->findAllRegisters();
+//        $campos = ['id', 'numero', 'fecha', 'direccion'];
+        $data = $serializer->normalize($contratos, null, [AbstractNormalizer::ATTRIBUTES=>[
+            'id', 'numero','nombres', 'cedula', 'fecha', 'direccion','estadoActual'=>['codigo','texto','cssClass']
+        ]]);
         return $this->render('Contrato/index.html.twig', [
-            'contratos' => $ContratoRepository->findAllRegisters(),
+            'contratos' => $data,
+            //'campos' => $campos
         ]);
     }
 

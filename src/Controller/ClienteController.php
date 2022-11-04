@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
@@ -26,10 +28,16 @@ class ClienteController extends AbstractController
     /**
      * @Route("/", name="cliente_index", methods={"GET"})
      */
-    public function index(ClienteRepository $clienteRepository): Response
+    public function index(ClienteRepository $clienteRepository, SerializerInterface $serializer): Response
     {
+        $clientes =$clienteRepository->getAll();
+        $fields = ['id', 'nombres', 'email', 'direccion', 'telefono', 'telefonoFijo', 'cedula'];
+        $data = $serializer->normalize($clientes, null, [AbstractNormalizer::ATTRIBUTES=>[
+            'id', 'nombres', 'email', 'direccion', 'telefono', 'telefonoFijo', 'dni'=>['numero']
+        ]]);
         return $this->render('cliente/index.html.twig', [
-            'clientes' => $clienteRepository->findAll(),
+            'clientes' => $data,
+            'campos' => $fields
         ]);
     }
 

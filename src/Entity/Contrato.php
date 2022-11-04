@@ -462,8 +462,14 @@ class Contrato
         $mes = null;
         /* @var $facturas ArrayCollection */
         $facturas = $this->getFacturas();
+
         if($facturas->count() > 0 ){
-            $mes = $facturas->last()->getMesPago();
+            $criteria = Criteria::create()
+                ->orderBy(['anioPago'=>'DESC', 'mesPago'=>'DESC']);
+            dump($criteria);
+            $f = $facturas->matching($criteria)->first();
+            dump($f);
+            if($f) $mes = $f->getMesPago();
         }
         return $mes;
     }
@@ -471,7 +477,10 @@ class Contrato
         $anio = null;
         $facturas = $this->getFacturas();
         if($facturas->count() > 0 ){
-            $anio = $facturas->last()->getAnioPago();
+            $criteria = Criteria::create()
+                ->orderBy(['anioPago'=>'DESC', 'mesPago'=>'DESC']);
+            $f = $facturas->matching($criteria)->first();
+            if($f) $anio = $f->getAnioPago();
         }
         return $anio;
     }
@@ -510,5 +519,11 @@ class Contrato
         $this->actualizadoPor = $actualizadoPor;
 
         return $this;
+    }
+    public function getNombres(){
+        return $this->cliente->getNombres();
+    }
+    public function getCedula(){
+        return $this->cliente->getDni()->getNumero();
     }
 }

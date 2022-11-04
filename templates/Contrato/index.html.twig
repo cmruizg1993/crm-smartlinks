@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}SAN index{% endblock %}
+{% block title %}Contratos{% endblock %}
 
 {% block body %}
     <div class="row">
@@ -22,45 +22,10 @@
     </div>
 
 
-    <table class="table table-bordered table-responsive">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Numero</th>
-                <th>Fecha</th>
-                <th>Cliente</th>
-                <th>Direccion</th>
-                <th>Últ. Pago</th>
-                <th>Estado</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for contrato in contratos %}
-            <tr {% if contrato.estadoActual %} class="table-{{ contrato.estadoActual.cssClass }}" {% endif %}>
-                <td>{{ contrato.id }}</td>
-                <td>{{ contrato.numero }}</td>
-                <td>{{ contrato.fecha ? contrato.fecha|date('Y-m-d') : '' }}</td>
-                <td>{{ contrato.cliente.nombres }}</td>
-                <td>{{ contrato.cliente.direccion }} </td>
-                <td>{{ contrato.anioPago }}/{{ contrato.mesPago }}</td>
-                <td>
-                    {% if contrato.estadoActual %}
-                        {{ contrato.estadoActual.texto }}
-                    {% endif %}
-                </td>
-                <td>
-                    <a class="btn btn-sm btn-warning" href="{{ path('contrato_edit', {'id': contrato.id}) }}">
-                        Editar
-                    </a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <contratos listado="{{ contratos|json_encode }}"></contratos>
 
+{% endblock %}
+{% block javascript %}
+
+{{ encore_entry_script_tags('app') }}
 {% endblock %}

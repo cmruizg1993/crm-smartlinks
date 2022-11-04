@@ -3,42 +3,13 @@
 {% block title %}Cliente index{% endblock %}
 
 {% block body %}
-    <h1>Cliente index</h1>
+    <h3>Clientes</h3>
+    <clientes listado="{{ clientes|json_encode }}" campos="{{ campos|json_encode }}">
 
-    <table class="table table-bordered table-responsive">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombres</th>
-                <th>Email</th>
-                <th>Telefono</th>
-                <th>Estado</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for cliente in clientes %}
-            <tr>
-                <td>{{ cliente.id }}</td>
-                <td>{{ cliente.nombres }}</td>
-                <td>{{ cliente.email }}</td>
-                <td>{{ cliente.telefono }}</td>
-                <td>{{ cliente.estado }}</td>
-                <td>
-
-                    <a href="{{ path('cliente_show', {'id': cliente.id}) }}">show</a>
-                    {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('cliente_edit', {'id': cliente.id}) }}">edit</a>
-                    {% endif %}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('cliente_new') }}">Create new</a>
+    </clientes>
 {% endblock %}
+{% block javascript %}
+
+{{ encore_entry_script_tags('app') }}
+{% endblock %}
+

@@ -19,6 +19,16 @@ class ClienteRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Cliente::class);
     }
+    public function getAll()
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c, dni')
+            ->innerJoin('c.dni', 'dni')
+            ->orderBy('c.nombres', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 
     // /**
     //  * @return Cliente[] Returns an array of Cliente objects
