@@ -67,6 +67,11 @@ class Usuario implements UserInterface
      */
     private $facturas;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Empresa::class, inversedBy="usuarios", fetch="EAGER")
+     */
+    private $empresa;
+
     public function __construct()
     {
         $this->eventos = new ArrayCollection();
@@ -256,6 +261,18 @@ class Usuario implements UserInterface
                 $factura->setUsuario(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEmpresa(): ?Empresa
+    {
+        return $this->empresa;
+    }
+
+    public function setEmpresa(?Empresa $empresa): self
+    {
+        $this->empresa = $empresa;
 
         return $this;
     }

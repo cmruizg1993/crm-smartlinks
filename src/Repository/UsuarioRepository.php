@@ -29,7 +29,7 @@ class UsuarioRepository extends ServiceEntityRepository implements PasswordUpgra
      * @return object|void|null
      */
     public function find($parameter, $lockMode = null, $lockVersion = null){
-        //dump($parameter);
+        if(!is_array($parameter))$parameter = ["id"=>$parameter];
         $query = $this->createQueryBuilder('u')
             ->andWhere('u.id = :val')
             ->leftJoin('App:Colaborador', 'c', 'WITH', 'u.colaborador = c.id')

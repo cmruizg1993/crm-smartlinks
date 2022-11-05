@@ -3,54 +3,17 @@
 {% block title %}Factura index{% endblock %}
 
 {% block body %}
-    <h1>Factura index</h1>
+    <h3>Facturas</h3>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Serial</th>
-                <th>Secuencial</th>
-                <th>Total</th>
-                <th>Subtotal</th>
-                <th>Subtotal 0</th>
-                <th>Subtotal 12</th>
-                <th>Iva</th>
-                <!--th>BaseNoImponible</th-->
-                <th>Fecha</th>
-
-                <th>Observaciones</th>
-                <!--th>actions</th-->
-            </tr>
-        </thead>
-        <tbody>
-        {% for factura in facturas %}
-            <tr>
-                <td>{{ factura.id }}</td>
-                <td>{{ factura.serial }}</td>
-                <td>{{ factura.secuencial }}</td>
-                <td>{{ factura.total }}</td>
-                <td>{{ factura.subtotal }}</td>
-                <td>{{ factura.subtotal0 }}</td>
-                <td>{{ factura.subtotal12 }}</td>
-                <td>{{ factura.iva }}</td>
-                {#
-                <td>{{ factura.baseNoImponible }}</td>
-                #}
-                <td>{{ factura.fecha ? factura.fecha|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ factura.observaciones }}</td>
-                {#
-                <td>
-                    <a href="{{ path('factura_show', {'id': factura.id}) }}">show</a>
-                    <a href="{{ path('factura_edit', {'id': factura.id}) }}">edit</a>
-                </td>
-                #}
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="15">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <facturas listado="{{ facturas|json_encode }}"
+              urlautorizacion="{{ path('factura_autorizacion') }}"
+              urlrecepcion="{{ path('factura_recepcion') }}"
+              urledicion="{{ path('factura_edit',{id: 0}) }}"
+              urlenvio="{{ path('factura_envio') }}"
+    ></facturas>
 {% endblock %}
+{% block javascript %}
+
+{{ encore_entry_script_tags('app') }}
+{% endblock %}
+

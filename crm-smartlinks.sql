@@ -1263,7 +1263,7 @@ INSERT INTO `colaborador` (`id`, `cargo_id`, `parroquia_id`, `nombres`, `direcci
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `configuracion`
+-- Estructura de tabla para la tabla `empresa`
 --
 
 DROP TABLE IF EXISTS `configuracion`;
@@ -1280,7 +1280,7 @@ CREATE TABLE IF NOT EXISTS `configuracion` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Volcado de datos para la tabla `configuracion`
+-- Volcado de datos para la tabla `empresa`
 --
 
 INSERT INTO `configuracion` (`id`, `razon_social`, `nombre_comercial`, `ruc`, `email`, `telefono`, `direccion`, `obligado_contabilidad`) VALUES

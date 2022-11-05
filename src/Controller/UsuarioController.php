@@ -48,7 +48,6 @@ class UsuarioController extends AbstractController
           'Administrador'=>'ROLE_SUPER_ADMIN'
         ];
         $userRoles = $usuario->getRoles();
-        dump($userRoles);
         $form = $this->createFormBuilder([])
             ->add('roles', ChoiceType::class,
                 [
@@ -57,7 +56,7 @@ class UsuarioController extends AbstractController
                     'choices' => $roles,
                     'data' => $userRoles,
 
-                ],
+                ]
             )
             ->add('id', HiddenType::class,
             [

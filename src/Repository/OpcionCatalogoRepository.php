@@ -22,7 +22,6 @@ class OpcionCatalogoRepository extends ServiceEntityRepository
     {
         $condicion = 'c.codigo';
         $condicion .= is_array($value) ? ' IN (:val)':' = :val';
-        dump($condicion);
         return $this->createQueryBuilder('o')
             ->leftJoin('App:Catalogo', 'c', 'WITH', 'o.catalogo = c.id')
             ->andWhere($condicion)

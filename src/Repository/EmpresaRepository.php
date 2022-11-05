@@ -2,23 +2,23 @@
 
 namespace App\Repository;
 
-use App\Entity\Configuracion;
+use App\Entity\Empresa;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Configuracion|null find($id, $lockMode = null, $lockVersion = null)
- * @method Configuracion|null findOneBy(array $criteria, array $orderBy = null)
- * @method Configuracion[]    findAll()
- * @method Configuracion[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Empresa|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Empresa|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Empresa[]    findAll()
+ * @method Empresa[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ConfiguracionRepository extends ServiceEntityRepository
+class EmpresaRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Configuracion::class);
+        parent::__construct($registry, Empresa::class);
     }
-    public function findOneLast(): ?Configuracion
+    public function findUser(): ?Empresa
     {
         return $this->createQueryBuilder('c')
             ->orderBy('c.id', 'DESC')

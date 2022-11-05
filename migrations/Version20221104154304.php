@@ -20,14 +20,14 @@ final class Version20221104154304 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE configuracion ADD p12_name VARCHAR(255) DEFAULT NULL, ADD p12_password VARCHAR(255) DEFAULT NULL');
+        $this->addSql('ALTER TABLE empresa ADD p12_name VARCHAR(255) DEFAULT NULL, ADD p12_password VARCHAR(255) DEFAULT NULL');
         $this->addSql('ALTER TABLE factura ADD clave_acceso VARCHAR(49) DEFAULT NULL');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE configuracion DROP p12_name, DROP p12_password');
+        $this->addSql('ALTER TABLE empresa DROP p12_name, DROP p12_password');
         $this->addSql('ALTER TABLE factura DROP clave_acceso');
     }
 }

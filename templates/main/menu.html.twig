@@ -2,7 +2,7 @@
 
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
-
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
         <li class="nav-item nav-category">Administrador</li>
         <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
@@ -12,12 +12,12 @@
             </a>
             <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Empresa</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ path('app_empresa_edit',{id: app.user.empresa.id}) }}">Empresa</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ path('usuario_list') }}">Usuarios</a></li>
                 </ul>
             </div>
         </li>
+        {% endif %}
         <li class="nav-item nav-category">Negocio</li>
         <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#facturacion" aria-expanded="false" aria-controls="form-elements">
@@ -35,7 +35,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#contratos" aria-expanded="false" aria-controls="form-elements">
-                <i class="menu-icon mdi mdi-card-text-outline"></i>
+                <i class="menu-icon mdi mdi-file-document"></i>
                 <span class="menu-title">Contratos</span>
                 <i class="menu-arrow"></i>
             </a>
@@ -57,16 +57,31 @@
             <div class="collapse" id="clientes">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"><a class="nav-link" href="{{ path('cliente_new') }}">Nuevo Cliente</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ path('cliente_index') }}">Lista de Clientes</a></li>
                 </ul>
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#facturacion" aria-expanded="false" aria-controls="form-elements">
+            <a class="nav-link" data-bs-toggle="collapse" href="#servicios" aria-expanded="false" aria-controls="form-elements">
+                <i class="menu-icon mdi mdi-room-service"></i>
+                <span class="menu-title">Servicios</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="servicios">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"><a class="nav-link" href="{{ path('servicio_index') }}">Servicios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ path('servicio_new') }}">Nuevo Servicio</a></li>
+                </ul>
+            </div>
+
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#adicional" aria-expanded="false" aria-controls="form-elements">
                 <i class="menu-icon mdi mdi-card-text-outline"></i>
                 <span class="menu-title">Adicional</span>
                 <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="facturacion">
+            <div class="collapse" id="adicional">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"><a class="nav-link" href="{{ path('equipo_index') }}">Equipos</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ path('equipo_new') }}">Nuevo Equipo</a></li>
@@ -74,6 +89,7 @@
             </div>
 
         </li>
+
 
         <li class="nav-item nav-category">Ayuda</li>
         <li class="nav-item">

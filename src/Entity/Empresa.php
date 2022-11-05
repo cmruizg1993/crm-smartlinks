@@ -2,13 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\ConfiguracionRepository;
+use App\Repository\EmpresaRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=ConfiguracionRepository::class)
+ * @ORM\Entity(repositoryClass=EmpresaRepository::class)
  */
-class Configuracion
+class Empresa
 {
     /**
      * @ORM\Id
@@ -61,6 +63,16 @@ class Configuracion
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $p12Password;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Usuario::class, mappedBy="empresa")
+     */
+    private $usuarios;
+
+    public function __construct()
+    {
+        $this->usuarios = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -183,6 +195,36 @@ class Configuracion
     public function setP12Password(?string $p12Password): self
     {
         $this->p12Password = $p12Password;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Usuario>
+     */
+    public function getUsuarios(): Collection
+    {
+        return $this->usuarios;
+    }
+
+    public function addUsuario(Usuario $usuario): self
+    {
+        if (!$this->usuarios->contains($usuario)) {
+            $this->usuarios[] = $usuario;
+            $usuario->setEmpresa($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUsuario(Usuario $usuario): self
+    {
+        if ($this->usuarios->removeElement($usuario)) {
+            // set the owning side to null (unless already changed)
+            if ($usuario->getEmpresa() === $this) {
+                $usuario->setEmpresa(null);
+            }
+        }
 
         return $this;
     }

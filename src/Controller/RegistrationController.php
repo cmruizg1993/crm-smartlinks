@@ -22,9 +22,9 @@ class RegistrationController extends AbstractController
 {
     private $emailVerifier;
 
-    public function __construct(EmailVerifier $emailVerifier)
+    public function __construct(/*EmailVerifier $emailVerifier*/)
     {
-        $this->emailVerifier = $emailVerifier;
+        //$this->emailVerifier = $emailVerifier;
     }
 
     /**
@@ -32,6 +32,7 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
+        $this->isGranted('ROLE_ADMIN');
         $user = new Usuario();
         $form = $this->createForm(RegistrationVendedorFormType::class, $user);
         $form->handleRequest($request);
@@ -46,8 +47,12 @@ class RegistrationController extends AbstractController
             );
 
             $entityManager = $this->getDoctrine()->getManager();
-            $cargo = $entityManager->getRepository(Cargo::class)->findOneByCodigo('VN');
-            $colaborador = $user->getColaborador();
+            $entityManager->persist($user);
+            $entityManager->flush();
+            return $this->redirectToRoute('usuario_list');
+            /*
+            //$cargo = $entityManager->getRepository(Cargo::class)->findOneByCodigo('VN');
+            //$colaborador = $user->getColaborador();
             if($cargo){
                 $colaborador->setCargo($cargo);
                 $entityManager->persist($user);
@@ -64,7 +69,8 @@ class RegistrationController extends AbstractController
                 $this->addFlash('registration_success','Registration succesfully. Please verify your email');
                 return $this->redirectToRoute('app_login');
             }
-            $form->addError(new FormError('Please contact with support. 0988116697'));
+            */
+            $form->addError(new FormError('Por favor contacte con el soporte técnico. 0988116697'));
         }
 
         return $this->render('registration/registerVendedor.html.twig', [

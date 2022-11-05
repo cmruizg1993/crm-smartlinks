@@ -639,5 +639,14 @@ class Factura
 
         return $this;
     }
+    public function getNombres(){
+        return $this->cliente->getNombres();
+    }
+    public function getCedula(){
+        return $this->cliente->getDni()->getNumero();
+    }
+    public function getNumero(){
+        return $this->contrato->getNumero();
+    }
 
 }

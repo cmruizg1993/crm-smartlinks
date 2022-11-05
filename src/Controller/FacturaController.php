@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Cliente;
-use App\Entity\Configuracion;
+use App\Entity\Empresa;
 use App\Entity\Contrato;
 use App\Entity\DetalleFactura;
 use App\Entity\Factura;
@@ -11,20 +11,25 @@ use App\Entity\OpcionCatalogo;
 use App\Entity\Producto;
 use App\Entity\PuntoEmision;
 use App\Entity\Servicio;
+use App\Entity\Usuario;
 use App\Form\FacturaType;
 use App\Repository\ClienteRepository;
-use App\Repository\ConfiguracionRepository;
+use App\Repository\EmpresaRepository;
 use App\Repository\ContratoRepository;
 use App\Repository\FacturaRepository;
 use App\Repository\OpcionCatalogoRepository;
 use App\Repository\PuntoEmisionRepository;
 use App\Repository\ServicioRepository;
+use App\Repository\UsuarioRepository;
 use App\Service\FacturacionElectronica;
 use Doctrine\ORM\EntityManagerInterface;
+use http\Client\Curl\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -37,13 +42,93 @@ class FacturaController extends AbstractController
     /**
      * @Route("/index/{page}/{pageLength}", name="factura_index", methods={"GET"})
      */
-    public function index($page = 1, $pageLength = 10, FacturaRepository $facturaRepository): Response
+    public function index($page = 1, $pageLength = 10, FacturaRepository $facturaRepository, SerializerInterface $serializer): Response
     {
-        $facturas = $facturaRepository->getPage($page, $pageLength);
-        dump($facturaRepository->obtenerNumeroDeFacturas());
+        //$facturas = $facturaRepository->getPage($page, $pageLength);
+        $facturas = $facturaRepository->getAll();
+        $data = $serializer->normalize($facturas, null, [AbstractNormalizer::ATTRIBUTES=>[
+            'id', 'numero', 'nombres', 'cedula', 'serie', 'secuencial', 'fecha', 'total', 'subtotal', 'subtotal0', 'subtotal12', 'iva', 'estadoSri'
+        ]]);
+        //dump($facturaRepository->obtenerNumeroDeFacturas());
         return $this->render('factura/index.html.twig', [
-            'facturas' => $facturas
+            'facturas' => $data
         ]);
+    }
+    /**
+     * @Route("/autorizacion/sri/{id}", name="factura_autorizacion", methods={"PUT"})
+     */
+    public function autorizacion
+    (
+        $id = '',
+        FacturaRepository $facturaRepository ,
+        FacturacionElectronica $facturacionElectronica,
+        EntityManagerInterface $em
+    ): Response
+    {
+        if(!$id) return new Response('Se necesita el Id de la factura',400);
+        $factura = $facturaRepository->find($id);
+        if(!$factura) return new Response('Factura no encontrada',400);
+        $clave = $factura->getClaveAcceso();
+        $result = $facturacionElectronica->autorizacion($clave);
+        $respuesta = isset($result->RespuestaAutorizacionComprobante) ? $result->RespuestaAutorizacionComprobante: null;
+        $autorizaciones = isset($respuesta->autorizaciones) ? $respuesta->autorizaciones: null;
+        $autorizacion = $autorizaciones ? $autorizaciones->autorizacion: null;
+        $estado = $autorizacion && isset($autorizacion->estado)?$autorizacion->estado:null;
+        $factura->setEstadoSri($estado);
+        $em->flush();
+        return new JsonResponse(['estado'=>$estado], 200);
+    }
+    /**
+     * @Route("/envio/mail/{id}", name="factura_envio", methods={"PUT"})
+     */
+    public function enviarMailFactura
+    (
+        $id = '',
+        FacturaRepository $facturaRepository ,
+        EntityManagerInterface $em,
+        MailerInterface $mailer,
+        FacturacionElectronica $facturacionElectronica
+    ): Response
+    {
+        if(!$id) return new Response('Se necesita el Id de la factura',400);
+        $factura = $facturaRepository->find($id);
+        if(!$factura) return new Response('Factura no encontrada',400);
+        $clave = $factura->getClaveAcceso();
+        $clienteEmail = $factura->getCliente()->getEmail();
+        $email = (new Email())
+            ->from('smartlinks@gmail.com')
+            ->to($clienteEmail)
+            ->subject('Facturación Electrónica!')
+            ->text("Factura: $clave")
+            ->html("<p>See Twig integration for better HTML integration!</p>")
+            ->attachFromPath($facturacionElectronica->obtenerPathXml($clave));
+
+        $mailer->send($email);
+        return new JsonResponse(['success'=>true], 200);
+    }
+
+    /**
+     * @Route("/recepcion/sri/{id}", name="factura_recepcion", methods={"PUT"})
+     */
+    public function recepcion
+    (
+        $id = '',
+        FacturaRepository $facturaRepository ,
+        FacturacionElectronica $facturacionElectronica,
+        EntityManagerInterface $em
+    ): Response
+    {
+        if(!$id) return new Response('Se necesita el Id de la factura',400);
+        $factura = $facturaRepository->find($id);
+        if(!$factura) return new Response('Factura no encontrada',400);
+        $clave = $factura->getClaveAcceso();
+        $result = $facturacionElectronica->recepcion($clave);
+        $respuesta = isset($result->RespuestaRecepcionComprobante) ? $result->RespuestaRecepcionComprobante: null;
+        $estado = $respuesta && isset($respuesta->estado) ? $respuesta->estado: null;
+        $factura->setEstadoSri($estado);
+        $em->flush();
+        return new JsonResponse(['estado'=>$estado], 200);
+
     }
 
 
@@ -58,10 +143,11 @@ class FacturaController extends AbstractController
         ClienteRepository $clienteRepository,
         ServicioRepository $servicioRepository,
         OpcionCatalogoRepository $opcionCatalogoRepository,
-        ConfiguracionRepository $configuracionRepository,
+        EmpresaRepository $empresaRepository,
         EntityManagerInterface $em,
         SerializerInterface $serializer,
-        FacturacionElectronica $facturacionElectronica
+        FacturacionElectronica $facturacionElectronica,
+        UsuarioRepository $usuarioRepository
     ): Response
     {
         $method = $request->getMethod();
@@ -156,18 +242,21 @@ class FacturaController extends AbstractController
             $factura->setSubtotal0($subtotal0);
             $factura->setSubtotal12($subtotal12);
             $factura->setUsuario($this->getUser());
-
-            /* @var $configuracion Configuracion */
-            $configuracion = $configuracionRepository->findOneLast();
-            $factura->ruc = $configuracion->getRuc();
+            $user = $this->getUser();
+            /* @var $usuario Usuario */
+            $usuario = $usuarioRepository->findOneBy(['email'=>$user->getEmail()]);
+            $empresa = $usuario->getEmpresa();
+            if(!$empresa) return new Response('Empresa no válida', 400);
+            dump($empresa);
+            $factura->ruc = $empresa->getRuc();
             $factura->generarClaveAcceso();
 
-            $xml = $this->renderView('xml/factura.pruebas.xml.twig',['factura'=>$factura, 'conf'=>$configuracion]);
+            $xml = $this->renderView('xml/factura.pruebas.xml.twig',['factura'=>$factura, 'conf'=>$empresa]);
             $clave = $factura->getClaveAcceso();
             $fileName = $facturacionElectronica->crearArchivoXml($clave, $xml);
-            $output = $facturacionElectronica->firmarArchivoXml($fileName, $configuracion);
+            $output = $facturacionElectronica->firmarArchivoXml($clave, $empresa);
             if($output == 0){
-                $result = $facturacionElectronica->recepcion($fileName);
+                $result = $facturacionElectronica->recepcion($clave);
                 $respuesta = isset($result->RespuestaRecepcionComprobante) ? $result->RespuestaRecepcionComprobante: null;
                 $estado = $respuesta && isset($respuesta->estado) ? $respuesta->estado: null;
                 $factura->setEstadoSri($estado);

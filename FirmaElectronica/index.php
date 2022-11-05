@@ -3,7 +3,7 @@
 $output=null;
 $retval=null;
 
-$fileName = 'Fact-000000011';
+$fileName = 'Fact-0411202201109179519800110010910000000582453517416';
 $fileInput = "$fileName.xml";
 $fileOutput = "$fileInput.signed.xml";
 $p12File = "smartlinks.p12";
@@ -24,20 +24,11 @@ try {
     fclose($myfile);
     
     */
-    $myfile = fopen($fileOutput, "r") or die("Unable to open file!");
-    $contentFile = fread($myfile,filesize($fileOutput));
-    fclose($myfile);
+
     $decodeContent = file_get_contents($fileOutput);
-    $base64Content = base64_encode($decodeContent);
+    $utf8Content = utf8_decode($decodeContent);
     $parametros = new stdClass();  
-    $xml = '<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">'.
-    		'<Body>'.
-		        '<validarComprobante xmlns="http://ec.gob.sri.ws.recepcion">'.
-		            '<xml xmlns="">'.$base64Content.'</xml>'.
-		        '</validarComprobante>'.
-    		'</Body>'.
-		'</Envelope>';
-    $parametros->xml = $decodeContent;
+    $parametros->xml = $utf8Content;
     // print_r($decodeContent);
     $url = WS_TEST_RECEIV;
     $client = new SoapClient($url, [ "trace" => 1 ] );
@@ -45,7 +36,7 @@ try {
     print_r($result);
 
 
-    $xmlObject = simplexml_load_string($contentFile) or die("Error: Cannot create object");
+    $xmlObject = simplexml_load_string($decodeContent) or die("Error: Cannot create object");
     $accessKey = (string)$xmlObject->infoTributaria->claveAcceso[0];
     $url = WS_TEST_AUTH;
     $client = new SoapClient($url, [ "trace" => 1 ] );

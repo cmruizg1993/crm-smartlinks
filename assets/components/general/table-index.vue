@@ -52,9 +52,18 @@
                         </b-input-group-append>
                     </b-input-group>
                 </b-form-group>
-
-
-
+                <div class="row">
+                    <div class="col">
+                        <button @click="reporteExcel" type="button" class="btn btn-sm btn-success">
+                            <i class="mdi mdi-file-excel"></i>
+                            <span class="align-self-center">Exportar Excel</span>
+                        </button>
+                        <button  @click="reportePdf" type="button" class="btn btn-sm btn-danger">
+                            <i class="mdi mdi-file-pdf"></i>
+                            <span class="align-self-center">Exportar PDF</span>
+                        </button>
+                    </div>
+                </div>
             </b-col>
 
 
@@ -119,14 +128,40 @@
                  show-empty
                  small
                  @filtered="onFiltered"
+                 ref="table"
         >
             <slot></slot>
+            <template #cell(actions)="row">
+                <button v-for="action in row.item.actions" @click="executeCallback(action)" type="button" :class="'btn btn-sm btn-'+action.color">
+                    {{action.texto}}
+                </button>
+            </template>
+            <template v-slot:custom-foot="row">
+                <tr class="d-none">
+                    <td :colspan="fields.length">
+
+                        <download-excel :data="row.items">
+                            <button id="reporte-excel" type="button" class="btn btn-sm btn-success">
+                                <i class="mdi mdi-file-excel"></i>
+                                <span class="align-self-center">Exportar Excel</span>
+                            </button>
+                        </download-excel>
+                        <button  id="reporte-pdf" type="button" class="btn btn-sm btn-danger" @click="exportData(row.items)">
+                            <i class="mdi mdi-file-pdf"></i>
+                            <span class="align-self-center">Exportar PDF</span>
+                        </button>
+                    </td>
+                </tr>
+
+            </template>
         </b-table>
     </div>
 
 </template>
 
 <script>
+    import jsPDF from "jspdf";
+    import autoTable from 'jspdf-autotable';
     export default {
         props:[
             'items',
@@ -147,7 +182,7 @@
             filter: null,
             filterOn: [],
             customize:[],
-            pageOptions: [5, 10, 15, { value: 100, text: "Show a lot" }]
+            pageOptions: [5, 10, 15, 50, 100, {text:"Todos", value: length}]
           }
         },computed: {
             sortOptions() {
@@ -175,6 +210,31 @@
                 // Trigger pagination to update the number of buttons/pages due to filtering
                 this.totalRows = filteredItems.length
                 this.currentPage = 1
+            },
+            exportData(data){
+                const doc = new jsPDF();
+                doc.o
+                let head =this.fields.map(v => v.text);
+                let body = data.map(v=>{
+                    return head.map(h => v[h]);
+                })
+                autoTable(doc, {
+                    head: [head],
+                    body: body
+                })
+                doc.save('reporte.pdf')
+            },
+            reporteExcel(){
+                document.getElementById('reporte-excel').click();
+            },
+            reportePdf(){
+                document.getElementById('reporte-pdf').click()
+            },
+            async executeCallback(action){
+                console.log('1');
+                await action.callback();
+                console.log('3');
+                this.$refs.table.refresh();
             }
         },
         name: "table-index"

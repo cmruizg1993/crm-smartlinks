@@ -22,7 +22,10 @@
         "axios": "^1.1.3",
         "bootstrap": "^5.2.2",
         "bootstrap-vue": "^2.23.1",
+        "jspdf": "^2.5.1",
+        "jspdf-autotable": "^3.5.25",
         "moment": "^2.29.4",
+        "vue-json-excel": "^0.3.0",
         "xlsx": "^0.18.5"
     }
 }

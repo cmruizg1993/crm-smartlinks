@@ -19,6 +19,17 @@ class FacturaRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Factura::class);
     }
+    public function getAll()
+    {
+        return $this->createQueryBuilder('f')
+            ->leftJoin('f.cliente', 'cliente')
+            ->leftJoin('cliente.dni', 'dni')
+            ->leftJoin('f.contrato','contrato')
+            ->orderBy('f.id', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
     public function obtenerSecuencial($punto_emision_id): int
     {
         /* @var $last Factura|null */
