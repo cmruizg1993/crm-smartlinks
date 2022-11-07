@@ -286,6 +286,7 @@ class FacturaController extends AbstractController
             }
             $em->persist($factura);
             $em->flush();
+
             dump($factura->getId());
             return new JsonResponse(['id'=>$factura->getId()], 200);
         }

@@ -47,6 +47,8 @@ class RegistrationController extends AbstractController
             );
 
             $entityManager = $this->getDoctrine()->getManager();
+            $empresa = $this->getUser()->getEmpresa();
+            $user->setEmpresa($empresa);
             $entityManager->persist($user);
             $entityManager->flush();
             return $this->redirectToRoute('usuario_list');
