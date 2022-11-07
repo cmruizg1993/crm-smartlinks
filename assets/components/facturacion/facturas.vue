@@ -1,12 +1,23 @@
 <template>
     <div>
+        <div class="container">
+            <div class="row justify-content-end">
+                <div class="col">
+                    <button  @click="autorizarTodas" type="button" :class="'btn btn-sm btn-primary'">
+                        Autorizar Todas
+                    </button>
+                    <button  @click="enviarTodas" type="button" :class="'btn btn-sm btn-info'">
+                        Enviar Todas
+                    </button>
+                </div>
+            </div>
+        </div>
         <table-index
                 :items="facturas"
                 :length="facturas.length"
                 :fields="campos"
                 :filters="filtros"
         >
-
         </table-index>
     </div>
 
@@ -71,14 +82,7 @@
                         color: 'primary',
                         texto: 'Autorizar',
                         callback: async ()=>{
-                            await axios.put(this.urlautorizacion+'/'+v.id).then(r => {
-                                if(r.data.estado){
-                                    v.estadoSri = r.data.estado;
-                                    this.establecerAcciones(v);
-                                }
-                            }).catch(e =>{
-                                console.log(e)
-                            })
+                            autorizar(v);
                         }
                     });
                 }
@@ -87,17 +91,44 @@
                         color: 'info',
                         texto: 'Enviar email',
                         callback: async ()=>{
-                            await axios.put(this.urlenvio+'/'+v.id).then(r => {
-                                if(r.data.estado){
-                                    v.estadoSri = r.data.estado;
-                                    this.establecerAcciones(v);
-                                }
-                            }).catch(e =>{
-                                console.log(e)
-                            })
+                            this.enviar(v);
                         }
                     });
                 }
+            },
+            async autorizarTodas(){
+                this.facturas.forEach(v => {
+                    if(v.estadoSri == 'RECIBIDA'){
+                        this.autorizar(v);
+                    }
+                })
+            },
+            async enviarTodas(v){
+                this.facturas.forEach(v => {
+                    if(v.estadoSri == 'AUTORIZADO'){
+                        this.enviar(v);
+                    }
+                })
+            },
+           async autorizar(v){
+                axios.put(this.urlautorizacion+'/'+v.id).then(r => {
+                    if(r.data.estado){
+                        v.estadoSri = r.data.estado;
+                        this.establecerAcciones(v);
+                    }
+                }).catch(e =>{
+                    console.log(e)
+                })
+            },
+            async enviar(v){
+                axios.put(this.urlenvio+'/'+v.id).then(r => {
+                    if(r.data.estado){
+                        v.estadoSri = r.data.estado;
+                        this.establecerAcciones(v);
+                    }
+                }).catch(e =>{
+                    console.log(e)
+                })
             }
         }
     }
