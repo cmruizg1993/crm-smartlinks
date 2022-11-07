@@ -27,6 +27,8 @@ class ContratoType extends AbstractType
             ->add('nodo')
             ->add('nap')
             ->add('puerto')
+            ->add('pppoe')
+            ->add('valorSuscripcion', NumberType::class,['attr'=>['type'=> 'number']])
             ->add('equiposjson', HiddenType::class, ['mapped'=>false])
         ;
     }

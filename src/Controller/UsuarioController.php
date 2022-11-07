@@ -70,9 +70,11 @@ class UsuarioController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted()){
             $hasAccess = in_array('ROLE_SUPER_ADMIN', $usuario->getRoles());
-            if($hasAccess)$this->createAccessDeniedException('No puede modificar este recurso.');
-            $usuario->setRoles($form['roles']->getData());
-            $this->getDoctrine()->getManager()->flush();
+            if(!$hasAccess){
+                $usuario->setRoles($form['roles']->getData());
+                $this->getDoctrine()->getManager()->flush();
+            }
+            return $this->redirectToRoute('usuario_list');
         }
         return $this->render('usuario/roles.html.twig', [
             'form' => $form->createView(),

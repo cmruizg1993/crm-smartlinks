@@ -127,6 +127,11 @@ class Contrato
      */
     private $actualizadoPor;
 
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $pppoe;
+
     public function __toString()
     {
         // TODO: Implement __toString() method.
@@ -525,5 +530,17 @@ class Contrato
     }
     public function getCedula(){
         return $this->cliente->getDni()->getNumero();
+    }
+
+    public function getPppoe(): ?string
+    {
+        return $this->pppoe;
+    }
+
+    public function setPppoe(?string $pppoe): self
+    {
+        $this->pppoe = $pppoe;
+
+        return $this;
     }
 }

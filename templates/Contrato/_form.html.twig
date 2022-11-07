@@ -127,6 +127,28 @@
                     <div class="col-md-6">
                         <div class="form-group row justify-content-end">
                             <label for="" class="col-form-label col-4">
+                                <span class="float-right">Valor $:</span>
+                            </label>
+                            <div class="col-8">
+                                {{ form_widget(form.valorSuscripcion,{ 'attr': {'class':'form-control' }}) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row justify-content-end">
+                            <label for="" class="col-form-label col-4">
+                                <span class="float-right">PPPOE:</span>
+                            </label>
+                            <div class="col-8">
+                                {{ form_widget(form.pppoe,{ 'attr': {'class':'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row justify-content-end">
+                            <label for="" class="col-form-label col-4">
                                 <span class="float-right">Vlan</span>
                             </label>
                             <div class="col-8">
