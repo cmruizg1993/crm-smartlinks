@@ -40,11 +40,14 @@
                     //v.cedula = v.cliente.dni.numero;
                     //v.nombres = v.cliente.nombres;
                     v.fecha = moment(String(v.fecha)).format('DD/MM/YYYY');
-                    let estado = v.estadoActual.texto;
-                    let variant = v.estadoActual.cssClass ;
-                    v.estadoActual = estado;
-                    v._rowVariant= variant;
-                    delete v.estado;
+                    if(v.estadoActual){
+                        let estado = v.estadoActual.texto;
+                        let variant = v.estadoActual.cssClass ;
+                        v.estadoActual = estado;
+                        v._rowVariant= variant;
+                        //delete v.estadoActual;
+                    }
+
                     return v;
                 })
                 if(this.contratos.length > 0){

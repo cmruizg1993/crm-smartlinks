@@ -84,7 +84,7 @@ class Factura
     private $referencia;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Usuario::class, inversedBy="facturas")
+     * @ORM\ManyToOne(targetEntity=Usuario::class, inversedBy="facturas", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $usuario;
@@ -648,5 +648,9 @@ class Factura
     public function getNumero(){
         return $this->contrato->getNumero();
     }
-
+    public function getSerie(){
+        $estab = $this->puntoEmision->getEstablecimiento()->getCodigo();
+        $pto = $this->puntoEmision->getCodigo();
+        return $estab.'-'.$pto;
+    }
 }

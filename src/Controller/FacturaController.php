@@ -23,7 +23,11 @@ use App\Repository\ServicioRepository;
 use App\Repository\UsuarioRepository;
 use App\Service\FacturacionElectronica;
 use Doctrine\ORM\EntityManagerInterface;
+use Dompdf\Dompdf;
 use http\Client\Curl\User;
+use Picqer\Barcode\BarcodeGeneratorDynamicHTML;
+use Picqer\Barcode\BarcodeGeneratorHTML;
+use Picqer\Barcode\BarcodeGeneratorPNG;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -87,7 +91,8 @@ class FacturaController extends AbstractController
         FacturaRepository $facturaRepository ,
         EntityManagerInterface $em,
         MailerInterface $mailer,
-        FacturacionElectronica $facturacionElectronica
+        FacturacionElectronica $facturacionElectronica,
+        OpcionCatalogoRepository $opcionCatalogoRepository
     ): Response
     {
         if(!$id) return new Response('Se necesita el Id de la factura',400);
@@ -95,16 +100,34 @@ class FacturaController extends AbstractController
         if(!$factura) return new Response('Factura no encontrada',400);
         $clave = $factura->getClaveAcceso();
         $clienteEmail = $factura->getCliente()->getEmail();
+        $empresa = $factura->getUsuario()->getEmpresa();
+        $generator = new BarcodeGeneratorPNG();
+        $codigoBarras = $generator->getBarcode($clave, $generator::TYPE_CODE_128, 4, 50);
+        $codigoBarras64 = base64_encode($codigoBarras);
+        $fpago = $opcionCatalogoRepository->findOneByCodigoyCatalogo($factura->getFormaPago(), 'f-pagos');
+        $html = $this->renderView('pdf/ride.html.twig',
+            ['empresa'=> $empresa, 'factura'=>$factura, 'codigoBarras'=>$codigoBarras64, 'formaPago'=>$fpago]);
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4');
+        $dompdf->render();
+        $output = $dompdf->output();
+        $pdfName = $facturacionElectronica->obtenerPathPdf($clave);
+        file_put_contents("$pdfName", $output);
+
         $email = (new Email())
             ->from('smartlinks@gmail.com')
             ->to($clienteEmail)
-            ->subject('Facturación Electrónica!')
-            ->text("Factura: $clave")
-            ->html("<p>See Twig integration for better HTML integration!</p>")
-            ->attachFromPath($facturacionElectronica->obtenerPathXml($clave));
+            ->subject('Facturación Electrónica Smartlinks')
+            ->text("Adjuntamos los datos de tu factura.")
+            ->attachFromPath($facturacionElectronica->obtenerPathXml($clave))
+            ->attachFromPath($pdfName);
 
         $mailer->send($email);
-        return new JsonResponse(['success'=>true], 200);
+        $factura->setEstadoSri($factura->getEstadoSri().','.'ENVIADA');
+        $estado = $factura->getEstadoSri();
+        $em->flush();
+        return new JsonResponse(['success'=>true, 'estado'=>$estado], 200);
     }
 
     /**

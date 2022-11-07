@@ -74,6 +74,7 @@
                             await axios.put(this.urlautorizacion+'/'+v.id).then(r => {
                                 if(r.data.estado){
                                     v.estadoSri = r.data.estado;
+                                    this.establecerAcciones(v);
                                 }
                             }).catch(e =>{
                                 console.log(e)
@@ -89,6 +90,7 @@
                             await axios.put(this.urlenvio+'/'+v.id).then(r => {
                                 if(r.data.estado){
                                     v.estadoSri = r.data.estado;
+                                    this.establecerAcciones(v);
                                 }
                             }).catch(e =>{
                                 console.log(e)

@@ -80,6 +80,11 @@ class FacturacionElectronica
         $fileOutput = "$this->targetDirectory/firmados/$fileName.xml";
         return $fileOutput;
     }
+    public function obtenerPathPdf($claveAcceso){
+        $fileName = "Fact-$claveAcceso";
+        $fileOutput = "$this->targetDirectory/firmados/$fileName.pdf";
+        return $fileOutput;
+    }
     function eliminar_acentos($cadena){
 
         //Reemplazamos la A y a

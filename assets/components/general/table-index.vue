@@ -233,7 +233,6 @@
             async executeCallback(action){
                 console.log('1');
                 await action.callback();
-                console.log('3');
                 this.$refs.table.refresh();
             }
         },
