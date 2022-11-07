@@ -286,7 +286,8 @@ class FacturaController extends AbstractController
             }
             $em->persist($factura);
             $em->flush();
-            return new Response(null, 200);
+            dump($factura->getId());
+            return new JsonResponse(['id'=>$factura->getId()], 200);
         }
 
         $codigos = ['ambiente', 'f-pagos', 'tipo-comp'];
@@ -294,7 +295,6 @@ class FacturaController extends AbstractController
         $data = $serializer->normalize($catalogos, 'json', [AbstractNormalizer::ATTRIBUTES=>
             [ 'id', 'codigo', 'nombre', 'catalogo'=>[ 'codigo', 'texto']]
         ]);
-        dump($data);
         $factura = new Factura();
         $form = $this->createForm(FacturaType::class, $factura);
         return $this->render('factura/new.html.twig', [
@@ -306,10 +306,14 @@ class FacturaController extends AbstractController
     /**
      * @Route("/{id}", name="factura_show", methods={"GET"})
      */
-    public function show(Factura $factura): Response
+    public function show(Factura $factura, OpcionCatalogoRepository $opcionCatalogoRepository): Response
     {
-        return $this->render('factura/show.html.twig', [
-            'factura' => $factura,
+        $fpago = $opcionCatalogoRepository->findOneByCodigoyCatalogo($factura->getFormaPago(), 'f-pagos');
+        $empresa = $factura->getUsuario()->getEmpresa();
+        $generator = new BarcodeGeneratorPNG();
+        $codigoBarras = base64_encode($generator->getBarcode($factura->getClaveAcceso(), $generator::TYPE_CODE_128));
+        return $this->render('printer/factura.html.twig', [
+            'factura' => $factura, 'empresa'=>$empresa, 'formaPago'=>$fpago, 'codigoBarras'=>$codigoBarras
         ]);
     }
     /**

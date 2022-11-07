@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <style>
+        *{
+            font-size: 10px !important;
+            box-sizing: border-box;
+        }
+        .contenedor{
+            width: 298px !important;
+            padding: 4px;
+        }
+    </style>
+</head>
+<body>
+<div class="contenedor">
+    <b>{{ empresa.razonSocial }}</b><br>
+    RUC.: {{ empresa.ruc }}<br>
+    FACT.N.{{ factura.serie }}-{{ factura.secuencial }}<br>
+    NUMERO DE AUTORIZACION: <br>
+    {{ factura.claveAcceso }}<br>
+    FECHA AUTORIZACIÒN:  {{ factura.fecha|date('d/m/Y H:i:s') }}<br>
+    CLAVE DE ACCESO: <br>
+    {{ factura.claveAcceso }}<br>
+    AMBIENTE: PRODUCCIÓN <br>
+    EMISION: NORMAL <br>
+    ______________________________________________________ <br>
+    {{ empresa.razonSocial }}<br>
+    Dirección Matriz: {{ empresa.direccion }}<br>
+    Teléfono 1: {{ empresa.telefono }}<br>
+    Correo: {{empresa.email}}<br>
+    Obligado a Llevar Contabilidad: {{ empresa.obligadoContabilidad }}<br>
+    _______________________________________________________ <br>
+    Nombres: {{ factura.nombres }} <br>
+    Direccion: {{ factura.cliente.direccion }}<br>
+    Telefono: {{ factura.cliente.telefono }}<br>
+    RUC: {{ factura.cedula }}<br>
+    Fecha Emisión: {{ factura.fecha|date('d/m/Y H:i:s') }}<br>
+    _______________________________________________________ <br>
+    <div class="table">
+        <table>
+            <thead>
+            <tr>
+                <th>Cod</th>
+                <th>Descripcion</th>
+                <th>Med</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Descuento</th>
+                <th>Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for d in factura.detalles %}
+                <tr>
+                    <td>{{d.servicio.codigo}}</td>
+                    <td>{{d.descripcion}}</td>
+                    <td>Unidad</td>
+                    <td>{{d.cantidad}}</td>
+                    <td>{{d.precio}}</td>
+                    <td>{{d.descuento}}</td>
+                    <td>{{d.subtotal}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr>
+                <td rowspan="11" colspan="4">
+                    <div class="p10">
+                        <b>Forma Pago SRI</b><br>
+                        <b>{{formaPago.texto}}&emsp;&emsp;&emsp;{{factura.total}}</b><br><br>
+                        <b>INFORMACIÓN ADICIONAL</b><br>
+                        <b>correo : facturas.smartlinksec@gmail.com</b><br>
+                        <b>ciudad : IBARRA</b><br>
+                        <b>referencia : Atuntaqui</b><br>
+                    </div>
+                </td>
+                <td colspan="2">Subtotal</td>
+                <td>{{factura.subtotal}}</td>
+            </tr>
+            <tr>
+                <td colspan="2">Descuento</td>
+                <td>{{factura.descuento}}</td>
+            </tr>
+            <tr>
+                <td colspan="2">Subtotal Neto:</td>
+                <td>{{factura.subtotal}}</td>
+            </tr>
+            <tr>
+                <td colspan="2">Subtotal Con Impuestos:</td>
+                <td>{{factura.subtotal12}}</td>
+            </tr>
+            <tr>
+                <td colspan="2">Subtotal Impuestos 0%:</td>
+                <td>{{factura.subtotal0}}</td>
+            </tr>
+            <tr>
+                <td colspan="2">Subtotal No Objeto IVA:</td>
+                <td>0.00</td>
+            </tr>
+            <tr>
+                <td colspan="2">Subtotal Exento IVA :</td>
+                <td>0.00</td>
+            </tr>
+            <tr>
+                <td colspan="2">ICE:</td>
+                <td>0.00</td>
+            </tr>
+            <tr>
+                <td colspan="2">IVA 12%:</td>
+                <td>{{factura.iva}}</td>
+            </tr>
+            <tr>
+                <td colspan="2">Propina:</td>
+                <td>{{factura.propina}}</td>
+            </tr>
+            <tr>
+                <td colspan="2"><b>VALOR TOTAL</b></td>
+                <td>{{factura.total}}</td>
+            </tr>
+            </tfoot>
+        </table>
+        Más información en nuestra pagina web http://smartlinksec.com
+        Para la atención de reclamos no resueltos por el prestador, ingrese su reclamo al link: http://reclamoconsumidor.arcotel.gob.ec/osTicket/, o para mayor
+        información comuníquese con el número telefónico 1800 567 567
+    </div>
+</div>
+<script>
+    window.print();
+</script>
+</body>
+</html>

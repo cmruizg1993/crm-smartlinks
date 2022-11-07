@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="invoice" v-if="!loading">
+        <div class="invoice" v-if="loading == false">
             <div class="invoice-header">
                 <div class="d-none">
                     <slot>
@@ -15,6 +15,7 @@
                             <label class="col-4 col-form-label">Emisión</label>
                             <div class="col-8">
                                 <b-form-datepicker
+                                        :disabled="isDisabled"
                                         v-model="factura.fecha"
                                         left
                                         locale="es-EC"
@@ -35,7 +36,7 @@
                         <div class="form-group row">
                             <label class="col-4 col-form-label">Comprobante</label>
                             <div class="col-8">
-                                <select class="form-control" name="tipoComprobante" form="factura" v-model="factura.tipoComprobante" @change="getSerie(factura.tipoComprobante)">
+                                <select :disabled='isDisabled' class="form-control" name="tipoComprobante" form="factura" v-model="factura.tipoComprobante" @change="getSerie(factura.tipoComprobante)">
                                     <option v-for="c in comprobantes" :value="c.codigo" >{{c.texto}}</option>
                                 </select>
                             </div>
@@ -50,7 +51,7 @@
                         <div class="form-group row">
                             <label class="col-4 col-form-label">Secuencial</label>
                             <div class="col-8">
-                                <input type="text" class="form-control"  v-model="secuencial" >
+                                <input :disabled='isDisabled' type="text" class="form-control"  v-model="secuencial" >
                             </div>
                         </div>
                     </div>
@@ -59,9 +60,9 @@
                             <label class="col-4 col-form-label">CI/RUC</label>
                             <div class="col-8">
                                 <div class="input-group">
-                                    <input type="text" v-model="factura.cliente.cedula" class="form-control" form="factura" name="cedula" readonly>
+                                    <input :disabled='isDisabled' type="text" v-model="factura.cliente.cedula" class="form-control" form="factura" name="cedula" readonly>
                                     <div class="input-group-append">
-                                        <lista-contratos :baseurl="urlcontratos" :color_class="'btn-warning'" @agregarContrato="agregarContrato">
+                                        <lista-contratos :disabled='isDisabled' :baseurl="urlcontratos" :color_class="'btn-warning'" @agregarContrato="agregarContrato">
                                         </lista-contratos>
                                     </div>
                                 </div>
@@ -86,7 +87,7 @@
                         <div class="form-group row">
                             <label class="col-4 col-form-label">Forma Pago</label>
                             <div class="col-8">
-                                <select class="form-control" name="fpago" form="factura" v-model="factura.formaPago">
+                                <select :disabled='isDisabled' class="form-control" name="fpago" form="factura" v-model="factura.formaPago">
                                     <option v-for="f in formaspago" :value="f.codigo" >{{f.texto}}</option>
                                 </select>
                             </div>
@@ -94,21 +95,21 @@
                         <div class="form-group row">
                             <label class="col-4 col-form-label">Año Pago</label>
                             <div class="col-8">
-                                <input type="number" min="2020" step="1" class="form-control" form="factura" name="anioPago" v-model="factura.anioPago" >
+                                <input :disabled='isDisabled' type="number" min="2020" step="1" class="form-control" form="factura" name="anioPago" v-model="factura.anioPago" >
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-4 col-form-label">Mes Pago</label>
                             <div class="col-8">
-                                <select class="form-control" name="mesPago" form="factura" v-model="factura.mesPago">
+                                <select :disabled='isDisabled' class="form-control" name="mesPago" form="factura" v-model="factura.mesPago">
                                     <option v-for="m in meses" :value="m.codigo" >{{m.texto}}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-4 col-form-label">#Comprobante</label>
+                            <label class="col-4 col-form-label">#Comp</label>
                             <div class="col-8">
-                                <input type="number" min="100" step="1" class="form-control" form="factura"  v-model="factura.comprobantePago" >
+                                <input :disabled='isDisabled' type="number" min="100" step="1" class="form-control" form="factura"  v-model="factura.comprobantePago" >
                             </div>
                         </div>
                     </div>
@@ -116,13 +117,13 @@
                         <div class="form-group row">
                             <label class="col-4 col-form-label">Usuario</label>
                             <div class="col-8">
-                                <input type="text" class="form-control" form="factura" name="usuario" v-model="user" readonly>
+                                <input :disabled='isDisabled' type="text" class="form-control" form="factura" name="usuario" v-model="user" readonly>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-4 col-form-label">Ambiente</label>
                             <div class="col-8">
-                                <select class="form-control" name="ambiente" form="factura" v-model="factura.tipoAmbiente">
+                                <select :disabled='isDisabled' class="form-control" name="ambiente" form="factura" v-model="factura.tipoAmbiente">
                                     <option v-for="a in ambientes" :value="a.codigo" >{{a.texto}}</option>
                                 </select>
                             </div>
@@ -130,7 +131,7 @@
                         <div class="form-group row">
                             <label class="col-4 col-form-label">Observaciones</label>
                             <div class="col-8">
-                                <textarea class="form-control" form="factura" name="usuario" v-model="factura.observaciones" ></textarea>
+                                <textarea :disabled='isDisabled' class="form-control" form="factura" name="usuario" v-model="factura.observaciones" ></textarea>
                             </div>
                         </div>
                     </div>
@@ -138,10 +139,18 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 d-flex justify-content-end">
-                        <lista-servicios :baseurl="urlservicios" @agregarServicio="agregarDetalle"></lista-servicios>
-                        <button type="button" form="factura" class="btn btn-success btn-group-sm" @click="guardarFactura">
-                            <i class="icon-file-add"></i>
+                        <lista-servicios :disabled='isDisabled' :baseurl="urlservicios" @agregarServicio="agregarDetalle"></lista-servicios>
+                        <button :disabled='isDisabled' type="button" form="factura" class="btn btn-success btn-group-sm" @click="guardarFactura">
+                            <i class="mdi mdi-content-save-all"></i>
                             <span>Guardar</span>
+                        </button>
+                        <button :disabled='!isDisabled' class="btn btn-group-sm btn-info" @click="inicializar">
+                            <i class="mdi mdi-plus-circle"></i>
+                            <span>Nuevo</span>
+                        </button>
+                        <button :disabled='factura.id == null' class="btn btn-group-sm btn-dark" @click="imprimir">
+                            <i class="mdi mdi-printer"></i>
+                            <span>Imprimir</span>
                         </button>
                     </div>
                 </div>
@@ -151,7 +160,7 @@
                 <detalle-factura :detalles="factura.detalles" @quitarDetalle="quitarDetalle"></detalle-factura>
             </div>
         </div>
-        <div  style="height: 75vh" v-else>
+        <div  style="height: 75vh" v-if="loading == true">
             <div class="d-flex align-items-center">
                 <strong class="m-3">Guardando</strong>
                 <b-spinner class="ml-auto"></b-spinner>
@@ -189,7 +198,8 @@
               meses,
               formatted: '',
               selected: '',
-              loading: false
+              loading: false,
+              isDisabled: true
           }
         },
         props:[
@@ -292,10 +302,11 @@
                 let success = false;
                 await axios.post('', factura).then(r => {
                     this.loading = false;
-                    if(r.status == 200)
-                       success = true;
+                    if(r.status == 200){
+                        this.factura.id = r.data.id;
+                        success = true;
+                    }
                 }).catch(e => {
-
                     console.log(e);
                 })
                 this.loading = false;
@@ -307,7 +318,8 @@
                         position: 'top-right', // bottom-left or bottom-right or bottom-center or top-left or top-right or top-center or mid-center or an object representing the left, right, top, bottom values
                     });
                     //location.reload();
-                    this.inicializar();
+                    //this.inicializar();
+                    this.isDisabled = true;
                 }
                 else{
                     $.toast({
@@ -328,12 +340,12 @@
             quitarDetalle(d){
                 this.factura.detalles = this.detalles.filter( v => v.id_servicio != d.id_servicio);
             },
-            inicializar(){
+            inicializar() {
                 this.factura = {
                     tipoComprobante: '01',
-                        cliente:{},
-                    contrato:{},
-                    puntoEmision:{},
+                    cliente: {},
+                    contrato: {},
+                    puntoEmision: {},
                     detalles: []
                 };
 
@@ -341,18 +353,24 @@
                 this.getAmbientes();
                 this.getFormasPago();
                 let fecha = new Date();
-                let mes = (fecha.getMonth() + 1).toString().length == 1 ? `0${fecha.getMonth() + 1}`:`${fecha.getMonth() + 1}`;
-                let dia = (fecha.getDate()).toString().length == 1 ? `0${fecha.getDate()}`:`${fecha.getDate()}`;
+                let mes = (fecha.getMonth() + 1).toString().length == 1 ? `0${fecha.getMonth() + 1}` : `${fecha.getMonth() + 1}`;
+                let dia = (fecha.getDate()).toString().length == 1 ? `0${fecha.getDate()}` : `${fecha.getDate()}`;
                 let anio = fecha.getFullYear();
 
                 this.factura.fecha = `${anio}-${mes}-${dia}`;
                 this.factura.mesPago = fecha.getMonth() + 1;
                 this.factura.anioPago = fecha.getFullYear();
+                this.isDisabled = false;
+            },
+            imprimir(){
+                let link = '/factura/'+this.factura.id;
+                window.open(link,'Imprimir', 'width=500, height=600');
+                return false;
             }
 
         },
         mounted() {
-            this.inicializar();
+            //this.inicializar();
         }
     }
 </script>

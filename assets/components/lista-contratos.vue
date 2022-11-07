@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-group-sm" :class="color_class" data-toggle="modal" data-target="#backdropContratos">
+        <button :disabled='disabled' type="button" class="btn btn-group-sm" :class="color_class" data-toggle="modal" data-target="#backdropContratos">
             <i class="icon-search"></i>
             <slot></slot>
         </button>
@@ -69,7 +69,8 @@
         name: "lista-contratos",
         props:[
             'baseurl',
-            'color_class'
+            'color_class',
+            'disabled'
         ],
         data(){
             return {

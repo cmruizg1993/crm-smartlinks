@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary btn-group-sm" data-toggle="modal" data-target="#backdropServicios">
+        <button :disabled='disabled' type="button" class="btn btn-primary btn-group-sm" data-toggle="modal" data-target="#backdropServicios">
             <i class="icon-search"></i>
             <span>Agregar Item</span>
         </button>
@@ -60,7 +60,8 @@
     export default {
         name: "lista-servicios",
         props:[
-            'baseurl'
+            'baseurl',
+            'disabled'
         ],
         data(){
             return {
