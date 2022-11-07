@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 03-11-2022 a las 02:00:14
+-- Tiempo de generación: 07-11-2022 a las 02:16:05
 -- Versión del servidor: 8.0.18
 -- Versión de PHP: 7.3.12
 
@@ -401,7 +401,7 @@ CREATE TABLE IF NOT EXISTS `cliente` (
   UNIQUE KEY `UNIQ_F41C9B25DB8B8168` (`dni_id`),
   KEY `IDX_F41C9B258361A8B8` (`vendedor_id`),
   KEY `IDX_F41C9B2574AFDC17` (`parroquia_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=783 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=785 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `cliente`
@@ -465,7 +465,6 @@ INSERT INTO `cliente` (`id`, `dni_id`, `vendedor_id`, `nombres`, `email`, `telef
 (55, 55, NULL, 'CARLOS FABIÁN RAMOS CLAVIJO', 'facturas.smartlinksec@gmail.com', '967778487', NULL, NULL, NULL, NULL, NULL, 'Miguel Ángel de la Fuente y Flores Vásquez', NULL, NULL, NULL, NULL, NULL, NULL, 'Natabuela', 613),
 (56, 56, NULL, 'MAYRA AZUCENA ZULETA CISNEROS', 'facturas.smartlinksec@gmail.com', '992482489', NULL, NULL, NULL, NULL, NULL, 'Ordoñez Crespo y Panamericana', NULL, NULL, NULL, NULL, NULL, NULL, 'Natabuela', 613),
 (57, 57, NULL, 'JOU ROBERTO FLORES TURRIAGO', 'facturas.smartlinksec@gmail.com', '986834588', NULL, NULL, NULL, NULL, NULL, 'Junín 040-40 y Jorge Montalvo', NULL, NULL, NULL, NULL, NULL, NULL, 'Andrade Marín', 613),
-(58, 58, NULL, 'CRISTIAN MANUEL RUIZ GÓMEZ', 'cmruizg1993@gmail.com', '988116697', '2022-01-01', NULL, 'M', NULL, NULL, 'General Enríquez y Alegría', NULL, NULL, NULL, 0, 0, NULL, 'Atuntaqui', 613),
 (59, 59, NULL, 'LUIS MAURICIO VINUEZA TITUAÑA', 'facturas.smartlinksec@gmail.com', '993074839', NULL, NULL, NULL, NULL, NULL, 'Barrio San Miguel, Nuevos Horizontes', NULL, NULL, NULL, NULL, NULL, NULL, 'Andrade Marín', 613),
 (60, 60, NULL, 'FREDDY DANILO GALLEGOS PROAÑO', 'gallegosfreddy@hotmail.com', '988053958', NULL, NULL, NULL, NULL, NULL, 'Jorge Regalado y 10 de Agosto, Barrio El Rosario', NULL, NULL, NULL, NULL, NULL, NULL, 'Andrade Marín', 613),
 (61, 61, NULL, 'BLANCA ESTHELA PRADO SEVILLA', 'facturas.smartlinksec@gmail.com', '986751443', NULL, NULL, NULL, NULL, NULL, 'San Miguel de Arcángel y 12 de Octubre, casa N°40', NULL, NULL, NULL, NULL, NULL, NULL, 'Bellavista de San Antonio', 613),
@@ -635,9 +634,9 @@ INSERT INTO `cliente` (`id`, `dni_id`, `vendedor_id`, `nombres`, `email`, `telef
 (225, 225, NULL, 'ALBAN ARCOS ANDREA MARLENE', 'FACTURAS@BONAVIDA.EC', NULL, NULL, NULL, NULL, NULL, NULL, 'Av.Salinas 12-22 y Sucre', NULL, NULL, NULL, NULL, NULL, NULL, 'Atuntaqui', 613),
 (226, 226, NULL, 'WAGNER ISRAEL CARAGULLA', 'facturas.smartlinksec@gmail.com', '979574449', NULL, NULL, NULL, NULL, NULL, 'Chile y Modesto Gallegos', NULL, NULL, NULL, NULL, NULL, NULL, 'Atuntaqui, Santa Isabel', 613),
 (227, 227, NULL, 'VIVIÁN TERESA QUIROZ VÁSQUEZ', 'facturas.smartlinksec@gmail.com', '961907544', NULL, NULL, NULL, NULL, NULL, 'Entrada Chaltura 38 cerramiento bloque Bellavista', NULL, NULL, NULL, NULL, NULL, NULL, 'Ibarra - Bellavista', 613),
-(228, 228, NULL, 'LAURO VITALINO ENDARA MANTILLA', 'facturas.smartlinksec@gmail.com', '969876125', NULL, NULL, NULL, NULL, NULL, 'Los Pinos, San Ignacio', NULL, NULL, NULL, NULL, NULL, NULL, 'Atuntaqui, Perugal', 613);
+(228, 228, NULL, 'LAURO VITALINO ENDARA MANTILLA', 'facturas.smartlinksec@gmail.com', '969876125', NULL, NULL, NULL, NULL, NULL, 'Los Pinos, San Ignacio', NULL, NULL, NULL, NULL, NULL, NULL, 'Atuntaqui, Perugal', 613),
+(229, 229, NULL, 'DELIA MARÍA INÉS ECHEVERRÍA QUISHPE', 'facturas.smartlinksec@gmail.com', '994587687', NULL, NULL, NULL, NULL, NULL, 'Bellavista', NULL, NULL, NULL, NULL, NULL, NULL, 'Ibarra- Bellavista', 613);
 INSERT INTO `cliente` (`id`, `dni_id`, `vendedor_id`, `nombres`, `email`, `telefono`, `fecha_nacimiento`, `fingerprint`, `genero`, `nacionalidad`, `residencia`, `direccion`, `estado_civil`, `telefono_fijo`, `otro`, `es_tercera_edad`, `es_discapacitado`, `nombre_comercial`, `referencia_direccion`, `parroquia_id`) VALUES
-(229, 229, NULL, 'DELIA MARÍA INÉS ECHEVERRÍA QUISHPE', 'facturas.smartlinksec@gmail.com', '994587687', NULL, NULL, NULL, NULL, NULL, 'Bellavista', NULL, NULL, NULL, NULL, NULL, NULL, 'Ibarra- Bellavista', 613),
 (230, 230, NULL, 'MARÍA MERCEDES MUÑOZ CÓRDOVA', 'facturas.smartlinksec@gmail.com', '967985954', NULL, NULL, NULL, NULL, NULL, 'Pasando Iglesia Bellavista, pasando tercera entrada', NULL, NULL, NULL, NULL, NULL, NULL, 'Ibarra- Bellavista Alto', 613),
 (231, 231, NULL, 'PABLO PATRICIO GARZÓN PALACIOS', 'facturas.smartlinksec@gmail.com', '996801897', NULL, NULL, NULL, NULL, NULL, '10 de Agosto y Jorge Regalado', NULL, NULL, NULL, NULL, NULL, NULL, 'Andrade Marín', 613),
 (232, 232, NULL, 'MEZA JUMA NORMA ESPERANZA', 'facturas.smartlinksec@gmail.com', '995108997', NULL, NULL, NULL, NULL, NULL, 'Barrio Los Soles', NULL, NULL, NULL, NULL, NULL, NULL, 'Ibarra - San Antonio', 613),
@@ -881,9 +880,9 @@ INSERT INTO `cliente` (`id`, `dni_id`, `vendedor_id`, `nombres`, `email`, `telef
 (470, 470, NULL, 'COLLAGUAZO POTOSI YAJAIRA SILVANA', 'yajairacollaguazo.84@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, 'VIA CHORLAVI  y PASAJE LOS CACHO', NULL, '987610745', NULL, NULL, NULL, NULL, 'BARRIO MORAS', 621),
 (471, 471, NULL, 'ZUMARRAGA POSSO PABLO GUILLERMO', 'zumarragap@hotmail.com', NULL, NULL, NULL, NULL, NULL, NULL, 'ATUNTAQUI OLMEDO Y BOLIVAR DIAGONAL A FRITADAS AMAZONAS ', NULL, '994016333', NULL, NULL, NULL, NULL, NULL, 621),
 (472, 472, NULL, 'CALDERON JACOME RHITA CONCEPCION', 'r.calderon2006@hotmail.com', NULL, NULL, NULL, NULL, NULL, NULL, 'ABDON CALDERON 12-28 y BOLIVAR', NULL, '2909187', NULL, NULL, NULL, NULL, NULL, 621),
-(473, 473, NULL, 'VILAÑEZ PAVON DIANA VERONICA', 'carlosandrango1982@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, '24 DE JULIO 5-35 Y FERNANDO DAQUILEMA', NULL, '0963304664', NULL, NULL, NULL, NULL, 'COLINAS DEL SUR', 621);
+(473, 473, NULL, 'VILAÑEZ PAVON DIANA VERONICA', 'carlosandrango1982@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, '24 DE JULIO 5-35 Y FERNANDO DAQUILEMA', NULL, '0963304664', NULL, NULL, NULL, NULL, 'COLINAS DEL SUR', 621),
+(474, 474, NULL, 'MANGUI PICUASI KARINA DAYANET', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'BOLIVAR  y 12 DE FEBRERO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 621);
 INSERT INTO `cliente` (`id`, `dni_id`, `vendedor_id`, `nombres`, `email`, `telefono`, `fecha_nacimiento`, `fingerprint`, `genero`, `nacionalidad`, `residencia`, `direccion`, `estado_civil`, `telefono_fijo`, `otro`, `es_tercera_edad`, `es_discapacitado`, `nombre_comercial`, `referencia_direccion`, `parroquia_id`) VALUES
-(474, 474, NULL, 'MANGUI PICUASI KARINA DAYANET', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'BOLIVAR  y 12 DE FEBRERO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 621),
 (475, 475, NULL, 'ANDRADE AGUIRRE ANTHONY SEBASTIAN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ANTONIO ANTE', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 621),
 (476, 476, NULL, 'TOAQUIZA CASA MARIA ALEJANDRA', 'facturas.smartlinksec@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, 'VELASCO IBARRA Y PASAJE', NULL, '999038997', NULL, NULL, NULL, NULL, NULL, 621),
 (477, 477, NULL, 'MANYA NAULA DIEGO JAVIER', 'dj_kardia@hotmail.com', NULL, NULL, NULL, NULL, NULL, NULL, 'LAS BUGAMBILLAS 3-07 y LOS CLAVELES', NULL, '994687895', NULL, NULL, NULL, NULL, NULL, 621),
@@ -1139,9 +1138,9 @@ INSERT INTO `cliente` (`id`, `dni_id`, `vendedor_id`, `nombres`, `email`, `telef
 (727, 727, NULL, 'YAGUAPAZ CUASPUD AMPARO RUBI', 'amparorubiyaguapaz@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, 'SAN ANTONIO', NULL, '0968690254', NULL, NULL, NULL, NULL, NULL, 621),
 (728, 728, NULL, 'SEVILLANO PINEDA JOSE OLIVIO', 'cordovaelva46@gmail', '0988280789', NULL, NULL, NULL, NULL, NULL, 'BOLIVAR S/N y GARCIA MORENO', NULL, '0986107681', NULL, NULL, NULL, NULL, NULL, 621),
 (729, 729, NULL, 'LANCHIMBA ESPINOZA WILMAN JAVIER', 'wilmanjavier38@hotmail.com', NULL, NULL, NULL, NULL, NULL, NULL, 'ATUNTAQUI', NULL, '0986214797', NULL, NULL, NULL, NULL, NULL, 621),
-(730, 730, NULL, 'ERAZO CHIZA VANESSA LISSETH', 'vaneerazo01@gmail.com', '0993366214', NULL, NULL, NULL, NULL, NULL, 'ATUNTAQUI', NULL, '0997381395', NULL, NULL, NULL, NULL, NULL, 621);
+(730, 730, NULL, 'ERAZO CHIZA VANESSA LISSETH', 'vaneerazo01@gmail.com', '0993366214', NULL, NULL, NULL, NULL, NULL, 'ATUNTAQUI', NULL, '0997381395', NULL, NULL, NULL, NULL, NULL, 621),
+(731, 731, NULL, 'IBADANGO GOMEZ MARCIA MERCEDES', 'marciaibadango98@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, 'SAN PEDRO', NULL, '0989713280', NULL, NULL, NULL, NULL, NULL, 621);
 INSERT INTO `cliente` (`id`, `dni_id`, `vendedor_id`, `nombres`, `email`, `telefono`, `fecha_nacimiento`, `fingerprint`, `genero`, `nacionalidad`, `residencia`, `direccion`, `estado_civil`, `telefono_fijo`, `otro`, `es_tercera_edad`, `es_discapacitado`, `nombre_comercial`, `referencia_direccion`, `parroquia_id`) VALUES
-(731, 731, NULL, 'IBADANGO GOMEZ MARCIA MERCEDES', 'marciaibadango98@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, 'SAN PEDRO', NULL, '0989713280', NULL, NULL, NULL, NULL, NULL, 621),
 (732, 732, NULL, 'GUERRERO GRIJALVA LUIS EDUARDO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2 DE MARZO 14-22 y PEREZ MUÑOZ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 621),
 (733, 733, NULL, 'LEON LASCANO VERONICA JACQUELINE', 'vjleon82@gmail.com', '0993572135', NULL, NULL, NULL, NULL, NULL, 'IBARRA', NULL, '0994534022', NULL, NULL, NULL, NULL, NULL, 621),
 (734, 734, NULL, 'JACOME GORDON EDWIN ANDRES', 'andres.jacome994@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, 'PANAMERICANA SUR Y LUIS ECHEVERRIA', NULL, '0982209999', NULL, NULL, NULL, NULL, NULL, 621),
@@ -1192,7 +1191,8 @@ INSERT INTO `cliente` (`id`, `dni_id`, `vendedor_id`, `nombres`, `email`, `telef
 (779, 779, NULL, 'CHUMA YANEZ BRYAN ANDRES', 'leonela=13041@live.com', NULL, NULL, NULL, NULL, NULL, NULL, 'ATUNTAQUI', NULL, '0978814069', NULL, NULL, NULL, NULL, NULL, 621),
 (780, 780, NULL, 'CRIOLLO NAVARRETE JORGE ANDRES', 'jacriollon@outlook.com', NULL, NULL, NULL, NULL, NULL, NULL, 'IBARRA', NULL, '0990874847', NULL, NULL, NULL, NULL, NULL, 621),
 (781, 781, NULL, 'TUSA BURGA ANDREA CAROLINA', 'albercan2704@gmail.com', '0964155300', NULL, NULL, NULL, NULL, NULL, 'IBARRA', NULL, '0990201210', NULL, NULL, NULL, NULL, NULL, 621),
-(782, 782, NULL, 'ANDRANGO MINANGO MARLON GABRIEL', 'andrangogabriel47@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, 'MIGUEL ANGEL GUZMAN Y JAIME ROLDOS AGUILERA', NULL, '0986707960', NULL, NULL, NULL, NULL, NULL, 621);
+(782, 782, NULL, 'ANDRANGO MINANGO MARLON GABRIEL', 'andrangogabriel47@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, 'MIGUEL ANGEL GUZMAN Y JAIME ROLDOS AGUILERA', NULL, '0986707960', NULL, NULL, NULL, NULL, NULL, 621),
+(784, 784, NULL, 'CRISTIAN MANUEL RUIZ GOMEZ', 'cmruizg1993@gmail.com', NULL, '2022-01-01', NULL, 'M', 'ECUATORIANA', NULL, 'OLMEDO Y SUCRE', 'SOLTERO', '0988116697', NULL, 0, 0, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1218,73 +1218,14 @@ CREATE TABLE IF NOT EXISTS `colaborador` (
   PRIMARY KEY (`id`),
   KEY `IDX_D2F80BB3813AC380` (`cargo_id`),
   KEY `IDX_D2F80BB374AFDC17` (`parroquia_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `colaborador`
 --
 
 INSERT INTO `colaborador` (`id`, `cargo_id`, `parroquia_id`, `nombres`, `direccion`, `cedula`, `codigo_ip`, `ruc`, `razon`, `factura`, `iva`, `ret_fuente`, `ret_iva`) VALUES
-(4, NULL, NULL, ' ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(6, NULL, NULL, 'GEOVANNY LUZURIAGA', NULL, NULL, 723196, NULL, NULL, NULL, NULL, NULL, NULL),
-(7, NULL, NULL, 'WILFRIDO FRANKLIN JUNCO CEDE?O', NULL, NULL, 648434, NULL, NULL, NULL, NULL, NULL, NULL),
-(8, NULL, NULL, 'EDGAR FRANCISCO VIVAR MALDONADO', NULL, NULL, 723203, NULL, NULL, NULL, NULL, NULL, NULL),
-(9, NULL, NULL, 'DAVID SAUL ROSADO RODRIGUEZ', NULL, NULL, 648427, NULL, NULL, NULL, NULL, NULL, NULL),
-(10, NULL, NULL, 'MONICA DEL CARMEN HARO ENCALADA', NULL, NULL, 648414, NULL, NULL, NULL, NULL, NULL, NULL),
-(11, NULL, NULL, 'FREDDY EFREN TROYA ABRIL', NULL, NULL, 648417, NULL, NULL, NULL, NULL, NULL, NULL),
-(12, NULL, NULL, 'INTELSERV INTELSERV', NULL, NULL, 473796, NULL, NULL, NULL, NULL, NULL, NULL),
-(13, NULL, NULL, 'JACINTA MARICELA LOPEZ ZAMBRANO', NULL, NULL, 723210, NULL, NULL, NULL, NULL, NULL, NULL),
-(14, NULL, NULL, 'CARLOS ADOLFO OCAMPO PAREDES', NULL, NULL, 615112, NULL, NULL, NULL, NULL, NULL, NULL),
-(15, NULL, NULL, 'ANGEL MEJIA RUA', NULL, NULL, 723202, NULL, NULL, NULL, NULL, NULL, NULL),
-(16, NULL, NULL, 'LENIN PERLAZA IBARRA', NULL, NULL, 723220, NULL, NULL, NULL, NULL, NULL, NULL),
-(17, NULL, NULL, 'JENNIFFER JULIANA DIEZ IMAICELA', NULL, NULL, 723216, NULL, NULL, NULL, NULL, NULL, NULL),
-(18, 3, NULL, 'HARO ENCALADA EDISON PATRICIO', 'PICHINCHA/QUITO/SAN BLAS-MACARA DOLORES SUCRE TOLA BAJA', '1706258207', 723199, NULL, NULL, NULL, NULL, NULL, NULL),
-(19, NULL, NULL, 'JORDAN BRYAN JUCA CUELLO', NULL, NULL, 598088, NULL, NULL, NULL, NULL, NULL, NULL),
-(20, NULL, NULL, 'OSCAR LEONARDO MORENO CARLOSAMA', NULL, NULL, 390285, NULL, NULL, NULL, NULL, NULL, NULL),
-(21, NULL, NULL, 'Ernesto Flores', NULL, NULL, 527415, NULL, NULL, NULL, NULL, NULL, NULL),
-(22, NULL, NULL, 'Diego Fernando Pineda Medina', NULL, NULL, 328537, NULL, NULL, NULL, NULL, NULL, NULL),
-(23, NULL, NULL, 'Angel Antonio Medrano Allieri', NULL, NULL, 597562, NULL, NULL, NULL, NULL, NULL, NULL),
-(24, NULL, NULL, 'JOHN EDUARDO ALCIVAR NOA', NULL, NULL, 615114, NULL, NULL, NULL, NULL, NULL, NULL),
-(25, NULL, NULL, 'Luis Fernando Yunga Pati?o', NULL, NULL, 328532, NULL, NULL, NULL, NULL, NULL, NULL),
-(26, NULL, NULL, 'David Mueckay', NULL, NULL, 456300, NULL, NULL, NULL, NULL, NULL, NULL),
-(27, NULL, NULL, 'GABRIEL ADRIAN CUERO ANGULO', NULL, NULL, 446977, NULL, NULL, NULL, NULL, NULL, NULL),
-(28, NULL, NULL, 'JEFERSON FREDY DE LA CRUZ SAN NICOLAS', NULL, NULL, 438416, NULL, NULL, NULL, NULL, NULL, NULL),
-(30, NULL, NULL, 'JOAQUIN YASACA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(31, 1, NULL, 'CRISTIAN RUIZ', 'ATUNTAQUI', '1003659966', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(32, 1, NULL, 'Edison Patricio Haro Encalada', 'quito', '1706258207', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(33, 1, NULL, 'PRUEBA VENDEDOR', 'QUITO', '1002003001', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(34, 1, NULL, 'CRISTIAN RUIZ', 'Gonzáles Suárez', '1003659966', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(36, 1, NULL, 'CRISTIAN RUIZ', 'Gonzáles Suárez', '1003444278', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(37, 1, NULL, 'CRISTIAN RUIZ', 'Gonzáles Suárez', '1003659966', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(39, 1, NULL, 'CRISTIAN RUIZ', 'Gonzáles Suárez', '1003659966', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(40, 1, NULL, 'CRISTIAN RUIZ', 'Gonzáles Suárez', '1003659966', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(41, 1, NULL, 'RUIZ GOMEZ CRISTIAN MANUEL', 'IMBABURA/ANTONIO ANTE/ATUNTAQUI-BRR SAN VICENTE 000', '1003659966', NULL, NULL, NULL, 0, NULL, NULL, NULL);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `empresa`
---
-
-DROP TABLE IF EXISTS `configuracion`;
-CREATE TABLE IF NOT EXISTS `configuracion` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `razon_social` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nombre_comercial` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `ruc` varchar(13) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `telefono` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `direccion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `obligado_contabilidad` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `empresa`
---
-
-INSERT INTO `configuracion` (`id`, `razon_social`, `nombre_comercial`, `ruc`, `email`, `telefono`, `direccion`, `obligado_contabilidad`) VALUES
-(1, 'PENTATELGROUP S.A.S', 'SMARTLINKS', '1091795198001', 'admin@smartlinks.com', '0999999999', 'SUCRE Y ABDON CALDERON, ATUNTAQUI', 'SI');
+(44, NULL, NULL, 'Cristian Ruiz', 'Gonzáles Suárez', '1003659966', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1340,7 +1281,6 @@ CREATE TABLE IF NOT EXISTS `contrato` (
   `numero` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
   `fecha` date NOT NULL,
   `direccion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `estado` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `valor_suscripcion` double DEFAULT NULL,
   `vlan` int(11) DEFAULT NULL,
   `nodo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1348,25 +1288,29 @@ CREATE TABLE IF NOT EXISTS `contrato` (
   `puerto` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `instalador_id` int(11) DEFAULT NULL,
   `version` int(11) NOT NULL,
+  `actualizado_por_id` int(11) DEFAULT NULL,
+  `fecha_actualizacion` datetime DEFAULT NULL,
+  `estado_actual_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_66696523F55AE19E` (`numero`),
   UNIQUE KEY `UNIQ_666965231CB9D6E4` (`solicitud_id`),
   KEY `IDX_66696523DE734E51` (`cliente_id`),
   KEY `IDX_6669652374AFDC17` (`parroquia_id`),
   KEY `IDX_666965238361A8B8` (`vendedor_id`),
   KEY `IDX_66696523EEBF8695` (`instalador_id`),
-  KEY `IDX_6669652371CAA3E7` (`servicio_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  KEY `IDX_6669652371CAA3E7` (`servicio_id`),
+  KEY `IDX_66696523F6167A1C` (`actualizado_por_id`),
+  KEY `IDX_6669652322552C49` (`estado_actual_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `contrato`
 --
 
-INSERT INTO `contrato` (`id`, `cliente_id`, `servicio_id`, `parroquia_id`, `vendedor_id`, `solicitud_id`, `numero`, `fecha`, `direccion`, `estado`, `valor_suscripcion`, `vlan`, `nodo`, `nap`, `puerto`, `instalador_id`, `version`) VALUES
-(1, 58, 3, NULL, NULL, NULL, '1', '2022-11-01', 'Jorge Regalado', NULL, NULL, 1, 'atuntaqui', '3210', '1234', NULL, 3),
-(3, 58, 3, NULL, NULL, NULL, '1', '2022-11-01', 'Jorge Regalado', NULL, NULL, 2, 'atuntaqui', '3210', '1234', NULL, 4),
-(4, 58, 3, NULL, NULL, NULL, '1', '2022-11-01', 'Jorge Regalado', 'A', NULL, 2, 'atuntaqui', '3210', '1234', NULL, 5),
-(5, 58, 5, NULL, NULL, NULL, '2', '2022-11-01', 'Jorge Regalado', NULL, NULL, 334, '123', '123', '123', NULL, 1),
-(6, 58, 5, NULL, NULL, NULL, '2', '2022-11-01', 'Jorge Regalado', 'A', NULL, 334, '123', '123', '123', NULL, 2);
+INSERT INTO `contrato` (`id`, `cliente_id`, `servicio_id`, `parroquia_id`, `vendedor_id`, `solicitud_id`, `numero`, `fecha`, `direccion`, `valor_suscripcion`, `vlan`, `nodo`, `nap`, `puerto`, `instalador_id`, `version`, `actualizado_por_id`, `fecha_actualizacion`, `estado_actual_id`) VALUES
+(9, 784, 7, NULL, NULL, NULL, '1', '2022-11-03', 'Gonzáles Suárez', NULL, NULL, 'atuntaqui', '123', '123', NULL, 2, NULL, '2022-11-04 15:26:14', 1),
+(10, 784, 7, NULL, NULL, NULL, '2', '2022-11-04', 'Jorge Regalado', NULL, 3, '123', '123', '123', NULL, 2, NULL, '2022-11-04 16:30:54', 2),
+(11, 660, 7, NULL, NULL, NULL, '3', '2022-11-07', 'LOS LAURELES Y LOS PINOS', NULL, NULL, '123', '123', '123', NULL, 1, NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -1417,21 +1361,49 @@ CREATE TABLE IF NOT EXISTS `detalle_factura` (
   KEY `IDX_B1354EA1F04F795F` (`factura_id`),
   KEY `IDX_B1354EA17645698E` (`producto_id`),
   KEY `IDX_B1354EA171CAA3E7` (`servicio_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `detalle_factura`
 --
 
 INSERT INTO `detalle_factura` (`id`, `factura_id`, `cantidad`, `precio`, `subtotal`, `servicio_id`, `es_servicio`, `descripcion`, `producto_id`, `descuento`) VALUES
-(1, 1, '1.00', '9.99', '8.92', 3, 1, 'PLAN BASICO', NULL, NULL),
-(2, 2, '1.00', '9.99', '8.92', 3, 1, 'PLAN BASICO', NULL, NULL),
-(3, 3, '1.00', '9.99', '8.92', 3, 1, 'PLAN BASICO', NULL, NULL),
-(4, 4, '1.00', '9.99', '8.92', 3, 1, 'PLAN BASICO', NULL, NULL),
-(5, 5, '1.00', '9.99', '8.92', 3, 1, 'PLAN BASICO', NULL, NULL),
-(6, 6, '1.00', '9.99', '8.92', 3, 1, 'PLAN BASICO', NULL, NULL),
-(7, 7, '1.00', '19.99', '17.85', 5, 1, 'PLAN MEDIUM', NULL, NULL),
-(8, 8, '1.00', '19.99', '17.85', 5, 1, 'PLAN MEDIUM', NULL, NULL);
+(46, 44, '1.00', '9.99', '8.92', 7, 1, 'PLAN BASICO', NULL, NULL),
+(47, 44, '1.00', '2.00', '1.79', 6, 1, 'SERVICIO DE RECONEXIÓN', NULL, NULL),
+(48, 45, '1.00', '9.99', '8.92', 7, 1, 'PLAN BASICO', NULL, NULL),
+(49, 45, '1.00', '2.00', '1.79', 6, 1, 'SERVICIO DE RECONEXIÓN', NULL, NULL),
+(50, 46, '1.00', '9.99', '8.92', 7, 1, 'PLAN BASICO', NULL, NULL),
+(51, 46, '1.00', '2.00', '1.79', 6, 1, 'SERVICIO DE RECONEXIÓN', NULL, NULL),
+(52, 47, '1.00', '9.99', '8.92', 7, 1, 'PLAN BASICO', NULL, NULL),
+(53, 47, '1.00', '2.00', '1.79', 6, 1, 'SERVICIO DE RECONEXIÓN', NULL, NULL),
+(54, 48, '1.00', '9.99', '8.92', 7, 1, 'PLAN BASICO', NULL, NULL),
+(55, 48, '1.00', '2.00', '1.79', 6, 1, 'SERVICIO DE RECONEXIÓN', NULL, NULL),
+(56, 49, '1.00', '9.99', '8.92', 7, 1, 'PLAN BASICO', NULL, NULL),
+(57, 49, '1.00', '2.00', '1.79', 6, 1, 'SERVICIO DE RECONEXIÓN', NULL, NULL),
+(58, 50, '1.00', '9.99', '8.92', 7, 1, 'PLAN BASICO', NULL, NULL),
+(59, 50, '1.00', '2.00', '1.79', 6, 1, 'SERVICIO DE RECONEXIÓN', NULL, NULL),
+(60, 51, '1.00', '9.99', '8.92', 7, 1, 'PLAN BASICO', NULL, NULL),
+(61, 51, '1.00', '2.00', '1.79', 6, 1, 'SERVICIO DE RECONEXIÓN', NULL, NULL),
+(62, 52, '1.00', '9.99', '8.92', 7, 1, 'PLAN BASICO', NULL, NULL),
+(63, 52, '1.00', '2.00', '1.79', 6, 1, 'SERVICIO DE RECONEXIÓN', NULL, NULL),
+(64, 53, '1.00', '9.99', '8.92', 7, 1, 'PLAN BASICO', NULL, NULL),
+(65, 54, '1.00', '9.99', '8.92', 7, 1, 'PLAN BASICO', NULL, NULL),
+(66, 55, '1.00', '9.99', '8.92', 7, 1, 'PLAN BASICO', NULL, NULL),
+(67, 56, '1.00', '9.99', '8.92', 7, 1, 'PLAN BASICO', NULL, NULL),
+(68, 57, '1.00', '9.99', '8.92', 7, 1, 'PLAN BASICO', NULL, NULL),
+(69, 58, '1.00', '9.99', '8.92', 7, 1, 'PLAN BASICO', NULL, NULL),
+(70, 59, '1.00', '9.99', '8.92', 7, 1, 'PLAN BASICO', NULL, NULL),
+(71, 60, '1.00', '9.99', '8.92', 7, 1, 'PLAN BASICO', NULL, NULL),
+(72, 61, '1.00', '9.99', '8.92', 7, 1, 'PLAN BASICO', NULL, NULL),
+(73, 62, '1.00', '9.99', '8.92', 7, 1, 'PLAN BASICO', NULL, NULL),
+(74, 63, '1.00', '9.99', '8.92', 7, 1, 'PLAN BASICO', NULL, NULL),
+(75, 64, '1.00', '9.99', '8.92', 7, 1, 'PLAN BASICO', NULL, NULL),
+(76, 65, '1.00', '9.99', '8.92', 7, 1, 'PLAN BASICO', NULL, NULL),
+(77, 66, '1.00', '9.99', '8.92', 7, 1, 'PLAN BASICO', NULL, NULL),
+(78, 67, '1.00', '9.99', '8.92', 7, 1, 'PLAN BASICO', NULL, NULL),
+(79, 68, '1.00', '9.99', '8.92', 7, 1, 'PLAN BASICO', NULL, NULL),
+(80, 69, '1.00', '9.99', '8.92', 7, 1, 'PLAN BASICO', NULL, NULL),
+(81, 70, '1.00', '9.99', '8.92', 7, 1, 'PLAN BASICO', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1448,7 +1420,7 @@ CREATE TABLE IF NOT EXISTS `dni` (
   `foto_posterior` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tipo` varchar(2) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=783 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=785 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `dni`
@@ -1512,7 +1484,6 @@ INSERT INTO `dni` (`id`, `numero`, `fecha_exp`, `foto_frontal`, `foto_posterior`
 (55, '1003366026', NULL, NULL, NULL, '05'),
 (56, '1001024999', NULL, NULL, NULL, '05'),
 (57, '1002257556', NULL, NULL, NULL, '05'),
-(58, '1003659966', NULL, NULL, NULL, '05'),
 (59, '1003151287', NULL, NULL, NULL, '05'),
 (60, '1002162509', NULL, NULL, NULL, '05'),
 (61, '1000523272', NULL, NULL, NULL, '05'),
@@ -2236,7 +2207,8 @@ INSERT INTO `dni` (`id`, `numero`, `fecha_exp`, `foto_frontal`, `foto_posterior`
 (779, '1004751267', NULL, NULL, NULL, '05'),
 (780, '1003600390', NULL, NULL, NULL, '05'),
 (781, '1005335078', NULL, NULL, NULL, '05'),
-(782, '1004406102', NULL, NULL, NULL, '05');
+(782, '1004406102', NULL, NULL, NULL, '05'),
+(784, '1003659966', NULL, NULL, NULL, '05');
 
 -- --------------------------------------------------------
 
@@ -2326,7 +2298,41 @@ INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_
 ('DoctrineMigrations\\Version20221102040736', '2022-11-02 04:07:42', 80),
 ('DoctrineMigrations\\Version20221103005308', '2022-11-03 00:53:30', 1475),
 ('DoctrineMigrations\\Version20221103005500', '2022-11-03 00:55:41', 127),
-('DoctrineMigrations\\Version20221103010628', '2022-11-03 01:07:23', 324);
+('DoctrineMigrations\\Version20221103010628', '2022-11-03 01:07:23', 324),
+('DoctrineMigrations\\Version20221103173323', '2022-11-03 17:33:46', 773),
+('DoctrineMigrations\\Version20221103201434', '2022-11-03 20:14:45', 452),
+('DoctrineMigrations\\Version20221103211403', '2022-11-03 21:14:14', 456),
+('DoctrineMigrations\\Version20221104154304', '2022-11-04 15:43:39', 786),
+('DoctrineMigrations\\Version20221104173617', '2022-11-04 17:36:25', 1060),
+('DoctrineMigrations\\Version20221105171915', '2022-11-05 17:19:30', 2997);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `empresa`
+--
+
+DROP TABLE IF EXISTS `empresa`;
+CREATE TABLE IF NOT EXISTS `empresa` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `razon_social` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nombre_comercial` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ruc` varchar(13) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `telefono` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `direccion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `obligado_contabilidad` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `p12_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `p12_password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `empresa`
+--
+
+INSERT INTO `empresa` (`id`, `razon_social`, `nombre_comercial`, `ruc`, `email`, `telefono`, `direccion`, `obligado_contabilidad`, `p12_name`, `p12_password`) VALUES
+(1, 'PENTATELGROUP S.A.S', 'SMARTLINKS\'S', '1091795198001', 'facturas.smartlinksec@gmail.com', '0999999999', 'SUCRE Y ABDON CALDERON, ATUNTAQUI', 'SI', 'smartlinks.p12', 'cristian1995firma');
 
 -- --------------------------------------------------------
 
@@ -2371,14 +2377,16 @@ CREATE TABLE IF NOT EXISTS `equipo_instalacion` (
   PRIMARY KEY (`id`),
   KEY `IDX_4E949FE623BFBED` (`equipo_id`),
   KEY `IDX_4E949FE670AE7BF1` (`contrato_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `equipo_instalacion`
 --
 
 INSERT INTO `equipo_instalacion` (`id`, `equipo_id`, `contrato_id`, `serie`, `observacion`, `cantidad`) VALUES
-(8, 2, 1, NULL, NULL, '1.00');
+(11, 3, 9, NULL, NULL, '1.00'),
+(12, 2, 10, NULL, NULL, '1.00'),
+(13, 4, 11, '12346+5654', NULL, '1.00');
 
 -- --------------------------------------------------------
 
@@ -2414,20 +2422,16 @@ CREATE TABLE IF NOT EXISTS `estado_contrato` (
   `estado_id` int(11) NOT NULL,
   `fecha` datetime NOT NULL,
   `observaciones` longtext COLLATE utf8mb4_unicode_ci,
-  `contrato_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `IDX_979FD6CE9F5A440B` (`estado_id`),
-  KEY `IDX_979FD6CE70AE7BF1` (`contrato_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  KEY `IDX_979FD6CE9F5A440B` (`estado_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `estado_contrato`
 --
 
-INSERT INTO `estado_contrato` (`id`, `estado_id`, `fecha`, `observaciones`, `contrato_id`) VALUES
-(1, 1, '2022-11-01 14:13:35', 'eestado inicial', 5),
-(2, 1, '2022-11-01 21:51:08', NULL, 4),
-(3, 1, '2022-11-01 21:51:14', NULL, 6);
+INSERT INTO `estado_contrato` (`id`, `estado_id`, `fecha`, `observaciones`) VALUES
+(6, 1, '2022-11-03 17:22:40', 'eestado inicial');
 
 -- --------------------------------------------------------
 
@@ -2508,26 +2512,47 @@ CREATE TABLE IF NOT EXISTS `factura` (
   `subtotal0` decimal(10,2) NOT NULL,
   `descuento` decimal(10,2) DEFAULT NULL,
   `propina` decimal(10,2) DEFAULT NULL,
+  `clave_acceso` varchar(49) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `estado_sri` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_F9EBA009DB38439E` (`usuario_id`),
   KEY `IDX_F9EBA009DE734E51` (`cliente_id`),
   KEY `IDX_F9EBA00970AE7BF1` (`contrato_id`),
   KEY `IDX_F9EBA009742B70B6` (`punto_emision_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `factura`
 --
 
-INSERT INTO `factura` (`id`, `usuario_id`, `cliente_id`, `punto_emision_id`, `secuencial`, `fecha`, `total`, `subtotal`, `iva`, `base_ice`, `ice`, `base_cero`, `base_no_imponible`, `observaciones`, `referencia`, `tipo_ambiente`, `codigo_numerico`, `tipo_emision`, `digito_verificador`, `forma_pago`, `contrato_id`, `mes_pago`, `anio_pago`, `comprobante_pago`, `subtotal12`, `subtotal0`, `descuento`, `propina`) VALUES
-(1, 7, 58, 1, '000000001', '2022-11-02 00:00:00', '9.99', '8.920', '1.070', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 4, 11, 2022, NULL, '8.92', '0.00', NULL, '0.00'),
-(2, 7, 58, 1, '000000002', '2022-11-02 00:00:00', '9.99', '8.920', '1.070', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 4, 11, 2022, NULL, '8.92', '0.00', NULL, '0.00'),
-(3, 7, 58, 1, '000000003', '2022-11-02 00:00:00', '9.99', '8.920', '1.070', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 4, 11, 2022, NULL, '8.92', '0.00', NULL, '0.00'),
-(4, 7, 58, 1, '000000004', '2022-11-02 00:00:00', '9.99', '8.920', '1.070', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 4, 11, 2022, NULL, '8.92', '0.00', NULL, '0.00'),
-(5, 7, 58, 1, '000000005', '2022-11-02 00:00:00', '9.99', '8.920', '1.070', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 4, 11, 2022, NULL, '8.92', '0.00', NULL, '0.00'),
-(6, 7, 58, 1, '000000006', '2022-11-02 00:00:00', '9.99', '8.920', '1.070', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 4, 11, 2022, NULL, '8.92', '0.00', NULL, '0.00'),
-(7, 7, 58, 1, '000000007', '2022-11-02 00:00:00', '19.99', '17.848', '2.142', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 6, 11, 2022, NULL, '17.85', '0.00', NULL, '0.00'),
-(8, 7, 58, 1, '000000008', '2022-11-02 00:00:00', '19.99', '17.848', '2.142', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 6, 11, 2022, NULL, '17.85', '0.00', NULL, '0.00');
+INSERT INTO `factura` (`id`, `usuario_id`, `cliente_id`, `punto_emision_id`, `secuencial`, `fecha`, `total`, `subtotal`, `iva`, `base_ice`, `ice`, `base_cero`, `base_no_imponible`, `observaciones`, `referencia`, `tipo_ambiente`, `codigo_numerico`, `tipo_emision`, `digito_verificador`, `forma_pago`, `contrato_id`, `mes_pago`, `anio_pago`, `comprobante_pago`, `subtotal12`, `subtotal0`, `descuento`, `propina`, `clave_acceso`, `estado_sri`) VALUES
+(44, 7, 784, 1, '000000052', '2022-11-04 00:00:00', '11.99', '10.705', '1.285', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 9, 11, 2022, NULL, '10.71', '0.00', NULL, '0.00', '0411202201109179519800110010910000000525620147819', NULL),
+(45, 7, 784, 1, '000000053', '2022-11-04 00:00:00', '11.99', '10.705', '1.285', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 9, 12, 2022, NULL, '10.71', '0.00', NULL, '0.00', '0411202201109179519800110010910000000531425459911', NULL),
+(46, 7, 784, 1, '000000054', '2022-11-04 00:00:00', '11.99', '10.705', '1.285', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 9, 1, 2023, NULL, '10.71', '0.00', NULL, '0.00', '0411202201109179519800110010910000000543697190911', NULL),
+(47, 7, 784, 1, '000000055', '2022-11-04 00:00:00', '11.99', '10.705', '1.285', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 9, 2, 2023, NULL, '10.71', '0.00', NULL, '0.00', '0411202201109179519800110010910000000552393411412', NULL),
+(48, 7, 784, 1, '000000056', '2022-11-04 00:00:00', '11.99', '10.705', '1.285', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 9, 3, 2023, NULL, '10.71', '0.00', NULL, '0.00', '0411202201109179519800110010910000000564267820917', NULL),
+(49, 7, 784, 1, '000000057', '2022-11-04 00:00:00', '11.99', '10.705', '1.285', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 9, 4, 2023, NULL, '10.71', '0.00', NULL, '0.00', '0411202201109179519800110010910000000578043621911', NULL),
+(50, 7, 784, 1, '000000058', '2022-11-04 00:00:00', '11.99', '10.705', '1.285', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 9, 5, 2023, NULL, '10.71', '0.00', NULL, '0.00', '0411202201109179519800110010910000000582453517416', NULL),
+(51, 7, 784, 1, '000000061', '2022-11-04 00:00:00', '11.99', '10.705', '1.285', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 9, 6, 2023, NULL, '10.71', '0.00', NULL, '0.00', '0411202201109179519800110010910000000614362944418', 'AUTORIZADO'),
+(52, 7, 784, 1, '000000062', '2022-11-04 00:00:00', '11.99', '10.705', '1.285', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 9, 7, 2023, NULL, '10.71', '0.00', NULL, '0.00', '0411202201109179519800110010910000000626590534619', 'AUTORIZADO'),
+(53, 30, 784, 1, '000000063', '2022-11-05 00:00:00', '9.99', '8.920', '1.070', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 9, 8, 2023, NULL, '8.92', '0.00', NULL, '0.00', '0511202201109179519800110010910000000632024247216', NULL),
+(54, 30, 784, 1, '000000064', '2022-11-05 00:00:00', '9.99', '8.920', '1.070', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 9, 9, 2023, NULL, '8.92', '0.00', NULL, '0.00', '0511202201109179519800110010910000000642596390015', NULL),
+(55, 30, 784, 1, '000000065', '2022-11-05 00:00:00', '9.99', '8.920', '1.070', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 9, 10, 2023, NULL, '8.92', '0.00', NULL, '0.00', '0511202201109179519800110010910000000653141840316', NULL),
+(56, 30, 784, 1, '000000066', '2022-11-05 00:00:00', '9.99', '8.920', '1.070', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 9, 11, 2023, NULL, '8.92', '0.00', NULL, '0.00', '0511202201109179519800110010910000000667542202313', NULL),
+(57, 30, 784, 1, '000000067', '2022-11-05 00:00:00', '9.99', '8.920', '1.070', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 9, 12, 2023, NULL, '8.92', '0.00', NULL, '0.00', '0511202201109179519800110010910000000676252085819', NULL),
+(58, 30, 784, 1, '000000068', '2022-11-05 00:00:00', '9.99', '8.920', '1.070', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 9, 1, 2024, NULL, '8.92', '0.00', NULL, '0.00', '0511202201109179519800110010910000000689438359719', NULL),
+(59, 30, 784, 1, '000000069', '2022-11-05 00:00:00', '9.99', '8.920', '1.070', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 9, 2, 2024, NULL, '8.92', '0.00', NULL, '0.00', '0511202201109179519800110010910000000691306257814', NULL),
+(60, 30, 784, 1, '000000070', '2022-11-05 00:00:00', '9.99', '8.920', '1.070', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 9, 3, 2024, NULL, '8.92', '0.00', NULL, '0.00', '0511202201109179519800110010910000000701029637014', NULL),
+(61, 30, 784, 1, '000000071', '2022-11-05 00:00:00', '9.99', '8.920', '1.070', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 9, 4, 2024, NULL, '8.92', '0.00', NULL, '0.00', '0511202201109179519800110010910000000718986806812', NULL),
+(62, 30, 784, 1, '000000072', '2022-11-05 00:00:00', '9.99', '8.920', '1.070', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 9, 5, 2024, NULL, '8.92', '0.00', NULL, '0.00', '0511202201109179519800110010910000000721886255410', 'AUTORIZADO'),
+(63, 7, 784, 1, '000000073', '2022-11-05 00:00:00', '9.99', '8.920', '1.070', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 9, 6, 2024, NULL, '8.92', '0.00', NULL, '0.00', '0511202201109179519800110010910000000734195578919', 'AUTORIZADO'),
+(64, 7, 784, 1, '000000075', '2022-11-05 00:00:00', '9.99', '8.920', '1.070', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 9, 7, 2024, NULL, '8.92', '0.00', NULL, '0.00', '0511202201109179519800110010910000000759823596010', 'AUTORIZADO'),
+(65, 7, 784, 1, '000000076', '2022-11-05 00:00:00', '9.99', '8.920', '1.070', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 9, 8, 2024, NULL, '8.92', '0.00', NULL, '0.00', '0511202201109179519800110010910000000764413249813', 'AUTORIZADO'),
+(66, 7, 784, 1, '000000077', '2022-11-05 00:00:00', '9.99', '8.920', '1.070', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 9, 9, 2024, NULL, '8.92', '0.00', NULL, '0.00', '0511202201109179519800110010910000000777054955418', 'AUTORIZADO'),
+(67, 7, 784, 1, '000000078', '2022-11-05 00:00:00', '9.99', '8.920', '1.070', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 9, 10, 2024, NULL, '8.92', '0.00', NULL, '0.00', '0511202201109179519800110010910000000783923090015', 'AUTORIZADO'),
+(68, 7, 784, 1, '000000079', '2022-11-05 00:00:00', '9.99', '8.920', '1.070', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 9, 11, 2024, NULL, '8.92', '0.00', NULL, '0.00', '0511202201109179519800110010910000000795243755614', 'AUTORIZADO'),
+(69, 7, 784, 1, '000000080', '2022-11-05 00:00:00', '9.99', '8.920', '1.070', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 9, 12, 2024, NULL, '8.92', '0.00', NULL, '0.00', '0511202201109179519800110010910000000807784303218', 'AUTORIZADO,ENVIADA'),
+(70, 7, 660, 1, '000000081', '2022-11-06 00:00:00', '9.99', '8.920', '1.070', NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, '1', NULL, '01', 11, 11, 2022, NULL, '8.92', '0.00', NULL, '0.00', '0611202201109179519800110010910000000815708610419', 'AUTORIZADO,ENVIADA');
 
 -- --------------------------------------------------------
 
@@ -4330,16 +4355,15 @@ CREATE TABLE IF NOT EXISTS `servicio` (
   `codigo_porcentaje` int(11) DEFAULT NULL,
   `incluye_iva` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `servicio`
 --
 
 INSERT INTO `servicio` (`id`, `nombre`, `activo`, `precio`, `codigo`, `codigo_porcentaje`, `incluye_iva`) VALUES
-(3, 'PLAN BASICO', 1, 9.99, 'PB', 2, 1),
-(4, 'SERVICIO DE RECONEXIÓN', 1, 2, 'S015', 2, 1),
-(5, 'PLAN MEDIUM', 1, 19.99, 'S01', 2, 1);
+(6, 'SERVICIO DE RECONEXIÓN', 1, 2, 'S015', 2, 1),
+(7, 'PLAN BASICO', 1, 9.99, 'S01', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -4495,19 +4519,22 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `roles` json NOT NULL,
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_verified` tinyint(1) NOT NULL,
+  `empresa_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_2265B05DE7927C74` (`email`),
   UNIQUE KEY `UNIQ_2265B05D444F97DD` (`phone`),
-  UNIQUE KEY `UNIQ_2265B05DF1CB264E` (`colaborador_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  UNIQUE KEY `UNIQ_2265B05DF1CB264E` (`colaborador_id`),
+  KEY `IDX_2265B05D521E1991` (`empresa_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `colaborador_id`, `email`, `phone`, `roles`, `password`, `is_verified`) VALUES
-(7, 31, 'cmruizg1993@gmail.com', '', '[\"ROLE_VENDEDOR\", \"ROLE_SUPER_ADMIN\"]', '$2y$13$LA4m1eeEPnidgEsLCh0vNezdYQCTcUrjw9MR7n.EN/xjXEJZytfki', 1),
-(27, 41, 'software.developer3000@gmail.com', '59398811669', '[]', '$argon2id$v=19$m=65536,t=4,p=1$a1Jva1FwdVVodEx0aklweQ$3rfKo71AdD2OSn29pwWZgT7Q5FLMOhFirH17VQ/Pqx0', 1);
+INSERT INTO `usuario` (`id`, `colaborador_id`, `email`, `phone`, `roles`, `password`, `is_verified`, `empresa_id`) VALUES
+(7, NULL, 'cmruizg1993@gmail.com', '593988116699', '[\"ROLE_VENDEDOR\", \"ROLE_SUPER_ADMIN\"]', '$2y$13$LA4m1eeEPnidgEsLCh0vNezdYQCTcUrjw9MR7n.EN/xjXEJZytfki', 1, 1),
+(27, NULL, 'software.developer3000@gmail.com', '59398811669', '[]', '$argon2id$v=19$m=65536,t=4,p=1$a1Jva1FwdVVodEx0aklweQ$3rfKo71AdD2OSn29pwWZgT7Q5FLMOhFirH17VQ/Pqx0', 1, NULL),
+(30, 44, 'a@b.com', '593988116697', '{\"1\": \"ROLE_VENDEDOR\"}', '$2y$13$ekb78BtiMtxS35YBbOP.ZOD/7.T.BvspH3P6wyj3iOluvURoliz5u', 0, 1);
 
 --
 -- Restricciones para tablas volcadas
@@ -4546,11 +4573,13 @@ ALTER TABLE `colaborador`
 --
 ALTER TABLE `contrato`
   ADD CONSTRAINT `FK_666965231CB9D6E4` FOREIGN KEY (`solicitud_id`) REFERENCES `solicitud` (`id`),
+  ADD CONSTRAINT `FK_6669652322552C49` FOREIGN KEY (`estado_actual_id`) REFERENCES `opcion_catalogo` (`id`),
   ADD CONSTRAINT `FK_6669652371CAA3E7` FOREIGN KEY (`servicio_id`) REFERENCES `servicio` (`id`),
   ADD CONSTRAINT `FK_6669652374AFDC17` FOREIGN KEY (`parroquia_id`) REFERENCES `parroquia` (`id`),
   ADD CONSTRAINT `FK_666965238361A8B8` FOREIGN KEY (`vendedor_id`) REFERENCES `colaborador` (`id`),
   ADD CONSTRAINT `FK_66696523DE734E51` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`),
-  ADD CONSTRAINT `FK_66696523EEBF8695` FOREIGN KEY (`instalador_id`) REFERENCES `colaborador` (`id`);
+  ADD CONSTRAINT `FK_66696523EEBF8695` FOREIGN KEY (`instalador_id`) REFERENCES `colaborador` (`id`),
+  ADD CONSTRAINT `FK_66696523F6167A1C` FOREIGN KEY (`actualizado_por_id`) REFERENCES `usuario` (`id`);
 
 --
 -- Filtros para la tabla `cuenta_bancaria`
@@ -4577,7 +4606,6 @@ ALTER TABLE `equipo_instalacion`
 -- Filtros para la tabla `estado_contrato`
 --
 ALTER TABLE `estado_contrato`
-  ADD CONSTRAINT `FK_979FD6CE70AE7BF1` FOREIGN KEY (`contrato_id`) REFERENCES `contrato` (`id`),
   ADD CONSTRAINT `FK_979FD6CE9F5A440B` FOREIGN KEY (`estado_id`) REFERENCES `opcion_catalogo` (`id`);
 
 --
@@ -4683,6 +4711,7 @@ ALTER TABLE `temp`
 -- Filtros para la tabla `usuario`
 --
 ALTER TABLE `usuario`
+  ADD CONSTRAINT `FK_2265B05D521E1991` FOREIGN KEY (`empresa_id`) REFERENCES `empresa` (`id`),
   ADD CONSTRAINT `FK_2265B05DF1CB264E` FOREIGN KEY (`colaborador_id`) REFERENCES `colaborador` (`id`);
 COMMIT;
 
