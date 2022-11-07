@@ -30,7 +30,7 @@ class UsuarioController extends AbstractController
      */
     public function list(UsuarioRepository $usuarioRepository): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         return $this->render('usuario/list.html.twig', [
             'usuarios' => $usuarioRepository->findAll(),
@@ -42,7 +42,7 @@ class UsuarioController extends AbstractController
      */
     public function edit(Request $request, Usuario $usuario): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $roles = [
           'Vendedor'=>'ROLE_VENDEDOR',
           'Administrador'=>'ROLE_ADMIN'
