@@ -20,6 +20,7 @@
         "phpoffice/phpspreadsheet": "^1.17",
         "picqer/php-barcode-generator": "^2.2",
         "sensio/framework-extra-bundle": "^5.1",
+        "symfony/apache-pack": "^1.0",
         "symfony/asset": "5.4.*",
         "symfony/console": "5.4.*",
         "symfony/dotenv": "5.4.*",
