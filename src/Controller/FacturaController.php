@@ -154,6 +154,26 @@ class FacturaController extends AbstractController
 
     }
 
+    /**
+     * @Route("/anular/sistema/{id}", name="factura_anulacion", methods={"PUT"})
+     */
+    public function anular
+    (
+        $id = '',
+        FacturaRepository $facturaRepository ,
+        FacturacionElectronica $facturacionElectronica,
+        EntityManagerInterface $em
+    ): Response
+    {
+        if(!$id) return new Response('Se necesita el Id de la factura',400);
+        $factura = $facturaRepository->find($id);
+        if(!$factura) return new Response('Factura no encontrada',400);
+        $estado = 'ANULADA';
+        $factura->setEstadoSri($estado);
+        $em->flush();
+        return new JsonResponse(['estado'=>$estado], 200);
+
+    }
 
     /**
      * @Route("/new", name="factura_new", methods={"GET","POST"})

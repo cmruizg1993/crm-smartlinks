@@ -33,7 +33,8 @@
             'urlautorizacion',
             'urlrecepcion',
             'urledicion',
-            'urlenvio'
+            'urlenvio',
+            'urlanulacion'
         ],
         data(){
             return{
@@ -74,6 +75,7 @@
             },
             establecerAcciones(v){
                 v.actions = [];
+
                 if(v.estadoSri == 'RECIBIDA'){
                     let autorizar = (v)=>{
                         console.log(v)
@@ -82,7 +84,7 @@
                         color: 'primary',
                         texto: 'Autorizar',
                         callback: async ()=>{
-                            autorizar(v);
+                            this.autorizar(v);
                         }
                     });
                 }
@@ -92,6 +94,16 @@
                         texto: 'Enviar email',
                         callback: async ()=>{
                             this.enviar(v);
+                        }
+                    });
+                }
+                if(v.estadoSri == 'ANULADA') v._rowVariant = 'danger';
+                else {
+                    v.actions.push({
+                        color: 'danger',
+                        texto: 'Anular',
+                        callback: async ()=>{
+                            await this.anular(v);
                         }
                     });
                 }
@@ -122,6 +134,16 @@
             },
             async enviar(v){
                 axios.put(this.urlenvio+'/'+v.id).then(r => {
+                    if(r.data.estado){
+                        v.estadoSri = r.data.estado;
+                        this.establecerAcciones(v);
+                    }
+                }).catch(e =>{
+                    console.log(e)
+                })
+            },
+            async anular(v){
+                await axios.put(this.urlanulacion+'/'+v.id).then(r => {
                     if(r.data.estado){
                         v.estadoSri = r.data.estado;
                         this.establecerAcciones(v);
