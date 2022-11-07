@@ -47,7 +47,14 @@
                         v._rowVariant= variant;
                         //delete v.estadoActual;
                     }
-
+                    v.actions = [];
+                    v.actions.push({
+                        color: 'warning',
+                        texto: 'Editar',
+                        callback: async ()=>{
+                            window.location.href = '/contrato/'+v.id+'/edit'; //
+                        }
+                    });
                     return v;
                 })
                 if(this.contratos.length > 0){
