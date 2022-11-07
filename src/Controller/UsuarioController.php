@@ -42,12 +42,14 @@ class UsuarioController extends AbstractController
      */
     public function edit(Request $request, Usuario $usuario): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
         $roles = [
           'Vendedor'=>'ROLE_VENDEDOR',
-          'Operador'=>'ROLE_ADMIN',
-          'Administrador'=>'ROLE_SUPER_ADMIN'
+          'Administrador'=>'ROLE_ADMIN'
         ];
         $userRoles = $usuario->getRoles();
+
+
         $form = $this->createFormBuilder([])
             ->add('roles', ChoiceType::class,
                 [
@@ -67,6 +69,8 @@ class UsuarioController extends AbstractController
             ->getForm();
         $form->handleRequest($request);
         if($form->isSubmitted()){
+            $hasAccess = in_array('ROLE_SUPER_ADMIN', $usuario->getRoles());
+            if($hasAccess)$this->createAccessDeniedException('No puede modificar este recurso.');
             $usuario->setRoles($form['roles']->getData());
             $this->getDoctrine()->getManager()->flush();
         }
