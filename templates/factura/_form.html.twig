@@ -10,8 +10,8 @@
         urlsecuencial="{{ path('factura_secuencial') }}"
         urlreconexion="{{ path('obtener_servicio_reconexion') }}"
         user="{{ app.user }}"
+        {% if edit is defined %}
+        datafactura="{{ factura|json_encode }}"
+        {% endif %}
 >
-        {{ form_start(form, {'attr':{'id': 'factura'}}) }}
-        {{ form_widget(form) }}
-        {{ form_end(form) }}
 </factura>

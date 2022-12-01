@@ -33,7 +33,7 @@
     Direccion: {{ factura.cliente.direccion }}<br>
     Telefono: {{ factura.cliente.telefono }}<br>
     RUC: {{ factura.cedula }}<br>
-    Fecha Emisión: {{ factura.fecha|date('d/m/Y H:i:s') }}<br>
+    Fecha Emisión: {{ factura.fecha|date('d/m/Y') }}<br>
     _______________________________________________________ <br>
     <div class="table">
         <table>
@@ -64,14 +64,17 @@
             <tfoot>
             <tr>
                 <td rowspan="11" colspan="4">
+                    {#
                     <div class="p10">
                         <b>Forma Pago SRI</b><br>
                         <b>{{formaPago.texto}}&emsp;&emsp;&emsp;{{factura.total}}</b><br><br>
-                        <b>INFORMACIÓN ADICIONAL</b><br>
+                        <b>INFORM
+                        ACIÓN ADICIONAL</b><br>
                         <b>correo : facturas.smartlinksec@gmail.com</b><br>
                         <b>ciudad : IBARRA</b><br>
                         <b>referencia : Atuntaqui</b><br>
                     </div>
+                    #}
                 </td>
                 <td colspan="2">Subtotal</td>
                 <td>{{factura.subtotal}}</td>
@@ -118,9 +121,11 @@
             </tr>
             </tfoot>
         </table>
+        {#
         Más información en nuestra pagina web http://smartlinksec.com
         Para la atención de reclamos no resueltos por el prestador, ingrese su reclamo al link: http://reclamoconsumidor.arcotel.gob.ec/osTicket/, o para mayor
         información comuníquese con el número telefónico 1800 567 567
+        #}
     </div>
 </div>
 <script>

@@ -30,6 +30,21 @@ class FacturaRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+    public function getRangeOfDate($desde, $hasta)
+    {
+        return $this->createQueryBuilder('f')
+            ->leftJoin('f.cliente', 'cliente')
+            ->leftJoin('cliente.dni', 'dni')
+            ->leftJoin('f.contrato','contrato')
+            ->andWhere('f.fecha >= :desde')
+            ->andWhere('f.fecha <= :hasta')
+            ->orderBy('f.id', 'DESC')
+            ->getQuery()
+            ->setParameter('desde', $desde)
+            ->setParameter('hasta', $hasta)
+            ->getResult()
+            ;
+    }
     public function obtenerSecuencial($punto_emision_id): int
     {
         /* @var $last Factura|null */

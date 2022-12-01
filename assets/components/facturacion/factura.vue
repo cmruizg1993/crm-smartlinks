@@ -2,14 +2,14 @@
     <div>
         <div class="invoice" v-if="loading == false">
             <div class="invoice-header">
-                <div class="d-none">
+                <div class="">
                     <slot>
                         <form action="" id="factura"></form>
                     </slot>
                 </div>
                 <!-- Row start -->
                 <div class="row">
-                    <div class="col-xl-3 col-lg-3secuencial col-md-3 col-sm-12 col-12">
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
 
                         <div class="form-group row">
                             <label class="col-4 col-form-label">Emisión</label>
@@ -44,14 +44,14 @@
                         <div class="form-group row">
                             <label class="col-4 col-form-label">Serie</label>
                             <div class="col-8">
-                                <input type="text" class="form-control" v-model="factura.serie" readonly>
+                                <input type="text" class="form-control" v-model="factura.serial" readonly>
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-4 col-form-label">Secuencial</label>
                             <div class="col-8">
-                                <input :disabled='isDisabled' type="text" class="form-control"  v-model="secuencial" >
+                                <input :disabled='isDisabled' type="text" class="form-control"  v-model="factura.secuencial" >
                             </div>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                             <label class="col-4 col-form-label">CI/RUC</label>
                             <div class="col-8">
                                 <div class="input-group">
-                                    <input :disabled='isDisabled' type="text" v-model="factura.cliente.cedula" class="form-control" form="factura" name="cedula" readonly>
+                                    <input :disabled='isDisabled' type="text" v-model="cedula" class="form-control" form="factura" name="cedula" readonly>
                                     <div class="input-group-append">
                                         <lista-contratos :disabled='isDisabled' :baseurl="urlcontratos" :color_class="'btn-warning'" @agregarContrato="agregarContrato">
                                         </lista-contratos>
@@ -71,7 +71,7 @@
                         <div class="form-group row">
                             <label class="col-4 col-form-label">Cliente</label>
                             <div class="col-8">
-                                <input type="text" v-model="factura.cliente.nombres" class="form-control" form="factura" name="nombre" readonly>
+                                <input type="text" v-model="nombres" class="form-control" form="factura" name="nombre" readonly>
                             </div>
                         </div>
                         <div class="form-group row justify-content-end">
@@ -79,7 +79,7 @@
                                 <span class="float-right">#Contrato</span>
                             </label>
                             <div class="col-8">
-                                <input type="text" name="contrato" v-model="factura.contrato.numero" class='form-control' style='color: #ff0000; font-weight: 700; font-size: 2rem !important; line-height: 3rem; height: 3rem !important'  readonly>
+                                <input type="text" name="contrato" v-model="numero" class='form-control' style='color: #ff0000; font-weight: 700; font-size: 2rem !important; line-height: 3rem; height: 3rem !important'  readonly>
                             </div>
                         </div>
                     </div>
@@ -152,17 +152,21 @@
                             <i class="mdi mdi-printer"></i>
                             <span>Imprimir</span>
                         </button>
+                        <button :disabled='factura.id == null' class="btn btn-group-sm btn-dark" @click="descargar">
+                            <i class="mdi mdi-download"></i>
+                            <span>Descargar</span>
+                        </button>
                     </div>
                 </div>
                 <!-- Row end -->
             </div>
             <div class="invoice-body">
-                <detalle-factura :detalles="factura.detalles" @quitarDetalle="quitarDetalle"></detalle-factura>
+                <detalle-factura ref="detalles" :text="text" :detalles="factura.detalles" :disabled="isDisabled"></detalle-factura>
             </div>
         </div>
         <div  style="height: 75vh" v-if="loading == true">
             <div class="d-flex align-items-center">
-                <strong class="m-3">Guardando</strong>
+                <strong class="m-3">{{loadingText}}</strong>
                 <b-spinner class="ml-auto"></b-spinner>
             </div>
         </div>
@@ -182,11 +186,11 @@
         },
         data(){
           return{
+              text: 'a',
               factura:{
+                fecha: '',
+                secuencial: null,
                 tipoComprobante: '01',
-                cliente:{},
-                contrato:{},
-                puntoEmision:{},
                 detalles: []
               },
               secuencial: '',
@@ -194,11 +198,14 @@
               comprobantes:[],
               ambientes: [],
               formaspago:[],
-              detalles:[],
               meses,
+              cedula: null,
+              nombres: null,
+              numero: null,
               formatted: '',
               selected: '',
               loading: false,
+              loadingText: 'Guardando',
               isDisabled: true
           }
         },
@@ -211,37 +218,23 @@
             'urlsecuencial',
             'urlcatalogopagos',
             'urlreconexion',
-            'user'
+            'user',
+            'datafactura'
         ],
         methods:{
             agregarDetalle(servicio){
-                let s =  JSON.parse(JSON.stringify(servicio))
-                let detalle = {
-                    servicio:{
-                        id: servicio.id,
-                    },
-                    id_producto: null,
-                    codigo: servicio.codigo,
-                    descripcion: servicio.nombre,
-                    precio: servicio.precio,
-                    cantidad: 1,
-                    subtotal: servicio.precio,
-                    esServicio: true,
-                    incluyeIva: servicio.incluyeIva,
-                    porcentaje: servicio.porcentaje
-                }
-
-                this.factura.detalles.push(detalle);
-                //$("#factura_detallesjson").val(JSON.stringify(this.detalles));
+                this.$refs.detalles.agregarDetalle(servicio);
             },
             agregarContrato(contrato){
-                this.factura.contrato.id = contrato.id;
-                this.factura.contrato.numero = contrato.numero;
-                this.factura.cliente.id = contrato.cliente.id;
-                this.factura.cliente.nombres = contrato.cliente.nombres;
-                this.factura.cliente.cedula = contrato.cliente.dni.numero;
+                this.factura.contrato = contrato.id;
+                this.numero = contrato.numero;
+                this.factura.cliente = contrato.cliente.id;
+                this.nombres = contrato.cliente.nombres;
+                this.cedula = contrato.cliente.dni.numero;
                 if(contrato.mesPago) this.factura.mesPago = contrato.mesPago == 12 ? 1: contrato.mesPago +1;
                 if(contrato.anioPago) this.factura.anioPago = contrato.mesPago == 12 ? contrato.anioPago +1:contrato.anioPago;
+                contrato.plan.nombre += '- Mes de: '+meses[this.factura.mesPago-1].texto + ' año ' +this.factura.anioPago;
+                this.$refs.detalles.inicializar();
                 this.agregarDetalle(contrato.plan);
                 if(contrato.necesitaReconexion) this.agregarServicioReconexion();
             },
@@ -249,23 +242,22 @@
                 await axios.get(this.urlcatalogocomprobantes)
                     .then(r=>{
                       this.comprobantes = r.data.opciones;
-                      this.getSerie(this.factura.tipoComprobante);
                     })
             },
             async getSerie(codigo){
                 await axios.get(`${this.urlserie}/${codigo}`)
                     .then(r=>{
                         let ptoEmi = r.data;
-                        this.factura.serie = ptoEmi.codigo+'-'+ptoEmi.codigoEstablecimiento;
-                        this.factura.puntoEmision = ptoEmi;
-                        if(this.factura.serie) this.getSecuencial(ptoEmi.id );
+                        this.factura.serial = ptoEmi.codigo+'-'+ptoEmi.codigoEstablecimiento;
+                        this.factura.puntoEmision = ptoEmi.id;
+                        if(this.factura.serial) this.getSecuencial(ptoEmi.id );
                     })
 
             },
             async getSecuencial(pto_id){
                 await axios.get(`${this.urlsecuencial}/${pto_id}`)
                     .then(r=>{
-                        this.secuencial = r.data.secuencial;
+                        this.factura.secuencial = r.data.secuencial;
                     })
             },
             async getAmbientes(){
@@ -290,14 +282,16 @@
                     })
             },
             async guardarFactura(){
-                let factura =this.factura;
+                this.factura.detalles = JSON.parse(JSON.stringify(this.$refs.detalles.detalles_local));
+                let factura = this.factura;
                 factura.detalles = factura.detalles.map(d => {
                     d.precio = d.precio.toString();
                     d.cantidad = d.cantidad.toString();
                     d.subtotal = d.subtotal.toString();
                     return d;
                 })
-                factura.secuencial = this.secuencial;
+                //factura.secuencial = this.secuencial;
+                this.loadingText = 'Guardando';
                 this.loading = true;
                 let success = false;
                 await axios.post('', factura).then(r => {
@@ -332,45 +326,98 @@
 
             },
             onContext(ctx) {
+                //ctx.selectedFormatted= ctx.activeFormatted
+                //ctx.selectedYMD = ctx.activeYMD ;
                 // The date formatted in the locale, or the `label-no-date-selected` string
                 this.formatted = ctx.selectedFormatted
                 // The following will be an empty string until a valid date is entered
                 this.selected = ctx.selectedYMD
+
+                //console.log(ctx)
             },
-            quitarDetalle(d){
-                this.factura.detalles = this.detalles.filter( v => v.id_servicio != d.id_servicio);
+            /*
+            refresh(data){
+                this.factura.detalles = data;
             },
-            inicializar() {
+
+             */
+            async inicializar() {
+
                 this.factura = {
                     tipoComprobante: '01',
+                    formaPago: '01',
+                    tipoAmbiente: '1',
+                    secuencial: '',
                     cliente: {},
                     contrato: {},
                     puntoEmision: {},
                     detalles: []
                 };
-
-                this.getComprobantes();
-                this.getAmbientes();
-                this.getFormasPago();
-                let fecha = new Date();
-                let mes = (fecha.getMonth() + 1).toString().length == 1 ? `0${fecha.getMonth() + 1}` : `${fecha.getMonth() + 1}`;
-                let dia = (fecha.getDate()).toString().length == 1 ? `0${fecha.getDate()}` : `${fecha.getDate()}`;
-                let anio = fecha.getFullYear();
-
-                this.factura.fecha = `${anio}-${mes}-${dia}`;
-                this.factura.mesPago = fecha.getMonth() + 1;
-                this.factura.anioPago = fecha.getFullYear();
+                if(this.$refs.detalles)this.$refs.detalles.inicializar();
+                this.numero = null;
+                this.nombres = null;
+                this.cedula = null;
+                //this.secuencial = null;
                 this.isDisabled = false;
+                await this.getAmbientes();
+                await this.getFormasPago();
+                await this.getComprobantes();
+                if(!this.datafactura){
+                    this.getSerie(this.factura.tipoComprobante);
+                    let fecha = new Date();
+                    let mes = (fecha.getMonth() + 1).toString().length == 1 ? `0${fecha.getMonth() + 1}` : `${fecha.getMonth() + 1}`;
+                    let dia = (fecha.getDate()).toString().length == 1 ? `0${fecha.getDate()}` : `${fecha.getDate()}`;
+                    let anio = fecha.getFullYear();
+
+                    this.factura.fecha = `${anio}-${mes}-${dia}`;
+                    this.factura.mesPago = fecha.getMonth() + 1;
+                    this.factura.anioPago = fecha.getFullYear();
+                }
             },
             imprimir(){
                 let link = '/factura/'+this.factura.id;
                 window.open(link,'Imprimir', 'width=500, height=600');
                 return false;
+            },
+            descargar(){
+                let link = '/factura/'+this.factura.id+'/descargar';
+                window.open(link,'_blank');
+                return false;
             }
 
         },
-        mounted() {
-            //this.inicializar();
+        async beforeMount() {
+            if(this.datafactura){
+                console.log(JSON.parse(this.datafactura))
+                this.loadingText = 'Cargando';
+                this.loading = true;
+
+                await this.inicializar();
+                let data = JSON.parse(this.datafactura);
+                this.factura = data.factura;
+                this.factura.puntoEmision = data.puntoEmision.id;
+                this.factura.serial = data.factura.serie;
+                this.factura.detalles = JSON.parse(JSON.stringify(data.detalles)).map(d => {
+                    d.codigo = d.servicio.codigo;
+                    d.incluyeIva = d.servicio.incluyeIva;
+                    d.precioOriginal = d.servicio.precio;
+                    d.porcentaje = d.servicio.porcentaje;
+                    d.servicio = d.servicio.id;
+                    return d;
+                });
+                this.factura.secuencial = data.factura.secuencial;
+                this.factura.cliente = data.cliente?.id;
+                this.factura.contrato = data.contrato?.id;
+                this.cedula = data.cliente?.dni?.numero;
+                this.nombres = data.cliente?.nombres;
+                this.numero = data.contrato?.numero;
+                this.loading = false;
+            }
+        },
+        watch:{
+            fecha(value){
+                this.factura.fecha = value;
+            }
         }
     }
 </script>

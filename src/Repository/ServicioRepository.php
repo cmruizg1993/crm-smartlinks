@@ -41,6 +41,16 @@ class ServicioRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
             ;
     }
+    public function obtenerServicioByCod($value): ?Servicio
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.codigo = :val')
+            ->setParameter('val', $value)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
     // /**
     //  * @return Servicio[] Returns an array of Servicio objects
     //  */

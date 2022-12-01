@@ -6,11 +6,13 @@ use App\Repository\ClienteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @ORM\Entity(repositoryClass=ClienteRepository::class)
+ * @UniqueEntity(fields={"dni"}, message="Ya existe un registro con este DNI")
  */
 class Cliente
 {
@@ -135,9 +137,6 @@ class Cliente
     private $parroquia;
     public function __toString()
     {
-        if($this->dni){
-            return $this->nombres.' - '. $this->getDni()->getNumero();
-        }
         return $this->nombres ? $this->nombres : ''. $this->getId();
     }
     public function __construct()

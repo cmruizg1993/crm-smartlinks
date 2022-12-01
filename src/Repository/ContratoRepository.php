@@ -125,6 +125,18 @@ class ContratoRepository extends ServiceEntityRepository
             ->setParameter('activo', EstadoContrato::ACTIVO)
             ->execute();
     }
+    public function cargaMasiva($anio, $mes){
+        $em = $this->getEntityManager();
+        $opcionRepository = $em->getRepository('App\Entity\OpcionCatalogo');
+        $activo = $opcionRepository->findOneByCodigoyCatalogo(EstadoContrato::ACTIVO, 'est-cont');
+
+        $sql = "INSERT INTO contrato c (pppoe, vlan, nodo, numero, cliente_id, servicio_id)";
+        $stmt = $em->getConnection()->prepare($sql);
+        $stmt->bindParam('anio',$anio);
+        $stmt->bindParam('mes', $mes);
+        $stmt->bindParam('estado_activo', $activo->getId());
+        return $stmt->executeStatement();
+    }
 
     // /**
     //  * @return Contrato[] Returns an array of Contrato objects

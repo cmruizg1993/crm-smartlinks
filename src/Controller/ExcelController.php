@@ -13,8 +13,11 @@ use App\Entity\Contrato;
 use App\Entity\Seriado;
 use App\Entity\TipoOrden;
 use App\Form\ItemOsType;
+use App\Repository\ClienteRepository;
+use App\Repository\ContratoRepository;
 use App\Repository\ParroquiaRepository;
 use App\Repository\ProvinciaRepository;
+use App\Repository\ServicioRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -25,7 +28,10 @@ use Symfony\Component\HttpClient\HttplugClient;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
@@ -578,12 +584,126 @@ class ExcelController extends AbstractController
                     $dni->setTipo($tipodni);
                     $dni->setNumero($numeroDni);
                     $cliente->setDni($dni);
-                    $em->persist($cliente);
+                    if(!isset($clientes["$numeroDni"])){
+                        $clientes["$numeroDni"] = $numeroDni;
+                        $em->persist($cliente);
+                    }
                 }
                 $em->flush();
                 $endtime = microtime(true);
                 $timediff = $endtime - $starttime;
                 dump($timediff);
+            }
+        }
+
+        return $this->render('excel/carga_clientes.html.twig', [
+            'controller_name' => 'ExcelController',
+            'form'=>$form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/carga/masiva/contratos", name="carga_masiva_contratos")
+     */
+    public function cargaContratos(
+        Request $request,
+        ClienteRepository $clienteRepository,
+        ServicioRepository $servicioRepository,
+        ContratoRepository $contratoRepository,
+        EntityManagerInterface $em,
+        SerializerInterface $serializer
+    ): Response
+    {
+        set_time_limit(450);
+        $starttime = microtime(true);
+        /* do stuff here */
+
+        //return new Response(null, 200);
+        $form = $this->createFormBuilder([])
+            ->add('archivo', FileType::class,['attr'=>['required'=>'required']])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $file = $form['archivo']->getData();
+            if($file){
+                $pathFile = $file->getPathName();
+
+                $reader = IOFactory::createReaderForFile($pathFile);
+                $spreadsheet = $reader->load($pathFile);
+                $sheet = $spreadsheet->getActiveSheet();
+
+
+
+                $response = new StreamedResponse();
+                //$response->headers->set('Content-Type', 'application/json');
+                $response->setCallback(function () use ($sheet, $em, $clienteRepository, $servicioRepository, $serializer){
+                    $counter = 1;
+                    $mapping = [
+                        'contrato'=>'A',
+                        'cedula' => 'B',
+                        'ppp' => 'C',
+                        'nodo' => 'D',
+                        'plan'=> 'E',
+                        'vlan' => 'F',
+                        'fecha' => 'G'
+                    ];
+                    $nrows = $sheet->getHighestRow();
+                    $cache = [];
+                    $contratos = [];
+                    echo '[';
+                    while ($counter<$nrows){
+                        $counter++;
+                        $contrato = new Contrato();
+                        $cliente = new Cliente();
+                        $dni = new Dni();
+                        $numeroContrato = $sheet->getCell($mapping['contrato']."$counter")->getValue();
+                        $numeroDni = $sheet->getCell($mapping['cedula']."$counter")->getValue();
+                        $pppoe = $sheet->getCell($mapping['ppp']."$counter")->getValue();
+                        $nodo = $sheet->getCell($mapping['nodo']."$counter")->getValue();
+                        $plan = $sheet->getCell($mapping['plan']."$counter")->getValue();
+                        $vlan = $sheet->getCell($mapping['vlan']."$counter")->getValue();
+                        $fecha = $sheet->getCell($mapping['fecha']."$counter")->getValue();
+                        $contrato->setNumero($numeroContrato);
+                        $contrato->setPppoe($pppoe);
+                        $contrato->setNodo($nodo);
+                        $contrato->setVlan($vlan);
+                        $contrato->setFecha(new \DateTime($fecha));
+                        $cliente = $clienteRepository->findOneByNumeroDni($numeroDni);
+                        $contrato->setCliente($cliente);
+
+                        if(isset($cache["$plan"])){
+                            $contrato->setPlan($cache["$plan"]);
+                        }else{
+                            $cache["$plan"] = $servicioRepository->obtenerServicioByCod($plan);
+                            $contrato->setPlan($cache["$plan"]);
+                        }
+                        $data = $serializer->normalize($contrato, null, [AbstractNormalizer::ATTRIBUTES=>[
+                            'numero', 'cliente'=>['nombres'], 'plan'=>['codigo']
+                        ]]);
+                        echo json_encode($data);
+                        echo $counter == $nrows ? '':',';
+                        flush();
+                        if($cliente){
+                            $direccion = $cliente->getDireccion();
+                            $contrato->setDireccion($direccion);
+                            $em->persist($contrato);
+                        }
+                        //
+                    }
+                    echo ']';
+                    $em->flush();
+                });
+
+                //$response->send();
+                return $response;
+                //$em->flush();
+                $endtime = microtime(true);
+                $timediff = $endtime - $starttime;
+                dump($timediff);
+
             }
         }
 

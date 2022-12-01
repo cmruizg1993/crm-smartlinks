@@ -12,7 +12,10 @@ class DetalleFacturaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('item',null, ['label'=>false, 'attr'=>['class'=>'form-control']])
+            ->add('servicio')
+            ->add('producto')
+            ->add('esServicio')
+            ->add('descripcion')
             ->add('cantidad',null, ['label'=>false, 'attr'=>['class'=>'form-control']])
             ->add('precio',null, ['label'=>false, 'attr'=>['class'=>'form-control']])
             ->add('subtotal',null, ['label'=>false, 'attr'=>['class'=>'form-control']])

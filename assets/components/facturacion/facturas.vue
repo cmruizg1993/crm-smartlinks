@@ -39,7 +39,8 @@
         data(){
             return{
                 facturas:[],
-                campos:[],
+                camposReporte: [],
+                campos:['id', 'serie', 'secuencial', 'cedula','nombres', 'fecha', 'numero', 'total', 'formaPago', 'estadoSri', 'actions'],
                 filtros:[
                     {text: 'Secuencial', value: 'secuencial'},
                     {text:'Cedula/Ruc', value:'cedula'},
@@ -53,16 +54,18 @@
             if(this.listado){
                 let listado = JSON.parse(this.listado);
                 this.facturas = listado.map((v)=>{
-                    v.fecha = moment(String(v.fecha)).format('DD/MM/YYYY');
+                    v.fecha = moment(String(v.strFecha)).format('DD/MM/YYYY');
+                    delete v.strFecha;
                     this.establecerAcciones(v);
                     return v;
                 })
+                /*
                 if(this.facturas.length > 0){
                     let factura = this.facturas[0];
                     this.campos = Object.keys(factura).map(k =>{
                         return {text: k, value: k}
                     });
-                }
+                }*/
             }
         },
         methods:{
@@ -75,7 +78,18 @@
             },
             establecerAcciones(v){
                 v.actions = [];
-
+                if(v.estadoSri == 'DEVUELTA'){
+                    let autorizar = (v)=>{
+                        console.log(v)
+                    }
+                    v.actions.push({
+                        color: 'warning',
+                        texto: 'Revisar',
+                        callback: async ()=>{
+                            this.revisar(v);
+                        }
+                    });
+                }
                 if(v.estadoSri == 'RECIBIDA'){
                     let autorizar = (v)=>{
                         console.log(v)
@@ -94,6 +108,13 @@
                         texto: 'Enviar email',
                         callback: async ()=>{
                             this.enviar(v);
+                        }
+                    });
+                    v.actions.push({
+                        color: 'success',
+                        texto: 'Descargar',
+                        callback: async ()=>{
+                            this.descargar(v);
                         }
                     });
                 }
@@ -151,6 +172,16 @@
                 }).catch(e =>{
                     console.log(e)
                 })
+            },
+            async descargar(v){
+                let link = '/factura/'+v.id+'/descargar';
+                window.open(link,'_blank');
+                return false;
+            },
+            async revisar(v){
+                let link = '/factura/'+v.id+'/edit';
+                location.href = link;
+                //return false;
             }
         }
     }

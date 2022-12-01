@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\FacturaRepository;
+use App\Repository\OpcionCatalogoRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use http\Exception\InvalidArgumentException;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=FacturaRepository::class)
@@ -15,6 +18,8 @@ class Factura
     const NOMBRE_CATALOGO = 'tipo-comp';
     const FACTURA = '01';
     const NOTA_VENTA = '00';
+
+    const ESTADO_RECIBIDA = 'RECIBIDA';
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -60,6 +65,7 @@ class Factura
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\DateTime(format="Y-m-d")
      */
     private $fecha;
 
@@ -96,7 +102,7 @@ class Factura
     private $cliente;
 
     /**
-     * @ORM\OneToMany(targetEntity=DetalleFactura::class, mappedBy="factura", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity=DetalleFactura::class, mappedBy="factura", cascade={"persist"}, orphanRemoval=true)
      */
     private $detalles;
 
@@ -187,6 +193,16 @@ class Factura
      */
     private $estadoSri;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $mensajeSri;
+
+    /**
+     * @ORM\Column(type="decimal", precision=8, scale=0, nullable=true)
+     */
+    private $aleatorio;
+
     public function __construct()
     {
         $this->detalles = new ArrayCollection();
@@ -202,23 +218,9 @@ class Factura
         return $this->total;
     }
 
-    public function setTotal(string $total): self
-    {
-        $this->total = $total;
-
-        return $this;
-    }
-
     public function getSubtotal(): ?string
     {
         return $this->subtotal;
-    }
-
-    public function setSubtotal(string $subtotal): self
-    {
-        $this->subtotal = $subtotal;
-
-        return $this;
     }
 
     public function getBaseIva(): ?string
@@ -226,23 +228,9 @@ class Factura
         return $this->baseIva;
     }
 
-    public function setBaseIva(string $baseIva): self
-    {
-        $this->baseIva = $baseIva;
-
-        return $this;
-    }
-
     public function getIva(): ?string
     {
         return $this->iva;
-    }
-
-    public function setIva(string $iva): self
-    {
-        $this->iva = $iva;
-
-        return $this;
     }
 
     public function getBaseIce(): ?string
@@ -250,35 +238,15 @@ class Factura
         return $this->baseIce;
     }
 
-    public function setBaseIce(?string $baseIce): self
-    {
-        $this->baseIce = $baseIce;
-
-        return $this;
-    }
-
     public function getIce(): ?string
     {
         return $this->ice;
     }
 
-    public function setIce(?string $ice): self
-    {
-        $this->ice = $ice;
-
-        return $this;
-    }
 
     public function getBaseCero(): ?string
     {
         return $this->baseCero;
-    }
-
-    public function setBaseCero(?string $baseCero): self
-    {
-        $this->baseCero = $baseCero;
-
-        return $this;
     }
 
     public function getBaseNoImponible(): ?string
@@ -295,7 +263,7 @@ class Factura
 
     public function getFecha(): ?\DateTimeInterface
     {
-        return $this->fecha;
+        return $this->fecha ? $this->fecha: new \DateTime();
     }
 
     public function setFecha(\DateTimeInterface $fecha): self
@@ -410,7 +378,7 @@ class Factura
 
     public function getTipoComprobante(): ?string
     {
-        return $this->getPuntoEmision()->getTipoComprobante()->getCodigo();
+        return $this->getPuntoEmision() ? $this->getPuntoEmision()->getTipoComprobante()->getCodigo(): null;
     }
 
     public function setTipoComprobante(?string $tipoComprobante): self
@@ -470,12 +438,16 @@ class Factura
     public function generarClaveAcceso(){
         $claveAcceso = '';
         $claveAcceso .= $this->getFecha()->format('dmY');
-
-            $n = rand(10000000, 99999999);
-            $digito8 = $n.'';
+            $digito8 = $this->aleatorio;
+            if(!$this->aleatorio){
+                $n = rand(10000000, 99999999);
+                $digito8 = $n.'';
+                $this->aleatorio = $digito8;
+            }
             $estab = $this->getPuntoEmision()->getEstablecimiento()->getCodigo();
             $ptoEmi = $this->getPuntoEmision()->getCodigo();
-            $claveAcceso .= "$this->tipoComprobante$this->ruc$this->tipoAmbiente$estab$ptoEmi$this->secuencial$digito8$this->tipoEmision";
+            $tipo = $this->getPuntoEmision()->getTipoComprobante()->getCodigo();
+            $claveAcceso .= "$tipo$this->ruc$this->tipoAmbiente$estab$ptoEmi$this->secuencial$digito8$this->tipoEmision";
 
             $suma = 0;
             $factor = 7;
@@ -573,24 +545,11 @@ class Factura
         return $this->subtotal12;
     }
 
-    public function setSubtotal12(?string $subtotal12): self
-    {
-        $this->subtotal12 = $subtotal12;
-
-        return $this;
-    }
-
     public function getSubtotal0(): ?string
     {
         return $this->subtotal0;
     }
 
-    public function setSubtotal0(string $subtotal0): self
-    {
-        $this->subtotal0 = $subtotal0;
-
-        return $this;
-    }
 
     public function getDescuento(): ?string
     {
@@ -652,5 +611,85 @@ class Factura
         $estab = $this->puntoEmision->getEstablecimiento()->getCodigo();
         $pto = $this->puntoEmision->getCodigo();
         return $estab.'-'.$pto;
+    }
+    public function totalizar(OpcionCatalogoRepository $opcionCatalogoRepository){
+        /* AGREGANDO DETALLES Y CALCULANDO TOTALES */
+        $total= 0;
+        $subtotal = 0;
+        $subtotal12 = 0;
+        $subtotal0 = 0;
+        $subtotalNOI = 0;
+        $iva = 0;
+        $detalles = $this->getDetalles();
+
+        /* @var $detalle DetalleFactura */
+        foreach ($detalles as $detalle){
+
+            if($detalle->getEsServicio()){
+                $servicio = $detalle->getServicio();
+                /* @var $impuesto OpcionCatalogo */
+                $impuesto = $opcionCatalogoRepository->findOneByCodigoyCatalogo($servicio->getCodigoPorcentaje(), 'iva');
+                $detalle->codigoPorcentaje = $impuesto;
+                if(!$servicio || !$servicio->getId()) throw new InvalidArgumentException();
+                $totalDetalle = ($detalle->getCantidad() * $detalle->getPrecio());
+                $porcentaje = $impuesto->getValorNumerico()/100;
+                $ivaDetalle = null;
+                if($servicio->getIncluyeIva()){
+                    $subtotalDetalle = $totalDetalle/(1 + $porcentaje);
+                    $ivaDetalle = $totalDetalle - $subtotalDetalle;
+                }else{
+                    $subtotalDetalle = $totalDetalle;
+                    $totalDetalle = $subtotalDetalle*(1 + $porcentaje);
+                    $ivaDetalle = $totalDetalle - $subtotalDetalle;
+                }
+                if($ivaDetalle > 0){
+                    $subtotal12 += $subtotalDetalle;
+
+                }else{
+                    $subtotal0 += $subtotalDetalle;
+                }
+                $subtotal += $subtotalDetalle;
+                $detalle->setSubtotal($subtotalDetalle);
+                $detalle->setIva($ivaDetalle);
+                $total += $totalDetalle;
+                $iva += $ivaDetalle;
+            }else{
+                // por completar
+
+            }
+            $detalle->setFactura($this);
+        }
+        $this->total =($total);
+        $this->subtotal =($subtotal);
+        $this->iva = ($iva);
+        $this->subtotal0 = ($subtotal0);
+        $this->subtotal12 = ($subtotal12);
+    }
+
+    public function getMensajeSri(): ?string
+    {
+        return $this->mensajeSri;
+    }
+
+    public function setMensajeSri(?string $mensajeSri): self
+    {
+        $this->mensajeSri = $mensajeSri;
+
+        return $this;
+    }
+
+    public function getAleatorio(): ?string
+    {
+        return $this->aleatorio;
+    }
+
+    public function setAleatorio(?string $aleatorio): self
+    {
+        $this->aleatorio = $aleatorio;
+
+        return $this;
+    }
+    public function getStrFecha(){
+        return $this->fecha ? $this->fecha->format('Y-m-d'):'';
     }
 }

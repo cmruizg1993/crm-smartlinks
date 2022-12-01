@@ -9,12 +9,12 @@
                         <div class="col-5">Detalle</div>
                         <div class="col-2">Precio</div>
                         <div class="col-1">Cant.</div>
-                        <div class="col-1">Inc. Iva</div>
+                        <div class="col-1">Dcto</div>
                         <div class="col-1">SubT.</div>
                     </div>
-                    <div class="row border border-1" v-for="d in detalles">
+                    <div class="row border border-1" v-for="d in detalles_local">
                         <div class="col-1">
-                            <button class="btn btn-sm btn-danger" @click="quitarDetalle(d)">
+                            <button class="btn btn-sm btn-danger" @click="quitarDetalle(d)" :disabled="isDisabled">
                                 <i class="mdi mdi-trash-can"></i>
                             </button>
                         </div>
@@ -25,13 +25,13 @@
                             {{d.descripcion}}
                         </div>
                         <div class="col-2">
-                            <input type="number" min="0" v-model="d.precio" class="form-control">
+                            <input type="number" min="0" v-model="d.precio" class="form-control" :disabled="isDisabled">
                         </div>
                         <div class="col-1">
-                            <input type="number" step="1" min="0" v-model="d.cantidad" class="form-control">
+                            <input type="number" step="1" min="0" v-model="d.cantidad" class="form-control" :disabled="isDisabled">
                         </div>
                         <div class="col-1">
-                            <input type="checkbox" v-model="d.incluyeIva">
+                            {{descuentoDetalle(d)}}
                         </div>
                         <div class="col-1">
                             {{subtotalDetalle(d)}}
@@ -71,11 +71,14 @@
     export default {
         name: "detalle-factura",
         props:[
-            'detalles'
+            'disabled',
+            'detalles',
+            'text'
         ],
         data(){
             return {
-
+                detalles_local: [],
+                isDisabled: false
             }
         },
         methods:{
@@ -83,14 +86,18 @@
                 let porcentaje = 1 + d.porcentaje/100;
                 return d.incluyeIva ? ((d.cantidad * d.precio)/(porcentaje)).toFixed(2):(d.cantidad * d.precio).toFixed(2)
             },
+            descuentoDetalle(d){
+                let descuento =  ( d.precioOriginal - d.precio ) * d.cantidad;
+                return descuento.toFixed(2);
+            },
             totalDetalle(d){
                 return d.incluyeIva ? (d.cantidad * d.precio).toFixed(2):(d.cantidad * d.precio*(1+0.12)).toFixed(2)
             },
             subTotalSinImpuestos(){
-                return this.detalles.reduce((p, c) => p + Number(this.subtotalDetalle(c)),0);
+                return this.detalles_local.reduce((p, c) => p + Number(this.subtotalDetalle(c)),0);
             },
             iva12(){
-                return this.detalles.reduce((p, c) =>{
+                return this.detalles_local.reduce((p, c) =>{
                     let subtotal = Number(this.subtotalDetalle(c));
                     let total = Number(this.totalDetalle(c));
                     return c.porcentaje == 12 ? p + total - subtotal:  p;
@@ -100,8 +107,43 @@
                 return this.subTotalSinImpuestos() + this.iva12();
             },
             quitarDetalle(d){
-                this.$emit('quitarDetalle', d);
+                this.detalles_local = this.detalles_local.filter( v => v.servicio != d.servicio);
+            },
+            agregarDetalle(servicio){
+                let s =  JSON.parse(JSON.stringify(servicio))
+                let detalle = {
+                    servicio: servicio.id,
+                    producto: null,
+                    codigo: servicio.codigo,
+                    descripcion: servicio.nombre,
+                    precio: servicio.precio,
+                    precioOriginal: servicio.precio,
+                    cantidad: 1,
+                    subtotal: servicio.precio,
+                    esServicio: true,
+                    incluyeIva: servicio.incluyeIva,
+                    porcentaje: servicio.porcentaje,
+                    descuento: 0.00
+                }
+                this.detalles_local.push(detalle);
+            },
+            inicializar(){
+                this.detalles_local = [];
             }
+        },
+        beforeMount() {
+            if(this.detalles) this.detalles_local = JSON.parse(JSON.stringify(this.detalles));
+            if(typeof this.disabled != 'undefined') this.isDisabled = this.disabled;
+        },
+        watch: {
+            /*
+            detalles_local: {
+                handler(newValue) {
+                    this.$emit('refresh', newValue);
+                },
+                deep: true
+            },
+             */
         }
     }
 </script>

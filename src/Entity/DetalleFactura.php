@@ -62,6 +62,10 @@ class DetalleFactura
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $descuento;
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=3, nullable=true)
+     */
+    private $iva;
 
     public function getId(): ?int
     {
@@ -112,18 +116,6 @@ class DetalleFactura
     public function setFactura(?Factura $factura): self
     {
         $this->factura = $factura;
-
-        return $this;
-    }
-
-    public function getItem(): ?Item
-    {
-        return $this->item;
-    }
-
-    public function setItem(?Item $item): self
-    {
-        $this->item = $item;
 
         return $this;
     }
@@ -184,6 +176,17 @@ class DetalleFactura
     public function setDescuento(?string $descuento): self
     {
         $this->descuento = $descuento;
+
+        return $this;
+    }
+    public function getIva(): ?string
+    {
+        return $this->iva;
+    }
+
+    public function setIva(?string $iva): self
+    {
+        $this->iva = $iva;
 
         return $this;
     }
