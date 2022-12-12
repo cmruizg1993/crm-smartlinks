@@ -102,6 +102,7 @@
                         }
                     });
                 }
+
                 if(v.estadoSri == 'AUTORIZADO'){
                     v.actions.push({
                         color: 'info',
@@ -110,6 +111,9 @@
                             this.enviar(v);
                         }
                     });
+
+                }
+                if(v.estadoSri.indexOf('AUTORIZADO')>0){
                     v.actions.push({
                         color: 'success',
                         texto: 'Descargar',
