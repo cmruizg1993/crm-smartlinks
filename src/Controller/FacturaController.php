@@ -220,7 +220,7 @@ class FacturaController extends AbstractController
             $form->submit($content);
             $secuencial = (int)$factura->getSecuencial() . '';
             while (strlen($secuencial)<9){
-                $secuencial = '0' + $secuencial;
+                $secuencial = '0' . $secuencial;
             }
             $factura->setSecuencial($secuencial);
             //$puntoEmision =
