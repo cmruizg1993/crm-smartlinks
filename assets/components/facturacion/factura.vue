@@ -226,6 +226,7 @@
                 this.$refs.detalles.agregarDetalle(servicio);
             },
             agregarContrato(contrato){
+                console.log(contrato);
                 this.factura.contrato = contrato.id;
                 this.numero = contrato.numero;
                 this.factura.cliente = contrato.cliente.id;
@@ -264,7 +265,7 @@
                 await axios.get(this.urlcatalogoambientes)
                     .then(r=>{
                         this.ambientes = r.data.opciones;
-                        this.factura.tipoAmbiente = '1';
+                        this.factura.tipoAmbiente = '2';
                     })
             },
             async getFormasPago(){
@@ -346,7 +347,7 @@
                 this.factura = {
                     tipoComprobante: '01',
                     formaPago: '01',
-                    tipoAmbiente: '1',
+                    tipoAmbiente: '2',
                     secuencial: '',
                     cliente: {},
                     contrato: {},

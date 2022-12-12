@@ -51,3 +51,4 @@ services:
         arguments:
             $targetDirectory: '%xml_files%'
             $fElectronicaDirectory: '%felectronica_path%'
+            $appEnvironment: '%env(APP_ENV)%'

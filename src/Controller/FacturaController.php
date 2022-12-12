@@ -87,9 +87,11 @@ class FacturaController extends AbstractController
         $factura = $facturaRepository->find($id);
         if(!$factura) return new Response('Factura no encontrada',400);
         $clave = $factura->getClaveAcceso();
-        $result = $facturacionElectronica->autorizacion($clave);
+        $testing = $factura->getTipoAmbiente() == '1';
+        $result = $facturacionElectronica->autorizacion($clave, $testing);
         $respuesta = isset($result->RespuestaAutorizacionComprobante) ? $result->RespuestaAutorizacionComprobante: null;
         $autorizaciones = isset($respuesta->autorizaciones) ? $respuesta->autorizaciones: null;
+        dump($result);
         $autorizacion = $autorizaciones ? $autorizaciones->autorizacion: null;
         $estado = $autorizacion && isset($autorizacion->estado)?$autorizacion->estado:null;
         $factura->setEstadoSri($estado);
@@ -216,6 +218,11 @@ class FacturaController extends AbstractController
             $form = $this->createForm(FacturaType::class, $factura);
             //$content["fecha"]=explode("-", $content["fecha"]);
             $form->submit($content);
+            $secuencial = (int)$factura->getSecuencial() . '';
+            while (strlen($secuencial)<9){
+                $secuencial = '0' + $secuencial;
+            }
+            $factura->setSecuencial($secuencial);
             //$puntoEmision =
             /* ENLAZANDO FACTURA AL CONTRATO */
             $contrato = $factura->getContrato();
@@ -266,7 +273,10 @@ class FacturaController extends AbstractController
             $fileName = $facturacionElectronica->crearArchivoXml($clave, $xml);
             $output = $facturacionElectronica->firmarArchivoXml($clave, $empresa);
             if($output == 0){
-                $result = $facturacionElectronica->recepcion($clave);
+                $testing = $factura->getTipoAmbiente() == '1';
+                dump($testing);
+                $result = $facturacionElectronica->recepcion($clave, $testing);
+                dump($result);
                 $respuesta = isset($result->RespuestaRecepcionComprobante) ? $result->RespuestaRecepcionComprobante: null;
                 $estado = null;
                 if($respuesta && isset($respuesta->estado)){
@@ -404,7 +414,10 @@ class FacturaController extends AbstractController
             $output = $facturacionElectronica->firmarArchivoXml($clave, $empresa);
             $factura->totalizar($opcionCatalogoRepository);
             if($output == 0){
-                $result = $facturacionElectronica->recepcion($clave);
+                $testing = $factura->getTipoAmbiente() == '1';
+                dump($testing);
+                $result = $facturacionElectronica->recepcion($clave, $testing);
+                dump($result);
                 $respuesta = isset($result->RespuestaRecepcionComprobante) ? $result->RespuestaRecepcionComprobante: null;
                 $estado = null;
                 if($respuesta && isset($respuesta->estado)){

@@ -17,11 +17,12 @@ class FacturacionElectronica
 
     private $targetDirectory;
     private $fElectronicaDirectory;
-
-    public function __construct($targetDirectory, $fElectronicaDirectory)
+    private $testing = true;
+    public function __construct($targetDirectory, $fElectronicaDirectory, $appEnvironment)
     {
         $this->targetDirectory = $targetDirectory;
         $this->fElectronicaDirectory = $fElectronicaDirectory;
+        $this->testing = $appEnvironment == 'dev' ;
     }
     public function getTargetDirectory()
     {
@@ -49,30 +50,30 @@ class FacturacionElectronica
         $retval=null;
         $process = new Process(['java', '-jar', $jarFile, $fileInput, $p12File, $p12Password, $fileOutput]);
         $process->run();
-        dump($process->getOutput());
+        //dump($process->getOutput());
         $output = $process->getExitCode();
         //exec("java -jar $jarFile $fileInput $p12File $p12Password $fileOutput", $output, $retval);
         return $output;
     }
-    public function recepcion($claveAcceso){
+    public function recepcion($claveAcceso, $testing = true){
         $fileName = "Fact-$claveAcceso";
         $fileOutput = "$this->targetDirectory/firmados/$fileName.xml";
         $decodeContent = file_get_contents($fileOutput);
         $parametros = new \stdClass();
         $parametros->xml = $decodeContent;
-        $url = FacturacionElectronica::WS_TEST_RECEIV;
+        $url = $testing ? FacturacionElectronica::WS_TEST_RECEIV: FacturacionElectronica::WS_RECEIV;
         $client = new \SoapClient($url);
         $result = $client->validarComprobante($parametros);
-        dump($result);
+        //dump($result);
         return $result;
     }
-    public function autorizacion($claveAcceso){
-        $url = FacturacionElectronica::WS_TEST_AUTH;
+    public function autorizacion($claveAcceso, $testing = true){
+        $url = $testing ? FacturacionElectronica::WS_TEST_AUTH: FacturacionElectronica::WS_AUTH;
         $client = new \SoapClient($url );
         $parametros =  new \stdClass();
         $parametros->claveAccesoComprobante = $claveAcceso;
         $result = $client->autorizacionComprobante($parametros);
-        dump($result);
+        //dump($result);
         return $result;
     }
     public function obtenerPathXml($claveAcceso){

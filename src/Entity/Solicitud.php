@@ -199,12 +199,12 @@ class Solicitud
         return $this;
     }
 
-    public function getPlan(): ?Plan
+    public function getPlan(): ?Servicio
     {
         return $this->plan;
     }
 
-    public function setPlan(?Plan $plan): self
+    public function setPlan(?Servicio $plan): self
     {
         $this->plan = $plan;
 

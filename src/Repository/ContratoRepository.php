@@ -31,12 +31,13 @@ class ContratoRepository extends ServiceEntityRepository
     {
         $em = $this->getEntityManager();
         /* @var $query QueryBuilder */
-        $query = $em->createQuery("SELECT Contrato,cli,f,est FROM App\Entity\Contrato Contrato
-        LEFT JOIN Contrato.facturas f
+        $query = $em->createQuery("
+        SELECT Contrato,cli,f,est FROM App\Entity\Contrato Contrato
+        LEFT JOIN Contrato.facturas f WITH f.estadoSri != 'ANULADA'
         INNER JOIN Contrato.cliente cli
         INNER JOIN cli.dni dni
         LEFT JOIN Contrato.estadoActual est
-        WHERE Contrato.numero LIKE :param OR cli.nombres LIKE :param OR dni.numero LIKE :param
+        WHERE (Contrato.numero LIKE :param OR cli.nombres LIKE :param OR dni.numero LIKE :param)
         ORDER BY f.anioPago DESC,f.mesPago DESC")
         ->setParameter('param', "%$value%");
 

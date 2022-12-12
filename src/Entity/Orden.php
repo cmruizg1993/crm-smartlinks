@@ -83,7 +83,6 @@ class Orden
     public function __construct()
     {
         $this->eventos = new ArrayCollection();
-        $this->equipos = new ArrayCollection();
     }
 
     public function setId($id): self
@@ -210,53 +209,6 @@ class Orden
         return $this;
     }
 
-    public function getModem(): ?Seriado
-    {
-        return $this->modem;
-    }
-
-    public function setModem(?Seriado $modem): self
-    {
-        $this->modem = $modem;
-
-        return $this;
-    }
-
-    public function getRadio(): ?Seriado
-    {
-        return $this->radio;
-    }
-
-    public function setRadio(?Seriado $radio): self
-    {
-        $this->radio = $radio;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Seriado[]
-     */
-    public function getEquipos(): Collection
-    {
-        return $this->equipos;
-    }
-
-    public function addEquipo(Seriado $equipo): self
-    {
-        if (!$this->equipos->contains($equipo)) {
-            $this->equipos[] = $equipo;
-        }
-
-        return $this;
-    }
-
-    public function removeEquipo(Seriado $equipo): self
-    {
-        $this->equipos->removeElement($equipo);
-
-        return $this;
-    }
 
     public function getFechaEjecucion(): ?\DateTimeInterface
     {

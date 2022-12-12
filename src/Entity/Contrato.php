@@ -470,6 +470,7 @@ class Contrato
 
         if($facturas->count() > 0 ){
             $criteria = Criteria::create()
+                ->where(Criteria::expr()->neq('estadoSri', Factura::ESTADO_ANULADA))
                 ->orderBy(['anioPago'=>'DESC', 'mesPago'=>'DESC']);
             dump($criteria);
             $f = $facturas->matching($criteria)->first();
@@ -483,6 +484,7 @@ class Contrato
         $facturas = $this->getFacturas();
         if($facturas->count() > 0 ){
             $criteria = Criteria::create()
+                ->where(Criteria::expr()->neq('estadoSri', Factura::ESTADO_ANULADA))
                 ->orderBy(['anioPago'=>'DESC', 'mesPago'=>'DESC']);
             $f = $facturas->matching($criteria)->first();
             if($f) $anio = $f->getAnioPago();

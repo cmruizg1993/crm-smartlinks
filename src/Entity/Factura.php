@@ -20,6 +20,8 @@ class Factura
     const NOTA_VENTA = '00';
 
     const ESTADO_RECIBIDA = 'RECIBIDA';
+    const ESTADO_DEVUELTA = 'DEVUELTA';
+    const ESTADO_ANULADA = 'ANULADA';
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

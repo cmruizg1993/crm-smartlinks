@@ -22,7 +22,7 @@
                             {{d.codigo}}
                         </div>
                         <div class="col-5">
-                            {{d.descripcion}}
+                            <input type="text"  v-model="d.descripcion" class="form-control" :disabled="isDisabled">
                         </div>
                         <div class="col-2">
                             <input type="number" min="0" v-model="d.precio" class="form-control" :disabled="isDisabled">
@@ -133,7 +133,7 @@
         },
         beforeMount() {
             if(this.detalles) this.detalles_local = JSON.parse(JSON.stringify(this.detalles));
-            if(typeof this.disabled != 'undefined') this.isDisabled = this.disabled;
+            this.isDisabled = this.disabled;
         },
         watch: {
             /*
@@ -144,6 +144,9 @@
                 deep: true
             },
              */
+            disabled(value){
+                this.isDisabled = value;
+            }
         }
     }
 </script>
