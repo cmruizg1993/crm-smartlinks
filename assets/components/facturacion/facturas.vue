@@ -113,7 +113,7 @@
                     });
 
                 }
-                if(v.estadoSri.indexOf('AUTORIZADO')>0){
+                if(v.estadoSri.indexOf('AUTORIZADO')>=0){
                     v.actions.push({
                         color: 'success',
                         texto: 'Descargar',
