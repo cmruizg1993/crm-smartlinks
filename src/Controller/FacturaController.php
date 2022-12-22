@@ -393,7 +393,7 @@ class FacturaController extends AbstractController
         $form = $this->createForm(FacturaType::class, $factura);
         $form->handleRequest($request);
         $estado = $factura->getEstadoSri();
-        if ($request->getMethod() == Request::METHOD_POST && !str_contains($estado, "AUTORIZADO")) {
+        if ($request->getMethod() == Request::METHOD_POST && (!str_contains($estado, "AUTORIZADO") || str_contains($estado, "NO AUTORIZADO"))) {
             $content = json_decode($request->getContent(), true);
             $form->submit($content);
             $factura->setUsuario($this->getUser());
