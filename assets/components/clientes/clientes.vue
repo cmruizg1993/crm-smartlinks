@@ -32,6 +32,7 @@
                 this.clientes = listado.map((v)=>{
                     v.cedula = v.dni.numero;
                     delete v.dni;
+                    this.establecerAcciones(v);
                     return v;
                 })
                 if(this.clientes.length > 0){
