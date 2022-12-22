@@ -2,6 +2,11 @@
     <div class="col-md-10">
         {{ form_start(form) }}
         <div class="row">
+            <div class="alert alert-danger">
+                {{ form_errors(form) }}
+            </div>
+        </div>
+        <div class="row">
             <div class="form-group row justify-content-end col">
                 <label for="" class="col-form-label col-4">
                     <span class="float-right">Tipo DNI</span>
