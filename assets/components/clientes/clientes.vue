@@ -57,7 +57,7 @@
 
             },
             async editar(v){
-                let link = '/cliente/'+v.id+'/edit';
+                let link = '/cliente/edit/'+v.id;
                 location.href = link;
                 //return false;
             }

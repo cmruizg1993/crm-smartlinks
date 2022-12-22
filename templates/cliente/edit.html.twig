@@ -3,11 +3,18 @@
 {% block title %}Edit Cliente{% endblock %}
 
 {% block body %}
-    <h1>Edit Cliente</h1>
+    <div class="row bg-gradient-info  p-2 m-2 text-white justify-content-end">
+        <div class="col">
+            <h3>Editar Cliente</h3>
+        </div>
+        <div class="col">
+            <a class="btn btn-xs btn-secondary" style="float: right" href="{{ path('cliente_index') }}" title="Atrás">
+                <i class="mdi mdi-keyboard-backspace"></i>
+            </a>
+        </div>
+    </div>
 
-    {{ include('cliente/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('cliente/_form.html.twig', {'button_label': 'Actualizar', 'submit': 'SI'}) }}
 
-    <a href="{{ path('cliente_index') }}">back to list</a>
 
-    {{ include('cliente/_delete_form.html.twig') }}
 {% endblock %}
