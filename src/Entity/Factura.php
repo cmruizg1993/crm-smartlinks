@@ -441,7 +441,7 @@ class Factura
         $claveAcceso = '';
         $claveAcceso .= $this->getFecha()->format('dmY');
             $digito8 = $this->aleatorio;
-            if(!$this->aleatorio){
+            if(!$this->aleatorio || $this->estadoSri == Factura::ESTADO_DEVUELTA){
                 $n = rand(10000000, 99999999);
                 $digito8 = $n.'';
                 $this->aleatorio = $digito8;
