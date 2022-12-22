@@ -137,11 +137,11 @@
                     </div>
                 </div>
                 <div class="row" v-if="factura.mensajeSri">
-                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
 
                         <div class="form-group row">
-                            <label class="col-4 col-form-label">Mensaje SRI</label>
-                            <div class="col-8">
+                            <label class="col-2 col-form-label">Mensaje SRI</label>
+                            <div class="col-10">
                                 <textarea :readonly="true" class="form-control" form="factura" name="usuario" v-model="factura.mensajeSri" ></textarea>
                             </div>
                         </div>
