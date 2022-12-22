@@ -97,8 +97,8 @@ class WhatsappController extends AbstractController
     {
         $to = $request->request->get('to');
         $message = $request->request->get('message');
-        dump($to);
-        dump($message);
+        //dump($to);
+        //dump($message);
         $cuid = uniqid();
 
         $response = $wtp->send(urlencode($message),$to,$cuid);

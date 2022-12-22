@@ -103,7 +103,7 @@ class EquipoController extends AbstractController
         if($param){
             $em =$this->getDoctrine()->getManager();
             $equipos = $em->getRepository(Equipo::class)->findByParam($param);
-            //dump($parroquias);
+            ////dump($parroquias);
             /* @var $serializer Serializer */
             $serializer = $this->get('serializer');
             $data = $serializer->normalize($equipos, null, [AbstractNormalizer::ATTRIBUTES=>

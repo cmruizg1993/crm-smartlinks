@@ -50,9 +50,9 @@ class FacturaType extends AbstractType
                 return $date ? $date->format('Y-m-d'): (new \DateTime())->format('Y-m-d');
             },
             function (?string $dateString) {
-                dump($dateString);
+                //dump($dateString);
                 $date = new \DateTime($dateString);
-                dump($date);
+                //dump($date);
                 return $date;
             }));
     }

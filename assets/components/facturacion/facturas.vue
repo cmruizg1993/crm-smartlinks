@@ -78,7 +78,7 @@
             },
             establecerAcciones(v){
                 v.actions = [];
-                if(v.estadoSri == 'DEVUELTA'){
+                if(v.estadoSri == 'DEVUELTA' || v.estadoSri == 'NO AUTORIZADO'){
                     let autorizar = (v)=>{
                         console.log(v)
                     }

@@ -11,7 +11,7 @@
             <div class="modal-dialog modal-dialog-scrollable modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Buscar Contrato</h5>
+                        <h5 class="modal-title" id="staticBackdropLabel">Buscar</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="modalCerrar">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -19,9 +19,12 @@
                     <div class="modal-body">
                         <div class="row form-group">
 
-                            <label class="col-form-label col-4">Buscar:</label>
-                            <div class="col-8">
-                                <input type="text" class="form-control"  @keyup="getItems" v-model="parametro" id="parametroContrato">
+                            <label class="col-form-label col-3">Buscar:</label>
+                            <div class="col-6">
+                                <input type="text" class="form-control"  v-model="parametro" id="parametroContrato">
+                            </div>
+                            <div class="col-3">
+                                <button class="btn btn-group-sm btn-primary" @click="getItems"><i class="icon-search"></i>Buscar</button>
                             </div>
                         </div>
                         <table class="table table-hover table-bordered table-bordered">

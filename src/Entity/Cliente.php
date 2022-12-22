@@ -516,7 +516,7 @@ class Cliente
         $data["fix_phone"] = $this->getTelefonoFijo();
         $data["exp_date"] = $this->getDni()->getFechaExp() ? $this->getDni()->getFechaExp()->format('d/m/Y'):null;
         $data["dni_type"] = $this->getDni()->getTipo();
-        dump($data);
+        //dump($data);
         return $data;
     }
 

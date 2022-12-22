@@ -61,7 +61,7 @@ class ExcelController extends AbstractController
 
             if($file){
                 $pathFile = $file->getPathName();
-                //dump($pathFile);
+                ////dump($pathFile);
                 $reader = IOFactory::createReaderForFile($pathFile);
                 $spreadsheet = $reader->load($pathFile);
                 $sheet = $spreadsheet->getActiveSheet();
@@ -338,7 +338,7 @@ class ExcelController extends AbstractController
             $file = $form['archivo']->getData();
             if($file){
                 $pathFile = $file->getPathName();
-                //dump($pathFile);
+                ////dump($pathFile);
                 $reader = IOFactory::createReaderForFile($pathFile);
                 $spreadsheet = $reader->load($pathFile);
                 $sheet = $spreadsheet->getActiveSheet();
@@ -486,13 +486,13 @@ class ExcelController extends AbstractController
                         return $response;
                     },
                     function (\Throwable $exception) {
-                        dump( 'Error: '.$exception->getMessage());
+                        //dump( 'Error: '.$exception->getMessage());
 
                         throw $exception;
                     }
                 );
             $response = $promise->wait()->getBody()->getContents();
-            dump($response);
+            //dump($response);
 
 
 
@@ -592,7 +592,7 @@ class ExcelController extends AbstractController
                 $em->flush();
                 $endtime = microtime(true);
                 $timediff = $endtime - $starttime;
-                dump($timediff);
+                //dump($timediff);
             }
         }
 
@@ -702,7 +702,7 @@ class ExcelController extends AbstractController
                 //$em->flush();
                 $endtime = microtime(true);
                 $timediff = $endtime - $starttime;
-                dump($timediff);
+                //dump($timediff);
 
             }
         }

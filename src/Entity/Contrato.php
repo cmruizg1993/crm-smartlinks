@@ -472,9 +472,9 @@ class Contrato
             $criteria = Criteria::create()
                 ->where(Criteria::expr()->neq('estadoSri', Factura::ESTADO_ANULADA))
                 ->orderBy(['anioPago'=>'DESC', 'mesPago'=>'DESC']);
-            dump($criteria);
+            //dump($criteria);
             $f = $facturas->matching($criteria)->first();
-            dump($f);
+            //dump($f);
             if($f) $mes = $f->getMesPago();
         }
         return $mes;

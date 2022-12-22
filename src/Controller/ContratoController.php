@@ -151,16 +151,21 @@ class ContratoController extends AbstractController
     /**
      * @Route("/buscarContrato", name="buscar_Contrato", methods={"POST"})
      */
-    public function buscarContrato(Request $request): Response
+    public function buscarContrato
+    (
+        Request $request,
+        ContratoRepository $contratoRepository,
+        OpcionCatalogoRepository $opcionCatalogoRepository
+    ): Response
     {
         $content = json_decode($request->getContent());
         $param = $content->param;
         //$html = '<tr><td colspan="4">No se encontraron datos</td></tr>';
         $data = [];
         if($param){
-            $em =$this->getDoctrine()->getManager();
-            $Contratos = $em->getRepository(Contrato::class)->findByParam($param);
-            //dump($parroquias);
+
+            $Contratos = $contratoRepository->findByParam($param);
+            ////dump($parroquias);
             /* @var $serializer Serializer */
             $serializer = $this->get('serializer');
             $data['contratos'] = $serializer->normalize($Contratos, null, [AbstractNormalizer::ATTRIBUTES=>
@@ -193,14 +198,24 @@ class ContratoController extends AbstractController
                     'necesitaReconexion'
                 ]
             ]);
-
-            $setPorcentaje = function ($contrato) use ($em){
+            $cache = [];
+            $counter = 0;
+            $setPorcentaje = function ($contrato) use ($opcionCatalogoRepository, &$cache, &$counter){
                 $codigo = $contrato['plan']['codigoPorcentaje'];
-                $impuesto = $em->getRepository(OpcionCatalogo::class)->findOneByCodigoyCatalogo($codigo, 'iva');
+                $impuesto = null;
+                if(isset($cache["$codigo"])){
+                    $impuesto = $cache["$codigo"];
+                }else{
+                    $impuesto = $opcionCatalogoRepository->findOneByCodigoyCatalogo($codigo, 'iva');
+                    $cache["$codigo"] = $impuesto;
+                    ////dump("query");
+                    $counter ++;
+                }
                 $contrato['plan']['porcentaje'] = $impuesto->getValorNumerico();
                 return$contrato;
             };
             $data["contratos"] = array_map($setPorcentaje, $data["contratos"]);
+            dump($counter);
             //$html = $this->renderView('Contrato/Contratos.html.twig',['Contratos'=>$data]);
         }
         return new JsonResponse($data);
@@ -266,7 +281,7 @@ class ContratoController extends AbstractController
     {
         $contrato->setEstado(EstadoContrato::ACTIVO);
         $opcion = $opcionCatalogoRepository->findOneByCodigoyCatalogo(EstadoContrato::ACTIVO, EstadoContrato::NOMBRE_CATALOGO);
-        dump($opcion);
+        //dump($opcion);
         $estado = new EstadoContrato();
         $estado->setEstado($opcion);
         $estado->setFecha(new \DateTime());

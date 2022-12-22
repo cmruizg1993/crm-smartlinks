@@ -105,7 +105,7 @@ class ServicioController extends AbstractController
 
         $content = json_decode($request->getContent());
         $param = $content->param;
-        dump($content->param);
+        //dump($content->param);
         $data = [];
         if($param){
             $em =$this->getDoctrine()->getManager();

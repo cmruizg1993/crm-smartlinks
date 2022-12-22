@@ -135,7 +135,17 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="row" v-if="factura.mensajeSri">
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
 
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label">Mensaje SRI</label>
+                            <div class="col-8">
+                                <textarea :readonly="true" class="form-control" form="factura" name="usuario" v-model="factura.mensajeSri" ></textarea>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 d-flex justify-content-end">
@@ -158,6 +168,7 @@
                         </button>
                     </div>
                 </div>
+
                 <!-- Row end -->
             </div>
             <div class="invoice-body">

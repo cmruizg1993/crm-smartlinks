@@ -91,7 +91,7 @@ class FacturaController extends AbstractController
         $result = $facturacionElectronica->autorizacion($clave, $testing);
         $respuesta = isset($result->RespuestaAutorizacionComprobante) ? $result->RespuestaAutorizacionComprobante: null;
         $autorizaciones = isset($respuesta->autorizaciones) ? $respuesta->autorizaciones: null;
-        dump($result);
+        ////dump($result);
         $autorizacion = $autorizaciones ? $autorizaciones->autorizacion: null;
         $estado = $autorizacion && isset($autorizacion->estado)?$autorizacion->estado:null;
         $factura->setEstadoSri($estado);
@@ -274,9 +274,9 @@ class FacturaController extends AbstractController
             $output = $facturacionElectronica->firmarArchivoXml($clave, $empresa);
             if($output == 0){
                 $testing = $factura->getTipoAmbiente() == '1';
-                dump($testing);
+                //dump($testing);
                 $result = $facturacionElectronica->recepcion($clave, $testing);
-                dump($result);
+                //dump($result);
                 $respuesta = isset($result->RespuestaRecepcionComprobante) ? $result->RespuestaRecepcionComprobante: null;
                 $estado = null;
                 if($respuesta && isset($respuesta->estado)){
@@ -415,9 +415,9 @@ class FacturaController extends AbstractController
             $factura->totalizar($opcionCatalogoRepository);
             if($output == 0){
                 $testing = $factura->getTipoAmbiente() == '1';
-                dump($testing);
+                //dump($testing);
                 $result = $facturacionElectronica->recepcion($clave, $testing);
-                dump($result);
+                //dump($result);
                 $respuesta = isset($result->RespuestaRecepcionComprobante) ? $result->RespuestaRecepcionComprobante: null;
                 $estado = null;
                 if($respuesta && isset($respuesta->estado)){
@@ -439,7 +439,7 @@ class FacturaController extends AbstractController
         $data = [];
         $data['factura'] = $serializer->normalize($factura, null, [AbstractNormalizer::ATTRIBUTES=>[
             'id','claveAcceso', 'serial', 'tipoAmbiente','mesPago', 'anioPago','formaPago','comprobantePago',
-            'serie', 'secuencial', 'fecha', 'total', 'subtotal', 'subtotal12', 'iva', 'subtotal0', 'estadoSri','tipoComprobante',
+            'serie', 'secuencial', 'fecha', 'total', 'subtotal', 'subtotal12', 'iva', 'subtotal0', 'estadoSri','tipoComprobante', 'mensajeSri'
             ]
         ]);
         $data['cliente'] = $serializer->normalize($factura->getCliente(), null, [AbstractNormalizer::ATTRIBUTES=>['id', 'nombres', 'dni'=>['numero']]]);

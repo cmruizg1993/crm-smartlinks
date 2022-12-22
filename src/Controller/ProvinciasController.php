@@ -114,7 +114,7 @@ class ProvinciasController extends AbstractController
         if($param){
             $em =$this->getDoctrine()->getManager();
             $parroquias = $em->getRepository(Parroquia::class)->findByParam($param);
-            //dump($parroquias);
+            ////dump($parroquias);
             /* @var $serializer Serializer */
             $serializer = $this->get('serializer');
             $data = $serializer->normalize($parroquias, null, [AbstractNormalizer::ATTRIBUTES=>
@@ -133,7 +133,7 @@ class ProvinciasController extends AbstractController
             ]);
             $html = $this->renderView('provincias/parroquias.html.twig',['parroquias'=>$data]);
         }
-        dump($html);
+        //dump($html);
         return new Response($html);
     }
 }

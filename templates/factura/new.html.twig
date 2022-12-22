@@ -35,8 +35,9 @@
 
 <script>
     let detalles = [];
-    $("#parametroContrato").keyup(function (){
-        var param = $(this).val();
+    $("#btnBuscarContrato").click(function (){
+
+        var param = $("#parametroContrato").val();
         var L = param.length;
         if ( L >= 3){
             $.ajax({

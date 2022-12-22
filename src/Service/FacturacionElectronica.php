@@ -50,7 +50,7 @@ class FacturacionElectronica
         $retval=null;
         $process = new Process(['java', '-jar', $jarFile, $fileInput, $p12File, $p12Password, $fileOutput]);
         $process->run();
-        //dump($process->getOutput());
+        ////dump($process->getOutput());
         $output = $process->getExitCode();
         //exec("java -jar $jarFile $fileInput $p12File $p12Password $fileOutput", $output, $retval);
         return $output;
@@ -64,7 +64,7 @@ class FacturacionElectronica
         $url = $testing ? FacturacionElectronica::WS_TEST_RECEIV: FacturacionElectronica::WS_RECEIV;
         $client = new \SoapClient($url);
         $result = $client->validarComprobante($parametros);
-        //dump($result);
+        ////dump($result);
         return $result;
     }
     public function autorizacion($claveAcceso, $testing = true){
@@ -73,7 +73,7 @@ class FacturacionElectronica
         $parametros =  new \stdClass();
         $parametros->claveAccesoComprobante = $claveAcceso;
         $result = $client->autorizacionComprobante($parametros);
-        //dump($result);
+        ////dump($result);
         return $result;
     }
     public function obtenerPathXml($claveAcceso){
