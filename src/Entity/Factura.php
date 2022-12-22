@@ -22,6 +22,8 @@ class Factura
     const ESTADO_RECIBIDA = 'RECIBIDA';
     const ESTADO_DEVUELTA = 'DEVUELTA';
     const ESTADO_ANULADA = 'ANULADA';
+    const ESTADO_AUTORIZADA = 'AUTORIZADO';
+    const ESTADO_NO_AUTORIZADA = 'NO AUTORIZADO';
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

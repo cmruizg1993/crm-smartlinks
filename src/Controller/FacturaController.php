@@ -95,6 +95,12 @@ class FacturaController extends AbstractController
         $autorizacion = $autorizaciones ? $autorizaciones->autorizacion: null;
         $estado = $autorizacion && isset($autorizacion->estado)?$autorizacion->estado:null;
         $factura->setEstadoSri($estado);
+        if($estado!=null && $estado != Factura::ESTADO_AUTORIZADA){
+            $mensajes = $autorizacion->mensajes;
+            $jsonMensajes = json_encode($mensajes);
+            $factura->setMensajeSri($jsonMensajes);
+        }
+        $factura->setEstadoSri($estado);
         $em->flush();
         return new JsonResponse(['estado'=>$estado], 200);
     }
@@ -166,6 +172,11 @@ class FacturaController extends AbstractController
         $respuesta = isset($result->RespuestaRecepcionComprobante) ? $result->RespuestaRecepcionComprobante: null;
         $estado = $respuesta && isset($respuesta->estado) ? $respuesta->estado: null;
         $factura->setEstadoSri($estado);
+        if($estado!=null && $estado != Factura::ESTADO_RECIBIDA){
+            $mensajes = $respuesta->comprobantes->comprobante->mensajes;
+            $jsonMensajes = json_encode($mensajes);
+            $factura->setMensajeSri($jsonMensajes);
+        }
         $em->flush();
         return new JsonResponse(['estado'=>$estado], 200);
 
