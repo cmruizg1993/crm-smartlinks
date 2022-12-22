@@ -41,6 +41,25 @@
                     });
                 }
             }
+        },
+        methods:{
+            establecerAcciones(v){
+                v.actions = [];
+                v.actions.push({
+                    color: 'warning',
+                    texto: 'Editar',
+                    callback: async ()=>{
+                        await this.editar(v);
+                    }
+                });
+                //if(v.estadoSri == 'ANULADA') v._rowVariant = 'danger';
+
+            },
+            async editar(v){
+                let link = '/cliente/'+v.id+'/edit';
+                location.href = link;
+                //return false;
+            }
         }
     }
 </script>
