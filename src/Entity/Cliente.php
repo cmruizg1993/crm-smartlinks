@@ -390,7 +390,7 @@ class Cliente
     public function validate(ExecutionContextInterface $context, $payload){
         $cedula = $this->getDni()->getNumero();
         $isvalid = $this->validarCedula($cedula);
-        if(!$isvalid){
+        if(!$isvalid && $this->getDni()->getTipo() == Dni::CEDULA){
             $context->buildViolation('CI is not valid!')
                 ->atPath('cedula')
                 ->addViolation();
