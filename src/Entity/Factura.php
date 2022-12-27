@@ -638,9 +638,12 @@ class Factura
                 $totalDetalle = ($detalle->getCantidad() * $detalle->getPrecio());
                 $porcentaje = $impuesto->getValorNumerico()/100;
                 $ivaDetalle = null;
+                $precioDetalle = $detalle->getPrecio();
                 if($servicio->getIncluyeIva()){
                     $subtotalDetalle = $totalDetalle/(1 + $porcentaje);
                     $ivaDetalle = $totalDetalle - $subtotalDetalle;
+                    $precioDetalle = $precioDetalle/(1 + $porcentaje);
+                    $detalle->setPrecio($precioDetalle);
                 }else{
                     $subtotalDetalle = $totalDetalle;
                     $totalDetalle = $subtotalDetalle*(1 + $porcentaje);
