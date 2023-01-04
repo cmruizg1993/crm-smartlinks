@@ -72,8 +72,7 @@
         name: "detalle-factura",
         props:[
             'disabled',
-            'detalles',
-            'text'
+            'detalles'
         ],
         data(){
             return {

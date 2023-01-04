@@ -38,6 +38,12 @@ class Pago
      */
     private $ctaBancaria;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=CuentaPorCobrar::class, inversedBy="pagos")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $cuentaPorCobrar;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -87,6 +93,18 @@ class Pago
     public function setCtaBancaria(?CuentaBancaria $ctaBancaria): self
     {
         $this->ctaBancaria = $ctaBancaria;
+
+        return $this;
+    }
+
+    public function getCuentaPorCobrar(): ?CuentaPorCobrar
+    {
+        return $this->cuentaPorCobrar;
+    }
+
+    public function setCuentaPorCobrar(?CuentaPorCobrar $cuentaPorCobrar): self
+    {
+        $this->cuentaPorCobrar = $cuentaPorCobrar;
 
         return $this;
     }

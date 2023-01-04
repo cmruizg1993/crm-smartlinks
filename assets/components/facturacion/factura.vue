@@ -1,179 +1,203 @@
 <template>
     <div>
         <div class="invoice" v-if="loading == false">
-            <div class="invoice-header">
-                <div class="">
-                    <slot>
-                        <form action="" id="factura"></form>
-                    </slot>
-                </div>
-                <!-- Row start -->
-                <div class="row">
-                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="factura-tab" data-bs-toggle="tab" data-bs-target="#factura-tab-pane" type="button" role="tab" aria-controls="factura-tab-pane" aria-selected="true">Factura</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pago-tab" data-bs-toggle="tab" data-bs-target="#pago-tab-pane" type="button" role="tab" aria-controls="pago-tab-pane" aria-selected="false">Forma Pago</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="cuentas-tab" data-bs-toggle="tab" data-bs-target="#cuentas-tab-pane" type="button" role="tab" aria-controls="cuentas-tab-pane" aria-selected="false">Cuentas x Cobrar</button>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="factura-tab-pane" role="tabpanel" aria-labelledby="factura-tab" tabindex="0">
+                    <div class="invoice-header">
+                        <div class="">
+                            <slot>
+                                <form action="" id="factura"></form>
+                            </slot>
+                        </div>
+                        <!-- Row start -->
+                        <div class="row">
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
 
-                        <div class="form-group row">
-                            <label class="col-4 col-form-label">Emisión</label>
-                            <div class="col-8">
-                                <b-form-datepicker
-                                        :disabled="isDisabled"
-                                        v-model="factura.fecha"
-                                        left
-                                        locale="es-EC"
-                                        @context="onContext"
-                                        size="sm"
-                                        :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
-                                ></b-form-datepicker>
-                            </div>
-                            <!--div class="col-8">
-                                <div class="input-group date datepicker navbar-date-picker">
-                                    <span class="input-group-addon input-group-prepend border-right">
+                                <div class="form-group row">
+                                    <label class="col-4 col-form-label">Emisión</label>
+                                    <div class="col-8">
+                                        <b-form-datepicker
+                                                :disabled="isDisabled"
+                                                v-model="factura.fecha"
+                                                left
+                                                locale="es-EC"
+                                                @context="onContext"
+                                                size="sm"
+                                                :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+                                        ></b-form-datepicker>
+                                    </div>
+                                    <!--div class="col-8">
+                                        <div class="input-group date datepicker navbar-date-picker">
+                                            <span class="input-group-addon input-group-prepend border-right">
 
-                                    </span>
-                                    <input type="text" class="form-control" v-model="factura.fecha" autocomplete="off">
+                                            </span>
+                                            <input type="text" class="form-control" v-model="factura.fecha" autocomplete="off">
+                                        </div>
+                                    </div-->
                                 </div>
-                            </div-->
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-4 col-form-label">Comprobante</label>
-                            <div class="col-8">
-                                <select :disabled='isDisabled' class="form-control" name="tipoComprobante" form="factura" v-model="factura.tipoComprobante" @change="getSerie(factura.tipoComprobante)">
-                                    <option v-for="c in comprobantes" :value="c.codigo" >{{c.texto}}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-4 col-form-label">Serie</label>
-                            <div class="col-8">
-                                <input type="text" class="form-control" v-model="factura.serial" readonly>
-                            </div>
-                        </div>
+                                <div class="form-group row">
+                                    <label class="col-4 col-form-label">Comprobante</label>
+                                    <div class="col-8">
+                                        <select :disabled='isDisabled' class="form-control" name="tipoComprobante" form="factura" v-model="factura.tipoComprobante" @change="getSerie(factura.tipoComprobante)">
+                                            <option v-for="c in comprobantes" :value="c.codigo" >{{c.texto}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-4 col-form-label">Serie</label>
+                                    <div class="col-8">
+                                        <input type="text" class="form-control" v-model="factura.serial" readonly>
+                                    </div>
+                                </div>
 
-                        <div class="form-group row">
-                            <label class="col-4 col-form-label">Secuencial</label>
-                            <div class="col-8">
-                                <input :disabled='isDisabled' type="text" class="form-control"  v-model="factura.secuencial" >
+                                <div class="form-group row">
+                                    <label class="col-4 col-form-label">Secuencial</label>
+                                    <div class="col-8">
+                                        <input :disabled='isDisabled' type="text" class="form-control"  v-model="factura.secuencial" >
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
-                        <div class="form-group row">
-                            <label class="col-4 col-form-label">CI/RUC</label>
-                            <div class="col-8">
-                                <div class="input-group">
-                                    <input :disabled='isDisabled' type="text" v-model="cedula" class="form-control" form="factura" name="cedula" readonly>
-                                    <div class="input-group-append">
-                                        <lista-contratos :disabled='isDisabled' :baseurl="urlcontratos" :color_class="'btn-warning'" @agregarContrato="agregarContrato">
-                                        </lista-contratos>
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+                                <div class="form-group row">
+                                    <label class="col-4 col-form-label">CI/RUC</label>
+                                    <div class="col-8">
+                                        <div class="input-group">
+                                            <input :disabled='isDisabled' type="text" v-model="cedula" class="form-control" form="factura" name="cedula" readonly>
+                                            <div class="input-group-append">
+                                                <lista-contratos :disabled='isDisabled' :baseurl="urlcontratos" :color_class="'btn-warning'" @agregarContrato="agregarContrato">
+                                                </lista-contratos>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-4 col-form-label">Cliente</label>
+                                    <div class="col-8">
+                                        <input type="text" v-model="nombres" class="form-control" form="factura" name="nombre" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group row justify-content-end">
+                                    <label class="col-form-label col-4">
+                                        <span class="float-right">#Contrato</span>
+                                    </label>
+                                    <div class="col-8">
+                                        <input type="text" name="contrato" v-model="numero" class='form-control' style='color: #ff0000; font-weight: 700; font-size: 2rem !important; line-height: 3rem; height: 3rem !important'  readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+                                <div class="form-group row">
+                                    <label class="col-4 col-form-label">Forma Pago</label>
+                                    <div class="col-8">
+                                        <select :disabled='isDisabled' class="form-control" name="fpago" form="factura" v-model="factura.formaPago">
+                                            <option v-for="f in formaspago" :value="f.codigo" >{{f.texto}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-4 col-form-label">Año Pago</label>
+                                    <div class="col-8">
+                                        <input :disabled='isDisabled' type="number" min="2020" step="1" class="form-control" form="factura" name="anioPago" v-model="factura.anioPago" >
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-4 col-form-label">Mes Pago</label>
+                                    <div class="col-8">
+                                        <select :disabled='isDisabled' class="form-control" name="mesPago" form="factura" v-model="factura.mesPago">
+                                            <option v-for="m in meses" :value="m.codigo" >{{m.texto}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-4 col-form-label">#Comp</label>
+                                    <div class="col-8">
+                                        <input :disabled='isDisabled' type="number" min="100" step="1" class="form-control" form="factura"  v-model="factura.comprobantePago" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+                                <div class="form-group row">
+                                    <label class="col-4 col-form-label">Usuario</label>
+                                    <div class="col-8">
+                                        <input :disabled='isDisabled' type="text" class="form-control" form="factura" name="usuario" v-model="user" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-4 col-form-label">Ambiente</label>
+                                    <div class="col-8">
+                                        <select :disabled='isDisabled' class="form-control" name="ambiente" form="factura" v-model="factura.tipoAmbiente">
+                                            <option v-for="a in ambientes" :value="a.codigo" >{{a.texto}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-4 col-form-label">Observaciones</label>
+                                    <div class="col-8">
+                                        <textarea :disabled='isDisabled' class="form-control" form="factura" name="usuario" v-model="factura.observaciones" ></textarea>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-4 col-form-label">Cliente</label>
-                            <div class="col-8">
-                                <input type="text" v-model="nombres" class="form-control" form="factura" name="nombre" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group row justify-content-end">
-                            <label class="col-form-label col-4">
-                                <span class="float-right">#Contrato</span>
-                            </label>
-                            <div class="col-8">
-                                <input type="text" name="contrato" v-model="numero" class='form-control' style='color: #ff0000; font-weight: 700; font-size: 2rem !important; line-height: 3rem; height: 3rem !important'  readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
-                        <div class="form-group row">
-                            <label class="col-4 col-form-label">Forma Pago</label>
-                            <div class="col-8">
-                                <select :disabled='isDisabled' class="form-control" name="fpago" form="factura" v-model="factura.formaPago">
-                                    <option v-for="f in formaspago" :value="f.codigo" >{{f.texto}}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-4 col-form-label">Año Pago</label>
-                            <div class="col-8">
-                                <input :disabled='isDisabled' type="number" min="2020" step="1" class="form-control" form="factura" name="anioPago" v-model="factura.anioPago" >
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-4 col-form-label">Mes Pago</label>
-                            <div class="col-8">
-                                <select :disabled='isDisabled' class="form-control" name="mesPago" form="factura" v-model="factura.mesPago">
-                                    <option v-for="m in meses" :value="m.codigo" >{{m.texto}}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-4 col-form-label">#Comp</label>
-                            <div class="col-8">
-                                <input :disabled='isDisabled' type="number" min="100" step="1" class="form-control" form="factura"  v-model="factura.comprobantePago" >
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
-                        <div class="form-group row">
-                            <label class="col-4 col-form-label">Usuario</label>
-                            <div class="col-8">
-                                <input :disabled='isDisabled' type="text" class="form-control" form="factura" name="usuario" v-model="user" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-4 col-form-label">Ambiente</label>
-                            <div class="col-8">
-                                <select :disabled='isDisabled' class="form-control" name="ambiente" form="factura" v-model="factura.tipoAmbiente">
-                                    <option v-for="a in ambientes" :value="a.codigo" >{{a.texto}}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-4 col-form-label">Observaciones</label>
-                            <div class="col-8">
-                                <textarea :disabled='isDisabled' class="form-control" form="factura" name="usuario" v-model="factura.observaciones" ></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" v-if="factura.mensajeSri">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="row" v-if="factura.mensajeSri">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 
-                        <div class="form-group row">
-                            <label class="col-1 col-form-label">Mensaje SRI</label>
-                            <div class="col-11">
-                                <textarea :readonly="true" class="form-control" form="factura" name="usuario" v-model="factura.mensajeSri" ></textarea>
+                                <div class="form-group row">
+                                    <label class="col-1 col-form-label">Mensaje SRI</label>
+                                    <div class="col-11">
+                                        <textarea :readonly="true" class="form-control" form="factura" name="usuario" v-model="factura.mensajeSri" ></textarea>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 d-flex justify-content-end">
-                        <lista-servicios :disabled='isDisabled' :baseurl="urlservicios" @agregarServicio="agregarDetalle"></lista-servicios>
-                        <button :disabled='isDisabled' type="button" form="factura" class="btn btn-success btn-group-sm" @click="guardarFactura">
-                            <i class="mdi mdi-content-save-all"></i>
-                            <span>Guardar</span>
-                        </button>
-                        <button :disabled='!isDisabled' class="btn btn-group-sm btn-info" @click="inicializar">
-                            <i class="mdi mdi-plus-circle"></i>
-                            <span>Nuevo</span>
-                        </button>
-                        <button :disabled='factura.id == null' class="btn btn-group-sm btn-dark" @click="imprimir">
-                            <i class="mdi mdi-printer"></i>
-                            <span>Imprimir</span>
-                        </button>
-                        <button :disabled='factura.id == null' class="btn btn-group-sm btn-dark" @click="descargar">
-                            <i class="mdi mdi-download"></i>
-                            <span>Descargar</span>
-                        </button>
-                    </div>
-                </div>
+                        <div class="row">
+                            <div class="col-md-12 d-flex justify-content-end">
+                                <lista-servicios :disabled='isDisabled' :baseurl="urlservicios" @agregarServicio="agregarDetalle"></lista-servicios>
+                                <button :disabled='isDisabled' type="button" form="factura" class="btn btn-success btn-group-sm" @click="guardarFactura">
+                                    <i class="mdi mdi-content-save-all"></i>
+                                    <span>Guardar</span>
+                                </button>
+                                <button :disabled='!isDisabled' class="btn btn-group-sm btn-info" @click="inicializar">
+                                    <i class="mdi mdi-plus-circle"></i>
+                                    <span>Nuevo</span>
+                                </button>
+                                <button :disabled='factura.id == null' class="btn btn-group-sm btn-dark" @click="imprimir">
+                                    <i class="mdi mdi-printer"></i>
+                                    <span>Imprimir</span>
+                                </button>
+                                <button :disabled='factura.id == null' class="btn btn-group-sm btn-dark" @click="descargar">
+                                    <i class="mdi mdi-download"></i>
+                                    <span>Descargar</span>
+                                </button>
+                            </div>
+                        </div>
 
-                <!-- Row end -->
+                        <!-- Row end -->
+                    </div>
+                    <div class="invoice-body">
+                        <detalle-factura ref="detalles" :detalles="factura.detalles" :disabled="isDisabled"></detalle-factura>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pago-tab-pane" role="tabpanel" aria-labelledby="pago-tab" tabindex="0">
+                    <factura_pagos></factura_pagos>
+                </div>
+                <div class="tab-pane fade" id="cuentas-tab-pane" role="tabpanel" aria-labelledby="cuentas-tab" tabindex="0">
+                    <cuentas_contrato>
+
+                    </cuentas_contrato>
+                </div>
             </div>
-            <div class="invoice-body">
-                <detalle-factura ref="detalles" :text="text" :detalles="factura.detalles" :disabled="isDisabled"></detalle-factura>
-            </div>
+
         </div>
         <div  style="height: 75vh" v-if="loading == true">
             <div class="d-flex align-items-center">
@@ -185,19 +209,21 @@
 </template>
 <script>
     import DetalleFactura from "./detalle-factura";
+    import FacturaPagos from "./factura_pagos";
     import ListaServicios from "../lista-servicios";
     import ListaContratos from "../lista-contratos";
-
+    import CuentasXCobrar from "../cuentasxcobrar/cuentas_contrato";
     export default {
         name: "factura",
         components:{
             DetalleFactura,
+            FacturaPagos,
             ListaServicios,
-            ListaContratos
+            ListaContratos,
+            CuentasXCobrar
         },
         data(){
           return{
-              text: 'a',
               factura:{
                 fecha: '',
                 secuencial: null,

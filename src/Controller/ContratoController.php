@@ -34,7 +34,7 @@ class ContratoController extends AbstractController
         $contratos = $ContratoRepository->findAllRegisters();
 //        $campos = ['id', 'numero', 'fecha', 'direccion'];
         $data = $serializer->normalize($contratos, null, [AbstractNormalizer::ATTRIBUTES=>[
-            'id', 'numero','nombres', 'cedula', 'fecha', 'direccion','estadoActual'=>['codigo','texto','cssClass']
+            'id','nombres', 'numero', 'cedula','vlan','nodo', 'pppoe','fecha', 'direccion','estadoActual'=>['codigo','texto','cssClass']
         ]]);
         return $this->render('Contrato/index.html.twig', [
             'contratos' => $data,

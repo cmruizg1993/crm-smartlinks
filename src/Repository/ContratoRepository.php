@@ -74,7 +74,9 @@ class ContratoRepository extends ServiceEntityRepository
         */
         /* @var $query Query */
         $query = $this->createQueryBuilder('c')
+            ->select('c, cli, dni, estadoActual')
             ->innerJoin('c.cliente', 'cli')
+            ->innerJoin('cli.dni', 'dni')
             ->leftJoin('c.estadoActual', 'estadoActual')
             ->leftJoin('estadoActual.catalogo', 'catalogo')
             ->orderBy('c.version', 'ASC')

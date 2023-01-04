@@ -207,6 +207,11 @@ class Factura
      */
     private $aleatorio;
 
+    /**
+     * @ORM\OneToOne(targetEntity=CuentaPorCobrar::class, cascade={"persist", "remove"})
+     */
+    private $cuentaPorCobrar;
+
     public function __construct()
     {
         $this->detalles = new ArrayCollection();
@@ -698,5 +703,17 @@ class Factura
     }
     public function getStrFecha(){
         return $this->fecha ? $this->fecha->format('Y-m-d'):'';
+    }
+
+    public function getCuentaPorCobrar(): ?CuentaPorCobrar
+    {
+        return $this->cuentaPorCobrar;
+    }
+
+    public function setCuentaPorCobrar(?CuentaPorCobrar $cuentaPorCobrar): self
+    {
+        $this->cuentaPorCobrar = $cuentaPorCobrar;
+
+        return $this;
     }
 }

@@ -33,16 +33,19 @@ Vue.use(IconsPlugin);
 
 Vue.component('lista-servicios', require('./components/lista-servicios').default )
 Vue.component('lista-contratos', require('./components/lista-contratos').default )
-
+//FACTURACION
 Vue.component('factura', require('./components/facturacion/factura').default )
 Vue.component('facturas', require('./components/facturacion/facturas').default )
 Vue.component('detalle-factura', require('./components/facturacion/detalle-factura').default )
+Vue.component('factura_pagos', require('./components/facturacion/factura_pagos').default)
 //GENERAL
 Vue.component('table-index', require('./components/general/table-index').default )
 //CLIENTES
 Vue.component('clientes', require('./components/clientes/clientes').default )
 //SERVICIOS
 Vue.component('contratos', require('./components/contratos/contratos').default )
+//CUENTAS X COBRAR
+Vue.component('cuentas_contrato', require('./components/cuentasxcobrar/cuentas_contrato').default)
 
 
 const app = new Vue({
