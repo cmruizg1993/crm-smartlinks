@@ -125,8 +125,6 @@ class ContratoController extends AbstractController
         $clienteOriginal = $Contrato->getCliente();
         $dniOriginal = $clienteOriginal->getDni();
         $numeroOriginal = $dniOriginal->getNumero();
-        dump($clienteOriginal);
-        dump($numeroOriginal);
         $form = $this->createForm(ContratoType::class, $Contrato);
         $form->handleRequest($request);
 
@@ -135,8 +133,6 @@ class ContratoController extends AbstractController
             $cliente = $Contrato->getCliente();
             $dni = $cliente->getDni();
             $numero = $dni->getNumero();
-            dump($numero);
-
             if($numero != $numeroOriginal){
                 $oldClient = $clienteRepository->findOneByNumeroDni($numero);
                 $dniOriginal = $dniRepository->findOneByNumero($numeroOriginal);
@@ -144,7 +140,6 @@ class ContratoController extends AbstractController
                 dump('DNI MODIFICADO');
                 if($oldClient){
                     dump('CLIENTE EXISTENTE');
-                    dump($oldClient);
                     $Contrato->setCliente($oldClient);
                 }else{
                     $cliente->setId(null);
@@ -152,8 +147,10 @@ class ContratoController extends AbstractController
 
             }
             $cliente = $Contrato->getCliente();
+            dump('Cliente asignado');
             dump($cliente);
-            dump($Contrato);
+            dump('Cliente Original');
+            dump($clienteOriginal);
             $Contrato->setFechaActualizacion(new \DateTime());
             $Contrato->getActualizadoPor($this->getUser());
             $em->flush();
