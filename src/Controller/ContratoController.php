@@ -120,6 +120,7 @@ class ContratoController extends AbstractController
         EntityManagerInterface $em): Response
     {
         $clienteOriginal = $Contrato->getCliente();
+        dump($clienteOriginal);
         $form = $this->createForm(ContratoType::class, $Contrato);
         $form->handleRequest($request);
 
@@ -134,7 +135,7 @@ class ContratoController extends AbstractController
                 }
                 $cliente->setId(null);
             }
-            dump($clienteOriginal);
+
             dump($cliente);
             $Contrato->setFechaActualizacion(new \DateTime());
             $Contrato->getActualizadoPor($this->getUser());
