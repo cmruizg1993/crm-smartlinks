@@ -117,15 +117,22 @@ class ContratoController extends AbstractController
         SerializerInterface $serializer,
         EntityManagerInterface $em): Response
     {
+        $clienteOriginal = $Contrato->getCliente();
         $form = $this->createForm(ContratoType::class, $Contrato);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $Contrato->setVersion($Contrato->getVersion()+1);
+            $cliente = $Contrato->getCliente();
+            if($cliente->getDni()->getNumero() == $clienteOriginal->getDni()->getNumero()){
+
+            }
+            dump($clienteOriginal);
+            dump($cliente);
             $Contrato->setFechaActualizacion(new \DateTime());
             $Contrato->getActualizadoPor($this->getUser());
             $em->flush();
-            return $this->redirectToRoute('contrato_index');
+            //return $this->redirectToRoute('contrato_index');
         }
 
         return $this->render('Contrato/edit.html.twig', [
