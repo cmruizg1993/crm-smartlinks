@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Cliente;
 use App\Entity\Contrato;
+use App\Entity\Dni;
 use App\Entity\Equipo;
 use App\Entity\EquipoInstalacion;
 use App\Entity\EstadoContrato;
@@ -11,6 +12,7 @@ use App\Entity\OpcionCatalogo;
 use App\Form\ContratoType;
 use App\Repository\ClienteRepository;
 use App\Repository\ContratoRepository;
+use App\Repository\DniRepository;
 use App\Repository\OpcionCatalogoRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -117,6 +119,7 @@ class ContratoController extends AbstractController
         Contrato $Contrato,
         SerializerInterface $serializer,
         ClienteRepository $clienteRepository,
+        DniRepository $dniRepository,
         EntityManagerInterface $em): Response
     {
         $clienteOriginal = $Contrato->getCliente();
@@ -136,6 +139,8 @@ class ContratoController extends AbstractController
 
             if($numero != $numeroOriginal){
                 $oldClient = $clienteRepository->findOneByNumeroDni($numero);
+                $dniOriginal = $dniRepository->findOneByNumero($numeroOriginal);
+                $clienteOriginal->setDni($dniOriginal);
                 dump('DNI MODIFICADO');
                 if($oldClient){
                     dump('CLIENTE EXISTENTE');
