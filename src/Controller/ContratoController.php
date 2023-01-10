@@ -121,7 +121,7 @@ class ContratoController extends AbstractController
     {
         $clienteOriginal = $Contrato->getCliente();
         $dniOriginal = $clienteOriginal->getDni()->getNumero();
-
+        dump($clienteOriginal);
         dump($dniOriginal);
         $form = $this->createForm(ContratoType::class, $Contrato);
         $form->handleRequest($request);
