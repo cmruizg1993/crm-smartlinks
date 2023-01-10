@@ -140,11 +140,14 @@ class ContratoController extends AbstractController
                     dump('CLIENTE EXISTENTE');
                     dump($oldClient);
                     $Contrato->setCliente($oldClient);
+                }else{
+                    $cliente->setId(null);
                 }
-                //$cliente->setId(null);
+
             }
             $cliente = $Contrato->getCliente();
             dump($cliente);
+            dump($Contrato);
             $Contrato->setFechaActualizacion(new \DateTime());
             $Contrato->getActualizadoPor($this->getUser());
             $em->flush();
