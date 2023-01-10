@@ -33,6 +33,7 @@ class FacturaRepository extends ServiceEntityRepository
     public function getRangeOfDate($desde, $hasta)
     {
         return $this->createQueryBuilder('f')
+            ->select('f, cliente, dni, contrato')
             ->leftJoin('f.cliente', 'cliente')
             ->leftJoin('cliente.dni', 'dni')
             ->leftJoin('f.contrato','contrato')
