@@ -138,6 +138,7 @@ class ContratoController extends AbstractController
                 dump('DNI MODIFICADO');
                 if($oldClient){
                     dump('CLIENTE EXISTENTE');
+                    dump($oldClient);
                     $Contrato->setCliente($oldClient);
                 }
                 //$cliente->setId(null);
