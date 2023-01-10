@@ -130,7 +130,9 @@ class ContratoController extends AbstractController
             $dni = $cliente->getDni()->getNumero();
             if($dni != $clienteOriginal->getDni()->getNumero()){
                 $oldClient = $clienteRepository->findOneByNumeroDni($dni);
+                dump('DNI MODIFICADO');
                 if($oldClient){
+                    dump('CLIENTE EXISTENTE');
                     $Contrato->setCliente($oldClient);
                 }
                 $cliente->setId(null);
