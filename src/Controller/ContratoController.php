@@ -122,7 +122,7 @@ class ContratoController extends AbstractController
         $clienteOriginal = $Contrato->getCliente();
         $dniOriginal = $clienteOriginal->getDni();
         dump($clienteOriginal);
-        dump($dniOriginal);
+        dump($dniOriginal->getNumero());
         $form = $this->createForm(ContratoType::class, $Contrato);
         $form->handleRequest($request);
 
@@ -131,7 +131,7 @@ class ContratoController extends AbstractController
             $cliente = $Contrato->getCliente();
             $dni = $cliente->getDni();
 
-            dump($dni);
+            dump($dni->getNumero());
 
             if($dni->getNumero() != $dniOriginal->getNumero()){
                 $oldClient = $clienteRepository->findOneByNumeroDni($dni);
