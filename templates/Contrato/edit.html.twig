@@ -6,3 +6,8 @@
 
     {{ include('Contrato/_form.html.twig', {'button_label': 'Update'}) }}
 {% endblock %}
+{% block javascript %}
+{{ include('scripts/buscar_parroquia.twig',{'controlName':'san_parroquia'}) }}
+{{ include('scripts/buscar_cliente.twig',{'prefix': 'contrato_'}) }}
+{{ include('scripts/agregar_equipo.twig', {'table_id': 'tEquiposInstalacion'}) }}
+{% endblock %}
