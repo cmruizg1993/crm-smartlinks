@@ -122,35 +122,22 @@ class ContratoController extends AbstractController
         DniRepository $dniRepository,
         EntityManagerInterface $em): Response
     {
-        $clienteOriginal = $Contrato->getCliente();
-        $dniOriginal = $clienteOriginal->getDni();
-        $numeroOriginal = $dniOriginal->getNumero();
+        $numeroOriginal = $Contrato->getCliente()->getDni()->getNumero();
         $form = $this->createForm(ContratoType::class, $Contrato);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $Contrato->setVersion($Contrato->getVersion()+1);
-            $cliente = $Contrato->getCliente();
-            $dni = $cliente->getDni();
-            $numero = $dni->getNumero();
+            $numero = $Contrato->getCliente()->getDni()->getNumero();
             if($numero != $numeroOriginal){
                 $oldClient = $clienteRepository->findOneByNumeroDni($numero);
-                unset($dniOriginal);
-                unset($clienteOriginal);
-
-                /*
-                $dniOriginal = $dniRepository->findOneByNumero($numeroOriginal);
-                $clienteOriginal->getDni()->setNumero($dniOriginal->getNumero());
-                $clienteOriginal->getDni()->setTipo($dniOriginal->getTipo());
-                */
                 dump('DNI MODIFICADO');
                 if($oldClient){
                     dump('CLIENTE EXISTENTE');
                     $Contrato->setCliente($oldClient);
                 }else{
-                    $cliente->setId(null);
+                    $Contrato->getCliente()->setId(null);
                 }
-
             }
             $cliente = $Contrato->getCliente();
             dump('Cliente asignado');
