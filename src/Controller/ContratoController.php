@@ -9,6 +9,7 @@ use App\Entity\EquipoInstalacion;
 use App\Entity\EstadoContrato;
 use App\Entity\OpcionCatalogo;
 use App\Form\ContratoType;
+use App\Repository\ClienteRepository;
 use App\Repository\ContratoRepository;
 use App\Repository\OpcionCatalogoRepository;
 use Doctrine\ORM\EntityManager;
@@ -115,6 +116,7 @@ class ContratoController extends AbstractController
         Request $request,
         Contrato $Contrato,
         SerializerInterface $serializer,
+        ClienteRepository $clienteRepository,
         EntityManagerInterface $em): Response
     {
         $clienteOriginal = $Contrato->getCliente();
@@ -124,8 +126,13 @@ class ContratoController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $Contrato->setVersion($Contrato->getVersion()+1);
             $cliente = $Contrato->getCliente();
-            if($cliente->getDni()->getNumero() == $clienteOriginal->getDni()->getNumero()){
-
+            $dni = $cliente->getDni()->getNumero();
+            if($dni != $clienteOriginal->getDni()->getNumero()){
+                $oldClient = $clienteRepository->findOneByNumeroDni($dni);
+                if($oldClient){
+                    $Contrato->setCliente($oldClient);
+                }
+                $cliente->setId(null);
             }
             dump($clienteOriginal);
             dump($cliente);
