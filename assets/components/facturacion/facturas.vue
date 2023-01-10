@@ -91,9 +91,7 @@
                     });
                 }
                 if(v.estadoSri == 'RECIBIDA' || v.estadoSri == 'EN PROCESO'){
-                    let autorizar = (v)=>{
-                        console.log(v)
-                    }
+
                     v.actions.push({
                         color: 'primary',
                         texto: 'Autorizar',
