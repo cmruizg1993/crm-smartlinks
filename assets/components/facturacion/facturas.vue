@@ -90,7 +90,7 @@
                         }
                     });
                 }
-                if(v.estadoSri == 'RECIBIDA'){
+                if(v.estadoSri == 'RECIBIDA' || v.estadoSri == 'EN PROCESO'){
                     let autorizar = (v)=>{
                         console.log(v)
                     }
