@@ -120,7 +120,7 @@ class ContratoController extends AbstractController
         EntityManagerInterface $em): Response
     {
         $clienteOriginal = $Contrato->getCliente();
-        $dniOriginal = $clienteOriginal->getDni()->getNumero();
+        $dniOriginal = $clienteOriginal->getDni();
         dump($clienteOriginal);
         dump($dniOriginal);
         $form = $this->createForm(ContratoType::class, $Contrato);
@@ -129,11 +129,11 @@ class ContratoController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $Contrato->setVersion($Contrato->getVersion()+1);
             $cliente = $Contrato->getCliente();
-            $dni = $cliente->getDni()->getNumero();
+            $dni = $cliente->getDni();
 
             dump($dni);
 
-            if($dni != $dniOriginal){
+            if($dni->getNumero() != $dniOriginal->getNumero()){
                 $oldClient = $clienteRepository->findOneByNumeroDni($dni);
                 dump('DNI MODIFICADO');
                 if($oldClient){
