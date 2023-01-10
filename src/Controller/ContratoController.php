@@ -142,7 +142,7 @@ class ContratoController extends AbstractController
                 }
                 //$cliente->setId(null);
             }
-
+            $cliente = $Contrato->getCliente();
             dump($cliente);
             $Contrato->setFechaActualizacion(new \DateTime());
             $Contrato->getActualizadoPor($this->getUser());
