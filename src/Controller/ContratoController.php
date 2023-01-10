@@ -133,23 +133,16 @@ class ContratoController extends AbstractController
                 $oldClient = $clienteRepository->findOneByNumeroDni($numero);
                 $em->refresh($Contrato->getCliente());
                 $em->refresh($Contrato->getCliente()->getDni());
-                dump('DNI MODIFICADO');
                 if($oldClient){
-                    dump('CLIENTE EXISTENTE');
-
                     $Contrato->setCliente($oldClient);
                 }else{
                     $Contrato->getCliente()->setId(null);
                 }
-
             }
-            $cliente = $Contrato->getCliente();
-            dump('Cliente asignado');
-            dump($cliente);
             $Contrato->setFechaActualizacion(new \DateTime());
             $Contrato->getActualizadoPor($this->getUser());
             $em->flush();
-            //return $this->redirectToRoute('contrato_index');
+            return $this->redirectToRoute('contrato_index');
         }
 
         return $this->render('Contrato/edit.html.twig', [
