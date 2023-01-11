@@ -1,0 +1,15 @@
+<cuenta
+        urlservicios="{{ path('buscar_servicio') }}"
+        urlcontratos="{{ path('buscar_Contrato') }}"
+        urlcatalogocomprobantes="{{ path('catalogo_get', {'codigo': 'tipo-comp' }) }}"
+        urlcatalogoambientes="{{ path('catalogo_get', {'codigo': 'ambiente' }) }}"
+        urlcatalogopagos="{{ path('catalogo_get', {'codigo': 'f-pagos' }) }}"
+        urlserie="{{ path('punto_emision_get', {'codigo': '' }) }}"
+        urlsecuencial="{{ path('factura_secuencial') }}"
+        urlreconexion="{{ path('obtener_servicio_reconexion') }}"
+        user="{{ app.user }}"
+        {% if edit is defined %}
+            datafactura="{{ factura|json_encode }}"
+        {% endif %}
+>
+</cuenta>

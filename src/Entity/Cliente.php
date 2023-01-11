@@ -135,6 +135,11 @@ class Cliente
      * @ORM\ManyToOne(targetEntity=Parroquia::class)
      */
     private $parroquia;
+
+    /**
+     * @ORM\OneToMany(targetEntity=CuentaPorCobrar::class, mappedBy="cliente")
+     */
+    private $deudas;
     public function __toString()
     {
         return $this->nombres ? $this->nombres : ''. $this->getId();
@@ -144,6 +149,7 @@ class Cliente
         $this->solicitudes = new ArrayCollection();
         $this->Contratos = new ArrayCollection();
         $this->facturas = new ArrayCollection();
+        $this->deudas = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -552,6 +558,36 @@ class Cliente
     public function setParroquia(?Parroquia $parroquia): self
     {
         $this->parroquia = $parroquia;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CuentaPorCobrar>
+     */
+    public function getDeudas(): Collection
+    {
+        return $this->deudas;
+    }
+
+    public function addDeuda(CuentaPorCobrar $deuda): self
+    {
+        if (!$this->deudas->contains($deuda)) {
+            $this->deudas[] = $deuda;
+            $deuda->setCliente($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDeuda(CuentaPorCobrar $deuda): self
+    {
+        if ($this->deudas->removeElement($deuda)) {
+            // set the owning side to null (unless already changed)
+            if ($deuda->getCliente() === $this) {
+                $deuda->setCliente(null);
+            }
+        }
 
         return $this;
     }

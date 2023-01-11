@@ -212,7 +212,7 @@
     import FacturaPagos from "./factura_pagos";
     import ListaServicios from "../lista-servicios";
     import ListaContratos from "../lista-contratos";
-    import CuentasXCobrar from "../cuentasxcobrar/cuentas_contrato";
+    import CuentasXCobrar from "../cuentasxcobrar/cuentas.vue";
     export default {
         name: "factura",
         components:{

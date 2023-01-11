@@ -6,7 +6,7 @@
 
 <script>
     export default {
-        name: "cuentas_contrato"
+        name: "cuentas"
     }
 </script>
 

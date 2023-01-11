@@ -45,7 +45,8 @@ Vue.component('clientes', require('./components/clientes/clientes').default )
 //SERVICIOS
 Vue.component('contratos', require('./components/contratos/contratos').default )
 //CUENTAS X COBRAR
-Vue.component('cuentas_contrato', require('./components/cuentasxcobrar/cuentas_contrato').default)
+Vue.component('cuentas', require('./components/cuentasxcobrar/cuentas').default)
+Vue.component('cuenta', require('./components/cuentasxcobrar/cuenta').default)
 
 
 const app = new Vue({

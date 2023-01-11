@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+{% block title %}Nueva CxC{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/factura/styles.css') }}">
+{% endblock %}
+{% block body %}
+    {{ include('cuenta_por_cobrar/_form.html.twig') }}
+{% endblock %}
+{% block javascript %}
+
+{{ encore_entry_script_tags('app') }}
+
+{% endblock %}

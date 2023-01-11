@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CuentaPorCobrar{% endblock %}
+
+{% block body %}
+    <h1>CuentaPorCobrar</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ cuenta_por_cobrar.id }}</td>
+            </tr>
+            <tr>
+                <th>Fecha</th>
+                <td>{{ cuenta_por_cobrar.fecha ? cuenta_por_cobrar.fecha|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Observaciones</th>
+                <td>{{ cuenta_por_cobrar.observaciones }}</td>
+            </tr>
+            <tr>
+                <th>Total</th>
+                <td>{{ cuenta_por_cobrar.total }}</td>
+            </tr>
+            <tr>
+                <th>Plazo</th>
+                <td>{{ cuenta_por_cobrar.plazo }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_cuenta_por_cobrar_index') }}">back to list</a>
+
+    <a href="{{ path('app_cuenta_por_cobrar_edit', {'id': cuenta_por_cobrar.id}) }}">edit</a>
+
+    {{ include('cuenta_por_cobrar/_delete_form.html.twig') }}
+{% endblock %}

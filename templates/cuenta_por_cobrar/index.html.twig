@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CuentaPorCobrar index{% endblock %}
+
+{% block body %}
+    <h1>CuentaPorCobrar index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fecha</th>
+                <th>Observaciones</th>
+                <th>Total</th>
+                <th>Plazo</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cuenta_por_cobrar in cuenta_por_cobrars %}
+            <tr>
+                <td>{{ cuenta_por_cobrar.id }}</td>
+                <td>{{ cuenta_por_cobrar.fecha ? cuenta_por_cobrar.fecha|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ cuenta_por_cobrar.observaciones }}</td>
+                <td>{{ cuenta_por_cobrar.total }}</td>
+                <td>{{ cuenta_por_cobrar.plazo }}</td>
+                <td>
+                    <a href="{{ path('app_cuenta_por_cobrar_show', {'id': cuenta_por_cobrar.id}) }}">show</a>
+                    <a href="{{ path('app_cuenta_por_cobrar_edit', {'id': cuenta_por_cobrar.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_cuenta_por_cobrar_new') }}">Create new</a>
+{% endblock %}

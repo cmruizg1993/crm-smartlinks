@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit CuentaPorCobrar{% endblock %}
+
+{% block body %}
+    <h1>Edit CuentaPorCobrar</h1>
+
+    {{ include('cuenta_por_cobrar/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_cuenta_por_cobrar_index') }}">back to list</a>
+
+    {{ include('cuenta_por_cobrar/_delete_form.html.twig') }}
+{% endblock %}
