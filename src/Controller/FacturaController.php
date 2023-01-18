@@ -459,10 +459,13 @@ class FacturaController extends AbstractController
         $data['contrato'] = $serializer->normalize($factura->getContrato(), null, [AbstractNormalizer::ATTRIBUTES=>['id', 'numero']]);
         $data['puntoEmision'] = $serializer->normalize($factura->getPuntoEmision(), null, [AbstractNormalizer::ATTRIBUTES=>['id', 'codigo', 'establecimiento'=>['codigo']]]);
         $data['detalles'] = $serializer->normalize($factura->getDetalles(), null, [AbstractNormalizer::ATTRIBUTES=>[
-            'id','descripcion', 'precio', 'cantidad', 'subtotal', 'descuento', 'idServicio', 'esServicio', 'servicio'=>['id', 'codigo', 'precio', 'codigoPorcentaje', 'incluyeIva']
+            'id','descripcion', 'precio', 'cantidad', 'subtotal', 'descuento', 'idServicio', 'esServicio', 'codigoPorcentaje',
+            'servicio'=>['id', 'codigo', 'precio', 'codigoPorcentaje', 'incluyeIva'],
+            'cuota'=>['id']
         ]]);
         $setPorcentaje = function ($detalle) use ($em){
-            $codigo = $detalle['servicio']['codigoPorcentaje'];
+            if($detalle['servicio'])$codigo = $detalle['servicio']['codigoPorcentaje'];
+            if($detalle['cuota'])$codigo = $detalle['codigoPorcentaje'];
             $impuesto = $em->getRepository(OpcionCatalogo::class)->findOneByCodigoyCatalogo($codigo, 'iva');
             $detalle['servicio']['porcentaje'] = $impuesto->getValorNumerico();
             return$detalle;
