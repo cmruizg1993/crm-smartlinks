@@ -352,6 +352,7 @@
                 await axios.get(this.urlreconexion)
                     .then(r=>{
                         let servicio = r.data;
+                        servicio.esServicio = true;
                         this.agregarDetalle(servicio);
                     })
             },
@@ -477,11 +478,12 @@
                 this.factura.puntoEmision = data.puntoEmision.id;
                 this.factura.serial = data.factura.serie;
                 this.factura.detalles = JSON.parse(JSON.stringify(data.detalles)).map(d => {
-                    d.codigo = d.servicio.codigo;
-                    d.incluyeIva = d.servicio.incluyeIva;
-                    d.precioOriginal = d.servicio.precio;
-                    d.porcentaje = d.servicio.porcentaje;
-                    d.servicio = d.servicio.id;
+                    d.codigo = d.codigo;
+                    d.incluyeIva = d.esServicio ? d.servicio.incluyeIva: true;
+                    d.precioOriginal = d.esServicio ? d.servicio.precio: d.precio;
+                    d.porcentaje = d.esServicio ? d.servicio.porcentaje:12;
+                    d.servicio = d.esServicio ? d.servicio.id: null;
+                    d.cuota = !d.esServicio ? d.cuota.id:null
                     return d;
                 });
                 this.factura.secuencial = data.factura.secuencial;
