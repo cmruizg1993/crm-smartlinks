@@ -478,6 +478,7 @@
                 this.factura.puntoEmision = data.puntoEmision.id;
                 this.factura.serial = data.factura.serie;
                 this.factura.detalles = JSON.parse(JSON.stringify(data.detalles)).map(d => {
+                    console.log(d)
                     d.codigo = d.codigo;
                     d.incluyeIva = d.esServicio ? d.servicio.incluyeIva: true;
                     d.precioOriginal = d.esServicio ? d.servicio.precio: d.precio;
