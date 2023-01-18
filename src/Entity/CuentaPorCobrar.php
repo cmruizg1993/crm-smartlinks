@@ -86,6 +86,11 @@ class CuentaPorCobrar
      */
     private $abono;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $fechaCrecion;
+
     public function __construct()
     {
         $this->pagos = new ArrayCollection();
@@ -343,6 +348,18 @@ class CuentaPorCobrar
     public function setAbono(?string $abono): self
     {
         $this->abono = $abono;
+
+        return $this;
+    }
+
+    public function getFechaCrecion(): ?\DateTimeInterface
+    {
+        return $this->fechaCrecion;
+    }
+
+    public function setFechaCrecion(?\DateTimeInterface $fechaCrecion): self
+    {
+        $this->fechaCrecion = $fechaCrecion;
 
         return $this;
     }

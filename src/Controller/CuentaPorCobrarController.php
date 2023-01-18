@@ -77,13 +77,13 @@ class CuentaPorCobrarController extends AbstractController
             if(!$plazo || $plazo < 0) return new Response('Plazo no válido', 400);
             if($plazo == 0){
                 $cuota = new CuotaCuenta();
-                $cuota->setFechaVencimiento($cuota->getFechaVencimiento());
+                $cuota->setFechaVencimiento($cuenta->getFecha());
                 $cuota->setValor($cuenta->getTotal());
                 $cuota->setNumero(1);
                 $cuenta->addCuota($cuota);
             }else{
                 $valorCuota = round($cuenta->getTotal()/$plazo, 2);
-                for($i = 1 ; $i <= $plazo; $i++){
+                for($i = 0 ; $i < $plazo; $i++){
                     $cuota = new CuotaCuenta();
                     /* @var $fecha \DateTime */
                     $fecha = clone $cuenta->getFecha();
@@ -94,6 +94,7 @@ class CuentaPorCobrarController extends AbstractController
                     $cuenta->addCuota($cuota);
                 }
             }
+            $cuenta->setFecha(new \DateTime());
             $em->persist($cuenta);
             $em->flush();
             return new JsonResponse(['id'=>$cuenta->getId()], 200);

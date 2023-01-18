@@ -152,6 +152,44 @@ class ContratoController extends AbstractController
     }
 
     /**
+     * @Route("/{id}/ejecutar", name="contrato_ejecutar", methods={"GET","POST"})
+     */
+    public function ejecutar(
+        Request $request,
+        Contrato $Contrato,
+        OpcionCatalogoRepository $opcionCatalogoRepository,
+        EntityManagerInterface $em): Response
+    {
+        $ejecutado = $opcionCatalogoRepository->findOneByCodigoyCatalogo(EstadoContrato::EJECUTADO, 'est-cont');
+        $Contrato->setEstadoActual($ejecutado);
+        $em->flush();
+        return $this->redirectToRoute('contrato_index');
+    }
+
+    /**
+     * @Route("/{id}/cortesia", name="contrato_cortesia", methods={"GET","POST"})
+     */
+    public function cortesia(
+        Request $request,
+        Contrato $Contrato,
+        OpcionCatalogoRepository $opcionCatalogoRepository,
+        EntityManagerInterface $em): Response
+    {
+        $esCortesia = $Contrato->isEsCortesia();
+        if($esCortesia){
+            $activo = $opcionCatalogoRepository->findOneByCodigoyCatalogo(EstadoContrato::ACTIVO, 'est-cont');
+            $Contrato->setEstadoActual($activo);
+        }else{
+            $cortesia = $opcionCatalogoRepository->findOneByCodigoyCatalogo(EstadoContrato::CORTESIA, 'est-cont');
+            $Contrato->setEstadoActual($cortesia);
+        }
+
+        $Contrato->isEsCortesia($esCortesia ? false:true);
+        $em->flush();
+        return $this->redirectToRoute('contrato_index');
+    }
+
+    /**
      * @Route("/{id}", name="contrato_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Contrato $Contrato): Response
@@ -260,7 +298,7 @@ class ContratoController extends AbstractController
         EntityManagerInterface $em
     ): Response
     {
-        error_reporting(E_ALL & ~E_NOTICE);
+        //error_reporting(E_ALL & ~E_NOTICE);
         $fecha = new \DateTime();
         $anio = (int)$fecha->format('Y');
         $mes = (int)$fecha->format('m');
@@ -281,6 +319,7 @@ class ContratoController extends AbstractController
         $contratoRepository->generarActivacion($anio, $mes);
         return $this->redirectToRoute('contrato_index');
     }
+
     /**
      * @Route("/marcar/inpagos", name="contrato_inpagos", methods={"GET"})
      */

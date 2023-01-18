@@ -45,6 +45,7 @@
                         let variant = v.estadoActual.cssClass ;
                         v.estadoActual = estado;
                         v._rowVariant= variant;
+                        if(v.esCortesia) v.estadoActual = 'CORTESIA';
                         //delete v.estadoActual;
                     }
                     v.actions = [];
@@ -53,6 +54,21 @@
                         texto: 'Editar',
                         callback: async ()=>{
                             window.location.href = '/contrato/'+v.id+'/edit'; //
+                        }
+                    });
+
+                    v.actions.push({
+                        color: 'danger',
+                        texto: 'Ejecutar',
+                        callback: async ()=>{
+                            window.location.href = '/contrato/'+v.id+'/ejecutar'; //
+                        }
+                    });
+                    v.actions.push({
+                        color: 'info',
+                        texto: 'Cortesia',
+                        callback: async ()=>{
+                            window.location.href = '/contrato/'+v.id+'/cortesia'; //
                         }
                     });
                     return v;
