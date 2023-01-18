@@ -458,8 +458,9 @@ class FacturaController extends AbstractController
 
         $data['contrato'] = $serializer->normalize($factura->getContrato(), null, [AbstractNormalizer::ATTRIBUTES=>['id', 'numero']]);
         $data['puntoEmision'] = $serializer->normalize($factura->getPuntoEmision(), null, [AbstractNormalizer::ATTRIBUTES=>['id', 'codigo', 'establecimiento'=>['codigo']]]);
-        $data['detalles'] = $serializer->normalize($factura->getDetalles(), null, [AbstractNormalizer::ATTRIBUTES=>[
-            'id','descripcion', 'precio', 'cantidad', 'subtotal', 'descuento', 'idServicio', 'esServicio', 'codigoPorcentaje',
+        $data['detalles'] = $serializer->normalize($factura->getDetalles(), null,
+            [AbstractNormalizer::ATTRIBUTES=>[
+            'id','descripcion', 'precio', 'cantidad', 'subtotal', 'descuento', 'idServicio', 'esServicio', 'codigoPorcentaje', 'codigo',
             'servicio'=>['id', 'codigo', 'precio', 'codigoPorcentaje', 'incluyeIva'],
             'cuota'=>['id']
         ]]);
