@@ -23,7 +23,7 @@ class CuotaCuenta
     private $fechaVencimiento;
 
     /**
-     * @ORM\ManyToOne(targetEntity=CuentaPorCobrar::class)
+     * @ORM\ManyToOne(targetEntity=CuentaPorCobrar::class, inversedBy="cuotas")
      * @ORM\JoinColumn(nullable=false)
      */
     private $cuenta;
@@ -43,9 +43,24 @@ class CuotaCuenta
      */
     private $observaciones;
 
+    /**
+     * @ORM\OneToOne(targetEntity=DetalleFactura::class, mappedBy="cuota", cascade={"persist", "remove"})
+     */
+    private $detalleFactura;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $numero;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+    public function __toString()
+    {
+        // TODO: Implement __toString() method.
+        return $this->getId()."";
     }
 
     public function getFechaVencimiento(): ?\DateTimeInterface
@@ -106,5 +121,42 @@ class CuotaCuenta
         $this->observaciones = $observaciones;
 
         return $this;
+    }
+
+    public function getDetalleFactura(): ?DetalleFactura
+    {
+        return $this->detalleFactura;
+    }
+
+    public function setDetalleFactura(?DetalleFactura $detalleFactura): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($detalleFactura === null && $this->detalleFactura !== null) {
+            $this->detalleFactura->setCuota(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($detalleFactura !== null && $detalleFactura->getCuota() !== $this) {
+            $detalleFactura->setCuota($this);
+        }
+
+        $this->detalleFactura = $detalleFactura;
+
+        return $this;
+    }
+
+    public function getNumero(): ?int
+    {
+        return $this->numero;
+    }
+
+    public function setNumero(?int $numero): self
+    {
+        $this->numero = $numero;
+
+        return $this;
+    }
+    public function getPagada(){
+        return $this->getDetalleFactura() ? true:false;
     }
 }

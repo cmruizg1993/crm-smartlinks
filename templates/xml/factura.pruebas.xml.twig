@@ -60,15 +60,15 @@
     <detalles>
         {% for d in factura.detalles %}
         <detalle>
-            <codigoPrincipal>{{ d.servicio.id }}</codigoPrincipal>
-            <codigoAuxiliar>{{ d.servicio.codigo }}</codigoAuxiliar>
-            <descripcion>{{ d.servicio.nombre }}</descripcion>
+            <codigoPrincipal>{{ d.id }}</codigoPrincipal>
+            <codigoAuxiliar>{{ d.codigo }}</codigoAuxiliar>
+            <descripcion>{{ d.descripcion }}</descripcion>
             <cantidad>{{ d.cantidad }}</cantidad>
             <precioUnitario>{{ d.precio|number_format(2) }}</precioUnitario>
             <descuento>{{ d.descuento|number_format(2) }}</descuento>
             <precioTotalSinImpuesto>{{ d.subtotal|number_format(2) }}</precioTotalSinImpuesto>
             <impuestos>
-                {% if d.servicio.codigoPorcentaje > 0 %}
+                {% if d.codigoPorcentaje > 0 %}
                 <impuesto>
                     <codigo>2</codigo>
                     <codigoPorcentaje>2</codigoPorcentaje>
@@ -77,7 +77,7 @@
                     <valor>{{ (d.subtotal*0.12) |number_format(2)}}</valor>
                 </impuesto>
                 {% endif %}
-                {% if d.servicio.codigoPorcentaje == 0 %}
+                {% if d.codigoPorcentaje == 0 %}
                     <impuesto>
                         <codigo>2</codigo>
                         <codigoPorcentaje>0</codigoPorcentaje>

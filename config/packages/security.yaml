@@ -1,6 +1,8 @@
 security:
     role_hierarchy:
-      ROLE_ADMIN: ROLE_VENDEDOR
+      ROLE_TECNICO: ROLE_VENDEDOR
+      ROLE_OPERADOR: ROLE_TECNICO
+      ROLE_ADMIN: ROLE_OPERADOR
       ROLE_SUPER_ADMIN: ROLE_ADMIN
     encoders:
         App\Entity\Usuario:

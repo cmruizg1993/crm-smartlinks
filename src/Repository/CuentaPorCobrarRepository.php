@@ -38,6 +38,15 @@ class CuentaPorCobrarRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    public function findAllRegisters(){
+        return $this->createQueryBuilder('c')
+            ->select('c, cliente, dni')
+            ->innerJoin('c.cliente', 'cliente')
+            ->innerJoin('cliente.dni', 'dni')
+            ->orderBy('c.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 
 //    /**
 //     * @return CuentaPorCobrar[] Returns an array of CuentaPorCobrar objects

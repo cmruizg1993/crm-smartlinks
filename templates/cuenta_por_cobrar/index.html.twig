@@ -1,41 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}CuentaPorCobrar index{% endblock %}
+{% block title %}CxC{% endblock %}
 
 {% block body %}
-    <h1>CuentaPorCobrar index</h1>
+    <div class="row">
+        <div class="col">
+            <h3 class="m-2">Cuentas por cobrar</h3>
+        </div>
+        <div class="col d-flex justify-content-end">
+            <a class="btn btn-sm btn-success" href="{{ path('contrato_activacion') }}">
+                Generar Activación
+            </a>
+            <a class="btn btn-sm btn-warning" href="{{ path('contrato_corte') }}">
+                Generar Corte
+            </a>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Fecha</th>
-                <th>Observaciones</th>
-                <th>Total</th>
-                <th>Plazo</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for cuenta_por_cobrar in cuenta_por_cobrars %}
-            <tr>
-                <td>{{ cuenta_por_cobrar.id }}</td>
-                <td>{{ cuenta_por_cobrar.fecha ? cuenta_por_cobrar.fecha|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ cuenta_por_cobrar.observaciones }}</td>
-                <td>{{ cuenta_por_cobrar.total }}</td>
-                <td>{{ cuenta_por_cobrar.plazo }}</td>
-                <td>
-                    <a href="{{ path('app_cuenta_por_cobrar_show', {'id': cuenta_por_cobrar.id}) }}">show</a>
-                    <a href="{{ path('app_cuenta_por_cobrar_edit', {'id': cuenta_por_cobrar.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <a href="{{ path('contrato_new') }}" class="btn btn-primary btn-sm">
+                <strong><b>+</b></strong>Nuevo
+            </a>
+        </div>
+    </div>
 
-    <a href="{{ path('app_cuenta_por_cobrar_new') }}">Create new</a>
+
+    <cuentas listado="{{ cuentas|json_encode }}"></cuentas>
+
+{% endblock %}
+{% block javascript %}
+
+{{ encore_entry_script_tags('app') }}
 {% endblock %}

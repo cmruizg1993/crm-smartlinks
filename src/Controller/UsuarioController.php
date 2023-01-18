@@ -45,6 +45,8 @@ class UsuarioController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $roles = [
           'Vendedor'=>'ROLE_VENDEDOR',
+            'Tecnico'=>'ROLE_TECNICO',
+            'Operador'=>'ROLE_OPERADOR',
           'Administrador'=>'ROLE_ADMIN'
         ];
         $userRoles = $usuario->getRoles();

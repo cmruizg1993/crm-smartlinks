@@ -29,18 +29,24 @@ class ContratoRepository extends ServiceEntityRepository
     */
     public function findByParam($value)
     {
+        $fecha = (new \DateTime())->format('Y-m-d');
         $em = $this->getEntityManager();
         /* @var $query QueryBuilder */
         $query = $em->createQuery("
-        SELECT Contrato,cli,f,est, dni, plan FROM App\Entity\Contrato Contrato
+        SELECT Contrato,cli,f,est, dni, plan, deuda, cuota FROM App\Entity\Contrato Contrato
         LEFT JOIN Contrato.facturas f WITH f.estadoSri != 'ANULADA'
         INNER JOIN Contrato.cliente cli
         INNER JOIN cli.dni dni
+        LEFT JOIN cli.deudas deuda WITH deuda.abono IS NULL OR deuda.abono < deuda.total
+        LEFT JOIN deuda.cuotas cuota WITH cuota.fechaVencimiento <= :fecha
+        LEFT JOIN cuota.detalleFactura detalle   
         LEFT JOIN Contrato.plan plan
         LEFT JOIN Contrato.estadoActual est
         WHERE (Contrato.numero LIKE :param OR cli.nombres LIKE :param OR dni.numero LIKE :param)
-        ORDER BY f.anioPago DESC,f.mesPago DESC")
-        ->setParameter('param', "%$value%");
+        ORDER BY f.anioPago DESC,f.mesPago DESC, cuota.id DESC")
+        ->setParameter(
+            'param', "%$value%")
+        ->setParameter('fecha', $fecha);
 
         $data = $query->getResult();
         return $data;

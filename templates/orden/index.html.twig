@@ -3,7 +3,7 @@
 {% block title %}Orden index{% endblock %}
 
 {% block body %}
-    <h1>Orden index</h1>
+    <h3 class="mb-3">Listado de órdenes</h3>
 
     <table class="table table-bordered table-responsive">
         <thead>
@@ -11,8 +11,7 @@
                 <th>Id</th>
                 <th>Tecnico</th>
                 <th>Tipo</th>
-                <th>SAN</th>
-                <th>FSO</th>
+                <th>Contrato</th>
                 <th>Fecha</th>
                 <th>Estado</th>
                 <th>actions</th>
@@ -29,16 +28,15 @@
                 </td>
                 <td>{{ orden.tipo.nombre }}</td>
                 <td>
-                    {% if orden.san %}
-                        {{ orden.san.numero }}
+                    {% if orden.Contrato %}
+                        {{ orden.Contrato.numero }}
                     {% endif %}
                 </td>
-                <td>{{ orden.codigo }}</td>
                 <td>{{ orden.fecha ? orden.fecha|date('Y-m-d') : '' }}</td>
                 <td>{{ orden.estado.nombre }}</td>
                 <td>
-                    <a href="{{ path('orden_show', {'id': orden.id}) }}">show</a>
-                    <a href="{{ path('orden_edit', {'id': orden.id}) }}">edit</a>
+                    <a class="btn btn-sm btn-primary" href="{{ path('orden_show', {'id': orden.id}) }}">Mostrar</a>
+                    <a class="btn btn-sm btn-info" href="{{ path('orden_edit', {'id': orden.id}) }}">Editar</a>
                 </td>
             </tr>
         {% else %}

@@ -67,6 +67,21 @@ class DetalleFactura
      */
     private $iva;
 
+    /**
+     * @ORM\OneToOne(targetEntity=CuotaCuenta::class, inversedBy="detalleFactura", cascade={"persist", "remove"})
+     */
+    private $cuota;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $codigo;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $codigoPorcentaje;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -187,6 +202,42 @@ class DetalleFactura
     public function setIva(?string $iva): self
     {
         $this->iva = $iva;
+
+        return $this;
+    }
+
+    public function getCuota(): ?CuotaCuenta
+    {
+        return $this->cuota;
+    }
+
+    public function setCuota(?CuotaCuenta $cuota): self
+    {
+        $this->cuota = $cuota;
+
+        return $this;
+    }
+
+    public function getCodigo(): ?string
+    {
+        return $this->codigo;
+    }
+
+    public function setCodigo(?string $codigo): self
+    {
+        $this->codigo = $codigo;
+
+        return $this;
+    }
+
+    public function getCodigoPorcentaje(): ?int
+    {
+        return $this->codigoPorcentaje;
+    }
+
+    public function setCodigoPorcentaje(?int $codigoPorcentaje): self
+    {
+        $this->codigoPorcentaje = $codigoPorcentaje;
 
         return $this;
     }

@@ -51,24 +51,10 @@
                                 <input type="text" v-model="nombres" class="form-control" form="factura" name="nombre" readonly>
                             </div>
                         </div>
-                        <div class="form-group row justify-content-end">
-                            <label class="col-form-label col-4">
-                                <span class="float-right">#Contrato</span>
-                            </label>
-                            <div class="col-8">
-                                <input type="text" name="contrato" v-model="numero" class='form-control' style='color: #ff0000; font-weight: 700; font-size: 2rem !important; line-height: 3rem; height: 3rem !important'  readonly>
-                            </div>
-                        </div>
                     </div>
                     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
                         <div class="form-group row">
-                            <label class="col-4 col-form-label">Usuario</label>
-                            <div class="col-8">
-                                <input :disabled='isDisabled' type="text" class="form-control" form="factura" name="usuario" v-model="user" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-4 col-form-label">Plazo</label>
+                            <label class="col-4 col-form-label">Plazo(meses)</label>
                             <div class="col-8">
                                 <input :disabled='isDisabled' type="number" min="0" step="1" class="form-control" form="factura" name="plazo" v-model="factura.plazo">
                             </div>
@@ -77,6 +63,14 @@
                             <label class="col-4 col-form-label">Observaciones</label>
                             <div class="col-8">
                                 <textarea :disabled='isDisabled' class="form-control" form="factura" name="usuario" v-model="factura.observaciones" ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label">Usuario</label>
+                            <div class="col-8">
+                                <input :disabled='isDisabled' type="text" class="form-control" form="factura" name="usuario" v-model="user" readonly>
                             </div>
                         </div>
                     </div>
@@ -125,19 +119,10 @@
             return{
                 factura:{
                     fecha: '',
-                    secuencial: null,
-                    tipoComprobante: '01',
                     detalles: []
                 },
-                secuencial: '',
-                comprobante: '',
-                comprobantes:[],
-                ambientes: [],
-                formaspago:[],
-                meses,
                 cedula: null,
                 nombres: null,
-                numero: null,
                 formatted: '',
                 selected: '',
                 loading: false,
@@ -148,12 +133,6 @@
         props:[
             'urlservicios',
             'urlcontratos',
-            'urlcatalogocomprobantes',
-            'urlcatalogoambientes',
-            'urlserie',
-            'urlsecuencial',
-            'urlcatalogopagos',
-            'urlreconexion',
             'user',
             'datafactura'
         ],
@@ -162,25 +141,9 @@
                 this.$refs.detalles.agregarDetalle(servicio);
             },
             agregarContrato(contrato){
-                console.log(contrato);
-                this.factura.contrato = contrato.id;
-                this.numero = contrato.numero;
                 this.factura.cliente = contrato.cliente.id;
                 this.nombres = contrato.cliente.nombres;
                 this.cedula = contrato.cliente.dni.numero;
-                if(contrato.mesPago) this.factura.mesPago = contrato.mesPago == 12 ? 1: contrato.mesPago +1;
-                if(contrato.anioPago) this.factura.anioPago = contrato.mesPago == 12 ? contrato.anioPago +1:contrato.anioPago;
-                contrato.plan.nombre += '- Mes de: '+meses[this.factura.mesPago-1].texto + ' año ' +this.factura.anioPago;
-                this.$refs.detalles.inicializar();
-                this.agregarDetalle(contrato.plan);
-                if(contrato.necesitaReconexion) this.agregarServicioReconexion();
-            },
-            async agregarServicioReconexion(){
-                await axios.get(this.urlreconexion)
-                    .then(r=>{
-                        let servicio = r.data;
-                        this.agregarDetalle(servicio);
-                    })
             },
             async guardarFactura(){
                 this.factura.detalles = JSON.parse(JSON.stringify(this.$refs.detalles.detalles_local));
@@ -197,6 +160,7 @@
                 let success = false;
                 await axios.post('', factura).then(r => {
                     this.loading = false;
+                    console.log(r);
                     if(r.status == 200){
                         this.factura.id = r.data.id;
                         success = true;
@@ -207,13 +171,11 @@
                 this.loading = false;
                 if(success){
                     $.toast({
-                        text: "Su factura ha sido guardada correctamente.", // Text that is to be shown in the toast
+                        text: "Su cuenta ha sido guardada correctamente.", // Text that is to be shown in the toast
                         heading: '! Éxito !', // Optional heading to be shown on the toast
                         icon: 'success', // Type of toast icon
                         position: 'top-right', // bottom-left or bottom-right or bottom-center or top-left or top-right or top-center or mid-center or an object representing the left, right, top, bottom values
                     });
-                    //location.reload();
-                    //this.inicializar();
                     this.isDisabled = true;
                 }
                 else{
@@ -227,35 +189,20 @@
 
             },
             onContext(ctx) {
-                //ctx.selectedFormatted= ctx.activeFormatted
-                //ctx.selectedYMD = ctx.activeYMD ;
                 // The date formatted in the locale, or the `label-no-date-selected` string
                 this.formatted = ctx.selectedFormatted
                 // The following will be an empty string until a valid date is entered
                 this.selected = ctx.selectedYMD
-
-                //console.log(ctx)
             },
-            /*
-            refresh(data){
-                this.factura.detalles = data;
-            },
-
-             */
             async inicializar() {
 
                 this.factura = {
-                    tipoComprobante: '01',
-                    formaPago: '01',
-                    tipoAmbiente: '2',
-                    secuencial: '',
                     cliente: {},
                     contrato: {},
                     puntoEmision: {},
                     detalles: []
                 };
                 if(this.$refs.detalles)this.$refs.detalles.inicializar();
-                this.numero = null;
                 this.nombres = null;
                 this.cedula = null;
                 //this.secuencial = null;
@@ -266,35 +213,20 @@
                     let mes = (fecha.getMonth() + 1).toString().length == 1 ? `0${fecha.getMonth() + 1}` : `${fecha.getMonth() + 1}`;
                     let dia = (fecha.getDate()).toString().length == 1 ? `0${fecha.getDate()}` : `${fecha.getDate()}`;
                     let anio = fecha.getFullYear();
-
                     this.factura.fecha = `${anio}-${mes}-${dia}`;
                     this.factura.mesPago = fecha.getMonth() + 1;
                     this.factura.anioPago = fecha.getFullYear();
                 }
             },
-            imprimir(){
-                let link = '/factura/'+this.factura.id;
-                window.open(link,'Imprimir', 'width=500, height=600');
-                return false;
-            },
-            descargar(){
-                let link = '/factura/'+this.factura.id+'/descargar';
-                window.open(link,'_blank');
-                return false;
-            }
-
         },
         async beforeMount() {
             if(this.datafactura){
-                console.log(JSON.parse(this.datafactura))
                 this.loadingText = 'Cargando';
                 this.loading = true;
 
                 await this.inicializar();
                 let data = JSON.parse(this.datafactura);
                 this.factura = data.factura;
-                this.factura.puntoEmision = data.puntoEmision.id;
-                this.factura.serial = data.factura.serie;
                 this.factura.detalles = JSON.parse(JSON.stringify(data.detalles)).map(d => {
                     d.codigo = d.servicio.codigo;
                     d.incluyeIva = d.servicio.incluyeIva;
@@ -303,19 +235,15 @@
                     d.servicio = d.servicio.id;
                     return d;
                 });
-                this.factura.secuencial = data.factura.secuencial;
+
                 this.factura.cliente = data.cliente?.id;
-                this.factura.contrato = data.contrato?.id;
                 this.cedula = data.cliente?.dni?.numero;
                 this.nombres = data.cliente?.nombres;
-                this.numero = data.contrato?.numero;
                 this.loading = false;
             }
         },
         watch:{
-            fecha(value){
-                this.factura.fecha = value;
-            }
+
         }
     }
 </script>

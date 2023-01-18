@@ -192,8 +192,20 @@ class ContratoController extends AbstractController
                     'cliente'=>[
                         'id',
                         'nombres',
+                        'esTerceraEdad',
+                        'esDiscapacitado',
                         'dni'=>[
                             'numero'
+                        ],
+                        'deudas'=>[
+                            'id',
+                            'fecha',
+                            'total',
+                            'plazo',
+                            'detalles'=>['descripcion'],
+                            'cuotas'=>[
+                                'id','fechaVencimiento', 'valor', 'observaciones', 'recargo', 'numero', 'pagada'
+                            ]
                         ]
                     ],
                     'plan'=>[
@@ -232,7 +244,7 @@ class ContratoController extends AbstractController
                 return$contrato;
             };
             $data["contratos"] = array_map($setPorcentaje, $data["contratos"]);
-            dump($counter);
+            //dump($counter);
             //$html = $this->renderView('Contrato/Contratos.html.twig',['Contratos'=>$data]);
         }
         return new JsonResponse($data);

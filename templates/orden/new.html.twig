@@ -8,4 +8,77 @@
     {{ include('orden/_form.html.twig',{'button_label':'Guardar'}) }}
 
     <a href="{{ path('orden_index') }}">back to list</a>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+{% endblock %}
+{% block javascript %}
+<script>
+let detalles = [];
+$("#btnBuscarContrato").click(function (){
+
+    var param = $("#parametroContrato").val();
+
+    var L = param.length;
+    if ( L >= 3){
+        $.ajax({
+            url:'{{ path('buscar_Contrato') }}',
+            type:'POST',
+            contentType:"application/json; charset=utf-8",
+            dataType:"json",
+            data: JSON.stringify({ param: param }),
+            success: function (data){
+                const contratos = data.contratos;
+                if(contratos.length > 0){
+                    let html = '';
+                    contratos.forEach(c => {
+                        html += `<tr>
+                                    <td>
+                                        <input type="radio" name="Contrato_id" value="${ c.id }"
+                                        data-cliente="${ c.cliente.nombres }"
+                                        data-contrato=${c.numero} >
+                                    </td>
+                                    <td>${ c.numero }</td>
+                                    <td>${ c.cliente.nombres }</td>
+                                    <td>
+                                        ${ c.cliente.dni.numero }
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                </tr>
+                            `;
+                    })
+                    $("#tContratos").html(html);
+                    console.log(html);
+                }
+            }
+        });
+    }
+});
+$("#modalAceptar").click(function (){
+    //alert("hola")
+    let checkboxContrato = $("input[name='Contrato_id']:checked")
+    if (typeof checkboxContrato !== 'undefined'){
+        let contrato_id = $("input[name='Contrato_id']:checked").val();
+        let cliente = $("input[name='Contrato_id']:checked").data('cliente');
+        let contrato = $("input[name='Contrato_id']:checked").data('contrato')
+        llenarDatos(contrato_id, contrato, cliente);
+    }else{
+        alert('No se ha seleccionado ninguna Contrato')
+    }
+});
+
+function llenarDatos(contrato_id, contrato, cliente) {
+    console.log(contrato_id, contrato, cliente)
+    $("#orden_Contrato").val(contrato_id);
+    $("#nContrato").val(`#${contrato} - ${cliente}`);
+}
+
+
+</script>
 {% endblock %}

@@ -132,6 +132,11 @@ class Contrato
      */
     private $pppoe;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $esCortesia;
+
     public function __toString()
     {
         // TODO: Implement __toString() method.
@@ -542,6 +547,18 @@ class Contrato
     public function setPppoe(?string $pppoe): self
     {
         $this->pppoe = $pppoe;
+
+        return $this;
+    }
+
+    public function isEsCortesia(): ?bool
+    {
+        return $this->esCortesia;
+    }
+
+    public function setEsCortesia(?bool $esCortesia): self
+    {
+        $this->esCortesia = $esCortesia;
 
         return $this;
     }

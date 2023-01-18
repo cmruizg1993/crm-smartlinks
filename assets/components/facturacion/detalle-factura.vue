@@ -22,13 +22,13 @@
                             {{d.codigo}}
                         </div>
                         <div class="col-5">
-                            <input type="text"  v-model="d.descripcion" class="form-control" :disabled="isDisabled">
+                            <input :readonly="!d.editable" type="text"  v-model="d.descripcion" class="form-control" :disabled="isDisabled">
                         </div>
                         <div class="col-2">
-                            <input type="number" min="0" v-model="d.precio" class="form-control" :disabled="isDisabled">
+                            <input :readonly="!d.editable" type="number" min="0" v-model="d.precio" class="form-control" :disabled="isDisabled">
                         </div>
                         <div class="col-1">
-                            <input type="number" step="1" min="0" v-model="d.cantidad" class="form-control" :disabled="isDisabled">
+                            <input :readonly="!d.editable" type="number" step="1" min="0" v-model="d.cantidad" class="form-control" :disabled="isDisabled">
                         </div>
                         <div class="col-1">
                             {{descuentoDetalle(d)}}
@@ -106,23 +106,27 @@
                 return this.subTotalSinImpuestos() + this.iva12();
             },
             quitarDetalle(d){
-                this.detalles_local = this.detalles_local.filter( v => v.servicio != d.servicio);
+                this.detalles_local = this.detalles_local.filter( v => v.esServicio ? v.servicio != d.servicio: true);
+                this.detalles_local = this.detalles_local.filter( v => v.esCuota ? v.cuota != d.cuota: true);
             },
-            agregarDetalle(servicio){
-                let s =  JSON.parse(JSON.stringify(servicio))
+            agregarDetalle(item, descuento){
+
                 let detalle = {
-                    servicio: servicio.id,
-                    producto: null,
-                    codigo: servicio.codigo,
-                    descripcion: servicio.nombre,
-                    precio: servicio.precio,
-                    precioOriginal: servicio.precio,
+                    producto: item.esProducto ? item.id: null,
+                    servicio: item.esServicio ? item.id: null,
+                    cuota: item.esCuota ? item.id: null,
+                    codigo: item.codigo,
+                    descripcion: item.nombre,
+                    precio: Number(item.precio*(100-descuento)/100).toFixed(2),
+                    precioOriginal: item.precio,
                     cantidad: 1,
-                    subtotal: servicio.precio,
-                    esServicio: true,
-                    incluyeIva: servicio.incluyeIva,
-                    porcentaje: servicio.porcentaje,
-                    descuento: 0.00
+                    subtotal: Number(item.precio*(100-descuento)/100).toFixed(2),
+                    esServicio: item.esServicio,
+                    esCuota: item.esCuota,
+                    incluyeIva: item.incluyeIva,
+                    porcentaje: item.porcentaje,
+                    descuento: item.descuento ? item.descuento: 0.00,
+                    editable: item.editable === false ? false:true
                 }
                 this.detalles_local.push(detalle);
             },

@@ -633,7 +633,7 @@ class Factura
                 $servicio = $detalle->getServicio();
                 /* @var $impuesto OpcionCatalogo */
                 $impuesto = $opcionCatalogoRepository->findOneByCodigoyCatalogo($servicio->getCodigoPorcentaje(), 'iva');
-                $detalle->codigoPorcentaje = $impuesto;
+                $detalle->setCodigoPorcentaje($servicio->getCodigoPorcentaje());
                 if(!$servicio || !$servicio->getId()) throw new InvalidArgumentException();
                 $totalDetalle = ($detalle->getCantidad() * $detalle->getPrecio());
                 $porcentaje = $impuesto->getValorNumerico()/100;
@@ -660,9 +660,39 @@ class Factura
                 $detalle->setIva($ivaDetalle);
                 $total += $totalDetalle;
                 $iva += $ivaDetalle;
-            }else{
-                // por completar
+            }elseif ($detalle->getCuota()){
+                $cuota = $detalle->getCuota();
+                /* @var $impuesto OpcionCatalogo */
+                $impuesto = $opcionCatalogoRepository->findOneByCodigoyCatalogo('2', 'iva');
+                $detalle->setCodigoPorcentaje('2');
+                $totalDetalle = $cuota->getValor();
+                $porcentaje = $impuesto->getValorNumerico()/100;
+                $ivaDetalle = null;
+                $precioDetalle = $cuota->getValor();
 
+                $subtotalDetalle = $totalDetalle/(1 + $porcentaje);
+                $ivaDetalle = $totalDetalle - $subtotalDetalle;
+                $precioDetalle = $precioDetalle/(1 + $porcentaje);
+                $detalle->setPrecio($precioDetalle);
+
+                if($ivaDetalle > 0){
+                    $subtotal12 += $subtotalDetalle;
+
+                }else{
+                    $subtotal0 += $subtotalDetalle;
+                }
+                $subtotal += $subtotalDetalle;
+                $detalle->setSubtotal($subtotalDetalle);
+                $detalle->setIva($ivaDetalle);
+                $total += $totalDetalle;
+                $iva += $ivaDetalle;
+
+                $abono = $cuota->getCuenta()->getAbono() ? $cuota->getCuenta()->getAbono(): 0;
+                $abono += $cuota->getValor();
+                $cuota->getCuenta()->setAbono($abono);
+            }
+            else{
+                // por completar
             }
             $detalle->setFactura($this);
         }

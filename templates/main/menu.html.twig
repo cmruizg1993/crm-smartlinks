@@ -18,6 +18,7 @@
             </div>
         </li>
         {% endif %}
+        {% if is_granted('ROLE_OPERADOR') %}
         <li class="nav-item nav-category">Negocio</li>
         <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#facturacion" aria-expanded="false" aria-controls="form-elements">
@@ -76,8 +77,38 @@
 
         </li>
         <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#cuentas" aria-expanded="false" aria-controls="form-elements">
+                <i class="menu-icon mdi mdi-wallet"></i>
+                <span class="menu-title">Cuentas por cobrar</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="cuentas">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"><a class="nav-link" href="{{ path('app_cuenta_por_cobrar_index') }}">Listado de Cuentas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ path('app_cuenta_por_cobrar_new') }}">Nueva Cuenta</a></li>
+                </ul>
+            </div>
+
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#ordenes" aria-expanded="false" aria-controls="form-elements">
+                <i class="menu-icon mdi mdi mdi mdi-worker"></i>
+                <span class="menu-title">Órdenes(Tickets)</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ordenes">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"><a class="nav-link" href="{{ path('orden_index') }}">Órdenes</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ path('orden_new') }}">Nueva Orden</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ path('tipo_orden_index') }}">Tipos de orden</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ path('estado_orden_index') }}">Estados de orden</a></li>
+                </ul>
+            </div>
+
+        </li>
+        <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#adicional" aria-expanded="false" aria-controls="form-elements">
-                <i class="menu-icon mdi mdi-card-text-outline"></i>
+                <i class="menu-icon mdi mdi mdi-bookmark-plus"></i>
                 <span class="menu-title">Adicional</span>
                 <i class="menu-arrow"></i>
             </a>
@@ -89,14 +120,25 @@
             </div>
 
         </li>
-
-
-        <li class="nav-item nav-category">Ayuda</li>
+        {% endif %}
+        {% if is_granted('ROLE_TECNICO') %}
+        <li class="nav-item nav-category">Técnicos</li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
-                <i class="menu-icon mdi mdi-file-document"></i>
-                <span class="menu-title">Documentacion</span>
+            <a class="nav-link" data-bs-toggle="collapse" href="#ordenes-tecnicos" aria-expanded="false" aria-controls="form-elements">
+                <i class="menu-icon mdi mdi mdi mdi-worker"></i>
+                <span class="menu-title">Órdenes(Tickets)</span>
+                <i class="menu-arrow"></i>
             </a>
+            <div class="collapse" id="ordenes-tecnicos">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"><a class="nav-link" href="{{ path('orden_index') }}">Órdenes</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ path('orden_new') }}">Nueva Orden</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ path('tipo_orden_index') }}">Tipos de orden</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ path('estado_orden_index') }}">Estados de orden</a></li>
+                </ul>
+            </div>
+
         </li>
+        {% endif %}
     </ul>
 </nav>

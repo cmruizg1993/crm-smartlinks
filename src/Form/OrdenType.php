@@ -9,6 +9,9 @@ use App\Repository\CuentaBancariaRepository;
 use App\Repository\ContratoRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,9 +20,12 @@ class OrdenType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('fecha')
+            ->add('fecha', DateType::class,['widget'=>'single_text'])
+            ->add('fechaEjecucion', DateType::class,['widget'=>'single_text'])
             ->add('codigo',null,['label'=>'Nro. de Orden'])
             ->add('tipo')
+            //->add('Contrato', HiddenType::class)
+
             ->add('Contrato',EntityType::class, [
                 'class' => Contrato::class,
                 'query_builder' => function (ContratoRepository $er) {
@@ -28,11 +34,18 @@ class OrdenType extends AbstractType
             ])
             ->add('estado')
             ->add('tecnico')
-            ->add('observaciones')
-            ->add('fechaEjecucion')
-            ->add('serialModem')
-            ->add('serialRadio')
-        ;
+            ->add('observaciones');
+        /*
+        $builder->get('fecha')->addModelTransformer(new CallbackTransformer(
+            function (? \DateTime $date = null) {
+                return $date ? $date->format('Y-m-d'): (new \DateTime())->format('Y-m-d');
+            },
+            function (?string $dateString) {
+                //dump($dateString);
+                $date = new \DateTime($dateString);
+                //dump($date);
+                return $date;
+            }));*/
     }
 
     public function configureOptions(OptionsResolver $resolver)

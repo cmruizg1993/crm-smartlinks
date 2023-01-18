@@ -3,13 +3,10 @@
         <div class="invoice" v-if="loading == false">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="factura-tab" data-bs-toggle="tab" data-bs-target="#factura-tab-pane" type="button" role="tab" aria-controls="factura-tab-pane" aria-selected="true">Factura</button>
+                    <button class="nav-link active" ref="factura_tab" id="factura-tab" data-bs-toggle="tab" data-bs-target="#factura-tab-pane" type="button" role="tab" aria-controls="factura-tab-pane" aria-selected="true">Factura</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pago-tab" data-bs-toggle="tab" data-bs-target="#pago-tab-pane" type="button" role="tab" aria-controls="pago-tab-pane" aria-selected="false">Forma Pago</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="cuentas-tab" data-bs-toggle="tab" data-bs-target="#cuentas-tab-pane" type="button" role="tab" aria-controls="cuentas-tab-pane" aria-selected="false">Cuentas x Cobrar</button>
+                    <button class="nav-link" id="cuentas-tab" data-bs-toggle="tab" data-bs-target="#cuentas-tab-pane" type="button" role="tab" aria-controls="cuentas-tab-pane" aria-selected="false">Valores Pendientes</button>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
@@ -162,7 +159,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12 d-flex justify-content-end">
-                                <lista-servicios :disabled='isDisabled' :baseurl="urlservicios" @agregarServicio="agregarDetalle"></lista-servicios>
+                                <lista-servicios :disabled='isDisabled' :baseurl="urlservicios" @agregarServicio="agregarServicio"></lista-servicios>
                                 <button :disabled='isDisabled' type="button" form="factura" class="btn btn-success btn-group-sm" @click="guardarFactura">
                                     <i class="mdi mdi-content-save-all"></i>
                                     <span>Guardar</span>
@@ -188,13 +185,10 @@
                         <detalle-factura ref="detalles" :detalles="factura.detalles" :disabled="isDisabled"></detalle-factura>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="pago-tab-pane" role="tabpanel" aria-labelledby="pago-tab" tabindex="0">
-                    <factura_pagos></factura_pagos>
-                </div>
                 <div class="tab-pane fade" id="cuentas-tab-pane" role="tabpanel" aria-labelledby="cuentas-tab" tabindex="0">
-                    <cuentas_contrato>
-
-                    </cuentas_contrato>
+                    <h5 v-if="deudas.length == 0">No existen valores pendientes</h5>
+                    <cuenta_cuotas @agregarCuenta="agregarCuenta" v-for="deuda in deudas" v-bind:key="JSON.stringify(deuda)" :cuentadata="JSON.stringify(deuda)">
+                    </cuenta_cuotas>
                 </div>
             </div>
 
@@ -212,7 +206,7 @@
     import FacturaPagos from "./factura_pagos";
     import ListaServicios from "../lista-servicios";
     import ListaContratos from "../lista-contratos";
-    import CuentasXCobrar from "../cuentasxcobrar/cuentas.vue";
+    import CuentasXCobrar from "../cuentasxcobrar/cuenta_cuotas";
     export default {
         name: "factura",
         components:{
@@ -235,6 +229,7 @@
               comprobantes:[],
               ambientes: [],
               formaspago:[],
+              deudas: [],
               meses,
               cedula: null,
               nombres: null,
@@ -243,7 +238,8 @@
               selected: '',
               loading: false,
               loadingText: 'Guardando',
-              isDisabled: true
+              isDisabled: true,
+              hayValoresPendientes: false
           }
         },
         props:[
@@ -259,8 +255,38 @@
             'datafactura'
         ],
         methods:{
-            agregarDetalle(servicio){
-                this.$refs.detalles.agregarDetalle(servicio);
+            agregarDetalle(item, descuento = 0){
+                this.$refs.detalles.agregarDetalle(item, descuento);
+            },
+            agregarServicio(item) {
+                item.esServicio = true;
+                this.agregarDetalle(item)
+            },
+            agregarCuenta(cuenta){
+                console.log(cuenta)
+                const descripcion = cuenta.detalles.map(d => d.descripcion).join(', ');
+                cuenta.cuotas.forEach(cuota => {
+                    if(!cuota.pagada){
+                        cuota.agregada = true;
+                        const cod = `CXC${cuenta.id}-${cuota.id}`;
+                        const nombre = `${descripcion}. Cuota #${cuota.numero} de ${cuenta.plazo}.`;
+                        let detalle = {
+                            id: cuota.id,
+                            producto: null,
+                            codigo: cod,
+                            nombre: nombre,
+                            precio: cuota.valor,
+                            cantidad: 1,
+                            subtotal: cuota.valor,
+                            esCuota: true,
+                            incluyeIva: true,
+                            porcentaje: 12,//modificar
+                            editable: false
+                        };
+                        this.agregarDetalle(detalle);
+                    }
+                });
+                this.$refs.factura_tab.click();
             },
             agregarContrato(contrato){
                 console.log(contrato);
@@ -269,11 +295,21 @@
                 this.factura.cliente = contrato.cliente.id;
                 this.nombres = contrato.cliente.nombres;
                 this.cedula = contrato.cliente.dni.numero;
+                this.deudas = contrato.cliente.deudas;
+                this.deudas.forEach(d => {
+                    const cuotasVencidas = d.cuotas.filter(c => !c.pagada);
+                    if(cuotasVencidas.length > 0){
+                        this.hayValoresPendientes = true;
+                    }
+                })
                 if(contrato.mesPago) this.factura.mesPago = contrato.mesPago == 12 ? 1: contrato.mesPago +1;
                 if(contrato.anioPago) this.factura.anioPago = contrato.mesPago == 12 ? contrato.anioPago +1:contrato.anioPago;
                 contrato.plan.nombre += '- Mes de: '+meses[this.factura.mesPago-1].texto + ' año ' +this.factura.anioPago;
                 this.$refs.detalles.inicializar();
-                this.agregarDetalle(contrato.plan);
+                contrato.plan.esServicio = true;
+                let descuento = contrato.cliente.esDiscapacitado || contrato.cliente.esTerceraEdad ? 50:0;
+                contrato.plan.descuento = Number(contrato.plan.precio*(100-descuento)/100).toFixed(2);
+                this.agregarDetalle(contrato.plan, descuento);
                 if(contrato.necesitaReconexion) this.agregarServicioReconexion();
             },
             async getComprobantes(){
@@ -320,6 +356,11 @@
                     })
             },
             async guardarFactura(){
+                let continuar = true;
+                if(this.hayValoresPendientes){
+                    continuar = confirm('Existen valores pendientes de pago. ¿Está seguro de continuar?');
+                }
+                if(!continuar) return ;
                 this.factura.detalles = JSON.parse(JSON.stringify(this.$refs.detalles.detalles_local));
                 let factura = this.factura;
                 factura.detalles = factura.detalles.map(d => {

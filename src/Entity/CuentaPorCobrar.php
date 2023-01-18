@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\CuentaPorCobrarRepository;
+use App\Repository\OpcionCatalogoRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use http\Exception\InvalidArgumentException;
 
 /**
 [0:51 p. m., 4/1/2023] Cristian Ruiz😎: 1. Se crea la cuenta por cobrar como que fuera una factura, en su respectivo módulo
@@ -70,14 +72,30 @@ class CuentaPorCobrar
     private $plazo;
 
     /**
-     * @ORM\OneToMany(targetEntity=DetalleCuentaPorCobrar::class, mappedBy="cuenta")
+     * @ORM\OneToMany(targetEntity=DetalleCuentaPorCobrar::class, mappedBy="cuenta", cascade={"persist"}, orphanRemoval=true)
      */
     private $detalles;
+
+    /**
+     * @ORM\OneToMany(targetEntity=CuotaCuenta::class, mappedBy="cuenta", cascade={"persist"}, orphanRemoval=true)
+     */
+    private $cuotas;
+
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     */
+    private $abono;
 
     public function __construct()
     {
         $this->pagos = new ArrayCollection();
         $this->detalles = new ArrayCollection();
+        $this->cuotas = new ArrayCollection();
+    }
+    public function __toString()
+    {
+        // TODO: Implement __toString() method.
+        return $this->id."";
     }
 
     public function getId(): ?int
@@ -213,6 +231,118 @@ class CuentaPorCobrar
                 $detalle->setCuenta(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CuotaCuenta>
+     */
+    public function getCuotas(): Collection
+    {
+        return $this->cuotas;
+    }
+
+    public function addCuota(CuotaCuenta $cuota): self
+    {
+        if (!$this->cuotas->contains($cuota)) {
+            $this->cuotas[] = $cuota;
+            $cuota->setCuenta($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCuota(CuotaCuenta $cuota): self
+    {
+        if ($this->cuotas->removeElement($cuota)) {
+            // set the owning side to null (unless already changed)
+            if ($cuota->getCuenta() === $this) {
+                $cuota->setCuenta(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function totalizar(OpcionCatalogoRepository $opcionCatalogoRepository){
+        /* AGREGANDO DETALLES Y CALCULANDO TOTALES */
+        $total= 0;
+        $subtotal = 0;
+        $subtotal12 = 0;
+        $subtotal0 = 0;
+        $subtotalNOI = 0;
+        $iva = 0;
+        $detalles = $this->getDetalles();
+
+        /* @var $detalle DetalleCuentaPorCobrar */
+        foreach ($detalles as $detalle){
+
+            if($detalle->isEsServicio()){
+                $servicio = $detalle->getServicio();
+                /* @var $impuesto OpcionCatalogo */
+                $impuesto = $opcionCatalogoRepository->findOneByCodigoyCatalogo($servicio->getCodigoPorcentaje(), 'iva');
+                $detalle->codigoPorcentaje = $impuesto;
+                if(!$servicio || !$servicio->getId()) throw new InvalidArgumentException();
+                $totalDetalle = ($detalle->getCantidad() * $detalle->getPrecio());
+                $porcentaje = $impuesto->getValorNumerico()/100;
+                $ivaDetalle = null;
+                $precioDetalle = $detalle->getPrecio();
+                if($servicio->getIncluyeIva()){
+                    $subtotalDetalle = $totalDetalle/(1 + $porcentaje);
+                    $ivaDetalle = $totalDetalle - $subtotalDetalle;
+                    $precioDetalle = $precioDetalle/(1 + $porcentaje);
+                    $detalle->setPrecio($precioDetalle);
+                }else{
+                    $subtotalDetalle = $totalDetalle;
+                    $totalDetalle = $subtotalDetalle*(1 + $porcentaje);
+                    $ivaDetalle = $totalDetalle - $subtotalDetalle;
+                }
+                if($ivaDetalle > 0){
+                    $subtotal12 += $subtotalDetalle;
+
+                }else{
+                    $subtotal0 += $subtotalDetalle;
+                }
+                $subtotal += $subtotalDetalle;
+                $detalle->setSubtotal($subtotalDetalle);
+                $detalle->setIva($ivaDetalle);
+                $total += $totalDetalle;
+                $iva += $ivaDetalle;
+            }else{
+                // por completar
+            }
+            $detalle->setCuenta($this);
+        }
+        $this->total =($total);
+        /*
+        $this->subtotal =($subtotal);
+        $this->iva = ($iva);
+        $this->subtotal0 = ($subtotal0);
+        $this->subtotal12 = ($subtotal12);
+        */
+    }
+    public function getSaldo(){
+        $cuotas = $this->getCuotas();
+        $abono = 0;
+        /* @var $cuota CuotaCuenta */
+        foreach ($cuotas as $cuota){
+            if($cuota->getDetalleFactura()){
+                $abono += $cuota->getValor();
+            }
+        }
+        $saldo = $this->total - $abono;
+        return $saldo;
+    }
+
+    public function getAbono(): ?string
+    {
+        return $this->abono;
+    }
+
+    public function setAbono(?string $abono): self
+    {
+        $this->abono = $abono;
 
         return $this;
     }

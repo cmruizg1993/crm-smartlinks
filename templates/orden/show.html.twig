@@ -14,7 +14,7 @@
                             <b>Solicitud:</b> {{ orden.id }}
                         </div>
                         <div class="col">
-                            <b>SAN:</b> {{ orden.san }}
+                            <b>Contrato:</b> {{ orden.Contrato }}
                         </div>
                     </div>
                     <div class="row">
@@ -35,22 +35,12 @@
                             <b>Técnico asignado:</b> {{ orden.tecnico }}
                         </div>
                     </div>
-                    <div class="row m-3">
-                        <div class="col">
-                            <a class="btn btn-primary" href="{{ path('orden_index') }}">back to list</a>
-                        </div>
-                        <div class="col">
-                            <a class="btn btn-info" href="{{ path('orden_edit', {'id': orden.id}) }}">edit</a>
-                        </div>
-                        <div class="col">
-                            {{ include('orden/_delete_form.html.twig') }}
-                        </div>
-                    </div>
-                    <div class="container-fluid">
+
+                    <div class="container-fluid mt-3">
                         <h3 class="text-primary">Eventos</h3>
                         <table class="table table-bordered table-responsive">
                             <thead>
-                            <tr class="text-light">
+                            <tr class="bg-primary text-light">
                                 <th>Id</th>
                                 <th>Motivo</th>
                                 <th>Acciones</th>
@@ -68,6 +58,14 @@
                             {% endfor %}
                             </tbody>
                         </table>
+                    </div>
+
+                    <div class="row m-3">
+                        <div class="col">
+                            <a class="btn btn-primary m-3" href="{{ path('orden_index') }}">Regresar</a>
+                            <a class="btn btn-info m-3" href="{{ path('orden_edit', {'id': orden.id}) }}">Editar</a>
+                        </div>
+
                     </div>
                 </div>
             </div>
