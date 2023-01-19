@@ -63,10 +63,15 @@ security:
          - { path: ^/cliente/edit, roles: [ROLE_ADMIN] }
          - { path: ^/cliente/delete, roles: [ROLE_ADMIN] }
       # PERMISO PARA QUE LOS VENDEDORES CREEN CLIENTES
-         - { path: ^/cliente, roles: [ROLE_VENDEDOR] }
-         - { path: ^/solicitud, roles: [ROLE_VENDEDOR] }
+         - { path: ^/cliente/edit, roles: [ROLE_OPERADOR] }
+         - { path: ^/cliente/new, roles: [ROLE_OPERADOR] }
+         - { path: ^/cliente/delete, roles: [ROLE_ADMIN] }
+         - { path: ^/cliente, roles: [ROLE_TECNICO] }
+
       # RESTRICCION FACTURA
+         - { path: ^/cuentas, roles: [IS_AUTHENTICATED_FULLY] }
          - { path: ^/factura, roles: [IS_AUTHENTICATED_FULLY] }
+         - { path: ^/contrato, roles: [IS_AUTHENTICATED_FULLY] }
       # RESTRICCION GENERAL
          - { path: ^/$, roles: [IS_AUTHENTICATED_FULLY] }
       # RESTRICCION GENERAL

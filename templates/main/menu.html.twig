@@ -122,8 +122,23 @@
                     <li class="nav-item"><a class="nav-link" href="{{ path('estado_orden_index') }}">Estados de orden</a></li>
                 </ul>
             </div>
-
         </li>
+        {% if not is_granted('ROLE_OPERADOR') %}
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#clientes" aria-expanded="false" aria-controls="form-elements">
+                    <i class="menu-icon mdi mdi-human"></i>
+                    <span class="menu-title">Clientes</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="clientes">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"><a class="nav-link" href="{{ path('cliente_new') }}">Nuevo Cliente</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ path('cliente_index') }}">Lista de Clientes</a></li>
+                    </ul>
+                </div>
+            </li>
+        {% endif %}
+
         {% endif %}
     </ul>
 </nav>
