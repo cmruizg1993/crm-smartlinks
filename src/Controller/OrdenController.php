@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @Route("/orden")
@@ -22,26 +23,23 @@ class OrdenController extends AbstractController
     /**
      * @Route("/", name="orden_index", methods={"GET"})
      */
-    public function index(Request $request , OrdenRepository $ordenRepository): Response
+    public function index(Request $request , OrdenRepository $ordenRepository, SerializerInterface $serializer): Response
     {
         $page = $request->get('page') ? $request->get('page')-1: 0;
         $offset = $page*25;
         $ordenes = $ordenRepository->findAll();
-        /* @var $serializer Serializer */
-        $serializer = $this->get('serializer');
+
         $data = $serializer->normalize($ordenes, null, [AbstractNormalizer::ATTRIBUTES=>
             [
                 'id',
-                'tecnico'=>
-                    [
-                        'nombres'
-                    ],
-                'tipo'=>
-                    [
-                        'nombre'
-                    ],
+                'tecnico'=> [ 'nombres' ],
+                'tipo'=> [ 'nombre' ],
                 'Contrato'=> [
-                        'numero'
+                    'numero',
+                    'cliente'=>[
+                        'nombres',
+                        'dni'=>['numero']
+                    ]
                 ],
                 'codigo',
                 'estado'=>[
@@ -52,7 +50,7 @@ class OrdenController extends AbstractController
             ]
         ]);
         return $this->render('orden/index.html.twig', [
-            'ordens' => $data,
+            'ordenes' => $data,
         ]);
     }
 

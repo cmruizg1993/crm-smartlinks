@@ -1,51 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Orden index{% endblock %}
+{% block title %}Órdenes{% endblock %}
 
 {% block body %}
-    <h3 class="mb-3">Listado de órdenes</h3>
 
-    <table class="table table-bordered table-responsive">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Tecnico</th>
-                <th>Tipo</th>
-                <th>Contrato</th>
-                <th>Fecha</th>
-                <th>Estado</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for orden in ordens %}
-            <tr>
-                <td>{{ orden.id }}</td>
-                <td>
-                    {% if orden.tecnico %}
-                        {{ orden.tecnico.nombres }}
-                    {% endif %}
-                </td>
-                <td>{{ orden.tipo.nombre }}</td>
-                <td>
-                    {% if orden.Contrato %}
-                        {{ orden.Contrato.numero }}
-                    {% endif %}
-                </td>
-                <td>{{ orden.fecha ? orden.fecha|date('Y-m-d') : '' }}</td>
-                <td>{{ orden.estado.nombre }}</td>
-                <td>
-                    <a class="btn btn-sm btn-primary" href="{{ path('orden_show', {'id': orden.id}) }}">Mostrar</a>
-                    <a class="btn btn-sm btn-info" href="{{ path('orden_edit', {'id': orden.id}) }}">Editar</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="container">
 
-    <a href="{{ path('orden_new') }}">Create new</a>
+        <div class="row mb-3">
+            <div class="col-2">
+                <h3>Órdenes</h3>
+            </div>
+        </div>
+    </div>
+    <ordenes listado="{{ ordenes|json_encode }}"
+              urledicion="{{ path('orden_edit',{id: 0}) }}"
+              urlmostrar="{{ path('orden_show', {id: 0}) }}"
+    ></ordenes>
 {% endblock %}
+{% block javascript %}
+
+{{ encore_entry_script_tags('app') }}
+{% endblock %}
+

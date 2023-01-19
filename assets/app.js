@@ -48,7 +48,8 @@ Vue.component('contratos', require('./components/contratos/contratos').default )
 Vue.component('cuentas', require('./components/cuentasxcobrar/cuentas').default)
 Vue.component('cuenta', require('./components/cuentasxcobrar/cuenta').default)
 Vue.component('cuenta_cuotas', require('./components/cuentasxcobrar/cuenta_cuotas').default)
-
+//ORDENES/TICKETS
+Vue.component('ordenes', require('./components/ordenes/ordenes').default)
 
 const app = new Vue({
     el: '#app',

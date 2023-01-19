@@ -1,42 +1,146 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Orden{% endblock %}
-
+{% block stylesheets %}
+    <style>
+        .box{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .card{
+            width: 100% !important;
+        }
+    </style>
+{% endblock %}
 {% block body %}
 
     <div class="row justify-content-center">
         <div class="col">
             <div class="card border-primary mb-3">
-                <div class="card-header">Nro. de Orden {{ orden.codigo }}</div>
+                <div class="card-header bg-primary text-light"><h3>Información de la Orden</h3></div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col">
-                            <b>Solicitud:</b> {{ orden.id }}
+
+                    <div class="container-fluid mt-3 mb-3">
+                        <div class="row">
+                            <div class="col">
+                                <div class="box">
+                                    <div class="card">
+                                        <div class="card-header bg-success text-light"><b>Orden</b></div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col">Nro. de Orden:</div>
+                                                <div class="col">{{ orden.id }}</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">Fecha:</div>
+                                                <div class="col">{{ orden.fecha | date('Y-m-d') }}</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">Tipo:</div>
+                                                <div class="col">{{ orden.tipo }}</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">Estado:</div>
+                                                <div class="col">{{ orden.estado }}</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">Técnico:</div>
+                                                <div class="col">{{ orden.tecnico }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col">
+                                <div class="box">
+                                    <div class="card">
+                                        <div class="card-header bg-warning"><b>Contrato</b></div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col">Contrato:</div>
+                                                <div class="col">{{ orden.Contrato.numero }}</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">Fecha:</div>
+                                                <div class="col">{{ orden.Contrato.fecha | date('Y-m-d') }}</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">Plan:</div>
+                                                <div class="col">{{ orden.Contrato.plan.nombre }}</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">Dirección:</div>
+                                                <div class="col">{{ orden.Contrato.direccion }}</div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col">PPOE:</div>
+                                                <div class="col">{{ orden.Contrato.pppoe }}</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">VLAN:</div>
+                                                <div class="col">{{ orden.Contrato.pppoe }}</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">Cortesia:</div>
+                                                <div class="col">{{ orden.Contrato.esCortesia }}</div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col">
+                                <div class="box">
+                                    <div class="card">
+                                        <div class="card-header"><b>Cliente</b></div>
+                                        <div class="card-body">
+                                            <div class="row justify-content-start">
+                                                <div class="col">Nombres:</div>
+                                                <div class="col">{{ orden.Contrato.nombres }}</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">Cedula:</div>
+                                                <div class="col">{{ orden.Contrato.cedula }}</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">Dirección:</div>
+                                                <div class="col">{{ orden.Contrato.cliente.direccion }}</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">Email:</div>
+                                                <div class="col">{{ orden.Contrato.cliente.email }}</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">Telefono 1:</div>
+                                                <div class="col">{{ orden.Contrato.cliente.telefono }}</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">Telefono 2:</div>
+                                                <div class="col">{{ orden.Contrato.cliente.telefonoFijo }}</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">Tercera Edad:</div>
+                                                <div class="col">{{ orden.Contrato.cliente.esTerceraEdad }}</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">Discapacitado:</div>
+                                                <div class="col">{{ orden.Contrato.cliente.esDiscapacitado }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col">
-                            <b>Contrato:</b> {{ orden.Contrato }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <b>Tipo:</b> {{ orden.tipo }}
-                        </div>
-                        <div class="col">
-                            <b>Estado:</b> {{ orden.estado }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <b>Fecha:</b> {{ orden.fecha | date('Y-m-d') }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <b>Técnico asignado:</b> {{ orden.tecnico }}
-                        </div>
+
                     </div>
 
-                    <div class="container-fluid mt-3">
                         <h3 class="text-primary">Eventos</h3>
                         <table class="table table-bordered table-responsive">
                             <thead>

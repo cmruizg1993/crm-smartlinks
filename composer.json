@@ -13,6 +13,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^2.8",
         "dompdf/dompdf": "^2.0",
+        "evilfreelancer/routeros-api-php": "^1.4",
         "guzzlehttp/promises": "^1.4",
         "nyholm/psr7": "^1.4",
         "php-http/httplug": "^2.2",
