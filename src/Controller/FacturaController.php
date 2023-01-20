@@ -279,7 +279,8 @@ class FacturaController extends AbstractController
             }
             $factura->ruc = $empresa->getRuc();
             $factura->generarClaveAcceso();
-
+            $em->persist($factura);
+            $em->flush();
             $xml = $this->renderView('xml/factura.pruebas.xml.twig',['factura'=>$factura, 'conf'=>$empresa]);
             $clave = $factura->getClaveAcceso();
             $fileName = $facturacionElectronica->crearArchivoXml($clave, $xml);
@@ -301,7 +302,7 @@ class FacturaController extends AbstractController
                 }
                 $factura->setEstadoSri($estado);
             }
-            $em->persist($factura);
+
             $em->flush();
             return new JsonResponse(['id'=>$factura->getId()], 200);
         }

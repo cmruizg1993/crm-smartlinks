@@ -90,7 +90,6 @@
             </div>
 
         </li>
-
         <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#adicional" aria-expanded="false" aria-controls="form-elements">
                 <i class="menu-icon mdi mdi mdi-bookmark-plus"></i>
@@ -106,6 +105,8 @@
 
         </li>
         {% endif %}
+
+
         {% if is_granted('ROLE_TECNICO') %}
         <li class="nav-item nav-category">Técnicos</li>
         <li class="nav-item">
@@ -123,7 +124,7 @@
                 </ul>
             </div>
         </li>
-        {% if not is_granted('ROLE_OPERADOR') %}
+
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#clientes" aria-expanded="false" aria-controls="form-elements">
                     <i class="menu-icon mdi mdi-human"></i>
@@ -137,7 +138,6 @@
                     </ul>
                 </div>
             </li>
-        {% endif %}
 
         {% endif %}
     </ul>
