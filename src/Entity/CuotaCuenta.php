@@ -53,6 +53,11 @@ class CuotaCuenta
      */
     private $numero;
 
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=3, nullable=true)
+     */
+    private $valorSinImp;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -158,5 +163,17 @@ class CuotaCuenta
     }
     public function getPagada(){
         return $this->getDetalleFactura() ? true:false;
+    }
+
+    public function getValorSinImp(): ?string
+    {
+        return $this->valorSinImp;
+    }
+
+    public function setValorSinImp(?string $valorSinImp): self
+    {
+        $this->valorSinImp = $valorSinImp;
+
+        return $this;
     }
 }

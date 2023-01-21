@@ -255,11 +255,13 @@
             'datafactura'
         ],
         methods:{
-            agregarDetalle(item, descuento = 0){
-                this.$refs.detalles.agregarDetalle(item, descuento);
+            agregarDetalle(item){
+                this.$refs.detalles.agregarDetalle(item);
             },
             agregarServicio(item) {
                 item.esServicio = true;
+                item.cantidad = 1;
+                item.subtotal = item.precioSinImp;
                 this.agregarDetalle(item)
             },
             agregarCuenta(cuenta){
@@ -270,20 +272,24 @@
                         cuota.agregada = true;
                         const cod = `CXC${cuenta.id}-${cuota.id}`;
                         const nombre = `${descripcion}. Cuota #${cuota.numero} de ${cuenta.plazo}.`;
-                        let detalle = {
+                        let item = {
                             id: cuota.id,
                             producto: null,
+                            servicio: null,
                             codigo: cod,
                             nombre: nombre,
+                            precioSinImp: cuota.valorSinImp,
                             precio: cuota.valor,
                             cantidad: 1,
-                            subtotal: cuota.valor,
+                            subtotal: cuota.valorSinImp,
                             esCuota: true,
                             incluyeIva: true,
                             porcentaje: 12,//modificar
-                            editable: false
+                            editable: false,
+
                         };
-                        this.agregarDetalle(detalle);
+                        this.agregarDetalle(item)
+                        //this.agregarDetalle(detalle);
                     }
                 });
                 this.$refs.factura_tab.click();
@@ -306,10 +312,15 @@
                 if(contrato.anioPago) this.factura.anioPago = contrato.mesPago == 12 ? contrato.anioPago +1:contrato.anioPago;
                 contrato.plan.nombre += '- Mes de: '+meses[this.factura.mesPago-1].texto + ' año ' +this.factura.anioPago;
                 this.$refs.detalles.inicializar();
-                contrato.plan.esServicio = true;
+
                 let descuento = contrato.cliente.esDiscapacitado || contrato.cliente.esTerceraEdad ? 50:0;
-                contrato.plan.descuento = Number(contrato.plan.precio*(100-descuento)/100).toFixed(2);
-                this.agregarDetalle(contrato.plan, descuento);
+                contrato.plan.descuento = Number(contrato.plan.precioSinImp)*(descuento/100).toFixed(3);
+                contrato.plan.precioSinImp  = (Number(contrato.plan.precioSinImp) - contrato.plan.descuento).toFixed(3);
+                contrato.plan.precio = contrato.plan.precioSinImp*(1 + (contrato.plan.porcentaje/100)).toFixed(2);
+                contrato.plan.cantidad = 1;
+                contrato.plan.subtotal = contrato.plan.precioSinImp;
+                contrato.plan.esServicio = true;
+                this.agregarDetalle(contrato.plan);
                 if(contrato.necesitaReconexion) this.agregarServicioReconexion();
             },
             async getComprobantes(){
@@ -480,11 +491,11 @@
                 this.factura.detalles = JSON.parse(JSON.stringify(data.detalles)).map(d => {
                     console.log(d)
                     d.codigo = d.codigo;
-                    d.incluyeIva = d.esServicio ? d.servicio.incluyeIva: true;
-                    d.precioOriginal = d.esServicio ? d.servicio.precio: d.precio;
+                    d.descuento = Number(d.descuento).toFixed(2);
                     d.porcentaje = d.esServicio ? d.servicio.porcentaje:12;
                     d.servicio = d.esServicio ? d.servicio.id: null;
                     d.cuota = !d.esServicio ? d.cuota.id:null
+                    d.porcentaje = Number(d.porcentaje).toFixed(2);
                     return d;
                 });
                 this.factura.secuencial = data.factura.secuencial;

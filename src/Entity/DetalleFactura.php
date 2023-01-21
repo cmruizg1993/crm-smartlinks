@@ -28,7 +28,7 @@ class DetalleFactura
     private $precio;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=2)
+     * @ORM\Column(type="decimal", precision=10, scale=3)
      */
     private $subtotal;
 
@@ -81,6 +81,16 @@ class DetalleFactura
      * @ORM\Column(type="integer", nullable=true)
      */
     private $codigoPorcentaje;
+
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=3, nullable=true)
+     */
+    private $precioSinImp;
+
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=3, nullable=true)
+     */
+    private $precioConDesc;
 
     public function getId(): ?int
     {
@@ -238,6 +248,30 @@ class DetalleFactura
     public function setCodigoPorcentaje(?int $codigoPorcentaje): self
     {
         $this->codigoPorcentaje = $codigoPorcentaje;
+
+        return $this;
+    }
+
+    public function getPrecioSinImp(): ?string
+    {
+        return $this->precioSinImp;
+    }
+
+    public function setPrecioSinImp(?string $precioSinImp): self
+    {
+        $this->precioSinImp = $precioSinImp;
+
+        return $this;
+    }
+
+    public function getPrecioConDesc(): ?string
+    {
+        return $this->precioConDesc;
+    }
+
+    public function setPrecioConDesc(string $precioConDesc): self
+    {
+        $this->precioConDesc = $precioConDesc;
 
         return $this;
     }

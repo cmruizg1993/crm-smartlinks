@@ -33,11 +33,6 @@ class DetalleCuentaPorCobrar
     private $subtotal;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     */
-    private $descuento;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $descripcion;
@@ -67,6 +62,11 @@ class DetalleCuentaPorCobrar
      * @ORM\JoinColumn(nullable=false)
      */
     private $cuenta;
+
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=3, nullable=true)
+     */
+    private $precioSinImp;
 
     public function getId(): ?int
     {
@@ -109,17 +109,6 @@ class DetalleCuentaPorCobrar
         return $this;
     }
 
-    public function getDescuento(): ?string
-    {
-        return $this->descuento;
-    }
-
-    public function setDescuento(?string $descuento): self
-    {
-        $this->descuento = $descuento;
-
-        return $this;
-    }
 
     public function getDescripcion(): ?string
     {
@@ -189,6 +178,18 @@ class DetalleCuentaPorCobrar
     public function setCuenta(?CuentaPorCobrar $cuenta): self
     {
         $this->cuenta = $cuenta;
+
+        return $this;
+    }
+
+    public function getPrecioSinImp(): ?string
+    {
+        return $this->precioSinImp;
+    }
+
+    public function setPrecioSinImp(?string $precioSinImp): self
+    {
+        $this->precioSinImp = $precioSinImp;
 
         return $this;
     }

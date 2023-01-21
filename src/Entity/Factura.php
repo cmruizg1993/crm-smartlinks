@@ -635,45 +635,63 @@ class Factura
                 $impuesto = $opcionCatalogoRepository->findOneByCodigoyCatalogo($servicio->getCodigoPorcentaje(), 'iva');
                 $detalle->setCodigoPorcentaje($servicio->getCodigoPorcentaje());
                 if(!$servicio || !$servicio->getId()) throw new InvalidArgumentException();
-                $totalDetalle = ($detalle->getCantidad() * $detalle->getPrecio());
+
                 $porcentaje = $impuesto->getValorNumerico()/100;
-                $ivaDetalle = null;
-                $precioDetalle = $detalle->getPrecio();
-                if($servicio->getIncluyeIva()){
-                    $subtotalDetalle = $totalDetalle/(1 + $porcentaje);
-                    $ivaDetalle = $totalDetalle - $subtotalDetalle;
-                    $precioDetalle = $precioDetalle/(1 + $porcentaje);
-                    $detalle->setPrecio($precioDetalle);
-                }else{
-                    $subtotalDetalle = $totalDetalle;
-                    $totalDetalle = $subtotalDetalle*(1 + $porcentaje);
-                    $ivaDetalle = $totalDetalle - $subtotalDetalle;
-                }
+                $precioSinImpDetalle = $detalle->getPrecioSinImp();
+                $cantidad = $detalle->getCantidad();
+
+                /*VALORES CALCULADOS*/
+                $precioConImpDetalle = round($precioSinImpDetalle*(1+$porcentaje), 3);
+                $subtotalDetalle = $precioSinImpDetalle * $cantidad;
+                $totalDetalle = $precioConImpDetalle * $cantidad;
+                $ivaDetalle = $totalDetalle - $subtotalDetalle;
+
+                //descuento unitario
+                $descuento = ($servicio->getPrecioSinImp() - $precioSinImpDetalle)*$cantidad;
+
+                /* SETEO DE VALORES CALCULADOS */
+                $detalle->setPrecio($precioConImpDetalle);
+                $detalle->setSubtotal($subtotalDetalle);
+                $detalle->setIva($ivaDetalle);
+                $detalle->setDescuento($descuento);
+
                 if($ivaDetalle > 0){
                     $subtotal12 += $subtotalDetalle;
-
                 }else{
                     $subtotal0 += $subtotalDetalle;
                 }
+
                 $subtotal += $subtotalDetalle;
-                $detalle->setSubtotal($subtotalDetalle);
-                $detalle->setIva($ivaDetalle);
                 $total += $totalDetalle;
                 $iva += $ivaDetalle;
+
             }elseif ($detalle->getCuota()){
+                /*Las cuotas solo soportan iva 12%*/
                 $cuota = $detalle->getCuota();
                 /* @var $impuesto OpcionCatalogo */
                 $impuesto = $opcionCatalogoRepository->findOneByCodigoyCatalogo('2', 'iva');
                 $detalle->setCodigoPorcentaje('2');
-                $totalDetalle = $cuota->getValor();
-                $porcentaje = $impuesto->getValorNumerico()/100;
-                $ivaDetalle = null;
-                $precioDetalle = $cuota->getValor();
+                if(!$cuota || !$cuota->getId()) throw new InvalidArgumentException();
 
-                $subtotalDetalle = $totalDetalle/(1 + $porcentaje);
+                $porcentaje = $impuesto->getValorNumerico()/100;
+                $precioSinImpDetalle = $detalle->getPrecioSinImp();
+                $cantidad = $detalle->getCantidad();
+
+                /*VALORES CALCULADOS*/
+                $precioConImpDetalle = round($precioSinImpDetalle*(1+$porcentaje), 3);
+                $subtotalDetalle = $precioSinImpDetalle * $cantidad;
+                $totalDetalle = $precioConImpDetalle * $cantidad;
                 $ivaDetalle = $totalDetalle - $subtotalDetalle;
-                $precioDetalle = $precioDetalle/(1 + $porcentaje);
-                $detalle->setPrecio($precioDetalle);
+
+                //descuento unitario
+                $descuento = ($cuota->getValorSinImp() - $precioSinImpDetalle)*$cantidad;
+
+                /* SETEO DE VALORES CALCULADOS */
+                $detalle->setPrecio($precioConImpDetalle);
+                $detalle->setSubtotal($subtotalDetalle);
+                $detalle->setIva($ivaDetalle);
+                $detalle->setDescuento($descuento);
+
 
                 if($ivaDetalle > 0){
                     $subtotal12 += $subtotalDetalle;

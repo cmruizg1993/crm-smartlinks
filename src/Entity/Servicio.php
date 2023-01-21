@@ -61,6 +61,11 @@ class Servicio
      */
     private $incluyeIva = true;
 
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=3, nullable=true)
+     */
+    private $precioSinImp;
+
     public function __toString()
     {
         return $this->getNombre();
@@ -218,6 +223,18 @@ class Servicio
     {
         $this->incluyeIva = $incluyeIva;
 
+        return $this;
+    }
+
+    public function getPrecioSinImp(): ?string
+    {
+        return $this->precioSinImp;
+    }
+
+    public function setPrecioSinImp($porcentajeImpuesto): self
+    {
+        $precioSinImp = $this->getPrecio()/(1+($porcentajeImpuesto)/100);
+        $this->precioSinImp = round($precioSinImp, 3);
         return $this;
     }
 }

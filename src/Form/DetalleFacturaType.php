@@ -19,8 +19,7 @@ class DetalleFacturaType extends AbstractType
             ->add('esServicio')
             ->add('descripcion')
             ->add('cantidad',null, ['label'=>false, 'attr'=>['class'=>'form-control']])
-            ->add('precio',null, ['label'=>false, 'attr'=>['class'=>'form-control']])
-            ->add('subtotal',null, ['label'=>false, 'attr'=>['class'=>'form-control']])
+            ->add('precioSinImp',null, ['label'=>false, 'attr'=>['class'=>'form-control']])
         ;
     }
 

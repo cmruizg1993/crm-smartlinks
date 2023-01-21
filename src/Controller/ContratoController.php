@@ -242,7 +242,7 @@ class ContratoController extends AbstractController
                             'plazo',
                             'detalles'=>['descripcion'],
                             'cuotas'=>[
-                                'id','fechaVencimiento', 'valor', 'observaciones', 'recargo', 'numero', 'pagada'
+                                'id','fechaVencimiento', 'valor', 'valorSinImp','observaciones', 'recargo', 'numero', 'pagada'
                             ]
                         ]
                     ],
@@ -251,6 +251,7 @@ class ContratoController extends AbstractController
                         'codigo',
                         'nombre',
                         'precio',
+                        'precioSinImp',
                         'incluyeIva',
                         'codigoPorcentaje'
                     ],

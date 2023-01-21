@@ -7,6 +7,10 @@ use App\Entity\Servicio;
 use App\Form\ServicioType;
 use App\Repository\OpcionCatalogoRepository;
 use App\Repository\ServicioRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\DBAL\Query\Expression\ExpressionBuilder;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,7 +37,7 @@ class ServicioController extends AbstractController
     /**
      * @Route("/new", name="servicio_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, OpcionCatalogoRepository $opcionCatalogoRepository): Response
     {
         $servicio = new Servicio();
         $form = $this->createForm(ServicioType::class, $servicio);
@@ -41,6 +45,10 @@ class ServicioController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $codigo = $servicio->getCodigoPorcentaje();
+            $imp = $opcionCatalogoRepository->findOneByCodigoyCatalogo($codigo, 'iva');
+            $porcentaje = $imp->getValorNumerico();
+            $servicio->setPrecioSinImp($porcentaje);
             $entityManager->persist($servicio);
             $entityManager->flush();
 
@@ -66,12 +74,16 @@ class ServicioController extends AbstractController
     /**
      * @Route("/{id}/edit", name="servicio_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Servicio $servicio): Response
+    public function edit(Request $request, Servicio $servicio, OpcionCatalogoRepository $opcionCatalogoRepository): Response
     {
         $form = $this->createForm(ServicioType::class, $servicio);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $codigo = $servicio->getCodigoPorcentaje();
+            $imp = $opcionCatalogoRepository->findOneByCodigoyCatalogo($codigo, 'iva');
+            $porcentaje = $imp->getValorNumerico();
+            $servicio->setPrecioSinImp($porcentaje);
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('servicio_index');
@@ -118,6 +130,7 @@ class ServicioController extends AbstractController
                     'codigo',
                     'nombre',
                     'precio',
+                    'precioSinImp',
                     'incluyeIva',
                     'codigoPorcentaje'
                 ]
@@ -153,6 +166,7 @@ class ServicioController extends AbstractController
                 'codigo',
                 'nombre',
                 'precio',
+                'precioSinImp',
                 'incluyeIva',
                 'codigoPorcentaje'
             ]
@@ -160,5 +174,40 @@ class ServicioController extends AbstractController
         $data["porcentaje"] = $impuesto ? $impuesto->getValorNumerico() : 0;
         return new JsonResponse($data);
     }
+    /**
+     * @Route("/admin/sincronizar", name="obtener_servicio_reconexion", methods={"GET"})
+     */
+    public function sincronizar
+    (
+        ServicioRepository $servicioRepository,
+        OpcionCatalogoRepository $opcionCatalogoRepository,
+        SerializerInterface $serializer,
+        EntityManagerInterface $em
+    ){
+        if($this->isGranted('ROLE_SUPER_ADMIN')){
+            $servicios = $servicioRepository->findAll();
+            $impuestos = $opcionCatalogoRepository->findByCodigoCatalogo('iva');
+            /* @var $impuestos ArrayCollection<OpcionCatalogo> */
+            $impuestos = new ArrayCollection($impuestos);
+
+            foreach ($servicios as $servicio){
+                //$servicio->setPrecioSinImp();
+                $codigo = $servicio->getCodigoPorcentaje();
+                $criteria = Criteria::create();
+                $criteria->where(Criteria::expr()->eq('codigo', (string) $codigo))->getFirstResult();
+                /* @var $imp OpcionCatalogo */
+                $imp = $impuestos->matching($criteria)->first();
+                $porcentaje = $imp->getValorNumerico();
+                $servicio->setPrecioSinImp($porcentaje);
+            }
+            $em->flush();
+            $data = $serializer->normalize($servicios, null, [AbstractNormalizer::ATTRIBUTES=>[
+                'id', 'nombre', 'precio', 'precioSinImp'
+                ]]);
+            return new JsonResponse($data);
+        }
+        return (new Response(null, 403));
+    }
+
 //obtenerServicioReconexion
 }

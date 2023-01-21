@@ -13,12 +13,9 @@ class DetalleCuentaType extends AbstractType
     {
         $builder
             ->add('cantidad')
-            ->add('precio')
-            ->add('subtotal')
-            ->add('descuento')
+            ->add('precioSinImp')
             ->add('descripcion')
             ->add('esServicio')
-            ->add('iva')
             ->add('producto')
             ->add('servicio')
             ->add('cuenta')

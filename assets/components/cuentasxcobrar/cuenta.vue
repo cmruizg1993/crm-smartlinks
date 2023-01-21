@@ -78,7 +78,7 @@
 
                 <div class="row">
                     <div class="col-md-12 d-flex justify-content-end">
-                        <lista-servicios :disabled='isDisabled' :baseurl="urlservicios" @agregarServicio="agregarDetalle"></lista-servicios>
+                        <lista-servicios :disabled='isDisabled' :baseurl="urlservicios" @agregarServicio="agregarServicio"></lista-servicios>
                         <button :disabled='isDisabled' type="button" form="factura" class="btn btn-success btn-group-sm" @click="guardarFactura">
                             <i class="mdi mdi-content-save-all"></i>
                             <span>Guardar</span>
@@ -137,8 +137,14 @@
             'datafactura'
         ],
         methods:{
-            agregarDetalle(servicio){
-                this.$refs.detalles.agregarDetalle(servicio);
+            agregarDetalle(detalle){
+                this.$refs.detalles.agregarDetalle(detalle);
+            },
+            agregarServicio(servicio){
+                servicio.cantidad = 1;
+                servicio.esServicio = true;
+                servicio.subtotal = servicio.precioSinImp;
+                this.agregarDetalle(servicio);
             },
             agregarContrato(contrato){
                 this.factura.cliente = contrato.cliente.id;
@@ -229,8 +235,9 @@
                 this.factura = data.factura;
                 this.factura.detalles = JSON.parse(JSON.stringify(data.detalles)).map(d => {
                     d.codigo = d.servicio.codigo;
-                    d.incluyeIva = d.servicio.incluyeIva;
-                    d.precioOriginal = d.servicio.precio;
+                    d.precio = d.servicio.precio;
+
+                    d.precioSinImp = d.servicio.precioSinImp;
                     d.porcentaje = d.servicio.porcentaje;
                     d.servicio = d.servicio.id;
                     return d;

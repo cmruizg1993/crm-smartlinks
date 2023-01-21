@@ -75,23 +75,37 @@ class CuentaPorCobrarController extends AbstractController
             if(!$empresa) return new Response('Empresa no válida', 400);
             $plazo = $cuenta->getPlazo();
             if(!$plazo || $plazo < 0) return new Response('Plazo no válido', 400);
+            $porcentaje = 0.12;
             if($plazo == 0){
+                $total = $cuenta->getTotal();
+                $totalSinImp = $total/(1+$porcentaje);
                 $cuota = new CuotaCuenta();
-                $cuota->setFechaVencimiento($cuenta->getFecha());
-                $cuota->setValor($cuenta->getTotal());
+                $cuota->setFechaVencimiento($total);
+                $cuota->setValor($total);
+                $cuota->setValorSinImp($totalSinImp);
                 $cuota->setNumero(1);
                 $cuenta->addCuota($cuota);
             }else{
-                $valorCuota = round($cuenta->getTotal()/$plazo, 2);
+                $total = $cuenta->getTotal();
+                $totalSinImp = $total/(1+$porcentaje);
+                $valorCuota = round($total/$plazo, 2);
+                $valorCuotaSinImp = round($totalSinImp/$plazo, 3);
+                $suma = 0;
                 for($i = 0 ; $i < $plazo; $i++){
+                    if($i + 1 == $plazo){
+                        $valorCuota = $cuenta->getTotal() -$suma;
+                        $valorCuotaSinImp = $valorCuota/(1+$porcentaje);
+                    };
                     $cuota = new CuotaCuenta();
                     /* @var $fecha \DateTime */
                     $fecha = clone $cuenta->getFecha();
                     $fecha->modify("+$i month");
                     $cuota->setFechaVencimiento($fecha);
                     $cuota->setValor($valorCuota);
-                    $cuota->setNumero($i);
+                    $cuota->setValorSinImp($valorCuotaSinImp);
+                    $cuota->setNumero($i + 1);
                     $cuenta->addCuota($cuota);
+                    $suma += $valorCuota;
                 }
             }
             $cuenta->setFecha(new \DateTime());
