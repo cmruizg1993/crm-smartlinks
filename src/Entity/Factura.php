@@ -624,6 +624,7 @@ class Factura
         $subtotal0 = 0;
         $subtotalNOI = 0;
         $iva = 0;
+        $totalDescuento = 0;
         $detalles = $this->getDetalles();
 
         /* @var $detalle DetalleFactura */
@@ -660,7 +661,7 @@ class Factura
                 }else{
                     $subtotal0 += $subtotalDetalle;
                 }
-
+                $totalDescuento += $descuento;
                 $subtotal += $subtotalDetalle;
                 $total += $totalDetalle;
                 $iva += $ivaDetalle;
@@ -714,6 +715,7 @@ class Factura
             }
             $detalle->setFactura($this);
         }
+        $this->descuento = $totalDescuento;
         $this->total =($total);
         $this->subtotal =($subtotal);
         $this->iva = ($iva);
