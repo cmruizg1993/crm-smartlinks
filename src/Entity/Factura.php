@@ -641,19 +641,20 @@ class Factura
                 $precioSinImpDetalle = $detalle->getPrecioSinImp();
                 $cantidad = $detalle->getCantidad();
 
+                /*VALORES CALCULADOS*/
                 //descuento unitario
                 $descuento = ($servicio->getPrecioSinImp() - $precioSinImpDetalle)*$cantidad;
+                $precioConImpDetalle = round($precioSinImpDetalle*(1+$porcentaje), 3);
+                $subtotalDetalle = $precioSinImpDetalle * $cantidad;
+                $totalDetalle = $precioConImpDetalle * $cantidad;
+                $ivaDetalle = $totalDetalle - $subtotalDetalle;
+
 
                 //reasigna valor original
                 $precioSinImpDetalle = $servicio->getPrecioSinImp();
                 $detalle->setPrecioSinImp($precioSinImpDetalle);
 
-                /*VALORES CALCULADOS*/
-                $precioConImpDetalle = round($precioSinImpDetalle*(1+$porcentaje), 3);
-                $subtotalDetalle = $precioSinImpDetalle * $cantidad;
-                $totalDetalle = $precioConImpDetalle * $cantidad;
-                $ivaDetalle = $totalDetalle - $subtotalDetalle;
-                
+
                 /* SETEO DE VALORES CALCULADOS */
 
                 $detalle->setPrecio($precioConImpDetalle);
