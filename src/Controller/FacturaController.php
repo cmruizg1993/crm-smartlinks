@@ -420,12 +420,13 @@ class FacturaController extends AbstractController
             if(!$empresa) return new Response('Empresa no válida', 400);
             $factura->ruc = $empresa->getRuc();
             $factura->generarClaveAcceso();
+            $factura->totalizar($opcionCatalogoRepository);
             $xml = $this->renderView('xml/factura.pruebas.xml.twig',['factura'=>$factura, 'conf'=>$empresa]);
 
             $clave = $factura->getClaveAcceso();
             $facturacionElectronica->crearArchivoXml($clave, $xml);
             $output = $facturacionElectronica->firmarArchivoXml($clave, $empresa);
-            $factura->totalizar($opcionCatalogoRepository);
+            
             if($output == 0){
                 $testing = $factura->getTipoAmbiente() == '1';
                 //dump($testing);
