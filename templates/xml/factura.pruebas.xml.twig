@@ -65,7 +65,7 @@
             <descripcion>{{ d.descripcion }}</descripcion>
             <cantidad>{{ d.cantidad }}</cantidad>
             <precioUnitario>{{ d.precioSinImp|number_format(2) }}</precioUnitario>
-            <descuento>{{ d.descuento*d.cantidad|number_format(2) }}</descuento>
+            <descuento>{{ (d.descuento)|number_format(2) }}</descuento>
             <precioTotalSinImpuesto>{{ d.subtotal|number_format(2) }}</precioTotalSinImpuesto>
             <impuestos>
                 {% if d.codigoPorcentaje > 0 %}
