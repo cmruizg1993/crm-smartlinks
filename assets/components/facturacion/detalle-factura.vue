@@ -34,7 +34,7 @@
                             {{d.descuento.toFixed(3)}}
                         </div>
                         <div class="col-1">
-                            {{d.subtotaltoFixed(3)}}
+                            {{d.subtotal.toFixed(3)}}
                         </div>
                     </div>
 
