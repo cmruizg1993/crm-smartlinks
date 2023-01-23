@@ -314,7 +314,7 @@
                 this.$refs.detalles.inicializar();
 
                 let descuento = contrato.cliente.esDiscapacitado || contrato.cliente.esTerceraEdad ? 50:0;
-                contrato.plan.descuento = Number(contrato.plan.precioSinImp)*(descuento/100).toFixed(3);
+                contrato.plan.descuento = Number(Number(contrato.plan.precioSinImp)*(descuento/100)).toFixed(3);
                 contrato.plan.precioSinImp  = (Number(contrato.plan.precioSinImp) - contrato.plan.descuento).toFixed(3);
                 contrato.plan.precio = contrato.plan.precioSinImp*(1 + (contrato.plan.porcentaje/100)).toFixed(2);
                 contrato.plan.cantidad = 1;
