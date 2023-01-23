@@ -78,6 +78,7 @@
             },
             establecerAcciones(v){
                 v.actions = [];
+                v.estadoSri = v.estadoSri ? v.estadoSri:'';
                 if(v.estadoSri == 'DEVUELTA' || v.estadoSri == 'NO AUTORIZADO'){
                     let autorizar = (v)=>{
                         console.log(v)
