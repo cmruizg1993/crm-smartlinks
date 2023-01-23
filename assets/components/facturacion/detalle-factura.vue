@@ -31,10 +31,10 @@
                             <input :readonly="!d.editable" type="number" step="1" min="0" v-model="d.cantidad" @change="cambiarCantidad(d,$event)"  class="form-control" :disabled="isDisabled">
                         </div>
                         <div class="col-1">
-                            {{d.descuento}}
+                            {{d.descuento.toFixed(3)}}
                         </div>
                         <div class="col-1">
-                            {{d.subtotal}}
+                            {{d.subtotaltoFixed(3)}}
                         </div>
                     </div>
 
