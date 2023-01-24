@@ -491,8 +491,21 @@
                 this.factura.detalles = JSON.parse(JSON.stringify(data.detalles)).map(d => {
                     console.log(d)
                     d.codigo = d.codigo;
-                    d.descuento = Number(d.descuento).toFixed(2);
+
+                    console.log(d.descuento);
+                    console.log(d.precioSinImp);
+
                     d.porcentaje = d.esServicio ? d.servicio.porcentaje:12;
+                    d.descuento = Number(d.descuento/d.cantidad).toFixed(3);
+                    d.precioSinImp = Number(d.precioSinImp - d.descuento).toFixed(3);
+
+                    console.log(d.descuento);
+                    console.log(d.precioSinImp);
+
+                    d.precio = Number(d.precioSinImp * (1 + d.porcentaje/100)).toFixed(2);
+                    d.subtotal = Number(d.precioSinImp*d.cantidad).toFixed(3);
+
+
                     d.servicio = d.esServicio ? d.servicio.id: null;
                     d.cuota = !d.esServicio ? d.cuota.id:null
                     d.porcentaje = Number(d.porcentaje).toFixed(2);
