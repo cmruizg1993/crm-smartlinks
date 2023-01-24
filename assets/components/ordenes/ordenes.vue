@@ -28,7 +28,17 @@
             return{
                 ordenes:[],
                 camposReporte: [],
-                campos:['id', 'cedula','nombres', 'numero', 'tipo', 'estado' ,'fecha', 'tecnico', 'actions'],
+                campos:[
+                    {text: 'id', key: 'id'},
+                    {text: 'cedula', key: 'cedula'},
+                    {text: 'nombres', key: 'nombres'},
+                    {text: 'numero', key: 'numero'},
+                    {text: 'tipo', key: 'tipo'},
+                    {text: 'estado', key: 'estado'},
+                    {text: 'fecha', key: 'fecha'},
+                    {text: 'tecnico', key: 'tecnico'},
+                    {text: 'actions', key: 'actions'}
+                    ],
                 filtros:[
                     {text: 'Estado', value: 'estado'},
                     {text:'Cedula/Ruc', value:'cedula'},
@@ -42,7 +52,7 @@
             if(this.listado){
                 let listado = JSON.parse(this.listado);
                 this.ordenes = listado.map((v)=>{
-                    v.fecha = moment(v.fecha).format('DD/MM/YYYY');
+                    v.fecha = moment(v.strFecha).format('DD/MM/YYYY');
                     delete v.strFecha;
                     v.cedula = v.Contrato.cliente.dni.numero;
                     v.nombres = v.Contrato.cliente.nombres;

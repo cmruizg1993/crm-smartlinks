@@ -23,7 +23,7 @@
         data(){
             return{
                 cuentas:[],
-                campos:['id','fecha', 'cedula', 'nombres', 'total', 'abono', 'actions'],
+                campos:[{ text: 'id', key: 'id'},{ text: 'fecha', key: 'fecha'}, { text: 'cedula', key: 'cedula'}, { text: 'nombres', key: 'nombres'}, { text: 'total', key: 'total'}, { text: 'abono', key: 'abono'}, { text: 'actions', key: 'actions'}],
                 filtros:[
                     {text: 'Nombres', value: 'nombres'},
                     {text:'Cedula/Ruc', value:'cedula'},

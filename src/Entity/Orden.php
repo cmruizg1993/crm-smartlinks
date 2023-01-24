@@ -212,5 +212,7 @@ class Orden
 
         return $this;
     }
-
+    public function getStrFecha(){
+        return $this->fecha ? $this->fecha->format('Y-m-d'):'';
+    }
 }

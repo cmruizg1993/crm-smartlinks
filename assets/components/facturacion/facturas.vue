@@ -40,7 +40,7 @@
             return{
                 facturas:[],
                 camposReporte: [],
-                campos:['id', 'serie', 'secuencial', 'cedula','nombres', 'fecha', 'numero', 'total', 'formaPago', 'estadoSri', 'actions'],
+                campos:[{ text: 'id', key: 'id'}, { text: 'serie', key: 'serie'}, { text: 'secuencial', key: 'secuencial'}, { text: 'cedula', key: 'cedula'},{ text: 'nombres', key: 'nombres'}, { text: 'fecha', key: 'fecha'}, { text: 'numero', key: 'numero'}, { text: 'total', key: 'total'}, { text: 'formaPago', key: 'formaPago'}, { text: 'estadoSri', key: 'estadoSri'}, { text: 'actions', key: 'actions'}],
                 filtros:[
                     {text: 'Secuencial', value: 'secuencial'},
                     {text:'Cedula/Ruc', value:'cedula'},

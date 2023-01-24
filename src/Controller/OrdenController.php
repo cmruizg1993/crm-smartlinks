@@ -45,7 +45,7 @@ class OrdenController extends AbstractController
                 'estado'=>[
                     'nombre'
                 ],
-                'fecha'
+                'strFecha'
 
             ]
         ]);
