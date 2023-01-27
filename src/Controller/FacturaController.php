@@ -91,7 +91,7 @@ class FacturaController extends AbstractController
         $result = $facturacionElectronica->autorizacion($clave, $testing);
         $respuesta = isset($result->RespuestaAutorizacionComprobante) ? $result->RespuestaAutorizacionComprobante: null;
         $autorizaciones = isset($respuesta->autorizaciones) ? $respuesta->autorizaciones: null;
-        dump($result);
+        //dump($result);
         $autorizacion = $autorizaciones ? $autorizaciones->autorizacion: null;
         $estado = $autorizacion && isset($autorizacion->estado)?$autorizacion->estado:null;
         $factura->setEstadoSri($estado);
@@ -170,7 +170,7 @@ class FacturaController extends AbstractController
         if(!$factura) return new Response('Factura no encontrada',400);
         $clave = $factura->getClaveAcceso();
         $result = $facturacionElectronica->recepcion($clave);
-        dump($result);
+        //dump($result);
         $respuesta = isset($result->RespuestaRecepcionComprobante) ? $result->RespuestaRecepcionComprobante: null;
         $estado = $respuesta && isset($respuesta->estado) ? $respuesta->estado: null;
         $factura->setEstadoSri($estado);
@@ -435,7 +435,7 @@ class FacturaController extends AbstractController
                 $testing = $factura->getTipoAmbiente() == '1';
                 //dump($testing);
                 $result = $facturacionElectronica->recepcion($clave, $testing);
-                dump($result);
+                //dump($result);
                 $respuesta = isset($result->RespuestaRecepcionComprobante) ? $result->RespuestaRecepcionComprobante: null;
                 $estado = null;
                 if($respuesta && isset($respuesta->estado)){
