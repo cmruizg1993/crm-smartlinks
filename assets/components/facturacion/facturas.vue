@@ -79,10 +79,8 @@
             establecerAcciones(v){
                 v.actions = [];
                 v.estadoSri = v.estadoSri ? v.estadoSri:'';
-                if(v.estadoSri == 'DEVUELTA' || v.estadoSri == 'NO AUTORIZADO'){
-                    let autorizar = (v)=>{
-                        console.log(v)
-                    }
+
+                if(v.estadoSri == 'DEVUELTA' || v.estadoSri == 'NO AUTORIZADO' || v.estadoSri == ''){
                     v.actions.push({
                         color: 'warning',
                         texto: 'Revisar',

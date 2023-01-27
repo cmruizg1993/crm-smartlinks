@@ -73,7 +73,7 @@ class FacturaController extends AbstractController
         ]);
     }
     /**
-     * @Route("/autorizacion/sri/{id}", name="factura_autorizacion", methods={"PUT"})
+     * @Route("/autorizacion/sri/{id}", name="factura_autorizacion", methods={"PUT", "GET"})
      */
     public function autorizacion
     (
@@ -99,10 +99,11 @@ class FacturaController extends AbstractController
             $mensajes = $autorizacion->mensajes;
             $jsonMensajes = json_encode($mensajes);
             $factura->setMensajeSri($jsonMensajes);
+            $em->flush();
+            return new JsonResponse(['id'=>$id,'estado'=>$estado, 'clave'=>$clave], 400);
         }
-        $factura->setEstadoSri($estado);
         $em->flush();
-        return new JsonResponse(['estado'=>$estado], 200);
+        return new JsonResponse(['id'=>$id,'estado'=>$estado, 'clave'=>$clave], 200);
     }
     /**
      * @Route("/envio/mail/{id}", name="factura_envio", methods={"PUT"})
@@ -149,6 +150,7 @@ class FacturaController extends AbstractController
         $factura->setEstadoSri($factura->getEstadoSri().','.'ENVIADA');
         $estado = $factura->getEstadoSri();
         $em->flush();
+
         return new JsonResponse(['success'=>true, 'estado'=>$estado], 200);
     }
 
@@ -301,10 +303,12 @@ class FacturaController extends AbstractController
                     $factura->setMensajeSri($jsonMensajes);
                 }
                 $factura->setEstadoSri($estado);
+                $em->flush();
+                sleep(3);
+                return $this->redirectToRoute('factura_autorizacion', ['id'=>$factura->getId()]);
             }
+            return new JsonResponse(['id'=>$factura->getId(), 'estado'=> $factura->getEstadoSri(), 'clave'=>$clave ], 500);
 
-            $em->flush();
-            return new JsonResponse(['id'=>$factura->getId()], 200);
         }
 
         $codigos = ['ambiente', 'f-pagos', 'tipo-comp'];

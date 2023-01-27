@@ -213,6 +213,6 @@ class Orden
         return $this;
     }
     public function getStrFecha(){
-        return $this->fecha ? $this->fecha->format('Y-m-d'):'';
+        return $this->fechaEjecucion ? $this->fechaEjecucion->format('Y-m-d'):'';
     }
 }

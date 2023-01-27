@@ -7,6 +7,7 @@ use App\Entity\Orden;
 use App\Form\OrdenType;
 use App\Repository\OrdenRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -21,37 +22,51 @@ use Symfony\Component\Serializer\SerializerInterface;
 class OrdenController extends AbstractController
 {
     /**
-     * @Route("/", name="orden_index", methods={"GET"})
+     * @Route("/", name="orden_index", methods={"GET", "POST"})
      */
     public function index(Request $request , OrdenRepository $ordenRepository, SerializerInterface $serializer): Response
     {
+        /*
         $page = $request->get('page') ? $request->get('page')-1: 0;
         $offset = $page*25;
-        $ordenes = $ordenRepository->findAll();
+        */
+        $form = $this->createFormBuilder([])
+            ->add('desde', DateType::class,['attr'=>['required'=>'required'], 'widget' => 'single_text'])
+            ->add('hasta', DateType::class,['attr'=>['required'=>'required'], 'widget' => 'single_text'])
+            ->getForm();
+        $form->handleRequest($request);
+        $data = [];
+        if($form->isSubmitted() && $form->isValid()){
+            $desde = $form['desde']->getData();
+            $hasta = $form['hasta']->getData();
+            $ordenes = $ordenRepository->getRangeOfDate($desde, $hasta);
 
-        $data = $serializer->normalize($ordenes, null, [AbstractNormalizer::ATTRIBUTES=>
-            [
-                'id',
-                'tecnico'=> [ 'nombres' ],
-                'tipo'=> [ 'nombre' ],
-                'Contrato'=> [
-                    'numero',
-                    'cliente'=>[
-                        'nombres',
-                        'dni'=>['numero']
-                    ]
-                ],
-                'codigo',
-                'estado'=>[
-                    'nombre'
-                ],
-                'strFecha'
+            $data = $serializer->normalize($ordenes, null, [AbstractNormalizer::ATTRIBUTES=>
+                [
+                    'id',
+                    'tecnico'=> [ 'nombres' ],
+                    'tipo'=> [ 'nombre' ],
+                    'Contrato'=> [
+                        'numero',
+                        'cliente'=>[
+                            'nombres',
+                            'dni'=>['numero']
+                        ]
+                    ],
+                    'codigo',
+                    'estado'=>[
+                        'nombre'
+                    ],
+                    'strFecha'
 
-            ]
-        ]);
+                ]
+            ]);
+        }
         return $this->render('orden/index.html.twig', [
             'ordenes' => $data,
+            'form'=>$form->createView()
         ]);
+
     }
 
     /**

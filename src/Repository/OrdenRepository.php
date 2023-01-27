@@ -18,6 +18,25 @@ class OrdenRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Orden::class);
     }
+    public function getRangeOfDate($desde, $hasta)
+    {
+        return $this->createQueryBuilder('o')
+            ->select('o, cliente, dni, contrato, estado, tipo, tecnico')
+            ->leftJoin('o.Contrato', 'contrato')
+            ->leftJoin('contrato.cliente', 'cliente')
+            ->leftJoin('cliente.dni','dni')
+            ->leftJoin('o.estado', 'estado')
+            ->leftJoin('o.tipo', 'tipo')
+            ->leftJoin('o.tecnico', 'tecnico')
+            ->andWhere('o.fechaEjecucion >= :desde')
+            ->andWhere('o.fechaEjecucion <= :hasta')
+            ->orderBy('o.fechaEjecucion', 'DESC')
+            ->getQuery()
+            ->setParameter('desde', $desde)
+            ->setParameter('hasta', $hasta)
+            ->getResult()
+            ;
+    }
 
     // /**
     //  * @return Orden[] Returns an array of Orden objects

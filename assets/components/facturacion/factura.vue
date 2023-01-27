@@ -146,12 +146,30 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" v-if="factura.mensajeSri">
-                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+
+                        <div class="row">
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12" v-if="factura.estadoSri">
+                                <div class="form-group row">
+                                    <label class="col-4 col-form-label">Estado SRI</label>
+                                    <div class="col-8">
+                                        <input :readonly="true" class="form-control" form="factura" name="usuario" v-model="factura.estadoSri" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+
+                                <div class="form-group row" v-if="factura.claveAcceso">
+                                    <label class="col-2 col-form-label">Clave de acceso</label>
+                                    <div class="col-10">
+                                        <input :readonly="true" class="form-control" form="factura" name="usuario" v-model="factura.claveAcceso" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12" v-if="factura.mensajeSri">
 
                                 <div class="form-group row">
-                                    <label class="col-1 col-form-label">Mensaje SRI</label>
-                                    <div class="col-11">
+                                    <label class="col-4 col-form-label">Mensaje SRI</label>
+                                    <div class="col-8">
                                         <textarea :readonly="true" class="form-control" form="factura" name="usuario" v-model="factura.mensajeSri" ></textarea>
                                     </div>
                                 </div>
@@ -389,9 +407,15 @@
                     this.loading = false;
                     if(r.status == 200){
                         this.factura.id = r.data.id;
+                        this.factura.estadoSri = r.data.estado;
+                        this.factura.claveAcceso = r.data.clave;
                         success = true;
                     }
                 }).catch(e => {
+                    const r = e.response;
+                    this.factura.id = r.data?.id;
+                    this.factura.estadoSri = r.data?.estado;
+                    this.factura.claveAcceso = r.data?.clave;
                     console.log(e);
                 })
                 this.loading = false;
