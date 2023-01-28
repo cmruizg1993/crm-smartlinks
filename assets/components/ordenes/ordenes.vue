@@ -54,11 +54,11 @@
                 this.ordenes = listado.map((v)=>{
                     v.fecha = moment(v.strFecha).format('DD/MM/YYYY');
                     delete v.strFecha;
-                    v.cedula = v.Contrato.cliente.dni.numero;
-                    v.nombres = v.Contrato.cliente.nombres;
+                    v.cedula = v.Contrato.cliente?.dni.numero;
+                    v.nombres = v.Contrato.cliente?.nombres;
                     v.numero = v.Contrato.numero;
                     v.estado = v.estado.nombre;
-                    v.tecnico = v.tecnico.nombres;
+                    v.tecnico = v.tecnico?.nombres;
                     v.tipo = v.tipo.nombre;
                     this.establecerAcciones(v);
                     return v;
