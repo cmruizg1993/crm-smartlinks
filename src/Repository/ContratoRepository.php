@@ -100,7 +100,7 @@ class ContratoRepository extends ServiceEntityRepository
 
         $sql = "UPDATE contrato c
                     LEFT JOIN factura f ON c.id = f.contrato_id AND f.anio_pago = :anio AND f.mes_pago = :mes
-                    SET c.estado_actual_id = IF((f.id IS NOT NULL), :estado_activo,c.estado_actual_id)";
+                    SET c.estado_actual_id = IF((f.id IS NOT NULL), :estado_activo ,c.estado_actual_id)";
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->bindParam('anio',$anio);
         $stmt->bindParam('mes', $mes);
@@ -114,14 +114,16 @@ class ContratoRepository extends ServiceEntityRepository
         /* @var $opcion OpcionCatalogo */
         $cortado = $opcionRepository->findOneByCodigoyCatalogo(EstadoContrato::CORTADO, 'est-cont');
         $activo = $opcionRepository->findOneByCodigoyCatalogo(EstadoContrato::ACTIVO, 'est-cont');
-
+        $idActivo = $activo->getId();
+        $idCortado = $cortado->getId();
+        dump($idActivo);
         $sql = "UPDATE contrato c LEFT JOIN factura f ON c.id = f.contrato_id AND f.anio_pago = :anio AND f.mes_pago = :mes
                     SET c.estado_actual_id = IF((f.id IS NULL AND (c.estado_actual_id = :estado_activo OR c.estado_actual_id IS NULL)), :estado_id, c.estado_actual_id);";
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->bindParam('anio',$anio);
         $stmt->bindParam('mes', $mes);
-        $stmt->bindParam('estado_activo', $activo->getId());
-        $stmt->bindParam('estado_id', $cortado->getId());
+        $stmt->bindParam('estado_activo', $idActivo);
+        $stmt->bindParam('estado_id', $idCortado);
         return $stmt->executeStatement();
     }
     public function marcarInpagos()

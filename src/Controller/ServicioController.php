@@ -175,7 +175,7 @@ class ServicioController extends AbstractController
         return new JsonResponse($data);
     }
     /**
-     * @Route("/admin/sincronizar", name="obtener_servicio_reconexion", methods={"GET"})
+     * @Route("/admin/sincronizar", name="admin_sincronizar_servicios", methods={"GET"})
      */
     public function sincronizar
     (
