@@ -380,9 +380,11 @@
             async agregarServicioReconexion(){
                 await axios.get(this.urlreconexion)
                     .then(r=>{
-                        let servicio = r.data;
-                        servicio.esServicio = true;
-                        this.agregarDetalle(servicio);
+                        let item = r.data;
+                        item.esServicio = true;
+                        item.cantidad = 1;
+                        item.subtotal = item.precioSinImp;
+                        this.agregarDetalle(item);
                     })
             },
             async guardarFactura(){
