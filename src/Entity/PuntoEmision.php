@@ -36,11 +36,6 @@ class PuntoEmision
     private $establecimiento;
 
     /**
-     * @ORM\ManyToOne(targetEntity=TipoComprobante::class, inversedBy="puntosEmision")
-     */
-    private $tipoComprobante;
-
-    /**
      * @ORM\OneToMany(targetEntity=Factura::class, mappedBy="puntoEmision")
      */
     private $facturas;
@@ -102,18 +97,7 @@ class PuntoEmision
 
         return $this;
     }
-
-    public function getTipoComprobante(): ?TipoComprobante
-    {
-        return $this->tipoComprobante;
-    }
-
-    public function setTipoComprobante(?TipoComprobante $tipoComprobante): self
-    {
-        $this->tipoComprobante = $tipoComprobante;
-
-        return $this;
-    }
+    
     public function getSerie(){
         return $this->__toString();
     }

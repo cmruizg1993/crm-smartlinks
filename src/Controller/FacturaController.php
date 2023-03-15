@@ -255,7 +255,7 @@ class FacturaController extends AbstractController
             if(!$puntoEmision || !$puntoEmision->getId()) return new Response('pto 2', 400);
             $puntoEmision = $puntoEmisionRepository->find($puntoEmision->getId());
             if(!$puntoEmision) return new Response('punto emision', 400);
-            $tipo = $puntoEmision->getTipoComprobante()->getCodigo();
+            $tipo = $factura->getTipoComprobante();
             if($tipo != Factura::FACTURA && $tipo != Factura::NOTA_VENTA)return new Response('tipo comp', 400);
             $factura->setPuntoEmision($puntoEmision);
 
@@ -599,7 +599,7 @@ class FacturaController extends AbstractController
         if(!$puntoEmision || !$puntoEmision->getId()) return new Response('pto 2', 400);
         $puntoEmision = $puntoEmisionRepository->find($puntoEmision->getId());
         if(!$puntoEmision) return new Response('punto emision', 400);
-        $tipo = $puntoEmision->getTipoComprobante()->getCodigo();
+        $tipo = $factura->getTipoComprobante();
         if($tipo != Factura::FACTURA && $tipo != Factura::NOTA_VENTA)return new Response('tipo comp', 400);
         $facturaOriginal->setPuntoEmision($puntoEmision);
 

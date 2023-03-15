@@ -450,7 +450,7 @@ class Factura
             }
             $estab = $this->getPuntoEmision()->getEstablecimiento()->getCodigo();
             $ptoEmi = $this->getPuntoEmision()->getCodigo();
-            $tipo = $this->getPuntoEmision()->getTipoComprobante()->getCodigo();
+            $tipo = $this->getTipoComprobante();
             $claveAcceso .= "$tipo$this->ruc$this->tipoAmbiente$estab$ptoEmi$this->secuencial$digito8$this->tipoEmision";
 
             $suma = 0;

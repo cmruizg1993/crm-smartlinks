@@ -70,36 +70,6 @@ class TipoComprobante
     }
 
     /**
-     * @return Collection|PuntoEmision[]
-     */
-    public function getPuntosEmision(): Collection
-    {
-        return $this->puntosEmision;
-    }
-
-    public function addPuntosEmision(PuntoEmision $puntosEmision): self
-    {
-        if (!$this->puntosEmision->contains($puntosEmision)) {
-            $this->puntosEmision[] = $puntosEmision;
-            $puntosEmision->setTipoComprobante($this);
-        }
-
-        return $this;
-    }
-
-    public function removePuntosEmision(PuntoEmision $puntosEmision): self
-    {
-        if ($this->puntosEmision->removeElement($puntosEmision)) {
-            // set the owning side to null (unless already changed)
-            if ($puntosEmision->getTipoComprobante() === $this) {
-                $puntosEmision->setTipoComprobante(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Factura>
      */
     public function getFacturas(): Collection
