@@ -21,22 +21,14 @@ class ColaboradorRepository extends ServiceEntityRepository
      * @return Colaborador[]
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function findAll(){
-        $query = $this->createQueryBuilder('c')
-            ->leftJoin('c.usuario', 'u', 'WITH', 'c.id = u.colaborador')
-            ->getQuery();
-        return $query->getOneOrNullResult();
-    }
-    /**
-     * @return Colaborador[]
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
+    /*
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null){
         $query = $this->createQueryBuilder('c')
             ->leftJoin('c.usuario', 'u', 'WITH', 'c.id = u.colaborador')
             ->getQuery();
         return $query->getOneOrNullResult();
     }
+    */
 
     // /**
     //  * @return Colaborador[] Returns an array of Colaborador objects

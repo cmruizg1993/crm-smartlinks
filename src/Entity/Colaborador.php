@@ -58,11 +58,6 @@ class Colaborador
      */
     private $cedula;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $codigoIP;
-
 
     /**
      * @ORM\OneToMany(targetEntity=Cliente::class, mappedBy="vendedor")
@@ -75,34 +70,9 @@ class Colaborador
     private $solicitudes;
 
     /**
-     * @ORM\Column(type="string", length=13, nullable=true)
+     * @ORM\ManyToOne(targetEntity=PuntoEmision::class)
      */
-    private $ruc;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $razon;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $factura;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $iva;
-
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private $retFuente;
-
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private $retIva;
+    private $puntoEmision;
 
 
     public function __toString()
@@ -479,5 +449,17 @@ class Colaborador
             return true ;
         }
         return false;
+    }
+
+    public function getPuntoEmision(): ?PuntoEmision
+    {
+        return $this->puntoEmision;
+    }
+
+    public function setPuntoEmision(?PuntoEmision $puntoEmision): self
+    {
+        $this->puntoEmision = $puntoEmision;
+
+        return $this;
     }
 }

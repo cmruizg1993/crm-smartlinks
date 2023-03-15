@@ -350,18 +350,31 @@
             async getSerie(codigo){
                 await axios.get(`${this.urlserie}/${codigo}`)
                     .then(r=>{
-                        let ptoEmi = r.data;
+                        let ptoEmi = r.data.puntoEmision;
                         this.factura.serial = ptoEmi.codigo+'-'+ptoEmi.codigoEstablecimiento;
                         this.factura.puntoEmision = ptoEmi.id;
-                        if(this.factura.serial) this.getSecuencial(ptoEmi.id );
+                        if(this.factura.serial) this.getSecuencial(r.data );
+                    })
+                    .catch(e => {
+                        $.toast({
+                            text: 'Hubo en error al iniciar la factura, comuníquese con el administrador.',
+                            heading: 'Error',
+                            icon: 'danger',
+                            position: 'top-right'
+                        });
+                        this.isDisabled = true;
                     })
 
             },
-            async getSecuencial(pto_id){
+            async getSecuencial(data){
+                console.log(data);
+                this.factura.secuencial = data.secuencial;
+                /*
                 await axios.get(`${this.urlsecuencial}/${pto_id}`)
                     .then(r=>{
                         this.factura.secuencial = r.data.secuencial;
                     })
+                    */
             },
             async getAmbientes(){
                 await axios.get(this.urlcatalogoambientes)

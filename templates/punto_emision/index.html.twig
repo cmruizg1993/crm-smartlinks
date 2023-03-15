@@ -9,6 +9,7 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Establecimiento</th>
                 <th>Codigo</th>
                 <th>Descripcion</th>
                 <th>actions</th>
@@ -18,6 +19,7 @@
         {% for punto_emision in punto_emisions %}
             <tr>
                 <td>{{ punto_emision.id }}</td>
+                <td>{{ punto_emision.establecimiento }}</td>
                 <td>{{ punto_emision.codigo }}</td>
                 <td>{{ punto_emision.descripcion }}</td>
                 <td>

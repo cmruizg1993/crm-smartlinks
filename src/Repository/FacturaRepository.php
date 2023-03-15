@@ -94,6 +94,12 @@ class FacturaRepository extends ServiceEntityRepository
                     ->getQuery()
                     ->getOneOrNullResult();
     }
+    public function importarCodigoComprobante(){
+        $em = $this->getEntityManager();
+        $sql = "UPDATE factura f SET f.tipo_comprobante = ( SELECT t.codigo FROM punto_emision p INNER JOIN tipo_comprobante t ON p.tipo_comprobante_id = t.id WHERE p.id = f.punto_emision_id LIMIT 1 )";
+        $stmt = $em->getConnection()->prepare($sql);
+        return $stmt->executeStatement();
+    }
     // /**
     //  * @return Factura[] Returns an array of Factura objects
     //  */

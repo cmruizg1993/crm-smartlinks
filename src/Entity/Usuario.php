@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass=UsuarioRepository::class)
  * @UniqueEntity(fields={"email"}, message="Ya existe una cuenta con este email")
  * @UniqueEntity(fields={"phone"}, message="Ya existe una cuenta con este teléfono")
+ * @method string getUserIdentifier()
  */
 class Usuario implements UserInterface
 {
@@ -71,6 +72,7 @@ class Usuario implements UserInterface
      * @ORM\ManyToOne(targetEntity=Empresa::class, inversedBy="usuarios", fetch="EAGER")
      */
     private $empresa;
+
 
     public function __construct()
     {
@@ -276,4 +278,5 @@ class Usuario implements UserInterface
 
         return $this;
     }
+
 }

@@ -29,14 +29,10 @@ class TipoComprobante
      */
     private $codigo;
 
-    /**
-     * @ORM\OneToMany(targetEntity=PuntoEmision::class, mappedBy="tipoComprobante")
-     */
-    private $puntosEmision;
 
     public function __construct()
     {
-        $this->puntosEmision = new ArrayCollection();
+        $this->secuencials = new ArrayCollection();
     }
     public function __toString()
     {
@@ -127,6 +123,36 @@ class TipoComprobante
             // set the owning side to null (unless already changed)
             if ($factura->getComprobante() === $this) {
                 $factura->setComprobante(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Secuencial>
+     */
+    public function getSecuencials(): Collection
+    {
+        return $this->secuencials;
+    }
+
+    public function addSecuencial(Secuencial $secuencial): self
+    {
+        if (!$this->secuencials->contains($secuencial)) {
+            $this->secuencials[] = $secuencial;
+            $secuencial->setPuntoEmision($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSecuencial(Secuencial $secuencial): self
+    {
+        if ($this->secuencials->removeElement($secuencial)) {
+            // set the owning side to null (unless already changed)
+            if ($secuencial->getPuntoEmision() === $this) {
+                $secuencial->setPuntoEmision(null);
             }
         }
 

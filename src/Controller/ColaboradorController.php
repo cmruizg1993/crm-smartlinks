@@ -5,11 +5,13 @@ namespace App\Controller;
 use App\Entity\Cargo;
 use App\Entity\Cliente;
 use App\Entity\Colaborador;
+use App\Form\ColaboradorPuntoEmisionType;
 use App\Form\ColaboradorType;
 use App\Form\VendedorType;
 use App\Repository\ClienteRepository;
 use App\Repository\ColaboradorRepository;
 use App\Service\WhatsappApi;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -189,5 +191,23 @@ class ColaboradorController extends AbstractController
             }
         }
         return new JsonResponse($data);
+    }
+    /**
+     * @Route("/admin/punto/{id}", name="colaborador_set_punto", methods={"GET","POST"})
+     */
+    public function establecerPuntoEmision(Request $request, Colaborador $colaborador, EntityManagerInterface $entityManager): Response
+    {
+        if(!$this->isGranted('ROLE_ADMIN')) return new Response(403);
+        $form = $this->createForm(ColaboradorPuntoEmisionType::class, $colaborador);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $entityManager->flush();
+        }
+        $template =  "admin/colaborador/set_punto_emision.html.twig";
+
+        return $this->render($template, [
+            'colaborador' => $colaborador,
+            'form' => $form->createView(),
+        ]);
     }
 }

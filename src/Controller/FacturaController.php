@@ -19,7 +19,9 @@ use App\Repository\ContratoRepository;
 use App\Repository\FacturaRepository;
 use App\Repository\OpcionCatalogoRepository;
 use App\Repository\PuntoEmisionRepository;
+use App\Repository\SecuencialRepository;
 use App\Repository\ServicioRepository;
+use App\Repository\TipoComprobanteRepository;
 use App\Repository\UsuarioRepository;
 use App\Service\FacturacionElectronica;
 use Doctrine\ORM\EntityManagerInterface;
@@ -220,7 +222,9 @@ class FacturaController extends AbstractController
         EntityManagerInterface $em,
         SerializerInterface $serializer,
         FacturacionElectronica $facturacionElectronica,
-        UsuarioRepository $usuarioRepository
+        UsuarioRepository $usuarioRepository,
+        SecuencialRepository $secuencialRepository,
+        TipoComprobanteRepository $tipoComprobanteRepository
     ): Response
     {
         $method = $request->getMethod();
@@ -237,7 +241,7 @@ class FacturaController extends AbstractController
                 $secuencial = '0' . $secuencial;
             }
             $factura->setSecuencial($secuencial);
-            //$puntoEmision =
+
             /* ENLAZANDO FACTURA AL CONTRATO */
             $contrato = $factura->getContrato();
             if(!$contrato || !$contrato->getId()) return new Response('contrato', 400);
@@ -255,6 +259,23 @@ class FacturaController extends AbstractController
             if($tipo != Factura::FACTURA && $tipo != Factura::NOTA_VENTA)return new Response('tipo comp', 400);
             $factura->setPuntoEmision($puntoEmision);
 
+            /**
+             * @var $user Usuario
+             */
+            $user = $this->getUser();
+            $colaborador = $user->getColaborador();
+
+            if(!($colaborador && $colaborador->getPuntoEmision() && $colaborador->getPuntoEmision()->getId() == $puntoEmision->getId()))
+                return new Response('Punto emision no permitido', 403);
+
+            $codigo = $factura->getTipoComprobante();
+
+            $tipoComprobante = $tipoComprobanteRepository->findOneBy(['codigo'=>$codigo]);
+            if(!$tipoComprobante) return new Response("Sin datos de comprobante. Comuníquese con el administrador", 400);
+            $secuenciales = $secuencialRepository->findBy(['puntoEmision'=>$puntoEmision, 'tipoComprobante'=>$tipoComprobante, 'activo'=>true]);
+            if(!$secuenciales) return new Response("Sin datos de secuencial. Comuníquese con el administrador", 400);
+            if(count($secuenciales)>1) return new Response("Hay más de un secuencial activo. Comuníquese con el administrador", 400);
+
             /* SECUENCIAL */
             $secuencial = $factura->getSecuencial();
             $exist = $facturaRepository->findOneBy(['secuencial'=>$secuencial, 'puntoEmision'=>$puntoEmision]);
@@ -269,7 +290,7 @@ class FacturaController extends AbstractController
             $factura->setCliente($cliente);
             $factura->totalizar($opcionCatalogoRepository);
             $factura->setUsuario($this->getUser());
-            $user = $this->getUser();
+
             /* @var $usuario Usuario */
             $usuario = $usuarioRepository->findOneBy(['email'=>$user->getEmail()]);
             $empresa = $usuario->getEmpresa();
@@ -283,6 +304,15 @@ class FacturaController extends AbstractController
             $factura->generarClaveAcceso();
             $em->persist($factura);
             $em->flush();
+
+            /* SE ACTUALIZA EL SECUENCIAL CORRESPONDIENTE AL COMPROBANTE Y PUNTO DE EMISION DEL USUARIO */
+            $secuencialObj = $secuenciales[0];
+            $numero = (int) $secuencial;
+            $numero++;
+            $secuencialObj->setActual($numero);
+            $em->flush();
+            /*******************************************************************************************/
+
             $xml = $this->renderView('xml/factura.pruebas.xml.twig',['factura'=>$factura, 'conf'=>$empresa]);
             $clave = $factura->getClaveAcceso();
             $fileName = $facturacionElectronica->crearArchivoXml($clave, $xml);
@@ -375,16 +405,45 @@ class FacturaController extends AbstractController
         // That's it! 😁
     }
     /**
-     * @Route("/secuencial/{punto_emision_id}", name="factura_secuencial", methods={"GET"})
+     * @Route("/secuencial/{id}", name="factura_secuencial", methods={"GET"})
      */
-    public function obtenerSecuencial($punto_emision_id = 0, FacturaRepository $facturaRepository): Response
+    public function obtenerSecuencial(PuntoEmision $puntoEmision , SecuencialRepository $secuencialRepository): Response
     {
-        $secuencial = $facturaRepository->obtenerSecuencial($punto_emision_id).'';
+        //$secuencial = $facturaRepository->obtenerSecuencial($punto_emision_id).'';
+        $secuenciales = $secuencialRepository->findBy(['activo'=>true, 'puntoEmision'=>$puntoEmision]);
+
+        if(!$secuenciales ) return new Response("No se encontró un secuencial activo para el punto de emisión. Comuníquese con el administrador", 400);
+
+        if(count($secuenciales) > 1 ) return new Response("Existe más de un secuencial activo para el punto de emisión. Comuníquese con el administrador", 400);
+
+        $secuencialObj = $secuenciales[0];
+
+        $secuencial = $secuencialObj->getActual();
+        if(!$secuencial) $secuencial = $secuencialObj->getInicio();
+
         while (strlen($secuencial)<9)$secuencial='0'.$secuencial;
         $data['secuencial']=$secuencial;
         return new JsonResponse($data);
     }
 
+    public function actualizarSecuencial(PuntoEmision $puntoEmision , SecuencialRepository $secuencialRepository, EntityManagerInterface $entityManager): Response
+    {
+        $secuenciales = $secuencialRepository->findBy(['activo'=>true, 'puntoEmision'=>$puntoEmision]);
+
+        if(!$secuenciales ) return false;
+
+        if(count($secuenciales) > 1 ) return false;
+
+        $secuencialObj = $secuenciales[0];
+
+        $secuencial = $secuencialObj->getActual();
+        if(!$secuencial) $secuencial = $secuencialObj->getInicio();
+        $secuencial++;
+
+        $secuencialObj->setActual($secuencial);
+        $entityManager->flush();
+        return true;
+    }
     /**
      * @Route("/{id}/edit", name="factura_edit", methods={"GET","POST"})
      */
@@ -402,8 +461,9 @@ class FacturaController extends AbstractController
         EntityManagerInterface $em,
         SerializerInterface $serializer,
         FacturacionElectronica $facturacionElectronica,
-        UsuarioRepository $usuarioRepository
-
+        UsuarioRepository $usuarioRepository,
+        TipoComprobanteRepository $tipoComprobanteRepository,
+        SecuencialRepository $secuencialRepository
     ): Response
     {
         $form = $this->createForm(FacturaType::class, $factura);
@@ -413,7 +473,27 @@ class FacturaController extends AbstractController
             $content = json_decode($request->getContent(), true);
             $form->submit($content);
             $factura->setUsuario($this->getUser());
+
+            $puntoEmision = $factura->getPuntoEmision();
+
+            /**
+             * @var $user Usuario
+             */
             $user = $this->getUser();
+            $colaborador = $user->getColaborador();
+
+            if(!($colaborador && $colaborador->getPuntoEmision() && $colaborador->getPuntoEmision()->getId() == $puntoEmision->getId()))
+                return new Response('Punto emision no permitido', 403);
+
+            $codigo = $factura->getTipoComprobante();
+
+            $tipoComprobante = $tipoComprobanteRepository->findOneBy(['codigo'=>$codigo]);
+            if(!$tipoComprobante) return new Response("Sin datos de comprobante. Comuníquese con el administrador", 400);
+            $secuenciales = $secuencialRepository->findBy(['puntoEmision'=>$puntoEmision, 'tipoComprobante'=>$tipoComprobante, 'activo'=>true]);
+            if(!$secuenciales) return new Response("Sin datos de secuencial. Comuníquese con el administrador", 400);
+            if(count($secuenciales)>1) return new Response("Hay más de un secuencial activo. Comuníquese con el administrador", 400);
+
+
             /* @var $usuario Usuario */
             $usuario = $usuarioRepository->findOneBy(['email'=>$user->getEmail()]);
             if($factura->getTipoComprobante() == Factura::NOTA_VENTA){

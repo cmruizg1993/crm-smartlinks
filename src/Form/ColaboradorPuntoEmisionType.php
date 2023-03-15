@@ -2,26 +2,25 @@
 
 namespace App\Form;
 
-use App\Entity\PuntoEmision;
+use App\Entity\Colaborador;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use function Matrix\add;
 
-class PuntoEmisionType extends AbstractType
+class ColaboradorPuntoEmisionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('codigo')
-            ->add('descripcion')
-            ->add('establecimiento')
+            ->add('puntoEmision')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => PuntoEmision::class,
+            'data_class' => Colaborador::class,
         ]);
     }
 }

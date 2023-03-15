@@ -50,6 +50,16 @@
                 </div>
 
             </div>
+            {% if  app.user.colaborador.puntoEmision %}
+            <div class="row">
+
+                <div class="col">
+                    <b>Punto Emisión:</b>
+                    <p>{{ app.user.colaborador.puntoEmision }}</p>
+                </div>
+
+            </div>
+            {% endif %}
         {% endif %}
 
     </div>

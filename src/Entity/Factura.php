@@ -111,7 +111,7 @@ class Factura
     private $detalles;
 
     /**
-     * @var $tipoComprobante string
+     * @ORM\Column(type="string", length=2, nullable=true)
      */
     private $tipoComprobante;
 
@@ -382,7 +382,7 @@ class Factura
 
     public function getTipoComprobante(): ?string
     {
-        return $this->getPuntoEmision() ? $this->getPuntoEmision()->getTipoComprobante()->getCodigo(): null;
+        return $this->tipoComprobante;
     }
 
     public function setTipoComprobante(?string $tipoComprobante): self

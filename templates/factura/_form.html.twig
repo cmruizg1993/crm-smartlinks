@@ -7,7 +7,7 @@
         urlcatalogoambientes="{{ path('catalogo_get', {'codigo': 'ambiente' }) }}"
         urlcatalogopagos="{{ path('catalogo_get', {'codigo': 'f-pagos' }) }}"
         urlserie="{{ path('punto_emision_get', {'codigo': '' }) }}"
-        urlsecuencial="{{ path('factura_secuencial') }}"
+        urlsecuencial="/factura/secuencial"
         urlreconexion="{{ path('obtener_servicio_reconexion') }}"
         user="{{ app.user }}"
         {% if edit is defined %}
