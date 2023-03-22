@@ -19,8 +19,10 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ContratoRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $opcionCatalogoRepository;
+    public function __construct(ManagerRegistry $registry, OpcionCatalogoRepository $opcionCatalogoRepository)
     {
+        $this->opcionCatalogoRepository = $opcionCatalogoRepository;
         parent::__construct($registry, Contrato::class);
     }
     /**
@@ -51,6 +53,28 @@ class ContratoRepository extends ServiceEntityRepository
         $data = $query->getResult();
         return $data;
        
+    }
+    public function findByEstado(OpcionCatalogo $estado)
+    {
+        //$estadoCortado = $this->opcionCatalogoRepository->findOneByCodigoyCatalogo(EstadoContrato::CORTADO, 'est-cont');
+        /* @var $query Query */
+        $query = $this->createQueryBuilder('c')
+            ->select('c, cli, dni, estadoActual, f')
+            ->innerJoin('c.plan', 'p')
+            ->leftJoin('c.facturas', 'f')
+            ->innerJoin('c.cliente', 'cli')
+            ->innerJoin('cli.dni', 'dni')
+            ->leftJoin('c.estadoActual', 'estadoActual')
+            ->leftJoin('estadoActual.catalogo', 'catalogo')
+            ->where('c.estadoActual = :estado')
+            ->orderBy('c.version', 'ASC')
+            ->setParameter('estado', $estado)
+            ->getQuery();
+        $em = $this->getEntityManager();
+
+        $data = $query->getResult();
+        return $data;
+
     }
     public function findAllRegisters()
     {
