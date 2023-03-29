@@ -30,6 +30,7 @@ use http\Client\Curl\User;
 use Picqer\Barcode\BarcodeGeneratorDynamicHTML;
 use Picqer\Barcode\BarcodeGeneratorHTML;
 use Picqer\Barcode\BarcodeGeneratorPNG;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -82,7 +83,8 @@ class FacturaController extends AbstractController
         $id = '',
         FacturaRepository $facturaRepository ,
         FacturacionElectronica $facturacionElectronica,
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
+        LoggerInterface $logger
     ): Response
     {
         if(!$id) return new Response('Se necesita el Id de la factura',400);
@@ -91,10 +93,12 @@ class FacturaController extends AbstractController
         $clave = $factura->getClaveAcceso();
         $testing = $factura->getTipoAmbiente() == '1';
         $result = $facturacionElectronica->autorizacion($clave, $testing);
+        $logger->info('Respuesta Autorización SRI');
+        $logger->info(json_encode($result));
         $respuesta = isset($result->RespuestaAutorizacionComprobante) ? $result->RespuestaAutorizacionComprobante: null;
         $autorizaciones = isset($respuesta->autorizaciones) ? $respuesta->autorizaciones: null;
         //dump($result);
-        $autorizacion = $autorizaciones ? $autorizaciones->autorizacion: null;
+        $autorizacion = $autorizaciones ? isset($autorizaciones->autorizacion) ? $autorizaciones->autorizacion: null : null;
         $estado = $autorizacion && isset($autorizacion->estado)?$autorizacion->estado:null;
         $factura->setEstadoSri($estado);
         if($estado!=null && $estado != Factura::ESTADO_AUTORIZADA){
@@ -208,7 +212,7 @@ class FacturaController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="factura_new", methods={"GET","POST"})
+     * @Route("/new", name="factura_new", methods={"POST"})
      */
     public function new(
         Request $request,
@@ -224,13 +228,19 @@ class FacturaController extends AbstractController
         FacturacionElectronica $facturacionElectronica,
         UsuarioRepository $usuarioRepository,
         SecuencialRepository $secuencialRepository,
-        TipoComprobanteRepository $tipoComprobanteRepository
+        TipoComprobanteRepository $tipoComprobanteRepository,
+        LoggerInterface $logger
     ): Response
     {
         $method = $request->getMethod();
         if($method == Request::METHOD_POST){
 
             $content = json_decode($request->getContent(), true);
+            if(!$content){
+                $data = $request->request->get('data');
+                $content = json_decode($data, true);
+            }
+
             $factura = new Factura();
             /* @var $factura Factura */
             $form = $this->createForm(FacturaType::class, $factura);
@@ -321,7 +331,9 @@ class FacturaController extends AbstractController
                 $testing = $factura->getTipoAmbiente() == '1';
                 //dump($testing);
                 $result = $facturacionElectronica->recepcion($clave, $testing);
-                //dump($result);
+                $logger->info("Respuesta Recepcion SRI");
+                $logger->info(json_encode($result));
+
                 $respuesta = isset($result->RespuestaRecepcionComprobante) ? $result->RespuestaRecepcionComprobante: null;
                 $estado = null;
                 if($respuesta && isset($respuesta->estado)){
@@ -335,7 +347,8 @@ class FacturaController extends AbstractController
                 $factura->setEstadoSri($estado);
                 $em->flush();
                 sleep(3);
-                return $this->redirectToRoute('factura_autorizacion', ['id'=>$factura->getId()]);
+                return $this->forward('App\Controller\FacturaController::autorizacion', ['id'=>$factura->getId()]);
+                //return $this->redirectToRoute('factura_autorizacion', ['id'=>$factura->getId()]);
             }
             return new JsonResponse(['id'=>$factura->getId(), 'estado'=> $factura->getEstadoSri(), 'clave'=>$clave ], 500);
 

@@ -5,10 +5,11 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     upload_directory: '%kernel.project_dir%/uploads'
-    xml_files: '%kernel.project_dir%/xml_files'
+    xml_files: '%kernel.project_dir%/facturacion_xml'
     felectronica_path: '%kernel.project_dir%/FirmaElectronica'
     excel_templates: '%kernel.project_dir%/src/ExcelTemplates'
     movs_directory: '%kernel.project_dir%/movimientos'
+    timezone: '%env(APP_TIMEZONE)%'
 services:
     # default configuration for services in *this* file
     _defaults:

@@ -17,4 +17,24 @@
         <li>Your template at <code><a href="{{ 'D:/PROYECTOS/crm-makrocel/templates/facturacion_bancos/index.html.twig'|file_link(0) }}">templates/facturacion_bancos/index.html.twig</a></code></li>
     </ul>
 </div>
+    <div class="container">
+        {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_row(form.archivo, { attr: {'class': 'form-control'}}) }}
+        </div>
+        <div class="form-group">
+            <button>Subir</button>
+        </div>
+        {{ form_end(form) }}
+    </div>
+
+    <div class="container mt-5">
+        {% if resumen %}
+            <li>
+                {% for resultado in resumen %}
+                    {{ dump(resultado) }}
+                {% endfor %}
+            </li>
+        {% endif %}
+    </div>
 {% endblock %}

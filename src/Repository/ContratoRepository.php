@@ -76,6 +76,31 @@ class ContratoRepository extends ServiceEntityRepository
         return $data;
 
     }
+
+    public function findByNumero(string $numero)
+    {
+        //$estadoCortado = $this->opcionCatalogoRepository->findOneByCodigoyCatalogo(EstadoContrato::CORTADO, 'est-cont');
+        /* @var $query Query */
+        $query = $this->createQueryBuilder('c')
+            ->select('c, cli, dni, estadoActual, f')
+            ->innerJoin('c.plan', 'p')
+            ->leftJoin('c.facturas', 'f')
+            ->innerJoin('c.cliente', 'cli')
+            ->innerJoin('cli.dni', 'dni')
+            ->leftJoin('c.estadoActual', 'estadoActual')
+            ->leftJoin('estadoActual.catalogo', 'catalogo')
+            ->where('c.numero = :numero')
+            ->orderBy('c.version', 'ASC')
+            ->setParameter('numero', $numero)
+            ->getQuery()
+        ;
+
+
+        $data = $query->getOneOrNullResult();
+        return $data;
+
+    }
+
     public function findAllRegisters()
     {
         /*
