@@ -212,7 +212,7 @@ class FacturaController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="factura_new", methods={"POST"})
+     * @Route("/new", name="factura_new", methods={"POST", "GET"})
      */
     public function new(
         Request $request,

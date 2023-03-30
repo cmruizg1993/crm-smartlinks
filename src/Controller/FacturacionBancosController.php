@@ -77,6 +77,7 @@ class FacturacionBancosController extends AbstractController
         $referencia = "INTERNET - $mes/$anio";
 
         foreach ($cortados as $contrato) {
+            if($contrato->isEsCortesia()) continue;
             $contrapartida = (string)$contrato->getNumero();
             $precio = $contrato->getPlan()->getPrecio();
 
@@ -98,16 +99,22 @@ class FacturacionBancosController extends AbstractController
                 $proporcional += ($precio/30)*10;
             }
 
+            $cliente = $contrato->getCliente();
+
+            if($cliente->getEsDiscapacitado() || $cliente->getEsTerceraEdad()){
+                $precio /= 2;
+            }
+
             $valor = $precio;
             $valor += 2;
             $valor += $proporcional;
             $valor = round($valor, 2);
             $valor *= 100;
 
-            $tipoIdCliente = $contrato->getCliente()->getDni()->getTipo();
+            $tipoIdCliente = $cliente->getDni()->getTipo();
             $tipoId = $tiposBasic["$tipoIdCliente"];
-            $numeroId = $contrato->getCliente()->getDni()->getNumero();
-            $nombreCliente = $contrato->getCliente()->getNombres();
+            $numeroId = $cliente->getDni()->getNumero();
+            $nombreCliente = $cliente->getNombres();
             $fila = [$tipo, $contrapartida, $moneda, $valor, $fCobro, $blanco1, $blanco2, $referencia, $tipoId, $numeroId, $nombreCliente, "\n"];
             $filaStr = implode("\t", $fila);
             $fs->appendToFile($fileName, $filaStr);
@@ -144,7 +151,8 @@ class FacturacionBancosController extends AbstractController
     (
         Request $request,
         Contrato $contrato,
-        Servicio $reconexion
+        Servicio $reconexion,
+        OpcionCatalogo $impuesto
     ){
         $codigoFactura = '01';
         /**
@@ -195,21 +203,34 @@ class FacturacionBancosController extends AbstractController
         $data["comprobantePago"] = "000";
         $data["observaciones"] = "";
         $data["detalles"] = [];
+        
+        $plan = $contrato->getPlan();
+        $descuento = 0;
+        if($cliente->getEsDiscapacitado() || $cliente->getEsTerceraEdad()){
+            $descuento = 50;
+        }
 
 
+        //$porcentaje =
+        $planDescuento = $plan->getPrecioSinImp()*($descuento/100);
+        $precioSinImp  = ($plan->getPrecioSinImp() - $planDescuento);
+        $tieneIva = $impuesto->getCodigo() == $plan->getCodigoPorcentaje();
+        $porcentaje = $tieneIva ? $impuesto->getValorNumerico() : 0;
+        $precio = round ( $precioSinImp*(1 + ($porcentaje/100)), 2 );
+        
         $detalle = [];
         $detalle["producto"] = null;
-        $detalle["servicio"] = $contrato->getPlan()->getId();
+        $detalle["servicio"] = $plan->getId();
         $detalle["cuota"] = null;
         $detalle["codigo"] = $plan->getCodigo();
         $detalle["descripcion"] = $descripcionDetalle1;
-        $detalle["precioSinImp"] = $plan->getPrecioSinImp();
-        $detalle["precio"] = $plan->getPrecio();
-        $detalle["subtotal"] = $plan->getPrecioSinImp();
+        $detalle["precioSinImp"] = $precioSinImp;
+        $detalle["precio"] = $precio;
+        $detalle["subtotal"] = $precioSinImp;
         $detalle["esServicio"] = true;
         $detalle["incluyeIva"] = true;
         $detalle["porcentaje"] = "12.00";
-        $detalle["descuento"] = null;
+        $detalle["descuento"] = $planDescuento;
         $detalle["cantidad"] = 1;
 
         $data["detalles"][] = $detalle;
@@ -276,14 +297,18 @@ class FacturacionBancosController extends AbstractController
                     $contrato = $contratoRepository->findByNumero($ContraPartida);
                     if(!$contrato) continue;
                     $result = $this->facturarPago($request, $contrato, $reconexion);
-                    $resumen[] = $result;
+                    $item = [];
+                    $item["status"] = $result->getStatusCode();
+                    dump($result->getContent());
+                    $resumen[] = $item;
                 }
 
             }
         }
         return $this->render('facturacion_bancos/index.html.twig', [
             'controller_name' => 'FacturacionBancosController',
-            'form'=>$form->createView()
+            'form'=>$form->createView(),
+            'resumen' => isset($resumen) ? $resumen : []
         ]);
     }
 

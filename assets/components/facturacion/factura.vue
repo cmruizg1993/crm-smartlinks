@@ -393,7 +393,6 @@
             async agregarServicioReconexion(){
                 await axios.get(this.urlreconexion)
                     .then(r=>{
-                        debugger;
                         let item = r.data;
                         item.esServicio = true;
                         item.cantidad = 1;
