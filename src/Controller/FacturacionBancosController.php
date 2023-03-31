@@ -112,6 +112,7 @@ class FacturacionBancosController extends AbstractController
             $valor *= 100;
 
             $tipoIdCliente = $cliente->getDni()->getTipo();
+            if($tipoIdCliente == '07') continue;
             $tipoId = $tiposBasic["$tipoIdCliente"];
             $numeroId = $cliente->getDni()->getNumero();
             $nombreCliente = $cliente->getNombres();
@@ -151,8 +152,8 @@ class FacturacionBancosController extends AbstractController
     (
         Request $request,
         Contrato $contrato,
-        Servicio $reconexion,
-        OpcionCatalogo $impuesto
+        Servicio $reconexion
+        /*OpcionCatalogo $impuesto*/
     ){
         $codigoFactura = '01';
         /**
@@ -214,8 +215,8 @@ class FacturacionBancosController extends AbstractController
         //$porcentaje =
         $planDescuento = $plan->getPrecioSinImp()*($descuento/100);
         $precioSinImp  = ($plan->getPrecioSinImp() - $planDescuento);
-        $tieneIva = $impuesto->getCodigo() == $plan->getCodigoPorcentaje();
-        $porcentaje = $tieneIva ? $impuesto->getValorNumerico() : 0;
+        $tieneIva = true;//$impuesto->getCodigo() == $plan->getCodigoPorcentaje();
+        $porcentaje = 12;//$tieneIva ? $impuesto->getValorNumerico() : 0;
         $precio = round ( $precioSinImp*(1 + ($porcentaje/100)), 2 );
         
         $detalle = [];
