@@ -112,7 +112,7 @@ class FacturacionBancosController extends AbstractController
             $valor *= 100;
 
             $tipoIdCliente = $cliente->getDni()->getTipo();
-            if($tipoIdCliente == '07') continue;
+            if((int)$tipoIdCliente > 6 || (int)$tipoIdCliente < 4) continue;
             $tipoId = $tiposBasic["$tipoIdCliente"];
             $numeroId = $cliente->getDni()->getNumero();
             $nombreCliente = $cliente->getNombres();
@@ -152,7 +152,8 @@ class FacturacionBancosController extends AbstractController
     (
         Request $request,
         Contrato $contrato,
-        Servicio $reconexion
+        Servicio $reconexion,
+        array $data
         /*OpcionCatalogo $impuesto*/
     ){
         $codigoFactura = '01';
@@ -253,6 +254,23 @@ class FacturacionBancosController extends AbstractController
             $detalle1["cantidad"] = 1;
 
             $data["detalles"][] = $detalle1;
+
+            $detalle2 = [];
+            $detalle2["producto"] = null;
+            $detalle2["servicio"] = $plan->getId();
+            $detalle2["cuota"] = null;
+            $detalle2["codigo"] = $plan->getCodigo();
+            $detalle2["descripcion"] = $plan->getNombre() ." - Proporcional";
+            $detalle2["precioSinImp"] = ($precioSinImp/30)*10;
+            $detalle2["precio"] = ($precio/30)*10;
+            $detalle2["subtotal"] = ($precioSinImp/30)*10;
+            $detalle2["esServicio"] = true;
+            $detalle2["incluyeIva"] = true;
+            $detalle2["porcentaje"] = "12.00";
+            $detalle2["descuento"] = null;
+            $detalle2["cantidad"] = 1;
+
+            $data["detalles"][] = $detalle2;
         }
 
 
@@ -297,7 +315,7 @@ class FacturacionBancosController extends AbstractController
                     $ContraPartida = $row["$mapper->ContraPartida"];
                     $contrato = $contratoRepository->findByNumero($ContraPartida);
                     if(!$contrato) continue;
-                    $result = $this->facturarPago($request, $contrato, $reconexion);
+                    $result = $this->facturarPago($request, $contrato, $reconexion, $row);
                     $item = [];
                     $item["status"] = $result->getStatusCode();
                     dump($result->getContent());
