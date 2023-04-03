@@ -130,6 +130,8 @@ class FacturacionBancosController extends AbstractController
                 $valor = round($valor, 0);
 
                 $tipoIdCliente = $contrato->getCliente()->getDni()->getTipo();
+                if($tipoIdCliente == '07' || $tipoIdCliente == '08') continue;
+                
                 $tipoId = $tiposBasic["$tipoIdCliente"];
                 $numeroId = $contrato->getCliente()->getDni()->getNumero();
                 $nombreCliente = $contrato->getCliente()->getNombres();
