@@ -313,9 +313,11 @@ class FacturaController extends AbstractController
             $empresa = $usuario->getEmpresa();
             if(!$empresa) return new Response('Empresa no válida', 400);
 
-            $exist = $facturaRepository->findOneBy(['comprobantePago'=>$factura->getComprobantePago()]);
-            if($exist){
-                return new Response('El comprobante ya ha se ha utilizado para otra factura', 400);
+            if($factura->getComprobantePago()){
+                $exist = $facturaRepository->findOneBy(['comprobantePago'=>$factura->getComprobantePago()]);
+                if($exist){
+                    return new Response('El comprobante ya ha se ha utilizado para otra factura', 400);
+                }
             }
 
             if($factura->getTipoComprobante() == Factura::NOTA_VENTA){
