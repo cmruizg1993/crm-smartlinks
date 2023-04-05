@@ -62,20 +62,25 @@ class FacturacionElectronica
         $parametros = new \stdClass();
         $parametros->xml = $decodeContent;
         $url = $testing ? FacturacionElectronica::WS_TEST_RECEIV: FacturacionElectronica::WS_RECEIV;
-        $client = new \SoapClient($url);
-        dump($decodeContent);
-        $result = $client->validarComprobante($parametros);
-        ////dump($result);
-        return $result;
+        try {
+            $client = new \SoapClient($url);
+            $result = $client->validarComprobante($parametros);
+            return $result;
+        }catch (\Exception $e){
+            return null;
+        }
     }
     public function autorizacion($claveAcceso, $testing = true){
         $url = $testing ? FacturacionElectronica::WS_TEST_AUTH: FacturacionElectronica::WS_AUTH;
-        $client = new \SoapClient($url );
-        $parametros =  new \stdClass();
-        $parametros->claveAccesoComprobante = $claveAcceso;
-        $result = $client->autorizacionComprobante($parametros);
-        ////dump($result);
-        return $result;
+        try{
+            $client = new \SoapClient($url );
+            $parametros =  new \stdClass();
+            $parametros->claveAccesoComprobante = $claveAcceso;
+            $result = $client->autorizacionComprobante($parametros);
+            return $result;
+        }catch (\Exception $e){
+            return null;
+        }
     }
     public function obtenerPathXml($claveAcceso){
         $fileName = "Fact-$claveAcceso";
