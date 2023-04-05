@@ -8,10 +8,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use http\Exception\InvalidArgumentException;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=FacturaRepository::class)
+ * @UniqueEntity(fields={"puntoEmision","secuencial"})
  */
 class Factura
 {
@@ -161,7 +163,7 @@ class Factura
     private $anioPago;
 
     /**
-     * @ORM\Column(type="string", length=20, nullable=true)
+     * @ORM\Column(type="string", length=20, nullable=true, unique=true)
      */
     private $comprobantePago;
 
@@ -206,6 +208,16 @@ class Factura
      * @ORM\Column(type="decimal", precision=8, scale=0, nullable=true)
      */
     private $aleatorio;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $esFacturacionAutomatica;
+
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $extraData = [];
 
     public function __construct()
     {
@@ -754,5 +766,29 @@ class Factura
     }
     public function getStrFecha(){
         return $this->fecha ? $this->fecha->format('Y-m-d'):'';
+    }
+
+    public function isEsFacturacionAutomatica(): ?bool
+    {
+        return $this->esFacturacionAutomatica;
+    }
+
+    public function setEsFacturacionAutomatica(?bool $esFacturacionAutomatica): self
+    {
+        $this->esFacturacionAutomatica = $esFacturacionAutomatica;
+
+        return $this;
+    }
+
+    public function getExtraData(): ?array
+    {
+        return $this->extraData;
+    }
+
+    public function setExtraData(?array $extraData): self
+    {
+        $this->extraData = $extraData;
+
+        return $this;
     }
 }

@@ -10,6 +10,7 @@ use App\Entity\Servicio;
 use App\Entity\TipoComprobante;
 use App\Entity\Usuario;
 use App\Repository\ContratoRepository;
+use App\Repository\FacturaRepository;
 use App\Repository\OpcionCatalogoRepository;
 use App\Repository\ServicioRepository;
 use App\Repository\TipoComprobanteRepository;
@@ -131,7 +132,7 @@ class FacturacionBancosController extends AbstractController
 
                 $tipoIdCliente = $contrato->getCliente()->getDni()->getTipo();
                 if($tipoIdCliente == '07' || $tipoIdCliente == '08') continue;
-                
+
                 $tipoId = $tiposBasic["$tipoIdCliente"];
                 $numeroId = $contrato->getCliente()->getDni()->getNumero();
                 $nombreCliente = $contrato->getCliente()->getNombres();
@@ -155,7 +156,7 @@ class FacturacionBancosController extends AbstractController
         Request $request,
         Contrato $contrato,
         Servicio $reconexion,
-        array $data
+        $rowData
         /*OpcionCatalogo $impuesto*/
     ){
         $codigoFactura = '01';
@@ -189,11 +190,12 @@ class FacturacionBancosController extends AbstractController
         $plan = $contrato->getPlan();
         $descripcionDetalle1 = $plan->getNombre(). " - Mes de ".$mesPagado. " Año ".$anio;
 
+        $campos = $this->getFileMapper();
 
         $data = [];
         $data["tipoComprobante"] = "01";
         $data["formaPago"] = "01"; // revisar
-        $data["tipoAmbiente"] = "1"; // pruebas
+        $data["tipoAmbiente"] = "2"; // producción
         $data["secuencial"] = $secuencial;
         $data["cliente"] = $cliente->getId();
         $data["contrato"] = $contrato->getId();
@@ -202,9 +204,10 @@ class FacturacionBancosController extends AbstractController
 
         $data["anioPago"] = $anio;
         $data["mesPago"] = $mes;
+        $data["esFacturacionAutomatica"] = true;
 
         $data["serial"] = $puntoEmision["serie"];
-        $data["comprobantePago"] = "000";
+        $data["comprobantePago"] = $rowData["$campos->NumeroDocumento"];
         $data["observaciones"] = "";
         $data["detalles"] = [];
         
@@ -289,7 +292,9 @@ class FacturacionBancosController extends AbstractController
     public function cargarArchivo(
         Request $request,
         ContratoRepository $contratoRepository,
-        ServicioRepository $servicioRepository
+        ServicioRepository $servicioRepository,
+        OpcionCatalogoRepository $opcionCatalogoRepository,
+        FacturaRepository $facturaRepository
     ): Response
     {
         $form = $this->createFormBuilder([])
@@ -313,14 +318,30 @@ class FacturacionBancosController extends AbstractController
                 $mapper = $this->getFileMapper();
                 $reconexion = $servicioRepository->obtenerServicioByCod(Servicio::CODIGO_RECONEXION);
                 $resumen = [];
+                $impuestos = $opcionCatalogoRepository->findByCodigoCatalogo('iva');
                 foreach ($rows as $row) {
                     $ContraPartida = $row["$mapper->ContraPartida"];
                     $contrato = $contratoRepository->findByNumero($ContraPartida);
                     if(!$contrato) continue;
+
                     $result = $this->facturarPago($request, $contrato, $reconexion, $row);
+                    $code = $result->getStatusCode();
+                    $comprobante =  $row["$mapper->NumeroDocumento"];
+
                     $item = [];
                     $item["status"] = $result->getStatusCode();
-                    dump($result->getContent());
+                    $item["comprobante"] = $comprobante;
+                    $item["contrato"] = $ContraPartida;
+
+                    if($code == 200){
+                        $item["mensaje"] = "Factura generada con éxito.";
+                    }
+                    elseif($code == 400){
+                        $item["mensaje"] = $result->getContent() ;
+                    }
+                    else{
+                        $item["mensaje"] = "Hubo problemas para generar la factura.";
+                    }
                     $resumen[] = $item;
                 }
 

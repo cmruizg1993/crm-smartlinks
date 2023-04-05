@@ -63,6 +63,7 @@ class FacturacionElectronica
         $parametros->xml = $decodeContent;
         $url = $testing ? FacturacionElectronica::WS_TEST_RECEIV: FacturacionElectronica::WS_RECEIV;
         $client = new \SoapClient($url);
+        dump($decodeContent);
         $result = $client->validarComprobante($parametros);
         ////dump($result);
         return $result;

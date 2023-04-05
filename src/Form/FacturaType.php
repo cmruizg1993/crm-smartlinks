@@ -43,6 +43,8 @@ class FacturaType extends AbstractType
             ->add('comprobantePago')
             ->add('propina')
             ->add('observaciones')
+            ->add('esFacturacionAutomatica')
+            ->add('extraData')
             ->add('detalles', CollectionType::class, ['entry_type'=>DetalleFacturaType::class, 'allow_add'=>true, 'allow_delete'=>true]);
 
         $builder->get('fecha')->addModelTransformer(new CallbackTransformer(

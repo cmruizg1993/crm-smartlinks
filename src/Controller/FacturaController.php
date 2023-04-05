@@ -70,9 +70,16 @@ class FacturaController extends AbstractController
                 'id', 'numero', 'nombres', 'cedula', 'serie', 'secuencial', 'strFecha', 'total', 'subtotal', 'subtotal12', 'iva', 'estadoSri', 'mensajeSri','formaPago'
             ]]);
         }
+        $formBanco = $this->createFormBuilder([])
+            ->setAction($this->generateUrl('subir_archivo'))
+            ->add('archivo', FileType::class, ['attr' => ['required' => 'required']])
+            ->getForm();
+
+
         return $this->render('factura/index.html.twig', [
             'facturas' => $data,
-            'form'=>$form->createView()
+            'form'=>$form->createView(),
+            'formBanco'=> $formBanco->createView()
         ]);
     }
     /**
@@ -254,7 +261,7 @@ class FacturaController extends AbstractController
 
             /* ENLAZANDO FACTURA AL CONTRATO */
             $contrato = $factura->getContrato();
-            if(!$contrato || !$contrato->getId()) return new Response('contrato', 400);
+            if(!$contrato || !$contrato->getId()) return new JsonResponse('contrato', 400);
             $contrato = $contratoRepository->findOneBy(['id'=>$contrato->getId()],['version'=>'DESC']);
             if(!$contrato) return new Response('contrato 2', 400);
             $contrato->addFactura($factura);
@@ -305,11 +312,19 @@ class FacturaController extends AbstractController
             $usuario = $usuarioRepository->findOneBy(['email'=>$user->getEmail()]);
             $empresa = $usuario->getEmpresa();
             if(!$empresa) return new Response('Empresa no válida', 400);
+
+            $exist = $facturaRepository->findOneBy(['comprobantePago'=>$factura->getComprobantePago()]);
+            if($exist){
+                return new Response('El comprobante ya ha se ha utilizado para otra factura', 400);
+            }
+
             if($factura->getTipoComprobante() == Factura::NOTA_VENTA){
                 $em->persist($factura);
                 $em->flush();
                 return new JsonResponse(['id'=>$factura->getId()], 200);
             }
+
+
             $factura->ruc = $empresa->getRuc();
             $factura->generarClaveAcceso();
             $em->persist($factura);
