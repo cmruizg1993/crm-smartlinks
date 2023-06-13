@@ -328,13 +328,40 @@ class ContratoController extends AbstractController
      * @Route("/generar/suspendidos", name="contrato_suspension", methods={"GET"})
      */
     public function generarSuspendidos(
-        ContratoRepository $contratoRepository
+        ContratoRepository $contratoRepository,
+        OpcionCatalogoRepository $opcionCatalogoRepository,
+        EntityManagerInterface $entityManager
     ): Response
     {
         $fecha = new \DateTime();
         $anio = (int)$fecha->format('Y');
         $mes = (int)$fecha->format('m');
-        $contratoRepository->actualizarMesesMora($anio, $mes);
+        $contratos = $contratoRepository->findAllRegisters();
+        /**
+         * @var $contrato Contrato
+         */
+        foreach ($contratos as $contrato){
+            $anioPago = $contrato->getAnioPago();
+            $mesPago = $contrato->getMesPago();
+            $mesesMora = 0;
+            if($anio >= $anioPago){
+                if($anio == $anioPago){
+                    $mesesMora = $mes - $mesPago;
+                    if($mesesMora < 0 ) $mesesMora = 0;
+                }else{
+                    $mesesMora = ($anioPago - $anio)*12 - $mesPago + $mes;
+                }
+            }
+            $contrato->setMesesMora($mesesMora);
+
+            if($mesesMora >= 3){
+                $suspendido = $opcionCatalogoRepository->findOneByCodigoyCatalogo(EstadoContrato::SUSPENDIDO, 'est-cont');
+                $contrato->setEstadoContrato(EstadoContrato::SUSPENDIDO);
+                $contrato->setEstadoActual($suspendido);
+            }
+        }
+        $entityManager->flush();
+        //$contratoRepository->actualizarMesesMora($anio, $mes);
         return $this->redirectToRoute('contrato_index');
     }
 
