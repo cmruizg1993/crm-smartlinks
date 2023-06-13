@@ -148,7 +148,7 @@ class ContratoRepository extends ServiceEntityRepository
         $activo = $opcionRepository->findOneByCodigoyCatalogo(EstadoContrato::ACTIVO, 'est-cont');
 
         $sql = "UPDATE contrato c
-                    LEFT JOIN factura f ON c.id = f.contrato_id AND f.anio_pago = :anio AND f.mes_pago >= :mes AND (f.estado_sri != 'ANULADA' OR f.estado_sri IS NULL) AND f.facturaPlan > 0
+                    LEFT JOIN factura f ON c.id = f.contrato_id AND f.anio_pago = :anio AND f.mes_pago >= :mes AND (f.estado_sri != 'ANULADA' OR f.estado_sri IS NULL) AND f.factura_plan > 0
                     SET c.estado_actual_id = IF((f.id IS NOT NULL), :estado_activo ,c.estado_actual_id)";
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->bindParam('anio',$anio);
@@ -167,7 +167,7 @@ class ContratoRepository extends ServiceEntityRepository
         $idCortado = $cortado->getId();
 
         $sql = "UPDATE contrato c 
-                LEFT JOIN factura f ON c.id = f.contrato_id AND f.anio_pago = :anio AND f.mes_pago >= :mes AND (f.estado_sri != 'ANULADA' OR f.estado_sri IS NULL)  AND f.facturaPlan > 0
+                LEFT JOIN factura f ON c.id = f.contrato_id AND f.anio_pago = :anio AND f.mes_pago >= :mes AND (f.estado_sri != 'ANULADA' OR f.estado_sri IS NULL)  AND f.factura_plan > 0
                     SET c.estado_actual_id = IF((f.id IS NULL AND (c.estado_actual_id = :estado_activo OR c.estado_actual_id IS NULL)), :estado_id, c.estado_actual_id);";
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->bindParam('anio',$anio);
