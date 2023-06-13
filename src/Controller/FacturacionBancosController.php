@@ -126,7 +126,11 @@ class FacturacionBancosController extends AbstractController
             foreach ($activos as $contrato) {
                 $contrapartida = (string)$contrato->getNumero();
 
-                $valor = $contrato->getPlan()->getPrecio();
+                $precio = $contrato->getPlan()->getPrecio();
+                if($cliente->getEsDiscapacitado() || $cliente->getEsTerceraEdad()){
+                    $precio /= 2;
+                }
+                $valor = $precio;
                 $valor *= 100;
                 $valor = round($valor, 0);
 

@@ -144,6 +144,12 @@
                                         <textarea :disabled='isDisabled' class="form-control" form="factura" name="usuario" v-model="factura.observaciones" ></textarea>
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <label class="col-4 col-form-label">Factura plan</label>
+                                    <div class="col-8">
+                                        <input :disabled='isDisabled' type="checkbox" v-model="factura.facturaPlan">
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -240,6 +246,7 @@
                 fecha: '',
                 secuencial: null,
                 tipoComprobante: '01',
+                facturaPlan: true,
                 detalles: []
               },
               secuencial: '',
@@ -314,18 +321,10 @@
             },
             agregarContrato(contrato){
                 console.log(contrato);
+                this.agregarCliente(contrato);
+                if(!this.factura.facturaPlan) return;
                 this.factura.contrato = contrato.id;
                 this.numero = contrato.numero;
-                this.factura.cliente = contrato.cliente.id;
-                this.nombres = contrato.cliente.nombres;
-                this.cedula = contrato.cliente.dni.numero;
-                this.deudas = contrato.cliente.deudas;
-                this.deudas.forEach(d => {
-                    const cuotasVencidas = d.cuotas.filter(c => !c.pagada);
-                    if(cuotasVencidas.length > 0){
-                        this.hayValoresPendientes = true;
-                    }
-                })
                 if(contrato.mesPago) this.factura.mesPago = contrato.mesPago == 12 ? 1: contrato.mesPago +1;
                 if(contrato.anioPago) this.factura.anioPago = contrato.mesPago == 12 ? contrato.anioPago +1:contrato.anioPago;
                 contrato.plan.nombre += '- Mes de: '+meses[this.factura.mesPago-1].texto + ' año ' +this.factura.anioPago;
@@ -340,6 +339,18 @@
                 contrato.plan.esServicio = true;
                 this.agregarDetalle(contrato.plan);
                 if(contrato.necesitaReconexion) this.agregarServicioReconexion();
+            },
+            agregarCliente(contrato){
+                this.factura.cliente = contrato.cliente.id;
+                this.nombres = contrato.cliente.nombres;
+                this.cedula = contrato.cliente.dni.numero;
+                this.deudas = contrato.cliente.deudas;
+                this.deudas.forEach(d => {
+                    const cuotasVencidas = d.cuotas.filter(c => !c.pagada);
+                    if(cuotasVencidas.length > 0){
+                        this.hayValoresPendientes = true;
+                    }
+                })
             },
             async getComprobantes(){
                 await axios.get(this.urlcatalogocomprobantes)
@@ -477,6 +488,7 @@
                     tipoComprobante: '01',
                     formaPago: '01',
                     tipoAmbiente: '2',
+                    facturaPlan: true,
                     secuencial: '',
                     cliente: {},
                     contrato: {},
