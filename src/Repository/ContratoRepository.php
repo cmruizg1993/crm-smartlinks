@@ -148,7 +148,7 @@ class ContratoRepository extends ServiceEntityRepository
         $activo = $opcionRepository->findOneByCodigoyCatalogo(EstadoContrato::ACTIVO, 'est-cont');
 
         $sql = "UPDATE contrato c
-                    LEFT JOIN factura f ON c.id = f.contrato_id AND f.anio_pago = :anio AND f.mes_pago >= :mes AND (f.estadoSri != 'ANULADA' OR f.estadoSri IS NULL) AND f.facturaPlan > 0
+                    LEFT JOIN factura f ON c.id = f.contrato_id AND f.anio_pago = :anio AND f.mes_pago >= :mes AND (f.estado_sri != 'ANULADA' OR f.estado_sri IS NULL) AND f.facturaPlan > 0
                     SET c.estado_actual_id = IF((f.id IS NOT NULL), :estado_activo ,c.estado_actual_id)";
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->bindParam('anio',$anio);
@@ -167,7 +167,7 @@ class ContratoRepository extends ServiceEntityRepository
         $idCortado = $cortado->getId();
 
         $sql = "UPDATE contrato c 
-                LEFT JOIN factura f ON c.id = f.contrato_id AND f.anio_pago = :anio AND f.mes_pago >= :mes AND (f.estadoSri != 'ANULADA' OR f.estadoSri IS NULL)  AND f.facturaPlan > 0
+                LEFT JOIN factura f ON c.id = f.contrato_id AND f.anio_pago = :anio AND f.mes_pago >= :mes AND (f.estado_sri != 'ANULADA' OR f.estado_sri IS NULL)  AND f.facturaPlan > 0
                     SET c.estado_actual_id = IF((f.id IS NULL AND (c.estado_actual_id = :estado_activo OR c.estado_actual_id IS NULL)), :estado_id, c.estado_actual_id);";
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->bindParam('anio',$anio);
@@ -194,7 +194,7 @@ class ContratoRepository extends ServiceEntityRepository
                 IF(
                     f.anio_pago < :anio, (:anio - f.anio_pago)*12 - f.mes_pago + :mes, :mes - f.mes_pago
                 )
-                WHERE (f.estadoSri != 'ANULADA' OR f.estadoSri IS NULL) AND f.id IS NOT NULL AND ( f.anio_pago < :anio OR f.mes_pago < :mes);";
+                WHERE (f.estado_sri != 'ANULADA' OR f.estado_sri IS NULL) AND f.id IS NOT NULL AND ( f.anio_pago < :anio OR f.mes_pago < :mes);";
 
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->bindParam('anio',$anio);
@@ -236,7 +236,7 @@ class ContratoRepository extends ServiceEntityRepository
             IF(
                 f.anio_pago < :anio, (:anio - f.anio_pago)*12 - f.mes_pago + :mes, :mes - f.mes_pago
             )
-            WHERE (f.estadoSri != 'ANULADA' OR f.estadoSri IS NULL) AND f.id IS NOT NULL AND ( f.anio_pago < :anio OR f.mes_pago < :mes);";
+            WHERE (f.estado_sri != 'ANULADA' OR f.estado_sri IS NULL) AND f.id IS NOT NULL AND ( f.anio_pago < :anio OR f.mes_pago < :mes);";
 
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->bindParam('anio',$anio);
