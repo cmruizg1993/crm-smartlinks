@@ -37,7 +37,7 @@ class ContratoController extends AbstractController
         $contratos = $ContratoRepository->findAllRegisters();
 //        $campos = ['id', 'numero', 'fecha', 'direccion'];
         $data = $serializer->normalize($contratos, null, [AbstractNormalizer::ATTRIBUTES=>[
-            'id','nombres', 'numero', 'cedula','vlan','nodo', 'pppoe','fecha', 'direccion','estadoActual'=>['codigo','texto','cssClass']
+            'id','nombres', 'numero', 'cedula','vlan','nodo', 'pppoe','fecha', 'direccion','estadoActual'=>['codigo','texto','cssClass'],'mesesMora'
         ]]);
         return $this->render('Contrato/index.html.twig', [
             'contratos' => $data,
@@ -183,8 +183,10 @@ class ContratoController extends AbstractController
             $cortesia = $opcionCatalogoRepository->findOneByCodigoyCatalogo(EstadoContrato::CORTESIA, 'est-cont');
             $Contrato->setEstadoActual($cortesia);
         }
-
-        $Contrato->isEsCortesia($esCortesia ? false:true);
+        dump($Contrato);
+        $esCortesia = $esCortesia ? false:true;
+        $Contrato->setEsCortesia($esCortesia);
+        dump($Contrato);
         $em->flush();
         return $this->redirectToRoute('contrato_index');
     }
@@ -263,7 +265,8 @@ class ContratoController extends AbstractController
                             'texto'
                         ]
                     ],
-                    'necesitaReconexion'
+                    'necesitaReconexion',
+                    'mesesMora'
                 ]
             ]);
             $cache = [];
@@ -322,6 +325,20 @@ class ContratoController extends AbstractController
     }
 
     /**
+     * @Route("/generar/suspendidos", name="contrato_suspension", methods={"GET"})
+     */
+    public function generarSuspendidos(
+        ContratoRepository $contratoRepository
+    ): Response
+    {
+        $fecha = new \DateTime();
+        $anio = (int)$fecha->format('Y');
+        $mes = (int)$fecha->format('m');
+        $contratoRepository->actualizarMesesMora($anio, $mes);
+        return $this->redirectToRoute('contrato_index');
+    }
+
+    /**
      * @Route("/marcar/inpagos", name="contrato_inpagos", methods={"GET"})
      */
     public function marcarInpagos(
@@ -345,19 +362,5 @@ class ContratoController extends AbstractController
         $em->flush();
         return $this->redirectToRoute('contrato_index');
     }
-    /*
-    public function generarActivacion(Contrato $contrato, EntityManagerInterface $em, OpcionCatalogoRepository $opcionCatalogoRepository): Response
-    {
-        $contrato->setEstado(EstadoContrato::ACTIVO);
-        $opcion = $opcionCatalogoRepository->findOneByCodigoyCatalogo(EstadoContrato::ACTIVO, EstadoContrato::NOMBRE_CATALOGO);
-        //dump($opcion);
-        $estado = new EstadoContrato();
-        $estado->setEstado($opcion);
-        $estado->setFecha(new \DateTime());
-        $estado->setContrato($contrato);
-        $contrato->addEstado($estado);
-        $em->flush();
-        return $this->redirectToRoute('contrato_index');
-    }
-    */
+
 }

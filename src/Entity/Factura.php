@@ -219,6 +219,11 @@ class Factura
      */
     private $extraData = [];
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $facturaPlan = true;
+
     public function __construct()
     {
         $this->detalles = new ArrayCollection();
@@ -621,7 +626,7 @@ class Factura
         return $this->cliente->getDni()->getNumero();
     }
     public function getNumero(){
-        return $this->contrato->getNumero();
+        return $this->contrato ? $this->contrato->getNumero(): null;
     }
     public function getSerie(){
         $estab = $this->puntoEmision->getEstablecimiento()->getCodigo();
@@ -788,6 +793,18 @@ class Factura
     public function setExtraData(?array $extraData): self
     {
         $this->extraData = $extraData;
+
+        return $this;
+    }
+
+    public function isFacturaPlan(): ?bool
+    {
+        return $this->facturaPlan;
+    }
+
+    public function setFacturaPlan(?bool $facturaPlan): self
+    {
+        $this->facturaPlan = $facturaPlan;
 
         return $this;
     }

@@ -260,12 +260,14 @@ class FacturaController extends AbstractController
             $factura->setSecuencial($secuencial);
 
             /* ENLAZANDO FACTURA AL CONTRATO */
-            $contrato = $factura->getContrato();
-            if(!$contrato || !$contrato->getId()) return new JsonResponse('contrato', 400);
-            $contrato = $contratoRepository->findOneBy(['id'=>$contrato->getId()],['version'=>'DESC']);
-            if(!$contrato) return new Response('contrato 2', 400);
-            $contrato->addFactura($factura);
-            $factura->setContrato($contrato);
+            if($factura->isFacturaPlan()){
+                $contrato = $factura->getContrato();
+                if(!$contrato || !$contrato->getId()) return new JsonResponse('contrato', 400);
+                $contrato = $contratoRepository->findOneBy(['id'=>$contrato->getId()],['version'=>'DESC']);
+                if(!$contrato) return new Response('contrato 2', 400);
+                $contrato->addFactura($factura);
+                $factura->setContrato($contrato);
+            }
 
             /* PUNTO DE EMISION */
             $puntoEmision = $factura->getPuntoEmision();

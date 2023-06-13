@@ -137,6 +137,11 @@ class Contrato
      */
     private $esCortesia;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $mesesMora;
+
     public function __toString()
     {
         // TODO: Implement __toString() method.
@@ -476,6 +481,7 @@ class Contrato
         if($facturas->count() > 0 ){
             $criteria = Criteria::create()
                 ->where(Criteria::expr()->neq('estadoSri', Factura::ESTADO_ANULADA))
+                ->orWhere(Criteria::expr()->eq('estadoSri', null))
                 ->orderBy(['anioPago'=>'DESC', 'mesPago'=>'DESC']);
             //dump($criteria);
             $f = $facturas->matching($criteria)->first();
@@ -490,6 +496,7 @@ class Contrato
         if($facturas->count() > 0 ){
             $criteria = Criteria::create()
                 ->where(Criteria::expr()->neq('estadoSri', Factura::ESTADO_ANULADA))
+                ->orWhere(Criteria::expr()->eq('estadoSri', null))
                 ->orderBy(['anioPago'=>'DESC', 'mesPago'=>'DESC']);
             $f = $facturas->matching($criteria)->first();
             if($f) $anio = $f->getAnioPago();
@@ -559,6 +566,18 @@ class Contrato
     public function setEsCortesia(?bool $esCortesia): self
     {
         $this->esCortesia = $esCortesia;
+
+        return $this;
+    }
+
+    public function getMesesMora(): ?int
+    {
+        return $this->mesesMora;
+    }
+
+    public function setMesesMora(?int $mesesMora): self
+    {
+        $this->mesesMora = $mesesMora;
 
         return $this;
     }
