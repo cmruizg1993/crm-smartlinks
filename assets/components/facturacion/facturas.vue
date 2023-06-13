@@ -80,7 +80,7 @@
                 v.actions = [];
                 v.estadoSri = v.estadoSri ? v.estadoSri:'';
 
-                if(v.estadoSri == 'DEVUELTA' || v.estadoSri == 'NO AUTORIZADO' || v.estadoSri == ''){
+               // if(v.estadoSri == 'DEVUELTA' || v.estadoSri == 'NO AUTORIZADO' || v.estadoSri == ''){
                     v.actions.push({
                         color: 'warning',
                         texto: 'Revisar',
@@ -88,7 +88,7 @@
                             this.revisar(v);
                         }
                     });
-                }
+               // }
                 if(v.estadoSri == 'RECIBIDA' || v.estadoSri == 'EN PROCESO'){
 
                     v.actions.push({

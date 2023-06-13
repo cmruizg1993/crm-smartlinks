@@ -195,7 +195,7 @@ class FacturacionBancosController extends AbstractController
         $data = [];
         $data["tipoComprobante"] = "01";
         $data["formaPago"] = "20"; // revisar
-        $data["tipoAmbiente"] = "1"; // producción
+        $data["tipoAmbiente"] = "2"; // producción
         $data["secuencial"] = $secuencial;
         $data["cliente"] = $cliente->getId();
         $data["contrato"] = $contrato->getId();

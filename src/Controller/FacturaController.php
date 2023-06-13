@@ -319,16 +319,23 @@ class FacturaController extends AbstractController
                     return new Response('El comprobante ya ha se ha utilizado para otra factura', 400);
                 }
             }
-
+            $factura->ruc = $empresa->getRuc();
+            $factura->generarClaveAcceso();
             if($factura->getTipoComprobante() == Factura::NOTA_VENTA){
                 $em->persist($factura);
                 $em->flush();
+
+                /* SE ACTUALIZA EL SECUENCIAL CORRESPONDIENTE AL COMPROBANTE Y PUNTO DE EMISION DEL USUARIO */
+                $secuencialObj = $secuenciales[0];
+                $numero = (int) $secuencial;
+                $numero++;
+                $secuencialObj->setActual($numero);
+                $em->flush();
+                /*******************************************************************************************/
+
                 return new JsonResponse(['id'=>$factura->getId()], 200);
             }
 
-
-            $factura->ruc = $empresa->getRuc();
-            $factura->generarClaveAcceso();
             $em->persist($factura);
             $em->flush();
 
@@ -499,7 +506,8 @@ class FacturaController extends AbstractController
         $form = $this->createForm(FacturaType::class, $factura);
         $form->handleRequest($request);
         $estado = $factura->getEstadoSri();
-        if ($request->getMethod() == Request::METHOD_POST && (!str_contains($estado, "AUTORIZADO") || str_contains($estado, "NO AUTORIZADO"))) {
+        
+        if ($request->getMethod() == Request::METHOD_POST /*&& (!str_contains($estado, "AUTORIZADO") || str_contains($estado, "NO AUTORIZADO"))*/) {
             $content = json_decode($request->getContent(), true);
             $form->submit($content);
             $factura->setUsuario($this->getUser());
