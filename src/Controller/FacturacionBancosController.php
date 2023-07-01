@@ -200,6 +200,7 @@ class FacturacionBancosController extends AbstractController
         $data["tipoComprobante"] = "01";
         $data["formaPago"] = "20"; // revisar
         $data["tipoAmbiente"] = "2"; // producción
+        $data["facturaPlan"] = true;
         $data["secuencial"] = $secuencial;
         $data["cliente"] = $cliente->getId();
         $data["contrato"] = $contrato->getId();
