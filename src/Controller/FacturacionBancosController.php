@@ -260,11 +260,12 @@ class FacturacionBancosController extends AbstractController
             $detalle1["esServicio"] = true;
             $detalle1["incluyeIva"] = true;
             $detalle1["porcentaje"] = "12.00";
+            $detalle2["codigoPorcentaje"] = 2;
             $detalle1["descuento"] = null;
             $detalle1["cantidad"] = 1;
 
             $data["detalles"][] = $detalle1;
-
+            /*
             $detalle2 = [];
             $detalle2["producto"] = null;
             $detalle2["servicio"] = $plan->getId();
@@ -277,13 +278,15 @@ class FacturacionBancosController extends AbstractController
             $detalle2["esServicio"] = true;
             $detalle2["incluyeIva"] = true;
             $detalle2["porcentaje"] = "12.00";
+            $detalle2["codigoPorcentaje"] = 2;
             $detalle2["descuento"] = null;
             $detalle2["cantidad"] = 1;
 
             $data["detalles"][] = $detalle2;
+            */
         }
 
-
+        //dump($data);
         $request->setMethod("POST");
         $request->request->set("data", json_encode($data));
         $result = $this->forward('App\Controller\FacturaController::new', $data);
